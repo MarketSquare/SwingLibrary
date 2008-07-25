@@ -1,0 +1,34 @@
+*Setting*	*Value*
+library	SwingLibrary
+
+*Variable*	*Value*
+${menuText}	Test Menu
+${showDialog}	${menuText}|Show Test Dialog
+${mutableMenu}	${menuText}|Mutable Menu
+${disabledMenu}	${menuText}|Disabled Menu Item
+
+*Test Case*	*Action*	*Argument*
+Select From Main Menu
+	selectFromMainMenu	${showDialog}
+	# Sleep is necessary because the preceding keyword doesn't wait for the tool to open
+	sleep	1
+	dialogShouldBeOpen	Message
+	[teardown]	closeDialog	Message
+
+Select From Main Menu And Wait
+	selectFromMainMenuAndWait	${mutableMenu}
+	mainMenuItemShouldExist	${menuText}|Menu Item Was Pushed	
+
+Menu Item Should Be Enabled
+	menuItemShouldBeEnabled	${showDialog}
+
+Menu Item Should Be Disabled
+	menuItemShouldBeDisabled	${disabledMenu}
+
+Get Main Menu Item Name
+	mainMenuItemNameShouldBe	0	${menuText}
+
+*Keyword*	*Action*
+mainMenuItemNameShouldBe	[arguments]	${menuItemIndex}	${expectedName}
+	${menuItemName}=	getMainMenuItemName	0
+	shouldBeEqual	${expectedName}	${menuItemName}

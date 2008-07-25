@@ -1,0 +1,220 @@
+*Setting*	*Value*
+library	SwingLibrary
+testSetup	selectTestTree
+
+*Variable*	*Value*	*Value*
+${treeName}	testTree
+${nodeIndex}	2
+${rootNode}	The Java Series
+${childNode1}	Books for Java Implementers
+${childNode2}	Books for Java Programmers
+${leafNode}	The Java Tutorial: A Short Course on the Basics
+${anotherNodePath}	${rootNode}|${childNode2}
+${leafNodePath}	${anotherNodePath}|${leafNode}
+
+*Test Case*	*Action*	*Argument*	*Argument*
+Select Tree By Index
+	selectMainWindow
+	selectTree	0
+	currentContextIsATree
+
+Select Tree By Name
+	selectMainWindow
+	selectTree	${treeName}
+	currentContextIsATree
+
+Expand Node by Index
+	expandTreeNode	0
+	expandTreeNode	${nodeIndex}
+	treeNodeShouldBeExpanded	${nodeIndex}
+	collapseTreeNode	${nodeIndex}
+	collapseTreeNode	0
+
+Expand Node By Name
+	expandTreeNode	${rootNode}
+	expandTreeNode	${anotherNodePath}
+	treeNodeShouldBeExpanded	${anotherNodePath}
+	collapseTreeNode	${anotherNodePath}
+	collapseTreeNode	${rootNode}
+
+Collapse Node By Index
+	expandTreeNode	0
+	expandTreeNode	${nodeIndex}
+	treeNodeShouldBeExpanded	${nodeIndex}
+	collapseTreeNode	${nodeIndex}
+	treeNodeShouldBeCollapsed	${nodeIndex}
+	collapseTreeNode	${nodeIndex}
+	collapseTreeNode	0
+
+Collapse Node By Name
+	expandTreeNode	${rootNode}
+	treeNodeShouldBeExpanded	${rootNode}
+	collapseTreeNode	${rootNode}
+	treeNodeShouldBeCollapsed	${rootNode}
+	collapseTreeNode	${rootNode}
+
+Tree Node Should Be Collapsed
+	collapseTreeNode	${rootNode}
+	treeNodeShouldBeCollapsed	0
+	treeNodeShouldBeCollapsed	${rootNode}
+
+Tree Node Should Be Expanded
+	expandTreeNode	${rootNode}
+	treeNodeShouldBeExpanded	0
+	treeNodeShouldBeExpanded	${rootNode}
+
+Select Tree Node By Index
+	clearTreeSelection
+	selectTreeNode	0
+	treeNodeShouldBeSelected	0
+	unselectTreeNode	0
+
+Select Tree Node By Name
+	clearTreeSelection
+	selectTreeNode	${rootNode}
+	treeNodeShouldBeSelected	${rootNode}
+	unselectTreeNode	${rootNode}
+
+Unselect Tree Node By Index
+	clearTreeSelection
+	selectTreeNode	0
+	unselectTreeNode	0
+	treeNodeShouldNotBeSelected	0
+
+Unselect Tree Node By name
+	clearTreeSelection
+	selectTreeNode	${rootNode}
+	unselectTreeNode	${rootNode}
+	treeNodeShouldNotBeSelected	${rootNode}
+
+Tree Node Should Be Selected AND Tree Node Should Not Be Selected
+	clearTreeSelection
+	treeNodeShouldNotBeSelected	0
+	treeNodeShouldNotBeSelected	${rootNode}
+	selectTreeNode	0
+	treeNodeShouldBeSelected	0
+	treeNodeShouldBeSelected	${rootNode}
+
+Select From Tree Node Popup Menu
+	selectFromTreeNodePopupMenu	${rootNode}	Insert a child
+	expandTreeNode	${rootNode}
+	treeNodeShouldBeVisible	${rootNode}|child
+	selectFromTreeNodePopupMenu	${rootNode}|child	Remove this node
+
+Select From Tree Node Popup Menu In Separate Thread
+	selectFromTreeNodePopupMenuInSeparateThread	${rootNode}	Show dialog
+	dialogShouldBeOpen	Message
+	closeDialog	Message
+
+Tree Node Should Be Visible AND Tree Node Should Not Be Visible
+	treeNodeShouldBeVisible	${rootNode}
+	expandTreeNode	${rootNode}
+	treeNodeShouldBeVisible	${anotherNodePath}
+	expandTreeNode	${anotherNodePath}
+	treeNodeShouldBeVisible	${leafNodePath}
+	collapseTreeNode	${rootNode}
+	treeNodeShouldNotBeVisible	${anotherNodePath}
+	treeNodeShouldNotBeVisible	${leafNodePath}
+
+Tree Node Should Be Leaf AND Tree Node Should Not Be Leaf
+	expandTreeNode	${rootNode}
+	expandTreeNode	${anotherNodePath}
+	treeNodeShouldBeLeaf	${leafNodePath}
+	treeNodeShouldNotBeLeaf	${anotherNodePath}
+	collapseTreeNode	${rootNode}
+	treeNodeShouldNotBeLeaf	${rootNode}
+
+Tree Node Should Exist By Name
+	treeNodeShouldExist	${rootNode}
+	treeNodeShouldExist	${anotherNodePath}
+	treeNodeShouldExist	${leafNodePath}
+
+Tree Node Should Exist By Index
+	treeNodeShouldExist	0
+
+Tree Node Should Not Exist By Name
+	treeNodeShouldNotExist	Unexisting|node|name
+	treeNodeShouldNotExist	Unexisting_root_node_name
+
+Tree Node Should Not Exist By Index
+	treeNodeShouldNotExist	9999
+
+Test Selecting Multiple Nodes
+	expandTreeNode	${rootNode}
+	clearTreeSelection
+	selectTreeNode	${rootNode}
+	selectTreeNode	${anotherNodePath}
+	treeNodeShouldBeSelected	${rootNode}
+	treeNodeShouldBeSelected	${anotherNodePath}
+	collapseTreeNode	${rootNode}
+	clearTreeSelection
+
+Tree Node Popup Menu Item Should Be Enabled
+	treeNodePopupMenuItemShouldBeEnabled	${rootNode}	Insert a child
+	treeNodePopupMenuItemShouldBeEnabled	${rootNode}	Submenu|Enabled menuitem
+	popupMenuShouldNotBeDisplayed
+
+Tree Node Popup Menu Item Should Be Disabled
+	treeNodePopupMenuItemShouldBeDisabled	${rootNode}	Disabled menuitem
+	treeNodePopupMenuItemShouldBeDisabled	${rootNode}	Submenu|Disabled menuitem
+	popupMenuShouldNotBeDisplayed
+
+Tree Node Popup Menu Item Should Be Disabled Should Fail If Menu Item Is Enabled
+	runKeywordAndExpectError	*Menu item 'Insert a child' was enabled*	treeNodePopupMenuItemShouldBeDisabled	${rootNode}	Insert a child
+
+Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
+	runKeywordAndExpectError	*Menu item 'Disabled menuitem' was disabled*	treeNodePopupMenuItemShouldBeEnabled	${rootNode}	Disabled menuitem
+
+Keywords Also Work With Invisible Root
+	expandTreeNode	${rootNode}
+	selectFromTreeNodePopupMenu	${rootNode}	Hide root node
+	treeNodeShouldBeVisible	${childNode1}
+	treeNodeShouldBeVisible	${childNode2}
+	treeNodeShouldExist	${childNode1}
+	treeNodeShouldExist	${childNode2}
+	treeNodeShouldExist	${childNode2}|${leafNode}
+	expandTreeNode	${childNode2}
+	treeNodeShouldBeVisible	${childNode2}|${leafNode}
+	collapseTreeNode	${childNode2}
+	[Teardown]	selectFromTreeNodePopupMenu	0	Show root node
+
+Tree Keywords Fail If Context Is Not a tree
+	selectMainWindow
+	keywordShouldFailBecauseContextIsIllegal	clearTreeSelection
+	keywordShouldFailBecauseContextIsIllegal	expandTreeNode	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	collapseTreeNode	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeExpanded	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeCollapsed	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	selectFromTreeNodePopupMenu	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	selectFromTreeNodePopupMenuInSeparateThread	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	selectTreeNode	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	unselectTreeNode	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeSelected	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeSelected	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeVisible	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeVisible	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeLeaf	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeLeaf	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldExist	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotExist	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	Path|To|Tree|Node	SomethingInMenu
+	[teardown]	selectMainWindow
+
+
+*Keyword*	*Action*	*Argument*	*Argument*
+selectTestTree
+	selectMainWindow
+	selectTree	${treeName}
+
+currentContextIsATree
+	${context}=	getCurrentContextSourceAsString
+	shouldContain	${context}	${treeName}
+
+keywordShouldFailBecauseContextIsIllegal	[arguments]	${keyword}	@{arguments}
+	runKeywordAndExpectError	*To use tree keywords you must first select a tree as context using the 'Select Tree'-keyword.*	${keyword}	@{arguments}
+
+popupMenuShouldNotBeDisplayed
+	selectMainWindow
+	componentShouldNotExist	popupMenu
+

@@ -1,0 +1,60 @@
+*Setting*	*Value*
+library	SwingLibrary
+testSetup	clearSelectionFromList	${listIndex}
+
+*Variable*	*Value*
+${listName}	testList
+${listIndex}	0
+
+*Test Case*	*Action*	*Argument*
+Get Selected List Value From List By Index
+	selectFromList	${listIndex}	0
+	${selectedValue}=	getSelectedValueFromList	0
+	shouldBeEqual	${selectedValue}	one
+
+Get Selected List Value From List By Name
+	selectFromList	${listName}	0
+	${selectedValue}=	getSelectedValueFromList	${listName}
+	shouldBeEqual	${selectedValue}	one
+
+Select From List By Index
+	selectFromList	${listIndex}	0
+	listSelectionShouldBe	${listIndex}	one
+
+Select From List By Name
+	selectFromList	${listName}	0
+	listSelectionShouldBe	${listName}	one
+
+Selecting Item By A Substring Of The Name Should Fail
+	runKeywordAndExpectError	*	selectFromList	${listIndex}	hre
+
+Clear Selection From List
+	selectFromList	${listIndex}	three
+	listSelectionShouldBe	${listIndex}	three
+	clearSelectionFromList	${listIndex}
+	listSelectionShouldNotBe	${listIndex}	three
+
+Get List Item Count By Index
+	${itemCount}=	getListItemCount	${listIndex}
+	shouldBeEqualAsIntegers	3	${itemCount}
+
+Get List Item Count By Name
+	${itemCount}=	getListItemCount	${listName}
+	shouldBeEqualAsIntegers	3	${itemCount}
+
+List Keywords Should Fail If Context Is Not A Window
+	[setup]	selectEmptyContext
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectFromList	0	0
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getSelectedValueFromList	0
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	clearSelectionFromList	0
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getListItemCount	0
+	[teardown]	selectMainWindow
+
+*Keyword*	*Action*
+listSelectionShouldBe	[arguments]	${listIndex}	${expectedValue}
+	${selectedValue}=	getSelectedValueFromList	${listIndex}
+	shouldBeEqual	${expectedValue}	${selectedValue}
+
+listSelectionShouldNotBe	[arguments]	${listIndex}	${expectedValue}
+	${selectedValue}=	getSelectedValueFromList	${listIndex}
+	shouldNotBeEqual	${expectedValue}	${selectedValue}

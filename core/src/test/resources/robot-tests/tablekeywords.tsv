@@ -1,0 +1,80 @@
+*Setting*	*Value*	*Value*
+library	SwingLibrary
+suiteSetup	selectTable	${tableName}
+testTeardown	clearTableSelection
+
+*Variable*	*Value*	*Value*
+${tableName}	testTable
+${columnHeaderOne}	column one
+
+*Test Case*	*Action*	*Argument*	*Argument*
+Table Cell Should Not Be Selected By Index	
+	tableCellShouldNotBeSelected	0	0
+
+Table Cell Should Not Be Selected By Column Header	
+	tableCellShouldNotBeSelected	0	${columnHeaderOne}
+
+Table Cell Should Be Selected By Index	
+	selectTableCell	0	0
+	tableCellShouldBeSelected	0	0
+
+Table Cell Should Be Selected By Column Header	
+	selectTableCell	0	column one
+	tableCellShouldBeSelected	0	column one
+
+Select Table Cell By Index	
+	selectTableCell	1	2
+	tableCellShouldBeSelected	1	2
+
+Select Table Cell By Column Header Name	
+	selectTableCell	1	column three
+	tableCellShouldBeSelected	1	column three
+
+Clear Table Selection	
+	selectTableCell	1	2
+	tableCellShouldBeSelected	1	2
+	clearTableSelection
+	tableCellShouldNotBeSelected	1	2
+
+Get Selected Table Cell Value
+	selectTableCell	1	2
+	${cellValue}=	getSelectedTableCellValue
+	shouldBeEqual	two/three	${cellValue}
+
+Get Table Cell Value By Index	
+	${cellValue}=	getTableCellValue	1	1
+	shouldBeEqual	two/two	${cellValue}
+
+Get Table Cell Value By Column Header	
+	${cellValue}=	getTableCellValue	1	column two
+	shouldBeEqual	two/two	${cellValue}
+
+Select Table By Index	
+	selectMainWindow
+	selectTable	0
+	contextIsATable
+
+Select Table By Name	
+	selectMainWindow
+	selectTable	${tableName}
+	contextIsATable
+
+Table Keywords Fail If Context Is Not a Table	
+	selectMainWindow
+	tableKeywordShouldFail	getTableCellValue	0	0
+	tableKeywordShouldFail	getSelectedTableCellValue
+	tableKeywordShouldFail	tableCellShouldBeSelected	0	0
+	tableKeywordShouldFail	tableCellShouldNotBeSelected	0	0
+	tableKeywordShouldFail	selectTableCell	0	0
+	tableKeywordShouldFail	clearTableSelection
+	[teardown]	selectMainWindow
+
+*Keyword*	*Action*	*Argument*	*Argument*	*Argument*	*Argument*	*Argument*	*Argument*
+contextIsATable
+	${context}=	getCurrentContextSourceAsString
+	log	${context}
+	shouldContain	${context}	${tableName}
+	shouldContain	${context}	JTable
+
+tableKeywordShouldFail	[Arguments]	${keyword}	@{arguments}
+	runKeywordAndExpectError	*To use table keywords you must first select a table as context using the 'Select Table'-keyword.*	${keyword}	@{arguments}

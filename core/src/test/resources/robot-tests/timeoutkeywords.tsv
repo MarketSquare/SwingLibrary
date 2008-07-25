@@ -1,0 +1,14 @@
+*Setting*	*Value*
+library	SwingLibrary							
+resource	userkeywords.tsv
+
+*Variable*	*Value*
+${tolerance}	3							
+
+*Test Case*	*Action*	*Argument*	*Argument*
+Set Jemmy Timeout
+	setJemmyTimeout	DialogWaiter.WaitDialogTimeout	1					
+	${elapsedTime}=	runKeywordAndMeasureTime	dialogShouldNotBeOpen	Nonexistent Dialog				
+	elapsedTimeWasLessThanLimit	${elapsedTime}	${tolerance}					
+
+*Keyword*	*Action*	*Argument*

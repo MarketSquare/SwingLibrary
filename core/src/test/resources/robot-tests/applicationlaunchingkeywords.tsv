@@ -1,0 +1,16 @@
+*Setting*	*Value*
+library	SwingLibrary
+
+*Variable*	*Value*
+${testApplicationName}	org.robotframework.swing.keyword.testapp.SomeApplication
+
+*Test Case*	*Action*	*Argument*
+Launch Application
+	runKeywordAndExpectError	Application was not called	assertApplicationWasCalled
+	launchApplication	${testApplicationName}
+	assertApplicationWasCalled
+
+*Keyword*	*Action*	*Argument*
+shouldNotHaveBeenCalled
+	${callStatus}=	getTestAppCallStatus
+	shouldBeEqual	false	${callStatus}

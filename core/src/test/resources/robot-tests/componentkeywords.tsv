@@ -1,0 +1,28 @@
+*Setting*	*Value*
+library	SwingLibrary
+
+*Variable*	*Value*
+${componentName}	Main Panel
+
+*Test Case*	*Action*	*Argument*
+Component Should Exist By Index
+	componentShouldExist	0
+
+Component Should Exist By Name
+	componentShouldExist	${componentName}
+
+Component Should Exist Fails If The Component Doesn't Exist
+	runKeywordAndExpectError	*Component 'Unexisting component' does not exist*	componentShouldExist	Unexisting component
+	runKeywordAndExpectError	*Component '9999' does not exist*	componentShouldExist	9999
+
+Component Should Not Exist By Index
+	componentShouldNotExist	9999
+
+Component Should Not Exist By Name
+	componentShouldNotExist	Unexisting component
+
+Component Should Not Exist Fails If The Component Exists
+	runKeywordAndExpectError	*Component '${componentName}' exists*	componentShouldNotExist	${componentName}
+	runKeywordAndExpectError	*Component '0' exists*	componentShouldNotExist	0
+
+*Keyword*	*Action*	*Argument*

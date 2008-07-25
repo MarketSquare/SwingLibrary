@@ -1,0 +1,15 @@
+*Setting*	*Value*
+library	SwingLibrary
+
+*Variable*	*Value*
+${panelName}	Main Panel
+
+*Test Case*	*Action*	*Argument*
+Select Context
+	selectContext	${panelName}
+	${contextAsString}=	getCurrentContextSourceAsString
+	shouldContain	${contextAsString}	javax.swing.JPanel
+	shouldContain	${contextAsString}	${panelName}
+
+*Keyword*	*Action*	*Argument*
+

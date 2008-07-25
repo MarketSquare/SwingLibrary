@@ -1,0 +1,58 @@
+*Setting*	*Value*
+library	SwingLibrary
+testTeardown	resetDropdownMenu
+
+*Variable*	*Value*
+${comboboxName}	testComboBox
+${comboboxIndex}	0
+${comboboxItem1}	one
+${comboboxItem2}	two
+
+*Test Case*	*Action*	*Argument*	*Argument*
+Get Selected Item From Combobox By Index
+	${selectedItem}=	getSelectedItemFromComboBox	${comboboxIndex}
+	shouldBeEqual	${comboboxItem1}	${selectedItem}
+
+Get Selected Item From Combobox By Name
+	${selectedItem}=	getSelectedItemFromCombobox	${comboboxName}
+	shouldBeEqual	${comboboxItem1}	${selectedItem}
+
+Get Selected Item From Dropdown Menu By Index
+	${selectedItem}=	getSelectedItemFromDropdownMenu	${comboboxIndex}
+	shouldBeEqual	${comboboxItem1}	${selectedItem}
+
+Get Selected Item From Dropdown Menu By Name
+	${selectedItem}=	getSelectedItemFromDropdownMenu	${comboboxName}
+	shouldBeEqual	${comboboxItem1}	${selectedItem}
+
+Select From Combobox By Index
+	selectFromCombobox	${comboboxIndex}	${comboboxItem2}
+	dropdownMenuSelectionShouldBe	${comboboxIndex}	${comboboxItem2}
+
+Select From Combobox By Name
+	selectFromCombobox	${comboboxName}	${comboboxItem2}
+	dropdownMenuSelectionShouldBe	${comboboxName}	${comboboxItem2}
+
+Select From Dropdown Menu By Index
+	selectFromDropdownMenu	${comboboxIndex}	${comboboxItem2}
+	dropdownMenuSelectionShouldBe	${comboboxIndex}	${comboboxItem2}
+
+Select From Dropdown Menu By Name
+	selectFromDropdownMenu	${comboboxName}	${comboboxItem2}
+	dropdownMenuSelectionShouldBe	${comboboxName}	${comboboxItem2}
+
+Dropdown Keywords Should Fail If Context Is Not A Window
+	selectEmptyContext
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectFromCombobox	${comboboxName}	${comboboxItem2}
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectFromDropdownMenu	${comboboxName}	${comboboxItem2}
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getSelectedItemFromCombobox	${comboboxName}
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getSelectedItemFromDropdownMenu	${comboboxName}
+	[teardown]	selectMainWindow
+
+*Keyword*	*Action*	*Argument*
+resetDropdownMenu
+	selectFromDropdownMenu	${comboboxIndex}	${comboboxItem1}
+
+dropdownMenuSelectionShouldBe	[arguments]	${identifier}	${expectedSelection}
+	${actualSelection}=	getSelectedItemFromCombobox	${identifier}
+	shouldBeEqual	${expectedSelection}	${actualSelection}

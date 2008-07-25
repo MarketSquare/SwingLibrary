@@ -1,0 +1,42 @@
+*Setting*	*Value*	*Value*
+library	SwingLibrary
+testSetup	openTestDialog
+testTeardown	closeTestDialog
+
+*Variable*	*Value*	*Value*
+${dialogMenu}	Test Menu|Show Test Dialog
+${dialogTitle}	Message
+
+*Test Case*	*Action*	*Argument*
+Select Dialog
+	selectDialog	${dialogTitle}
+	${context}=	getCurrentContextSourceAsString
+	contains	${context}	Dialog
+
+Close Dialog
+	closeTestDialog
+	dialogShouldNotBeOpen	${dialogTitle}
+	[teardown]
+
+Dialog Should Not Be Open
+	[setup]
+	dialogShouldNotBeOpen	Non existent Dialog
+	[teardown]
+
+Dialog Should Not Be Open Fails If Dialog Is Open
+	runKeywordAndExpectError	*Dialog '${dialogTitle}' is open*	dialogShouldNotBeOpen	${dialogTitle}
+
+Dialog Should Be Open
+	dialogShouldBeOpen	${dialogTitle}
+
+Dialog Should Be Open Fails If Dialog Is Not Open
+	[setup]
+	runKeywordAndExpectError	*Dialog '${dialogTitle}' is not open*	dialogShouldBeOpen	${dialogTitle}
+	[teardown]
+
+*Keyword*	*Action*	*Argument*	*Argument*
+openTestDialog
+	selectFromMainMenu	${dialogMenu}
+
+closeTestDialog
+	closeDialog	${dialogTitle}

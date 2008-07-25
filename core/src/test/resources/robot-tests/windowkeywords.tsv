@@ -1,0 +1,32 @@
+*Setting*	*Value*
+library	SwingLibrary
+testSetup	selectEmptyContext
+
+*Variable*	*Value*
+
+*Test Case*	*Action*	*Argument*
+Select Main Window
+	selectMainWindow
+	contextIsMainWindow
+
+Select Window By Title
+	selectWindow	Test App
+	contextIsMainWindow
+
+Select Window By Index
+	selectWindow	0
+	contextIsMainWindow
+
+Get Selected Window Title
+	selectMainWindow
+	${title}=	getSelectedWindowTitle
+	shouldBeEqual	${title}	Test App
+
+Close Window
+	selectFromMainMenu	Test Menu|Show Test Window
+	closeWindow	Test Window
+
+*Keyword*	*Action*	*Argument*
+contextIsMainWindow
+	${context}=	getCurrentContextSourceAsString
+	shouldContain	${context}	Test App

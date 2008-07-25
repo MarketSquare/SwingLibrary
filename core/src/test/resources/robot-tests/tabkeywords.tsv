@@ -1,0 +1,69 @@
+*Setting*	*Value*	*Value*
+library	SwingLibrary
+testSetup	selectMainWindow
+
+*Variable*	*Value*	*Value*
+${firstTabPane}	testTabbedPane1
+${secondTabPane}	testTabbedPane2
+
+*Test Case*	*Action*	*Argument*	*Argument*
+Select Tab Pane
+	selectTabPane	${firstTabPane}
+	tabPaneShouldBeSelected	${firstTabPane}
+	selectMainWindow
+	selectTabPane	${secondTabPane}
+	tabPaneShouldBeSelected	${secondTabPane}
+
+Get Selected Tab Label
+	selectTab	tab2
+	${selectedTabLabel}=	getSelectedTabLabel
+	shouldBeEqual	tab2	${selectedTabLabel}
+
+Select Tab By Name
+	selectTab	tab3
+	tabShouldBeSelected	tab3
+	selectTabPane	${secondTabPane}
+	selectTab	tab3
+	tabShouldBeSelected	tab3
+
+Select Tab By Index
+	selectTab	2
+	tabShouldBeSelected	tab3
+	selectTabPane	${secondTabPane}
+	selectTab	2
+	tabShouldBeSelected	tab3
+
+Get Selected Tab Label By Name
+	selectTab	tab2
+	${selectedTabLabel}=	getSelectedTabLabel
+	shouldBeEqual	tab2	${selectedTabLabel}
+	selectTabPane	${secondTabPane}
+	selectTab	tab2
+	${selectedTabLabel}=	getSelectedTabLabel
+	shouldBeEqual	tab2	${selectedTabLabel}
+
+Get Selected Tab Label By Index
+	selectTab	1
+	${selectedTabLabel}=	getSelectedTabLabel
+	shouldBeEqual	tab2	${selectedTabLabel}
+	selectTabPane	${secondTabPane}
+	selectTab	1
+	${selectedTabLabel}=	getSelectedTabLabel
+	shouldBeEqual	tab2	${selectedTabLabel}
+
+Tab Keywords Should Fail Context Is Not Correct
+	selectEmptyContext
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectTab	tab1
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getSelectedTabLabel
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectTabPane	0
+	[teardown]	selectMainWindow
+
+*Keyword*	*Action*	*Argument*	*Argument*
+tabShouldBeSelected	[arguments]	${expectedTab}
+	${selectedTabLabel}=	getSelectedTabLabel
+	shouldBeEqual	${expectedTab}	${selectedTabLabel}
+
+tabPaneShouldBeSelected	[arguments]	${tabPaneIdentifier}
+	${context}=	getCurrentContextSourceAsString
+	log	${context}
+	shouldContain	${context}	${tabPaneIdentifier}
