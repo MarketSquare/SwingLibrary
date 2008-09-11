@@ -19,7 +19,11 @@ desc "Robot library for Swing GUI testing"
 define PROJECT_NAME do
   project.group   = GROUP
   project.version = VERSION_NUMBER
+
   define "core" do
+    install artifact("abbot:abbot:jar:1.0.2").from("lib/abbot-1.0.2.jar")
+    install artifact("abbot:costello:jar:1.0.2").from("lib/costello-1.0.2.jar")
+
     compile.with DEPENDENCIES
     compile.options.source = "1.5"
     compile.options.target = "1.5"
@@ -85,6 +89,6 @@ task :doc => :package do
   output_dir = __('target/doc')
   mkdir_p output_dir
   set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
-  sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc.py --output #{output_dir} SwingLibrary"
+  sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc/libdoc.py --output #{output_dir} SwingLibrary"
 end
 

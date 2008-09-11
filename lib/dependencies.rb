@@ -4,11 +4,9 @@ PARANAMER = 'com.thoughtworks.paranamer:paranamer:jar:1.1.2'
 JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.7'
 
 ABBOT =
- ['abbot:abbot:jar:0.13.0', 'jdom:jdom:jar:1.0']
-#ABBOT =
- #['abbot:abbot:jar:1.0.1',
-  #'abbot:costello:jar:1.0.1',
-  #'jdom:jdom:jar:1.0']
+ ['abbot:abbot:jar:1.0.2',
+  'abbot:costello:jar:1.0.2',
+  'jdom:jdom:jar:1.0']
 
 JAVALIB_CORE_DEPENDENCIES =
  ['aopalliance:aopalliance:jar:1.0',
