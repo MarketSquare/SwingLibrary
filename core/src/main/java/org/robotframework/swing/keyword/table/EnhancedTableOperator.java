@@ -18,6 +18,8 @@ package org.robotframework.swing.keyword.table;
 
 import java.awt.Point;
 
+import javax.swing.JTable;
+
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
@@ -28,6 +30,10 @@ import org.springframework.util.ObjectUtils;
  * @author Heikki Hulkko
  */
 public class EnhancedTableOperator extends JTableOperator {
+    public EnhancedTableOperator(JTable table) {
+        super(table);
+    }
+    
     public EnhancedTableOperator(ContainerOperator context, int index) {
         super(context, index);
     }
@@ -36,19 +42,19 @@ public class EnhancedTableOperator extends JTableOperator {
         super(context, componentChooser);
     }
 
-    public Object getValueAt(String rowIdentifier, String cellIdentifier) {
-        Point coordinates = findCell(rowIdentifier, cellIdentifier);
-        return getValueAt(coordinates.x, coordinates.y);
+    public Object getValueAt(String rowIdentifier, String columnIdentifier) {
+        Point coordinates = findCell(rowIdentifier, columnIdentifier);
+        return getValueAt(coordinates.y, coordinates.x);
     }
 
     public boolean isCellSelected(String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        return isCellSelected(coordinates.x, coordinates.y);
+        return isCellSelected(coordinates.y, coordinates.x);
     }
 
     public void selectCell(String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        selectCell(coordinates.x, coordinates.y);
+        selectCell(coordinates.y, coordinates.x);
     }
 
     public Point findCell(String row, String columnIdentifier) {

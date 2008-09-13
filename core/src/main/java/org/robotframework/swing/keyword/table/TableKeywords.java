@@ -95,7 +95,7 @@ public class TableKeywords {
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
     public Object getSelectedTableCellValue() {
         tableContextVerifier.verifyContext();
-        return tableOperator().getValueAt(tableOperator().getSelectedColumn(), tableOperator().getSelectedRow());
+        return tableOperator().getValueAt(tableOperator().getSelectedRow(), tableOperator().getSelectedColumn());
     }
 
     private EnhancedTableOperator tableOperator() {

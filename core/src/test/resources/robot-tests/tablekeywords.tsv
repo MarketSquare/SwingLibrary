@@ -15,20 +15,22 @@ Table Cell Should Not Be Selected By Column Header
 	tableCellShouldNotBeSelected	0	${columnHeaderOne}
 
 Table Cell Should Be Selected By Index	
-	selectTableCell	0	0
-	tableCellShouldBeSelected	0	0
+	selectTableCell	3	2
+	tableCellShouldBeSelected	3	2
 
 Table Cell Should Be Selected By Column Header	
-	selectTableCell	0	column one
-	tableCellShouldBeSelected	0	column one
+	selectTableCell	3	column two
+	tableCellShouldBeSelected	3	column two
 
 Select Table Cell By Index	
-	selectTableCell	1	2
-	tableCellShouldBeSelected	1	2
+	selectTableCell	3	2
+	${cellValue}=	getSelectedTableCellValue
+	shouldBeEqual	four/three	${cellValue}
 
 Select Table Cell By Column Header Name	
 	selectTableCell	1	column three
-	tableCellShouldBeSelected	1	column three
+	${cellValue}=	getSelectedTableCellValue
+	shouldBeEqual	two/three	${cellValue}
 
 Clear Table Selection	
 	selectTableCell	1	2
@@ -37,13 +39,13 @@ Clear Table Selection
 	tableCellShouldNotBeSelected	1	2
 
 Get Selected Table Cell Value
-	selectTableCell	1	2
+	selectTableCell	3	2
 	${cellValue}=	getSelectedTableCellValue
-	shouldBeEqual	two/three	${cellValue}
+	shouldBeEqual	four/three	${cellValue}
 
 Get Table Cell Value By Index	
-	${cellValue}=	getTableCellValue	1	1
-	shouldBeEqual	two/two	${cellValue}
+	${cellValue}=	getTableCellValue	2	1
+	shouldBeEqual	three/two	${cellValue}
 
 Get Table Cell Value By Column Header	
 	${cellValue}=	getTableCellValue	1	column two

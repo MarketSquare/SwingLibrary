@@ -188,10 +188,12 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
         public void getsSelectedTableCellValue() {
             final String cellValue = "someValue";
+            final int row = 5;
+            final int column = 2;
             checking(new Expectations() {{
-                one(tableOperator).getSelectedColumn(); will(returnValue(1));
-                one(tableOperator).getSelectedRow(); will(returnValue(1));
-                one(tableOperator).getValueAt(1, 1);
+                one(tableOperator).getSelectedColumn(); will(returnValue(column));
+                one(tableOperator).getSelectedRow(); will(returnValue(row));
+                one(tableOperator).getValueAt(row, column);
                 will(returnValue(cellValue));
             }});
 
