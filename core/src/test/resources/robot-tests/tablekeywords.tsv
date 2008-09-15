@@ -51,6 +51,11 @@ Get Table Cell Value By Column Header
 	${cellValue}=	getTableCellValue	1	column two
 	shouldBeEqual	two/two	${cellValue}
 
+Set Table Cell Value
+	setTableCellValue	2	1	newValue
+	${cellValue}=	getTableCellValue	2	1
+	shouldBeEqual	newValue	${cellValue}
+
 Select Table By Index	
 	selectMainWindow
 	selectTable	0

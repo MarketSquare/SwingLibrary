@@ -56,6 +56,11 @@ public class EnhancedTableOperator extends JTableOperator {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
         selectCell(coordinates.y, coordinates.x);
     }
+    
+    public void setValueAt(Object newValue, String rowIdentifier, String columnIdentifier) {
+        Point coordinates = findCell(rowIdentifier, columnIdentifier);
+        setValueAt(newValue, coordinates.y, coordinates.x);
+    }
 
     public Point findCell(String row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);

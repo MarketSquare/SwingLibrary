@@ -40,6 +40,12 @@ public class EnhancedTableOperatorSpec extends Specification<Void> {
         	specifyGivenCoordinatesAreUsed();
         }
         
+        public void usesGivenCoordinatesToSetValue() {
+            tableOperator.setValueAt("someValue", row, column);
+            
+            specifyGivenCoordinatesAreUsed();
+        }
+        
         private void specifyGivenCoordinatesAreUsed() {
         	specify(cell.x == tableOperator.column);
         	specify(cell.y == tableOperator.row);
@@ -52,7 +58,7 @@ public class EnhancedTableOperatorSpec extends Specification<Void> {
         public FakeEnhancedTableOperator() {
             super(dummy(JTable.class));
         }
-        
+
         @Override
         public void selectCell(int row, int column) {
             this.row = row;
@@ -71,6 +77,12 @@ public class EnhancedTableOperatorSpec extends Specification<Void> {
         	this.row = row;
         	this.column = column;
         	return super.getValueAt(row, column);
+        }
+        
+        @Override
+        public void setValueAt(Object newValue, int row, int column) {
+            this.row = row;
+            this.column = column;
         }
         
         @Override

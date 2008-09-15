@@ -98,6 +98,15 @@ public class TableKeywords {
         return tableOperator().getValueAt(tableOperator().getSelectedRow(), tableOperator().getSelectedColumn());
     }
 
+    @RobotKeyword("Sets the cell value.\n"
+    	+ "Assumes current context is a table.\n\n"
+    	+ "Example:\n"
+    	+ "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
+    public void setTableCellValue(String row, String columnIdentifier, String newValue) {
+        tableContextVerifier.verifyContext();
+        tableOperator().setValueAt(newValue, row, columnIdentifier);
+    }
+
     private EnhancedTableOperator tableOperator() {
         return (EnhancedTableOperator) Context.getContext();
     }
