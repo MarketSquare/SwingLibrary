@@ -85,8 +85,8 @@ task :acceptance_tests => :dist do
   sh "jybot -d /tmp --critical regression " + __('src/test/resources/robot-tests')
 end
 
-task :doc => :package do
-  output_dir = __('target/doc')
+task :doc => :compile do
+  output_dir = project(PROJECT_NAME)._('doc')
   mkdir_p output_dir
   set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
   sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc/libdoc.py --output #{output_dir} SwingLibrary"
