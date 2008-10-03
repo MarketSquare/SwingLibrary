@@ -86,6 +86,7 @@ task :acceptance_tests => :dist do
 end
 
 task :doc => :compile do
+  generate_parameter_names(__('src/main/java'), __('target/classes'))
   output_dir = project(PROJECT_NAME)._('doc')
   output_file = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
   mkdir_p output_dir
