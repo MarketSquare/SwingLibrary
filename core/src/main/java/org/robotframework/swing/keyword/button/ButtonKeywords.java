@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -63,8 +63,7 @@ public class ButtonKeywords {
     }
 
     @RobotKeyword("Fails if button exists within current context.\n"
-        + "You might want to set the waiting timeout with the keyword Set Jemmy Timeout,\n"
-        + "see documentation below.\n\n"
+        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`.\n\n"
         + "Example:\n"
         + "| Set Jemmy Timeouts      | _1_  |\n"
         + "| Button Should Not Exist | _OK_ |\n")

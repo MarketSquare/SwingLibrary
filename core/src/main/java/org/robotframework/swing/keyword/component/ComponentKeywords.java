@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -34,7 +34,7 @@ public class ComponentKeywords {
     private IComponentConditionResolver componentExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
     @RobotKeyword("Fails if component exists within current context.\n"
-        + "You might want to set the waiting timeout with the keyword _'Set Jemmy Timeout'_\n\n"
+        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
         + "| Component Should Not Exist | _myPanel_ |\n")
     public void componentShouldNotExist(String identifier) {
@@ -42,7 +42,7 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Fails if component does not exist within current context.\n"
-        + "You might want to set the waiting timeout with the keyword _'Set Jemmy Timeout'_\n\n"
+        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
         + "| Component Should Not Exist | _myPanel_ |\n")
     public void componentShouldExist(String identifier) {

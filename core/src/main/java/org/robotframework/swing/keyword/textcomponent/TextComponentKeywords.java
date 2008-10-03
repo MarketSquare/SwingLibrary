@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -50,7 +50,7 @@ public class TextComponentKeywords {
     }
 
     @RobotKeyword("Types text into a text component.\n"
-        + "Same as _Insert Into Textfield_ but sends real key events when setting text field contents.\n"
+        + "Same as `Insert Into Textfield` but sends real key events when setting text field contents.\n"
         + "Useful if application expects real keyboard events instead of only setting the text of the textfield.\n\n"
         + "Example:\n"
         + "| Type Into Textfield | _nameTextField_ | _John Doe_ |\n")

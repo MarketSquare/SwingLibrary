@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -42,7 +42,7 @@ public class ComboBoxKeywords {
         comboBoxOperator.selectItem(comboItemIdentifier);
     }
 
-    @RobotKeyword("Alias for _'Select From Combobox'_ keyword.\n")
+    @RobotKeyword("Alias for `Select From Combobox` keyword.\n")
     public void selectFromDropdownMenu(String menuIdentifier, String menuItemIdentifier) {
         selectFromComboBox(menuIdentifier, menuItemIdentifier);
     }
@@ -56,7 +56,7 @@ public class ComboBoxKeywords {
         return operatorFactory.createOperator(identifier).getSelectedItem();
     }
 
-    @RobotKeyword("Alias for _'Get Selected Item From Combobox'_ keyword.\n")
+    @RobotKeyword("Alias for `Get Selected Item From Combobox` keyword.\n")
     public Object getSelectedItemFromDropdownMenu(String identifier) {
         return getSelectedItemFromComboBox(identifier);
     }

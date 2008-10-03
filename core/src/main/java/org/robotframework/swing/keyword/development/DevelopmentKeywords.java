@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -33,7 +33,7 @@ public class DevelopmentKeywords {
     private ArrayList resultComponentList = new ArrayList();
 
     @RobotKeyword("Prints components (their types and their internal names) from the selected context.\n"
-        + "See keywords, Select Window, Select Dialog and Select Context for details about context.\n\n"
+        + "See keywords, `Select Window`, `Select Dialog` and `Select Context` for details about context.\n\n"
         + "Example:\n"
         + "| Select Main Window         |\n"
         + "| List Components In Context |\n")

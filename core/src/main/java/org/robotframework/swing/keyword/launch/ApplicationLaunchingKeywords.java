@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -37,7 +37,7 @@ public class ApplicationLaunchingKeywords {
         mainMethod.invoke(null, new Object[] { args });
     }
 
-    @RobotKeyword("Alias for _'Launch Application'_ keyword\n")
+    @RobotKeyword("Alias for `Launch Application` keyword\n")
     @ArgumentNames({"className", "*args"})
     public void startApplication(String className, String[] args) throws Exception {
         launchApplication(className, args);

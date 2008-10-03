@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -87,7 +87,7 @@ public class TreeKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if the node has child nodes.\n"
         + "Assumes current context is a tree.\n"
-        + "You might want to set the waiting timeout with the keyword _Set Jemmy Timeout_\n\n"
+        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
         + "| Tree Node Should Be Leaf | _Root|Folder_ |")
     public void treeNodeShouldBeLeaf(String nodeIdentifier) {
@@ -98,7 +98,7 @@ public class TreeKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if the node doesn't have child nodes.\n"
         + "Assumes current context is a tree.\n"
-        + "You might want to set the waiting timeout with the keyword _Set Jemmy Timeout_\n\n"
+        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
         + "| Tree Node Should Not Be Leaf | _Root|Folder_ |")
     public void treeNodeShouldNotBeLeaf(String nodeIdentifier) {

@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -31,7 +31,7 @@ public class TabKeywords extends IdentifierSupport {
 
     @RobotKeyword("Selects a tab.\n"
         + "Expects that only one tab pane exists in the current context.\n"
-        + "If you need to operate on a different tab pane use _Select Tab Pane_ keyword first.\n\n"
+        + "If you need to operate on a different tab pane use `Select Tab Pane` keyword first.\n\n"
         + "Example:\n"
         + "| Select Tab | _Customer Information_ |\n")
     public void selectTab(String tabIdentifier) {
@@ -44,7 +44,7 @@ public class TabKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns the label of the tab that is currenctly selected.\n"
         + "Expects that only one tab pane exists in the current context.\n"
-        + "If you need to operate on a different tab pane use _Select Tab Pane_ keyword first.\n\n"
+        + "If you need to operate on a different tab pane use `Select Tab Pane` keyword first.\n\n"
         + "Example:\n"
         + "| ${currentTab}= | Get Selected Tab Label |\n"
         + "| Should Be Equal | _Customer Information_ | ${currentTab} |\n")
