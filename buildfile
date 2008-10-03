@@ -93,3 +93,11 @@ task :doc => :compile do
   sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
 end
 
+task :source do
+  src_dir = project("#{PROJECT_NAME}:core").path_to(:source) + '/main/java'
+  target_dir = project(PROJECT_NAME).path_to(:target)
+  mkdir_p target_dir
+  
+  cd src_dir
+  sh "zip -r #{target_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-src.zip #{Dir['**/*.java'].join(' ')}"
+end
