@@ -6,6 +6,7 @@ require 'lib/dependencies'
 PROJECT_NAME   = 'swing-library'
 GROUP          = 'org.robotframework.swing'
 VERSION_NUMBER = '0.4-SNAPSHOT'
+NEXT_VERSION   = '0.4'
 SETTINGS       = YAML::load(File.open('settings.yaml'))
 
 repositories.remote << 'http://www.laughingpanda.org/maven2'
