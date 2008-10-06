@@ -82,15 +82,6 @@ module HelperMethods
     tmp_dir
   end
 
-  def install_abbot
-    mkdir_p _('target/classes')
-    version = "1.0.2"
-    ['abbot', 'costello'].each do |jar|
-      file = "lib/#{jar}-#{version}.jar"
-      install artifact("abbot:#{jar}:jar:#{version}").from(file)
-    end
-  end
-
   def include_abbot
     mkdir_p _('target/classes')
     artifacts(ABBOT).each do |jar|
