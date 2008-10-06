@@ -36,7 +36,8 @@ define PROJECT_NAME do
       generate_parameter_names(_('src/main/java'), _('target/classes'))
     end
 
-    package(:jar)
+    package(:sources, :id => PROJECT_NAME)
+    package(:jar, :id => PROJECT_NAME)
   end
 
   desc "Test application"
@@ -93,13 +94,4 @@ task :doc => :compile do
   mkdir_p output_dir
   set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
   sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
-end
-
-task :source do
-  src_dir = project("#{PROJECT_NAME}:core").path_to(:source) + '/main/java'
-  target_dir = project(PROJECT_NAME).path_to(:target)
-  mkdir_p target_dir
-  
-  cd src_dir
-  sh "zip -r #{target_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-src.zip #{Dir['**/*.java'].join(' ')}"
 end

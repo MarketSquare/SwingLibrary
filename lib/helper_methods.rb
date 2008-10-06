@@ -90,9 +90,9 @@ module Buildr
       xml.instruct!
       xml.project do 
         xml.modelVersion  '4.0.0'
-        xml.groupId       GROUP
-        xml.artifactId    PROJECT_NAME
-        xml.version       VERSION_NUMBER
+        xml.groupId       group
+        xml.artifactId    id
+        xml.version       version
         xml.dependencies do
           Buildr.artifacts(DEPENDENCIES).each do |jar|
             xml.dependency do
