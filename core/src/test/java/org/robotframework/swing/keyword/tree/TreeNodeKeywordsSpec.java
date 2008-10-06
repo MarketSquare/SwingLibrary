@@ -14,16 +14,16 @@ import org.robotframework.swing.context.Context;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.tree.TreeKeywords;
+import org.robotframework.swing.keyword.tree.TreeNodeKeywords;
 import org.robotframework.swing.tree.EnhancedTreeOperator;
 import org.robotframework.swing.tree.TreePathFactory;
 
 
 @RunWith(JDaveRunner.class)
-public class TreeKeywordsSpec extends MockSupportSpecification<TreeKeywords> {
+public class TreeNodeKeywordsSpec extends MockSupportSpecification<TreeNodeKeywords> {
     public class Any {
-        public TreeKeywords create() {
-            return new TreeKeywords();
+        public TreeNodeKeywords create() {
+            return new TreeNodeKeywords();
         }
 
         public void isRobotKeywordsAnnotated() {
@@ -68,11 +68,11 @@ public class TreeKeywordsSpec extends MockSupportSpecification<TreeKeywords> {
         private String nodeIdentifier = "path|to|node";
         private TreePath treePath = mock(TreePath.class);
 
-        public TreeKeywords create() {
+        public TreeNodeKeywords create() {
             treeOperator = mock(EnhancedTreeOperator.class);
             Context.setContext(treeOperator);
 
-            TreeKeywords treeKeywords = new TreeKeywords();
+            TreeNodeKeywords treeKeywords = new TreeNodeKeywords();
 
             final TreePathFactory treePathFactory = injectMockTo(treeKeywords, TreePathFactory.class);
             checking(new Expectations() {{

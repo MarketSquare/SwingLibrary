@@ -30,7 +30,7 @@ import org.robotframework.swing.tree.TreeSupport;
  * @author Heikki Hulkko
  */
 @RobotKeywords
-public class TreeKeywords extends TreeSupport {
+public class TreeNodeKeywords extends TreeSupport {
     private TreePathFactory treePathFactory = new TreePathFactory();
 
     @RobotKeyword("Collapses a tree node.\n"
