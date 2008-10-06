@@ -11,13 +11,13 @@ module HelperMethods
   end
 
   def dist_jar(classifier = "with-dependencies")
-    lib = project(PROJECT_NAME)
-    artifact = lib.package.to_hash
-    "#{lib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}-#{classifier}.jar"
+    swinglib = project(PROJECT_NAME)
+    artifact = swinglib.package.to_hash
+    "#{swinglib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}-#{classifier}.jar"
   end
 
-  def dist_jars
-    [DEPENDENCIES, main_project.package].flatten
+  def dist_dependencies
+    [DEPENDENCIES, main_project.package(:id => PROJECT_NAME)].flatten
   end
 
   def generate_parameter_names(from, to)
@@ -81,8 +81,25 @@ module HelperMethods
     end
     tmp_dir
   end
+
+  def install_abbot
+    mkdir_p _('target/classes')
+    version = "1.0.2"
+    ['abbot', 'costello'].each do |jar|
+      file = "lib/#{jar}-#{version}.jar"
+      install artifact("abbot:#{jar}:jar:#{version}").from(file)
+    end
+  end
+
+  def include_abbot
+    mkdir_p _('target/classes')
+    artifacts(ABBOT).each do |jar|
+      sh "unzip -qo #{jar} -d #{_('target/classes')}", :verbose => false
+    end
+  end
 end
 
+# Add dependencies to project.pom
 module Buildr
   module ActsAsArtifact
     def pom_xml

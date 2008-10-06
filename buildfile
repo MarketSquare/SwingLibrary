@@ -11,6 +11,7 @@ SETTINGS       = YAML::load(File.open('settings.yaml'))
 repositories.remote << 'http://www.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
 repositories.remote << 'http://repository.codehaus.org'
+repositories.remote << "file://#{File.dirname(__FILE__)}/lib"
 
 Java.classpath << artifacts(PARANAMER_GENERATOR)
 Java.classpath << File.expand_path('lib/swing-library-paranamer.jar')
@@ -21,8 +22,6 @@ define PROJECT_NAME do
   project.version = VERSION_NUMBER
 
   define "core" do
-    handle_abbot
-
     compile.with DEPENDENCIES, ABBOT
     compile.options.source = "1.5"
     compile.options.target = "1.5"
@@ -35,7 +34,9 @@ define PROJECT_NAME do
     end
 
     package(:sources, :id => PROJECT_NAME)
-    package(:jar, :id => PROJECT_NAME)
+    package(:jar, :id => PROJECT_NAME).enhance do
+      include_abbot
+    end
   end
 
   desc "Test application"
@@ -45,7 +46,7 @@ define PROJECT_NAME do
   end
 
   define "test-keywords" do
-    compile.with [project("core"), JEMMY, JDOM, JAVALIB_CORE] 
+    compile.with [project("swing-library:core"), JEMMY, JDOM, JAVALIB_CORE] 
     package :jar
   end
 end
@@ -54,7 +55,7 @@ task :dist => :package do
   unless uptodate?(dist_jar, sources)
     puts "Creating #{dist_jar}"
     temp_dir do |tmpdir|
-      artifacts(dist_jars).each do |jar|
+      artifacts(dist_dependencies).each do |jar|
         sh "unzip -qo #{jar}", :verbose => false
       end
       sh "zip -qr #{dist_jar} * -x \*.SF", :verbose => false
@@ -92,14 +93,4 @@ task :doc => :compile do
   mkdir_p output_dir
   set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
   sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
-end
-
-def handle_abbot
-  mkdir_p _('target/classes')
-  version = "1.0.2"
-  ['abbot', 'costello'].each do |jar|
-    file = "lib/#{jar}-#{version}.jar"
-    install artifact("abbot:#{jar}:jar:#{version}").from(file)
-    sh "unzip -qo #{file} -d #{_('target/classes')}", :verbose => false
-  end
 end
