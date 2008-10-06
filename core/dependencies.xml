@@ -4,7 +4,7 @@
   <artifactId>swing-library-core</artifactId>
   <packaging>jar</packaging>
   <version>0.4-SNAPSHOT</version>
-  <name>swing-library-core</name>
+  <name>swing-library</name>
   <dependencies>
     <dependency>
       <groupId>jretrofit</groupId>
@@ -185,12 +185,12 @@
       <version>3.0</version>
     </dependency>
     <dependency>
-      <groupId>org.robotframework.swing</groupId>
+      <groupId>org.robotframework</groupId>
       <artifactId>swing-library-test-keywords</artifactId>
       <version>0.4-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.robotframework.swing</groupId>
+      <groupId>org.robotframework</groupId>
       <artifactId>swing-library-test-application</artifactId>
       <version>0.4-SNAPSHOT</version>
     </dependency>
