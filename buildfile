@@ -6,7 +6,6 @@ require 'lib/dependencies'
 PROJECT_NAME   = 'swing-library'
 GROUP          = 'org.robotframework'
 VERSION_NUMBER = '0.4-SNAPSHOT'
-NEXT_VERSION   = '0.4'
 SETTINGS       = YAML::load(File.open('settings.yaml'))
 
 repositories.remote << 'http://www.laughingpanda.org/maven2'
@@ -22,10 +21,9 @@ define PROJECT_NAME do
   project.version = VERSION_NUMBER
 
   define "core" do
-    install artifact("abbot:abbot:jar:1.0.2").from("lib/abbot-1.0.2.jar")
-    install artifact("abbot:costello:jar:1.0.2").from("lib/costello-1.0.2.jar")
+    handle_abbot
 
-    compile.with DEPENDENCIES
+    compile.with DEPENDENCIES, ABBOT
     compile.options.source = "1.5"
     compile.options.target = "1.5"
 
@@ -47,7 +45,7 @@ define PROJECT_NAME do
   end
 
   define "test-keywords" do
-    compile.with [project("core"), JEMMY, ABBOT, JAVALIB_CORE] 
+    compile.with [project("core"), JEMMY, JDOM, JAVALIB_CORE] 
     package :jar
   end
 end
@@ -94,4 +92,14 @@ task :doc => :compile do
   mkdir_p output_dir
   set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
   sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
+end
+
+def handle_abbot
+  mkdir_p _('target/classes')
+  version = "1.0.2"
+  ['abbot', 'costello'].each do |jar|
+    file = "lib/#{jar}-#{version}.jar"
+    install artifact("abbot:#{jar}:jar:#{version}").from(file)
+    sh "unzip -qo #{file} -d #{_('target/classes')}", :verbose => false
+  end
 end

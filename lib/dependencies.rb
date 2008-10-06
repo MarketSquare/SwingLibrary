@@ -2,11 +2,9 @@ JRETROFIT = 'jretrofit:jretrofit:jar:1.0rc1'
 JEMMY = 'org.netbeans:jemmy:jar:2.2.7.5'
 PARANAMER = 'com.thoughtworks.paranamer:paranamer:jar:1.1.2'
 JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.7'
+JDOM = 'jdom:jdom:jar:1.0'
 
-ABBOT =
- ['abbot:abbot:jar:1.0.2',
-  'abbot:costello:jar:1.0.2',
-  'jdom:jdom:jar:1.0']
+ABBOT = ['abbot:abbot:jar:1.0.2', 'abbot:costello:jar:1.0.2']
 
 JAVALIB_CORE_DEPENDENCIES =
  ['aopalliance:aopalliance:jar:1.0',
@@ -27,7 +25,7 @@ JAVALIB_CORE_DEPENDENCIES =
 DEPENDENCIES =
   [JAVALIB_CORE_DEPENDENCIES,
    JEMMY,
-   ABBOT,
+   JDOM,
    PARANAMER,
    JRETROFIT].flatten
 
