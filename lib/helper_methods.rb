@@ -83,4 +83,37 @@ module HelperMethods
   end
 end
 
+module Buildr
+  module ActsAsArtifact
+    def pom_xml
+      xml = Builder::XmlMarkup.new(:indent=>2)
+      xml.instruct!
+      xml.project do 
+        xml.modelVersion  '4.0.0'
+        xml.groupId       GROUP
+        xml.artifactId    PROJECT_NAME
+        xml.version       VERSION_NUMBER
+        xml.dependencies do
+          Buildr.artifacts(DEPENDENCIES).each do |jar|
+            xml.dependency do
+              xml.groupId    jar.group
+              xml.artifactId jar.id
+              xml.version    jar.version
+            end
+          end
+        end
+        xml.repositories do
+          xml.repository do
+            xml.id  'laughingpanda'
+            xml.url 'http://www.laughingpanda.org/maven2'
+          end
+          xml.repository do
+            xml.id  'codehaus'
+            xml.url 'http://repository.codehaus.org'
+          end
+        end
+      end
+    end
+  end
+end
 include HelperMethods
