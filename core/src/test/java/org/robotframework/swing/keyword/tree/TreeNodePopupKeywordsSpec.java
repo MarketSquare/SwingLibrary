@@ -15,18 +15,18 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.tree.TreePopupKeywords;
+import org.robotframework.swing.keyword.tree.TreeNodePopupKeywords;
 import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
 
 
 @RunWith(JDaveRunner.class)
-public class TreePopupKeywordsSpec extends MockSupportSpecification<TreePopupKeywords> {
+public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNodePopupKeywords> {
     private String nodeIdentifier = "some|path";
     private String menuPath = "some|menu";
 
     public class Any {
-        public TreePopupKeywords create() {
-            return new TreePopupKeywords();
+        public TreeNodePopupKeywords create() {
+            return new TreeNodePopupKeywords();
         }
 
         public void isRoboKeywordsAnnotated() {
@@ -66,8 +66,8 @@ public class TreePopupKeywordsSpec extends MockSupportSpecification<TreePopupKey
         private OperatorFactory operatorFactory;
         private JPopupMenuOperator popupMenuOperator;
 
-        public TreePopupKeywords create() {
-            TreePopupKeywords treePopupKeywords = new TreePopupKeywords();
+        public TreeNodePopupKeywords create() {
+            TreeNodePopupKeywords treePopupKeywords = new TreeNodePopupKeywords();
             injectContextVerifierTo(treePopupKeywords);
 
             operatorFactory = injectMockTo(treePopupKeywords, OperatorFactory.class);
@@ -101,8 +101,8 @@ public class TreePopupKeywordsSpec extends MockSupportSpecification<TreePopupKey
     public class CheckingConditions {
         private JMenuItem menuItem;
 
-        public TreePopupKeywords create() {
-            TreePopupKeywords treePopupKeywords = new TreePopupKeywords();
+        public TreeNodePopupKeywords create() {
+            TreeNodePopupKeywords treePopupKeywords = new TreeNodePopupKeywords();
             injectMockMenuFinderTo(treePopupKeywords);
             injectContextVerifierTo(treePopupKeywords);
 
@@ -158,7 +158,7 @@ public class TreePopupKeywordsSpec extends MockSupportSpecification<TreePopupKey
             }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' was enabled"));
         }
 
-        private void injectMockMenuFinderTo(TreePopupKeywords treePopupKeywords) {
+        private void injectMockMenuFinderTo(TreeNodePopupKeywords treePopupKeywords) {
             final ITreePopupMenuItemFinder popupMenuItemFinder =
                 injectMockTo(treePopupKeywords, "treePopupMenuItemFinder", ITreePopupMenuItemFinder.class);
 
@@ -170,7 +170,7 @@ public class TreePopupKeywordsSpec extends MockSupportSpecification<TreePopupKey
         }
     }
 
-    private void injectContextVerifierTo(TreePopupKeywords treePopupKeywords) {
+    private void injectContextVerifierTo(TreeNodePopupKeywords treePopupKeywords) {
         final IContextVerifier contextVerifier = injectMockTo(treePopupKeywords, "contextVerifier", IContextVerifier.class);
         checking(new Expectations() {{
             one(contextVerifier).verifyContext();

@@ -38,7 +38,7 @@ import abbot.tester.ComponentTester;
  * @author Heikki Hulkko
  */
 @RobotKeywords
-public class TreePopupKeywords {
+public class TreeNodePopupKeywords {
     private OperatorFactory<JPopupMenuOperator> operatorFactory = new TreePopupMenuOperatorFactory();
     private IContextVerifier contextVerifier = new TreeContextVerifier();
     private ITreePopupMenuItemFinder treePopupMenuItemFinder = new TreePopupMenuItemFinder();
