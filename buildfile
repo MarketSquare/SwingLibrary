@@ -3,7 +3,7 @@ require 'yaml'
 require 'lib/helper_methods'
 require 'lib/dependencies'
 
-PROJECT_NAME   = 'swing-library'
+PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
 VERSION_NUMBER = '0.4-SNAPSHOT'
 
@@ -45,7 +45,7 @@ define PROJECT_NAME do
   end
 
   define "test-keywords" do
-    compile.with [project("swing-library:core"), JEMMY, JDOM, JAVALIB_CORE] 
+    compile.with [project("core"), JEMMY, JDOM, JAVALIB_CORE] 
     package :jar
   end
 end
