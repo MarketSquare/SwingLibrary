@@ -6,7 +6,6 @@ require 'lib/dependencies'
 PROJECT_NAME   = 'swing-library'
 GROUP          = 'org.robotframework'
 VERSION_NUMBER = '0.4-SNAPSHOT'
-SETTINGS       = YAML::load(File.open('settings.yaml'))
 
 repositories.remote << 'http://www.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
@@ -75,12 +74,9 @@ task :acceptance_tests => :dist do
   set_env('CLASSPATH', [test_keywords, test_app, dist_jar])
 
   if !Buildr.environment.nil? && Buildr.environment == 'legacy'
-    if !SETTINGS || SETTINGS[:java14_home].nil? || !File.directory?(SETTINGS[:java14_home])
-      raise 'Please define java14_home in the settings.yaml' 
-    end
     retro_translate(test_app.to_s)
     retro_translate(test_keywords.to_s)
-    set_env('PATH', [SETTINGS[:java14_home] + "/bin"])
+    set_env('PATH', ["#{java14_home}/bin"])
   end
 
   sh "jybot -d /tmp --critical regression " + __('src/test/resources/robot-tests')
@@ -92,5 +88,5 @@ task :doc => :compile do
   output_file = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
   mkdir_p output_dir
   set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
-  sh "jython -Dpython.path=/usr/lib/python2.5/site-packages/ lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
+  sh "jython -Dpython.path=#{python_path} lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
 end

@@ -88,6 +88,22 @@ module HelperMethods
       sh "unzip -qo #{jar} -d #{_('target/classes')}", :verbose => false
     end
   end
+
+  def java14_home 
+    get_directory_from_settings('java14_home')
+  end
+
+  def python_path
+    get_directory_from_settings('site_packages')
+  end
+
+  def get_directory_from_settings(directory_setting)
+    dir = Buildr.settings.user[directory_setting]
+    error_msg = %{Please define path to your #{directory_setting} directory in the ~/.buildr/settings.yaml by adding a line:
+#{directory_setting}: /path/to/your/#{directory_setting}}
+    raise error_msg if dir.nil? || !File.directory?(dir)
+    dir
+  end
 end
 
 # Add dependencies to project.pom
