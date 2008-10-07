@@ -2,7 +2,9 @@ SwingLibrary
 ============
 
 Swing Library is a Robot Framework library for testing Java Swing
-applications. 
+applications. This file describes the building and testing process of
+SwingLibrary. For general information about SwingLibrary please see
+http://code.google.com/p/robotframework-swinglibrary/
 
 Prerequisites for building
 --------------------------
@@ -20,7 +22,10 @@ acceptance_tests:
   Runs the acceptance tests, it is recommended to use a virtual display such as
   vnc when this is run, so that the GUI operations are not disturbed. For
   example on linux machine you could start vncserver and reset the DISPLAY=:1.0
-  environment variable: export DISPLAY=:1.0 buildr acceptance_tests
+  environment variable:
+
+  export DISPLAY=:1.0
+  buildr acceptance_tests
 
 doc:
   Builds the robot documentation for this library. The path to python site-packages
