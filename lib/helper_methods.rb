@@ -10,10 +10,15 @@ module HelperMethods
     ClassVersionCheck.new(max_version).assert_classes_have_correct_version(target)
   end
 
-  def dist_jar(classifier = "with-dependencies")
+  def dist_jar
+    classifier = if Buildr.environment == 'legacy'
+      '-jre1.4'
+    else
+      ''
+    end
     swinglib = project(PROJECT_NAME)
     artifact = swinglib.package.to_hash
-    "#{swinglib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}-#{classifier}.jar"
+    "#{swinglib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}#{classifier}.jar"
   end
 
   def dist_dependencies
