@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.table;
+package org.robotframework.swing.table;
 
-import org.robotframework.swing.chooser.ByNameComponentChooser;
-import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import javax.swing.JTable;
+
+import org.robotframework.swing.context.ContextVerifier;
 
 /**
  * @author Heikki Hulkko
  */
-public class TableOperatorFactory extends IdentifierParsingOperatorFactory<EnhancedTableOperator> {
-    public EnhancedTableOperator createOperatorByIndex(int index) {
-        return new EnhancedTableOperator(Context.getContext(), index);
+public class TableContextVerifier extends ContextVerifier {
+    static final String ERROR_MESSAGE =
+        "To use table keywords you must first select a table as context using the 'Select Table'-keyword.";
+
+    public TableContextVerifier() {
+        super(ERROR_MESSAGE);
     }
 
-    public EnhancedTableOperator createOperatorByName(String name) {
-        return new EnhancedTableOperator(Context.getContext(), new ByNameComponentChooser(name));
+    @Override
+    protected Class[] getExpectedClasses() {
+        return new Class[] { JTable.class };
     }
 }

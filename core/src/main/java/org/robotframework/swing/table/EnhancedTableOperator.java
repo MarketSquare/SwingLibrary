@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.table;
+package org.robotframework.swing.table;
 
 import java.awt.Point;
 
@@ -24,7 +24,6 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.robotframework.swing.arguments.IdentifierHandler;
-import org.robotframework.swing.table.InvalidCellException;
 import org.springframework.util.ObjectUtils;
 
 /**

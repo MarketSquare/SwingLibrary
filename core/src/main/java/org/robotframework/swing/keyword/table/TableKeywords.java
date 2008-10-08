@@ -23,6 +23,9 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.table.EnhancedTableOperator;
+import org.robotframework.swing.table.TableContextVerifier;
+import org.robotframework.swing.table.TableOperatorFactory;
 
 /**
  * @author Heikki Hulkko
