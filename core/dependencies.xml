@@ -186,12 +186,12 @@
     </dependency>
     <dependency>
       <groupId>org.robotframework</groupId>
-      <artifactId>swing-library-test-keywords</artifactId>
+      <artifactId>swinglibrary-test-keywords</artifactId>
       <version>0.4-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.robotframework</groupId>
-      <artifactId>swing-library-test-application</artifactId>
+      <artifactId>swinglibrary-test-application</artifactId>
       <version>0.4-SNAPSHOT</version>
     </dependency>
   </dependencies>
