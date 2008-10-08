@@ -32,6 +32,10 @@ Select Table Cell By Column Header Name
 	${cellValue}=	getSelectedTableCellValue
 	shouldBeEqual	two/three	${cellValue}
 
+Select Table Cell Should Fail If The Cell Doesn't Exist
+	runKeywordAndExpectError	Table cell (row: 10, column: 15) doesn't exist.	selectTableCell	10	15
+	runKeywordAndExpectError	Table cell (row: 10, column: nonexisting) doesn't exist.	selectTableCell	10	nonexisting
+
 Clear Table Selection	
 	selectTableCell	1	2
 	tableCellShouldBeSelected	1	2

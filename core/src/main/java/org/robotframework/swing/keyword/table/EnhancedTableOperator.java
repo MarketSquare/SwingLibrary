@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,6 +24,7 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.robotframework.swing.arguments.IdentifierHandler;
+import org.robotframework.swing.table.InvalidCellException;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -33,7 +34,7 @@ public class EnhancedTableOperator extends JTableOperator {
     public EnhancedTableOperator(JTable table) {
         super(table);
     }
-    
+
     public EnhancedTableOperator(ContainerOperator context, int index) {
         super(context, index);
     }
@@ -56,7 +57,7 @@ public class EnhancedTableOperator extends JTableOperator {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
         selectCell(coordinates.y, coordinates.x);
     }
-    
+
     public void setValueAt(Object newValue, String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
         setValueAt(newValue, coordinates.y, coordinates.x);
@@ -64,7 +65,14 @@ public class EnhancedTableOperator extends JTableOperator {
 
     public Point findCell(String row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
-        return findCell(cellChooser);
+        Point cell = findCell(cellChooser);
+        if (cellIsInvalid(cell))
+            throw new InvalidCellException(row, columnIdentifier);
+        return cell;
+    }
+
+    private boolean cellIsInvalid(Point cell) {
+        return cell.x < 0 || cell.y < 0;
     }
 
     private TableCellChooser createCellChooser(String row, String columnIdentifier) {
