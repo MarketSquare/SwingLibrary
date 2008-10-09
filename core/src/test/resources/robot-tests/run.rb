@@ -17,7 +17,6 @@ deps.each do |dep|
   raise "#{dep} doesn't exist" unless File.exist? dep.to_s
 end
 
-#ENV['DISPLAY'] = ":1.0"
 ENV['CLASSPATH'] = deps.join(":")
 
 system "jybot -d /tmp --critical regression #{args}"
