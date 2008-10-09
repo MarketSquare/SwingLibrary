@@ -101,6 +101,9 @@ Select From Tree Node Popup Menu
 	treeNodeShouldBeVisible	${rootNode}|child
 	selectFromTreeNodePopupMenu	${rootNode}|child	Remove this node
 
+Select From Tree Node Popup Menu Fails If Menu Item Is Disabled	[tags]	development
+	runKeywordAndExpectError	Menu item 'Disabled menuitem' was disabled.	selectFromTreeNodePopupMenu	${rootNode}	Disabled menuitem
+
 Select From Tree Node Popup Menu In Separate Thread
 	selectFromTreeNodePopupMenuInSeparateThread	${rootNode}	Show dialog
 	dialogShouldBeOpen	Message
