@@ -7,17 +7,16 @@ import javax.swing.JButton;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.button.ButtonOperatorFactory;
+import org.robotframework.swing.operator.button.MyButtonOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class ButtonOperatorFactorySpec extends OperatorFactorySpecification<ButtonOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<JButtonOperator> createOperatorFactory() {
+        protected OperatorFactory<MyButtonOperator> createOperatorFactory() {
             return new ButtonOperatorFactory();
         }
 

@@ -7,16 +7,14 @@ import javax.swing.JComboBox;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.combobox.ComboBoxOperatorFactory;
-
+import org.robotframework.swing.operator.combobox.MyComboBoxOperator;
 
 @RunWith(JDaveRunner.class)
 public class ComboBoxOperatorFactorySpec extends OperatorFactorySpecification<ComboBoxOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
-        protected OperatorFactory<? extends Operator> createOperatorFactory() {
+        protected OperatorFactory<MyComboBoxOperator> createOperatorFactory() {
             return new ComboBoxOperatorFactory();
         }
 

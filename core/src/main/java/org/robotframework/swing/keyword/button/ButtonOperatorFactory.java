@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,18 +20,19 @@ import org.netbeans.jemmy.operators.JButtonOperator;
 import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.button.MyButtonOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ButtonOperatorFactory extends IdentifierParsingOperatorFactory<JButtonOperator> {
+public class ButtonOperatorFactory extends IdentifierParsingOperatorFactory<MyButtonOperator> {
     @Override
-    public JButtonOperator createOperatorByIndex(int index) {
-        return new JButtonOperator(Context.getContext(), index);
+    public MyButtonOperator createOperatorByIndex(int index) {
+        return new MyButtonOperator(Context.getContext(), index);
     }
 
     @Override
-    public JButtonOperator createOperatorByName(String name) {
-        return new JButtonOperator(Context.getContext(), new ByNameOrTextComponentChooser(name));
+    public MyButtonOperator createOperatorByName(String name) {
+        return new MyButtonOperator(Context.getContext(), new ByNameOrTextComponentChooser(name));
     }
 }

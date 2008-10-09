@@ -78,5 +78,6 @@ public class TestApplication {
         panel.add(new TestTabbedPane("testTabbedPane1"));
         panel.add(new TestTabbedPane("testTabbedPane2"));
         panel.add(new TestTextArea());
+        panel.add(new TestSpinnerButton());
     }
 }

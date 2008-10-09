@@ -10,12 +10,12 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.laughingpanda.beaninject.Inject;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
-import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
+import org.robotframework.swing.operator.tab.MyTabbedPaneOperator;
 
 @RunWith(JDaveRunner.class)
 public class TabPaneOperatorFactorySpec extends OperatorFactorySpecification<TabPaneOperatorFactory> {
@@ -42,7 +42,7 @@ public class TabPaneOperatorFactorySpec extends OperatorFactorySpecification<Tab
         }
 
         @Override
-        protected OperatorFactory<? extends Operator> createOperatorFactory() {
+        protected OperatorFactory<MyTabbedPaneOperator> createOperatorFactory() {
             TabPaneOperatorFactory tabPaneOperatorFactory = new TabPaneOperatorFactory();
             Inject.field("contextVerifier").of(tabPaneOperatorFactory).with(dummy(IContextVerifier.class));
             return tabPaneOperatorFactory;

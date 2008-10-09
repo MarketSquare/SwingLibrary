@@ -4,14 +4,13 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.combobox.ComboBoxKeywords;
+import org.robotframework.swing.operator.combobox.MyComboBoxOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -53,11 +52,11 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
     }
 
     public class WhenOperating {
-        private OperatorFactory<JComboBoxOperator> operatorFactory;
-        private JComboBoxOperator operator;
+        private OperatorFactory<MyComboBoxOperator> operatorFactory;
+        private MyComboBoxOperator operator;
 
         public ComboBoxKeywords create() {
-            operator = mock(JComboBoxOperator.class);
+            operator = mock(MyComboBoxOperator.class);
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords();
             operatorFactory = injectMockTo(comboBoxKeywords, OperatorFactory.class);
             final IContextVerifier contextVerifier = injectMockTo(comboBoxKeywords, "contextVerifier", IContextVerifier.class);

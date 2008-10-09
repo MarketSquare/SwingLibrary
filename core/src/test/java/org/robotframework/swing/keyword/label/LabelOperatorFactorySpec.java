@@ -7,10 +7,9 @@ import javax.swing.JLabel;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.label.LabelOperatorFactory;
+import org.robotframework.swing.operator.label.MyLabelOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -26,7 +25,7 @@ public class LabelOperatorFactorySpec extends OperatorFactorySpecification<Label
         }
 
         @Override
-        protected OperatorFactory<? extends Operator> createOperatorFactory() {
+        protected OperatorFactory<MyLabelOperator> createOperatorFactory() {
             return new LabelOperatorFactory();
         }
     }

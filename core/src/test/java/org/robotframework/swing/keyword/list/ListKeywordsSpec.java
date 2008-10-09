@@ -6,7 +6,6 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.JListOperator;
 import org.netbeans.jemmy.operators.JListOperator.ListItemChooser;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
@@ -14,7 +13,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.list.ListKeywords;
+import org.robotframework.swing.operator.list.MyListOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -55,14 +54,14 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
 
     public class WhenOperating {
         private String listIdentifier = "someList";
-        private OperatorFactory<JListOperator> operatorFactory;
-        private JListOperator listOperator;
+        private OperatorFactory<MyListOperator> operatorFactory;
+        private MyListOperator listOperator;
         private IContextVerifier contextVerifier;
 
         public ListKeywords create() {
             ListKeywords listKeywords = new ListKeywords();
             operatorFactory = injectMockTo(listKeywords, OperatorFactory.class);
-            listOperator = mock(JListOperator.class);
+            listOperator = mock(MyListOperator.class);
 
             contextVerifier = injectMockTo(listKeywords, "contextVerifier", IContextVerifier.class);
             checking(new Expectations() {{

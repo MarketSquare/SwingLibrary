@@ -7,17 +7,16 @@ import javax.swing.JCheckBox;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.checkbox.CheckBoxOperatorFactory;
+import org.robotframework.swing.operator.checkbox.MyCheckBoxOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class CheckBoxOperatorFactorySpec extends OperatorFactorySpecification<CheckBoxOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<? extends Operator> createOperatorFactory() {
+        protected OperatorFactory<MyCheckBoxOperator> createOperatorFactory() {
             return new CheckBoxOperatorFactory();
         }
 

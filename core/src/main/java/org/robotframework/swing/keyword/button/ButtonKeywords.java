@@ -18,12 +18,12 @@ package org.robotframework.swing.keyword.button;
 
 import junit.framework.Assert;
 
-import org.netbeans.jemmy.operators.JButtonOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.button.MyButtonOperator;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -32,7 +32,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class ButtonKeywords {
-    private IdentifierParsingOperatorFactory<JButtonOperator> operatorFactory = new ButtonOperatorFactory();
+    private IdentifierParsingOperatorFactory<MyButtonOperator> operatorFactory = new ButtonOperatorFactory();
     private IComponentConditionResolver buttonExistenceResolver = new ComponentExistenceResolver(operatorFactory);
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 

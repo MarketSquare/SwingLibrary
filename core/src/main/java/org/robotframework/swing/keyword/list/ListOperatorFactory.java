@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,22 +16,22 @@
 
 package org.robotframework.swing.keyword.list;
 
-import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.list.MyListOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ListOperatorFactory extends IdentifierParsingOperatorFactory<JListOperator> {
+public class ListOperatorFactory extends IdentifierParsingOperatorFactory<MyListOperator> {
     @Override
-    public JListOperator createOperatorByIndex(int index) {
-        return new JListOperator(Context.getContext(), index);
+    public MyListOperator createOperatorByIndex(int index) {
+        return new MyListOperator(Context.getContext(), index);
     }
 
     @Override
-    public JListOperator createOperatorByName(String name) {
-        return new JListOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public MyListOperator createOperatorByName(String name) {
+        return new MyListOperator(Context.getContext(), new ByNameComponentChooser(name));
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,20 +16,20 @@
 
 package org.robotframework.swing.keyword.checkbox;
 
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.robotframework.swing.chooser.ByTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.checkbox.MyCheckBoxOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class CheckBoxOperatorFactory extends IdentifierParsingOperatorFactory<JCheckBoxOperator> {
-    public JCheckBoxOperator createOperatorByIndex(int index) {
-        return new JCheckBoxOperator(Context.getContext(), index);
+public class CheckBoxOperatorFactory extends IdentifierParsingOperatorFactory<MyCheckBoxOperator> {
+    public MyCheckBoxOperator createOperatorByIndex(int index) {
+        return new MyCheckBoxOperator(Context.getContext(), index);
     }
 
-    public JCheckBoxOperator createOperatorByName(final String name) {
-        return new JCheckBoxOperator(Context.getContext(), new ByTextComponentChooser(name));
+    public MyCheckBoxOperator createOperatorByName(final String name) {
+        return new MyCheckBoxOperator(Context.getContext(), new ByTextComponentChooser(name));
     }
 }

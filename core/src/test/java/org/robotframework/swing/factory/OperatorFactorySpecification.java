@@ -10,9 +10,9 @@ import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.drivers.KeyDriver;
 import org.netbeans.jemmy.drivers.MouseDriver;
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.operator.IOperator;
 
 
 public abstract class OperatorFactorySpecification<T> extends MockSupportSpecification<T> {
@@ -72,7 +72,7 @@ public abstract class OperatorFactorySpecification<T> extends MockSupportSpecifi
 
     public abstract class AnyIdentifierParsingOperatorFactory {
         private Component component;
-        private OperatorFactory<? extends Operator> operatorFactory;
+        private OperatorFactory<? extends IOperator> operatorFactory;
 
         public void create() {
             operatorFactory =  createOperatorFactory();
@@ -86,18 +86,18 @@ public abstract class OperatorFactorySpecification<T> extends MockSupportSpecifi
         public void findsComponentWithNameAndCreatesOperatorForIt() {
             mockFindsByName(component);
 
-            Operator operator = operatorFactory.createOperator("someComponent");
+            IOperator operator = operatorFactory.createOperator("someComponent");
             specify(operator.getSource(), must.equal(component));
         }
 
         public void findsComponentWithIndexAndCreatesOperatorForIt() {
             mockFindsByIndex(component);
 
-            Operator operator = operatorFactory.createOperator("0");
+            IOperator operator = operatorFactory.createOperator("0");
             specify(operator.getSource(), must.equal(component));
         }
 
-        protected abstract OperatorFactory<? extends Operator> createOperatorFactory();
+        protected abstract OperatorFactory<? extends IOperator> createOperatorFactory();
         protected abstract Component createComponent();
     }
 }

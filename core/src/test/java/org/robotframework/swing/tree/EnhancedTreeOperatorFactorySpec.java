@@ -7,10 +7,8 @@ import javax.swing.JTree;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.tree.EnhancedTreeOperatorFactory;
 
 
 @RunWith(JDaveRunner.class)
@@ -26,7 +24,7 @@ public class EnhancedTreeOperatorFactorySpec extends OperatorFactorySpecificatio
         }
 
         @Override
-        protected OperatorFactory<? extends Operator> createOperatorFactory() {
+        protected OperatorFactory<EnhancedTreeOperator> createOperatorFactory() {
             return new EnhancedTreeOperatorFactory();
         }
     }

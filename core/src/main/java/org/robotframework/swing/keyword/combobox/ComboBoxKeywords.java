@@ -16,19 +16,19 @@
 
 package org.robotframework.swing.keyword.combobox;
 
-import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.operator.combobox.MyComboBoxOperator;
 
 /**
  * @author Heikki Hulkko
  */
 @RobotKeywords
 public class ComboBoxKeywords {
-    private OperatorFactory<JComboBoxOperator> operatorFactory = new ComboBoxOperatorFactory();
+    private OperatorFactory<MyComboBoxOperator> operatorFactory = new ComboBoxOperatorFactory();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects an item from a combobox.\n\n"
@@ -37,7 +37,7 @@ public class ComboBoxKeywords {
         + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n")
     public void selectFromComboBox(String comboBoxIdentifier, String comboItemIdentifier) {
         contextVerifier.verifyContext();
-        JComboBoxOperator comboBoxOperator = operatorFactory.createOperator(comboBoxIdentifier);
+        MyComboBoxOperator comboBoxOperator = operatorFactory.createOperator(comboBoxIdentifier);
         comboBoxOperator.pushComboButton();
         comboBoxOperator.selectItem(comboItemIdentifier);
     }

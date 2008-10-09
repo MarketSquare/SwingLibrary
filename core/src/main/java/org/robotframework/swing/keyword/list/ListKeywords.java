@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,6 +24,7 @@ import org.robotframework.swing.arguments.VoidIdentifierHandler;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.operator.list.MyListOperator;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -31,7 +32,7 @@ import org.springframework.util.ObjectUtils;
  */
 @RobotKeywords
 public class ListKeywords {
-    private OperatorFactory<JListOperator> operatorFactory = new ListOperatorFactory();
+    private OperatorFactory<MyListOperator> operatorFactory = new ListOperatorFactory();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Clears selection from list.\n\n"
@@ -48,7 +49,7 @@ public class ListKeywords {
         + "| Select From List | _myList_ | _0_      | # selects the first item in the list |\n")
     public void selectFromList(String identifier, String listItemIdentifier) {
         contextVerifier.verifyContext();
-        JListOperator listOperator = operatorFactory.createOperator(identifier);
+        MyListOperator listOperator = operatorFactory.createOperator(identifier);
         new ListSelector(listOperator).parseArgument(listItemIdentifier);
     }
 
@@ -71,9 +72,9 @@ public class ListKeywords {
     }
 
     private static class ListSelector extends VoidIdentifierHandler {
-        private final JListOperator listOperator;
+        private final MyListOperator listOperator;
 
-        public ListSelector(JListOperator listOperator) {
+        public ListSelector(MyListOperator listOperator) {
             this.listOperator = listOperator;
         }
 

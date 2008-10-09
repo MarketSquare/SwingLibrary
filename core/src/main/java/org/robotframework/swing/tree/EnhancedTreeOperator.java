@@ -28,6 +28,7 @@ import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
+import org.robotframework.swing.operator.IOperator;
 import org.robotframework.swing.popup.DefaultPopupCaller;
 import org.robotframework.swing.popup.IPopupCaller;
 
@@ -35,7 +36,7 @@ import org.robotframework.swing.popup.IPopupCaller;
  * @author Sami Honkonen
  * @author Heikki Hulkko
  */
-public class EnhancedTreeOperator extends JTreeOperator {
+public class EnhancedTreeOperator extends JTreeOperator implements IOperator {
     private IPopupCaller popupCaller = new DefaultPopupCaller();
 
     public EnhancedTreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {

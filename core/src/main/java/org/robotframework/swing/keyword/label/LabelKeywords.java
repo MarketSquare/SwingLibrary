@@ -18,12 +18,12 @@ package org.robotframework.swing.keyword.label;
 
 import junit.framework.Assert;
 
-import org.netbeans.jemmy.operators.JLabelOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.label.MyLabelOperator;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -32,7 +32,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class LabelKeywords {
-    private IdentifierParsingOperatorFactory<JLabelOperator> operatorFactory = new LabelOperatorFactory();
+    private IdentifierParsingOperatorFactory<MyLabelOperator> operatorFactory = new LabelOperatorFactory();
     private IComponentConditionResolver labelExistenceResolver = new ComponentExistenceResolver(operatorFactory);
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 

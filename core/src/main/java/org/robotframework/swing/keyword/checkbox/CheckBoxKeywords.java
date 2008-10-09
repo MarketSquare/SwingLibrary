@@ -18,19 +18,19 @@ package org.robotframework.swing.keyword.checkbox;
 
 import junit.framework.Assert;
 
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.operator.checkbox.MyCheckBoxOperator;
 
 /**
  * @author Heikki Hulkko
  */
 @RobotKeywords
 public class CheckBoxKeywords {
-    private OperatorFactory<JCheckBoxOperator> operatorFactory = new CheckBoxOperatorFactory();
+    private OperatorFactory<MyCheckBoxOperator> operatorFactory = new CheckBoxOperatorFactory();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Uses current context to search for a checkbox and when found, checks it.\n\n"

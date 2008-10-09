@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,20 +16,20 @@
 
 package org.robotframework.swing.keyword.combobox;
 
-import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.combobox.MyComboBoxOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ComboBoxOperatorFactory extends IdentifierParsingOperatorFactory<JComboBoxOperator> {
-    public JComboBoxOperator createOperatorByIndex(int index) {
-        return new JComboBoxOperator(Context.getContext(), index);
+public class ComboBoxOperatorFactory extends IdentifierParsingOperatorFactory<MyComboBoxOperator> {
+    public MyComboBoxOperator createOperatorByIndex(int index) {
+        return new MyComboBoxOperator(Context.getContext(), index);
     }
 
-    public JComboBoxOperator createOperatorByName(String name) {
-        return new JComboBoxOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public MyComboBoxOperator createOperatorByName(String name) {
+        return new MyComboBoxOperator(Context.getContext(), new ByNameComponentChooser(name));
     }
 }

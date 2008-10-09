@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,22 +16,22 @@
 
 package org.robotframework.swing.keyword.context;
 
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.context.MyContainerOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ContainerOperatorFactory extends IdentifierParsingOperatorFactory<ContainerOperator> {
+public class ContainerOperatorFactory extends IdentifierParsingOperatorFactory<MyContainerOperator> {
     @Override
-    public ContainerOperator createOperatorByIndex(int index) {
-        return new ContainerOperator(Context.getContext(), index);
+    public MyContainerOperator createOperatorByIndex(int index) {
+        return new MyContainerOperator(Context.getContext(), index);
     }
 
     @Override
-    public ContainerOperator createOperatorByName(String name) {
-        return new ContainerOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public MyContainerOperator createOperatorByName(String name) {
+        return new MyContainerOperator(Context.getContext(), new ByNameComponentChooser(name));
     }
 }

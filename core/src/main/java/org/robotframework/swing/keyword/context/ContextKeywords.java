@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,18 +16,18 @@
 
 package org.robotframework.swing.keyword.context;
 
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.operator.context.MyContainerOperator;
 
 /**
  * @author Heikki Hulkko
  */
 @RobotKeywords
 public class ContextKeywords {
-    private OperatorFactory<ContainerOperator> operatorFactory = new ContainerOperatorFactory();
+    private OperatorFactory<MyContainerOperator> operatorFactory = new ContainerOperatorFactory();
 
     @RobotKeyword("Selects a container as current context.\n\n"
         + "Example:\n"

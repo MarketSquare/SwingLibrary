@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,13 +16,12 @@
 
 package org.robotframework.swing.factory;
 
-import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.arguments.IdentifierHandler;
 
 /**
  * @author Heikki Hulkko
  */
-public abstract class IdentifierParsingOperatorFactory<T extends Operator>
+public abstract class IdentifierParsingOperatorFactory<T>
     extends IdentifierHandler<T> implements OperatorFactory<T> {
 
     public T createOperator(String identifier) {

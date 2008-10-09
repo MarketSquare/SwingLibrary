@@ -1,28 +1,26 @@
-package org.robotframework.swing.keyword.context;
+package org.robotframework.swing.spinner;
 
 import java.awt.Component;
-import java.awt.Container;
+
+import javax.swing.JSpinner;
 
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.context.MyContainerOperator;
-
 
 @RunWith(JDaveRunner.class)
-public class ContainerOperatorFactorySpec extends OperatorFactorySpecification<ContainerOperatorFactory> {
+public class SpinnerOperatorFactorySpec extends OperatorFactorySpecification<SpinnerOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<MyContainerOperator> createOperatorFactory() {
-            return new ContainerOperatorFactory();
+        protected OperatorFactory<SpinnerOperator> createOperatorFactory() {
+            return new SpinnerOperatorFactory();
         }
 
         @Override
         protected Component createComponent() {
-            return new Container() {
-                @Override
+            return new JSpinner() {
                 public boolean isShowing() {
                     return true;
                 }
