@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -60,18 +60,23 @@ public class EnhancedTreeOperator extends JTreeOperator {
     @Override
     public TreePath findPath(final String treePath) {
         try {
-            return (TreePath) getTreeWaiter(treePath).waitAction(null);
+            return (TreePath) createTreeWaiter(treePath).waitAction(null);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Waiter getTreeWaiter(final String treePath) {
+    private Waiter createTreeWaiter(String treePath) {
         Waiter waiter = new Waiter(new TreePathWaitable(treePath));
-        Timeouts times = getTimeouts().cloneThis();
-        times.setTimeout("Waiter.WaitingTime", getTimeouts().getTimeout("JTreeOperator.WaitNextNodeTimeout"));
-        waiter.setTimeouts(times);
+        Timeouts nextNodeTimeout = copyTimeout("JTreeOperator.WaitNextNodeTimeout");
+        waiter.setTimeouts(nextNodeTimeout);
         return waiter;
+    }
+
+    private Timeouts copyTimeout(String timeout) {
+        Timeouts times = getTimeouts().cloneThis();
+        times.setTimeout("Waiter.WaitingTime", getTimeouts().getTimeout(timeout));
+        return times;
     }
 
     private class TreePathWaitable implements Waitable {
