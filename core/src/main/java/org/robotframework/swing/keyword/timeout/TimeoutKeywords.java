@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -28,7 +28,7 @@ public class TimeoutKeywords {
     public final static String[] JEMMY_TIMEOUTS = new String[] { "DialogWaiter.WaitDialogTimeout",
         "FrameWaiter.WaitFrameTimeout", "WindowWaiter.WaitWindowTimeout", "ComponentOperator.WaitComponentTimeout",
         "JMenuOperator.WaitPopupTimeout", "JTreeOperator.WaitNodeExpandedTimeout", "JTreeOperator.WaitNextNodeTimeout",
-        "JTreeOperator.WaitNodeVisibleTimeout" };
+        "JTreeOperator.WaitNodeVisibleTimeout", "ComponentOperator.WaitStateTimeout"};
 
     @RobotKeyword("Sets the jemmy timeout used for waiting a component to appear.\n"
         + "Timeout names are listed here: http://jemmy.netbeans.org/OperatorsEnvironment.html#timeouts.\n\n"
@@ -46,6 +46,7 @@ public class TimeoutKeywords {
         + "| FrameWaiter.WaitFrameTimeout | Time to wait frame displayed |\n"
         + "| WindowWaiter.WaitWindowTimeout | Time to wait window displayed |\n"
         + "| ComponentOperator.WaitComponentTimeout | Time to wait component displayed |\n"
+        + "| ComponentOperator.WaitStateTimeout | Used for example in combobox selection |\n"
         + "| JMenuOperator.WaitPopupTimeout | Time to wait popup displayed |\n"
         + "| JTreeOperator.WaitNodeExpandedTimeout | Time to wait node expanded |\n"
         + "| JTreeOperator.WaitNextNodeTimeout | Time to wait next node displayed |\n"
