@@ -10,11 +10,6 @@ public class DefaultSpinnerOperator implements SpinnerOperator {
     }
 
     @Override
-    public void setValue(Object value) {
-        spinnerOperator.setValue(value);
-    }
-
-    @Override
     public Object getSource() {
         return spinnerOperator.getSource();
     }
@@ -22,5 +17,25 @@ public class DefaultSpinnerOperator implements SpinnerOperator {
     @Override
     public Object getValue() {
         return spinnerOperator.getValue();
+    }
+
+    @Override
+    public void decrease() {
+        spinnerOperator.getDecreaseOperator().push();
+    }
+
+    @Override
+    public void decreaseToMinimum() {
+        spinnerOperator.scrollToMinimum();
+    }
+
+    @Override
+    public void increase() {
+        spinnerOperator.getIncreaseOperator().push();
+    }
+
+    @Override
+    public void increaseToMaximum() {
+        spinnerOperator.scrollToMaximum();
     }
 }

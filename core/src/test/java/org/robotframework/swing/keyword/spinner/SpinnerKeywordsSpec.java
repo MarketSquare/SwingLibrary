@@ -17,7 +17,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RunWith(JDaveRunner.class)
 public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeywords> {
-    private String spinnerIdentifier = "spinnerButtonIdentifier";
+    private String spinnerIdentifier = "spinnerIdentifier";
     private SpinnerKeywords spinnerKeywords;
 
     public class Any {
@@ -29,20 +29,24 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
             specify(context, satisfies(new RobotKeywordsContract()));
         }
 
-        public void hasSpinnerButtonShouldExistKeyword() {
+        public void hasSpinnerShouldExistKeyword() {
             specify(context, satisfies(new RobotKeywordContract("spinnerShouldExist")));
         }
 
-        public void hasSpinnerButtonShouldNotExistKeyword() {
+        public void hasSpinnerShouldNotExistKeyword() {
             specify(context, satisfies(new RobotKeywordContract("spinnerShouldNotExist")));
         }
 
-        public void hasSetSpinnerButtonValueKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("setSpinnerValue")));
+        public void hasGetSpinnerValueKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getSpinnerValue")));
         }
 
-        public void hasGetSpinnerButtonValueKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("getSpinnerValue")));
+        public void hasIncreaseSpinnerValueKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("increaseSpinnerValue")));
+        }
+
+        public void hasDecreaseSpinnerValueKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("decreaseSpinnerValue")));
         }
 
         public void createsOperatorFactory() {
@@ -58,8 +62,8 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
         }
     }
 
-    public class OperatingOnSpinnerButtons {
-        private SpinnerOperator spinnerButtonOperator;
+    public class OperatingOnSpinners {
+        private SpinnerOperator spinnerOperator;
         private String someValue = "someValue";
 
         public SpinnerKeywords create() {
@@ -69,17 +73,41 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
             return spinnerKeywords;
         }
 
-        public void setsSpinnerButtonValue() {
+        public void increasesSpinnerValue() {
             checking(new Expectations() {{
-                one(spinnerButtonOperator).setValue(someValue);
+                one(spinnerOperator).increase();
             }});
 
-            context.setSpinnerValue(spinnerIdentifier, someValue);
+            context.increaseSpinnerValue(spinnerIdentifier, new String[] {});
         }
 
-        public void getsSpinnerButtonValue() {
+        public void increaseSpinnerValueByDefinedAmount() {
             checking(new Expectations() {{
-                one(spinnerButtonOperator).getValue(); will(returnValue(someValue));
+                exactly(8).of(spinnerOperator).increase();
+            }});
+
+            context.increaseSpinnerValue(spinnerIdentifier, new String[] { "8" });
+        }
+
+        public void decreasesSpinnerValue() {
+            checking(new Expectations() {{
+                one(spinnerOperator).decrease();
+            }});
+
+            context.decreaseSpinnerValue(spinnerIdentifier, new String[] {});
+        }
+
+        public void decreaseSpinnerValueByDefinedAmount() {
+            checking(new Expectations() {{
+                exactly(8).of(spinnerOperator).decrease();
+            }});
+
+            context.decreaseSpinnerValue(spinnerIdentifier, new String[] { "8" });
+        }
+
+        public void getsSpinnerValue() {
+            checking(new Expectations() {{
+                one(spinnerOperator).getValue(); will(returnValue(someValue));
             }});
 
             specify(context.getSpinnerValue(spinnerIdentifier), must.equal(someValue));
@@ -87,11 +115,11 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
 
         private void injectMockOperatorFactory() {
             final IdentifierParsingOperatorFactory operatorFactory = injectMockTo(spinnerKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
-            spinnerButtonOperator = mock(SpinnerOperator.class);
+            spinnerOperator = mock(SpinnerOperator.class);
 
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(spinnerIdentifier);
-                will(returnValue(spinnerButtonOperator));
+                will(returnValue(spinnerOperator));
             }});
         }
     }
@@ -106,7 +134,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
             return spinnerKeywords;
         }
 
-        public void spinnerShouldExistPassesIfSpinnerButtonExists() throws Throwable {
+        public void spinnerShouldExistPassesIfSpinnerExists() throws Throwable {
             checking(new Expectations() {{
                 one(existenceResolver).satisfiesCondition(spinnerIdentifier); will(returnValue(true));
             }});
@@ -118,7 +146,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
             }, should.not().raise(AssertionFailedError.class));
         }
 
-        public void spinnerShouldExistFailsIfSpinnerButtonDoesntExists() throws Throwable {
+        public void spinnerShouldExistFailsIfSpinnerDoesntExists() throws Throwable {
             checking(new Expectations() {{
                 one(existenceResolver).satisfiesCondition(spinnerIdentifier); will(returnValue(false));
             }});
@@ -130,7 +158,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
             }, should.raiseExactly(AssertionFailedError.class, "Spinner '" + spinnerIdentifier + "' doesn't exist."));
         }
 
-        public void spinnerShouldNotExistPassesIfSpinnerButtonDoesntExist() throws Throwable {
+        public void spinnerShouldNotExistPassesIfSpinnerDoesntExist() throws Throwable {
             checking(new Expectations() {{
                 one(existenceResolver).satisfiesCondition(spinnerIdentifier); will(returnValue(false));
             }});
@@ -142,7 +170,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
             }, should.not().raise(AssertionFailedError.class));
         }
 
-        public void spinnerShouldNotExistFailsIfSpinnerButtonExists() throws Throwable {
+        public void spinnerShouldNotExistFailsIfSpinnerExists() throws Throwable {
             checking(new Expectations() {{
                 one(existenceResolver).satisfiesCondition(spinnerIdentifier); will(returnValue(true));
             }});
