@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,6 +19,7 @@ package org.robotframework.swing.context;
 import java.awt.Panel;
 import java.awt.Window;
 
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
 /**
@@ -33,6 +34,6 @@ public class DefaultContextVerifier extends ContextVerifier {
 
     @Override
     protected Class[] getExpectedClasses() {
-        return new Class[] { Window.class, JPanel.class, Panel.class };
+        return new Class[] { Window.class, JPanel.class, Panel.class, JInternalFrame.class };
     }
 }
