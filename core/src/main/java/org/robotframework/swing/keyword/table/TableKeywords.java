@@ -100,7 +100,9 @@ public class TableKeywords {
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
     public Object getSelectedTableCellValue() {
         tableContextVerifier.verifyContext();
-        return tableOperator().getValueAt(tableOperator().getSelectedRow(), tableOperator().getSelectedColumn());
+        int selectedRow = tableOperator().getSelectedRow();
+        int selectedColumn = tableOperator().getSelectedColumn();
+        return tableOperator().getValueAt(selectedRow, selectedColumn).toString();
     }
 
     @RobotKeyword("Sets the cell value.\n"

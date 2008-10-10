@@ -224,7 +224,11 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
     }
 
     public class OperatingOnCellValues {
-        private String cellValue = "someValue";
+        private Object cellValue = new Object() {
+            public String toString() {
+                return "someValue";
+            }
+        };
 
         public TableKeywords create() {
             setMockTableOperatorAsContext();
@@ -237,7 +241,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 will(returnValue(cellValue));
             }});
 
-            specify(context.getTableCellValue(row, columnIdentifier), must.equal(cellValue));
+            specify(context.getTableCellValue(row, columnIdentifier), must.equal(cellValue.toString()));
         }
 
         public void getsSelectedTableCellValue() {
@@ -250,7 +254,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 will(returnValue(cellValue));
             }});
 
-            specify(context.getSelectedTableCellValue(), must.equal(cellValue));
+            specify(context.getSelectedTableCellValue(), must.equal(cellValue.toString()));
         }
 
         public void setsTableCellValue() {
