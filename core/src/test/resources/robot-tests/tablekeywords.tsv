@@ -1,7 +1,6 @@
 *Setting*	*Value*	*Value*
 library	SwingLibrary
-suiteSetup	selectTable	${tableName}
-testTeardown	clearTableSelection
+testSetup	selectAndClearTable
 
 *Variable*	*Value*	*Value*
 ${tableName}	testTable
@@ -70,14 +69,36 @@ Select Table By Name
 	selectTable	${tableName}
 	contextIsATable
 
+Get Table Column Count By Name
+	[setup]	selectMainWindow
+	${columnCount}=	getTableColumnCount	${tableName}
+	shouldBeEqualAsIntegers	4	${columnCount}
+
+Get Table Column Count By Index
+	[setup]	selectMainWindow
+	${columnCount}=	getTableColumnCount	0
+	shouldBeEqualAsIntegers	4	${columnCount}
+
+Get Table Row Count By Name
+	[setup]	selectMainWindow
+	${rowCount}=	getTableRowCount	${tableName}
+	shouldBeEqualAsIntegers	4	${rowCount}
+
+Get Table Row Count By Index
+	[setup]	selectMainWindow
+	${rowCount}=	getTableRowCount	0
+	shouldBeEqualAsIntegers	4	${rowCount}
+
 Table Keywords Fail If Context Is Not a Table	
-	selectMainWindow
+	selectEmptyContext
 	tableKeywordShouldFail	getTableCellValue	0	0
 	tableKeywordShouldFail	getSelectedTableCellValue
 	tableKeywordShouldFail	tableCellShouldBeSelected	0	0
 	tableKeywordShouldFail	tableCellShouldNotBeSelected	0	0
 	tableKeywordShouldFail	selectTableCell	0	0
 	tableKeywordShouldFail	clearTableSelection
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getTableColumnCount	someTable
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getTableRowCount	someTable
 	[teardown]	selectMainWindow
 
 *Keyword*	*Action*	*Argument*	*Argument*	*Argument*	*Argument*	*Argument*	*Argument*
@@ -89,3 +110,8 @@ contextIsATable
 
 tableKeywordShouldFail	[Arguments]	${keyword}	@{arguments}
 	runKeywordAndExpectError	*To use table keywords you must first select a table as context using the 'Select Table'-keyword.*	${keyword}	@{arguments}
+
+selectAndClearTable
+	selectMainWindow
+	selectTable	${tableName}
+	clearTableSelection

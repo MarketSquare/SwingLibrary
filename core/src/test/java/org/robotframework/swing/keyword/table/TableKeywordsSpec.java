@@ -22,7 +22,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
     private EnhancedTableOperator tableOperator;
     private String columnIdentifier = "two";
     private String row = "1";
-    
+
     public class Any {
         public TableKeywords create() {
             return new TableKeywords();
@@ -59,9 +59,17 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         public void hasGetSelectedTableCellValueKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getSelectedTableCellValue")));
         }
-        
+
         public void hasSetTableCellValueKeyword() {
             specify(context, satisfies(new RobotKeywordContract("setTableCellValue")));
+        }
+
+        public void hasGetTableColumnCountKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTableColumnCount")));
+        }
+
+        public void hasGetTableRowCountKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTableRowCount")));
         }
 
         public void hasOperatorFactory() {
@@ -94,8 +102,53 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(Context.getContext(), must.equal(tableContext));
         }
     }
-    
+
     public class OperatingOnTable {
+        private OperatorFactory operatorFactory;
+        private IContextVerifier contextVerifier;
+        private TableKeywords tableKeywords = new TableKeywords();
+
+        public TableKeywords create() {
+            injectMockOperatorFactory();
+            injectMockContextVerifier();
+            return tableKeywords;
+        }
+        public void getsTableColumnCount() {
+            checking(new Expectations() {{
+                one(tableOperator).getColumnCount(); will(returnValue(7));
+            }});
+
+            specify(context.getTableColumnCount(tableIdentifier), must.equal(7));
+        }
+
+        public void getsTableRowCount() {
+            checking(new Expectations() {{
+                one(tableOperator).getRowCount(); will(returnValue(7));
+            }});
+
+            specify(context.getTableRowCount(tableIdentifier), must.equal(7));
+        }
+
+        private void injectMockContextVerifier() {
+            contextVerifier = injectMockTo(tableKeywords, IContextVerifier.class);
+
+            checking(new Expectations() {{
+                one(contextVerifier).verifyContext();
+            }});
+        }
+
+        private void injectMockOperatorFactory() {
+            operatorFactory = injectMockTo(tableKeywords, OperatorFactory.class);
+            tableOperator = mock(EnhancedTableOperator.class);
+
+            checking(new Expectations() {{
+                one(operatorFactory).createOperator(tableIdentifier);
+                will(returnValue(tableOperator));
+            }});
+        }
+    }
+
+    public class SelectingTableCells {
         public TableKeywords create() {
             setMockTableOperatorAsContext();
             return createTableKeywordsWithMockContextVerifier();
@@ -169,7 +222,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }, must.raiseExactly(AssertionFailedError.class, "Cell '" + row + "', '" + columnIdentifier + "' is selected."));
         }
     }
-    
+
     public class OperatingOnCellValues {
         private String cellValue = "someValue";
 
@@ -177,16 +230,16 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             setMockTableOperatorAsContext();
             return createTableKeywordsWithMockContextVerifier();
         }
-        
+
         public void getsTableCellValue() {
             checking(new Expectations() {{
                 one(tableOperator).getValueAt(row, columnIdentifier);
                 will(returnValue(cellValue));
             }});
-            
+
             specify(context.getTableCellValue(row, columnIdentifier), must.equal(cellValue));
         }
-        
+
         public void getsSelectedTableCellValue() {
             final int row = 5;
             final int column = 2;
@@ -196,17 +249,17 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 one(tableOperator).getValueAt(row, column);
                 will(returnValue(cellValue));
             }});
-            
+
             specify(context.getSelectedTableCellValue(), must.equal(cellValue));
         }
 
         public void setsTableCellValue() {
             final String newValue = "newValue";
-            
+
             checking(new Expectations() {{
                 one(tableOperator).setValueAt(newValue, row, columnIdentifier);
             }});
-            
+
             context.setTableCellValue(row, columnIdentifier, newValue);
         }
     }

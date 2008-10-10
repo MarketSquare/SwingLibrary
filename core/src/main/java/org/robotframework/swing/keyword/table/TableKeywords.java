@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,6 +21,7 @@ import junit.framework.Assert;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
+import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.table.EnhancedTableOperator;
@@ -34,6 +35,7 @@ import org.robotframework.swing.table.TableOperatorFactory;
 public class TableKeywords {
     private OperatorFactory<EnhancedTableOperator> operatorFactory = new TableOperatorFactory();
     private IContextVerifier tableContextVerifier = new TableContextVerifier();
+    private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects a table as current context.\n\n"
         + "Example:\n"
@@ -108,6 +110,24 @@ public class TableKeywords {
     public void setTableCellValue(String row, String columnIdentifier, String newValue) {
         tableContextVerifier.verifyContext();
         tableOperator().setValueAt(newValue, row, columnIdentifier);
+    }
+
+    @RobotKeyword("Returns the number of rows in the table.\n\n"
+        + "Example:\n"
+        + "| ${columnCount}= | Get Table Column Count | _myTable_ |\n"
+        + "| Should Be Equal As Integers | _4_ | _${columnCount}_ |\n")
+    public int getTableColumnCount(String identifier) {
+        contextVerifier.verifyContext();
+        return operatorFactory.createOperator(identifier).getColumnCount();
+    }
+
+    @RobotKeyword("Returns the number of rows in the table.\n\n"
+        + "Example:\n"
+        + "| ${rowCount}= | Get Table Row Count | _myTable_ |\n"
+        + "| Should Be Equal As Integers | _5_ | _${rowCount}_ |\n")
+    public int getTableRowCount(String identifier) {
+        contextVerifier.verifyContext();
+        return operatorFactory.createOperator(identifier).getRowCount();
     }
 
     private EnhancedTableOperator tableOperator() {
