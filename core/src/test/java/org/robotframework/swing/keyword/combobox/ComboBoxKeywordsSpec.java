@@ -4,6 +4,7 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
@@ -76,7 +77,7 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
 
             checking(new Expectations() {{
                 one(operator).pushComboButton();
-                one(operator).selectItem(comboItemIdentifier);
+                one(operator).selectItem(with(equal(comboItemIdentifier)), with(any(EqualsStringComparator.class)));
             }});
 
             context.selectFromComboBox(comboBoxIdentifier, comboItemIdentifier);

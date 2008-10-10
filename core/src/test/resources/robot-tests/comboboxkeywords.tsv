@@ -41,6 +41,9 @@ Select From Dropdown Menu By Name
 	selectFromDropdownMenu	${comboboxName}	${comboboxItem2}
 	dropdownMenuSelectionShouldBe	${comboboxName}	${comboboxItem2}
 
+Select From Combobox Works Only With Exact Match
+	runKeywordAndExpectError	*	selectFromCombobox	${comboboxName}	wo
+
 Dropdown Keywords Should Fail If Context Is Not A Window
 	selectEmptyContext
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectFromCombobox	${comboboxName}	${comboboxItem2}

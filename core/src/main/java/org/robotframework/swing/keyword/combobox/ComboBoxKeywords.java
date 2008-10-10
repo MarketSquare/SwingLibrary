@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.combobox;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
@@ -39,7 +40,7 @@ public class ComboBoxKeywords {
         contextVerifier.verifyContext();
         MyComboBoxOperator comboBoxOperator = operatorFactory.createOperator(comboBoxIdentifier);
         comboBoxOperator.pushComboButton();
-        comboBoxOperator.selectItem(comboItemIdentifier);
+        comboBoxOperator.selectItem(comboItemIdentifier, new EqualsStringComparator());
     }
 
     @RobotKeyword("Alias for `Select From Combobox` keyword.\n")
