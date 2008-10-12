@@ -144,5 +144,51 @@ module Buildr
       end
     end
   end
+
+  module Eclipse
+    class ClasspathEntryWriter
+      def var(libs, var_name, var_value)
+        paths = libs.map { |lib| lib.to_s.sub(var_value, var_name) }.sort.uniq
+        paths.each do |path|
+          path_to_sources = path.sub(/(.*).jar$/, '\1-sources.jar')
+          puts path_to_sources
+          if File.exist?(path_to_sources.sub(var_name, var_value))
+            @xml.classpathentry :kind=>'var', :path=>path, :sourcepath=> path_to_sources
+          else
+            @xml.classpathentry :kind=>'var', :path=>path
+          end
+        end
+      end
+    end
+  end
+
+  class Artifact 
+    alias_method :old_download, :download
+
+    def download
+      old_download
+      download_sources
+    end
+
+    def download_sources
+      remote = Buildr.repositories.remote.map { |repo_url| URI === repo_url ? repo_url : URI.parse(repo_url) }
+      remote = remote.each { |repo_url| repo_url.path += '/' unless repo_url.path[-1] == '/' }
+      remote.find do |repo_url|
+        begin
+          source_name = name.sub(/(.*).jar$/, '\1-sources.jar')
+          path = "#{group_path}/#{id}/#{version}/#{File.basename(source_name)}"
+          URI.download repo_url + path, source_name
+          true
+        rescue URI::NotFoundError
+          false
+        rescue Exception=>error
+          info error
+          false
+        end
+      end
+    end
+  end
 end
+
+
 include HelperMethods
