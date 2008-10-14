@@ -18,6 +18,8 @@ package org.robotframework.swing.security;
 
 import java.security.Permission;
 
+import org.netbeans.jemmy.QueueTool;
+
 public class SystemExitCatcher extends SecurityManager {
     private final SecurityManager currentSecurityManager;
 
@@ -29,8 +31,17 @@ public class SystemExitCatcher extends SecurityManager {
         System.setSecurityManager(this);
     }
 
+    @Override
     public void checkPermission(Permission perm) {
         currentSecurityManager.checkPermission(perm);
+    }
+    
+    @Override
+    public void checkExit(int status) {
+        if (QueueTool.isDispatchThread())
+            throw new SecurityException("System.exit(" + status + ") was prevented");
+        else
+            currentSecurityManager.checkExit(status);
     }
 
     SecurityManager getCurrentSecurityManager() {

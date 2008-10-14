@@ -8,6 +8,8 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.netbeans.jemmy.JemmyException;
+import org.netbeans.jemmy.QueueTool;
 
 @RunWith(JDaveRunner.class)
 public class SystemExitCatcherSpec extends Specification<SystemExitCatcher> {
@@ -39,7 +41,7 @@ public class SystemExitCatcherSpec extends Specification<SystemExitCatcher> {
         }
     }
     
-    public class CheckingPermission {
+    public class CheckingPermissions {
         private SecurityManager securityManager;
 
         public SystemExitCatcher create() {
@@ -59,5 +61,38 @@ public class SystemExitCatcherSpec extends Specification<SystemExitCatcher> {
             
             context.checkPermission(null);
         }
+        
+        public void checksExitWithCurrentSecurityManagerWhenCalledFromThisThread() {
+            checking(new Expectations() {{
+                one(securityManager).checkExit(0);
+            }});
+            
+            context.checkExit(0);
+        }
+        
+        public void throwsSecurityExceptionWhenCalledFromAWTThread() throws Throwable {
+            final int status = 0;
+            specify(new Block() {
+                public void run() throws Throwable {
+                    new AWTThreadInvoker() {
+                        public void run() {
+                            context.checkExit(status);
+                        }
+                    }.invokeInAWTThread();
+                }
+            }, should.raiseExactly(SecurityException.class, "System.exit(" + status + ") was prevented")); 
+        }
+    }
+    
+    private abstract static class AWTThreadInvoker implements Runnable {
+        public void invokeInAWTThread() throws Throwable {
+            try {
+                new QueueTool().invokeAndWait(this);
+            } catch (JemmyException e) {
+                throw e.getInnerThrowable();
+            }
+        }
+        
+        public abstract void run();
     }
 }
