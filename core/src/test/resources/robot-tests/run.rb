@@ -7,6 +7,14 @@ require 'rubygems'
 require 'buildr'
 require File.dirname(__FILE__) + '/../../../../../lib/dependencies'
 
+module Buildr
+  class Application
+    def rakefile
+      __FILE__
+    end
+  end
+end
+
 deps = ['../../../../target/classes',
         '../../../../../test-application/target/classes',
         '../../../../../test-keywords/target/classes',

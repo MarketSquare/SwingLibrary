@@ -53,6 +53,7 @@ end
 task :dist => :package do
   unless uptodate?(dist_jar, sources)
     puts "Creating #{dist_jar}"
+    mkdir_p File.dirname(dist_jar)
     temp_dir do |tmpdir|
       artifacts(dist_dependencies).each do |jar|
         sh "unzip -qo #{jar}", :verbose => false

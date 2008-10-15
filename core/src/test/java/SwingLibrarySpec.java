@@ -4,6 +4,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.JemmyProperties;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
+import org.robotframework.swing.security.SystemExitCatcher;
 
 @RunWith(JDaveRunner.class)
 public class SwingLibrarySpec extends Specification<SwingLibrary> {
@@ -26,6 +27,10 @@ public class SwingLibrarySpec extends Specification<SwingLibrary> {
             for (String timeout : timeouts) {
                 specify(JemmyProperties.getCurrentTimeout(timeout), must.equal(5000));
             }
+        }
+        
+        public void catchesSystemExits() {
+            specify(System.getSecurityManager().getClass(), must.equal(SystemExitCatcher.class));
         }
     }
 }
