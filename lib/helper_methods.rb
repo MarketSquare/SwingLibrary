@@ -151,7 +151,6 @@ module Buildr
         paths = libs.map { |lib| lib.to_s.sub(var_value, var_name) }.sort.uniq
         paths.each do |path|
           path_to_sources = path.sub(/(.*).jar$/, '\1-sources.jar')
-          puts path_to_sources
           if File.exist?(path_to_sources.sub(var_name, var_value))
             @xml.classpathentry :kind=>'var', :path=>path, :sourcepath=> path_to_sources
           else
