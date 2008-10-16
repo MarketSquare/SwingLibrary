@@ -5,7 +5,6 @@ ARGV.clear
 
 require 'rubygems'
 require 'buildr'
-require File.dirname(__FILE__) + '/../../../../../lib/dependencies'
 
 module Buildr
   class Application
@@ -15,9 +14,23 @@ module Buildr
   end
 end
 
-deps = ['../../../../target/classes',
-        '../../../../../test-application/target/classes',
-        '../../../../../test-keywords/target/classes',
+def root_dir
+  this_dir = Dir.pwd
+  until File.directory? "#{Dir.pwd}/core"
+    Dir.chdir('..')
+  end
+  root = Dir.pwd
+  Dir.chdir(this_dir)
+  root
+end
+
+root_dir
+
+require "#{root_dir}/lib/dependencies"
+
+deps = ["#{root_dir}/core/target/classes",
+        "#{root_dir}/test-application/target/classes",
+        "#{root_dir}/test-keywords/target/classes",
         Buildr.artifacts(DEPENDENCIES),
         Buildr.artifacts(TEST_DEPENDENCIES)].flatten
 
