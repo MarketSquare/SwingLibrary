@@ -1,40 +1,77 @@
 *Setting*	*Value*	*Value*
 library	SwingLibrary
-testSetup	openTestDialog
-testTeardown	closeTestDialog
 
 *Variable*	*Value*	*Value*
-${dialogMenu}	Test Menu|Show Test Dialog
+${menuRoot}	Test Menu
+${dialogMenu}	${menuRoot}|Show Test Dialog
 ${dialogTitle}	Message
+${internalFrameMenu}	${menuRoot}|Show Internal Frame
+${internalFrameTitle}	Test Internal Frame
 
 *Test Case*	*Action*	*Argument*
 Select Dialog
+	[setup]	openTestDialog
 	selectDialog	${dialogTitle}
 	${context}=	getCurrentContextSourceAsString
 	contains	${context}	Dialog
+	[teardown]	closeTestDialog
 
 Close Dialog
+	[setup]	openTestDialog
 	closeTestDialog
 	dialogShouldNotBeOpen	${dialogTitle}
-	[teardown]
 
 Dialog Should Not Be Open
-	[setup]
 	dialogShouldNotBeOpen	Non existent Dialog
-	[teardown]
 
 Dialog Should Not Be Open Fails If Dialog Is Open
+	[setup]	openTestDialog
 	runKeywordAndExpectError	*Dialog '${dialogTitle}' is open*	dialogShouldNotBeOpen	${dialogTitle}
+	[teardown]	closeTestDialog
 
 Dialog Should Be Open
+	[setup]	openTestDialog
 	dialogShouldBeOpen	${dialogTitle}
+	[teardown]	closeTestDialog
 
 Dialog Should Be Open Fails If Dialog Is Not Open
-	[setup]
 	runKeywordAndExpectError	*Dialog '${dialogTitle}' is not open*	dialogShouldBeOpen	${dialogTitle}
-	[teardown]
+
+Select Internal Frame	[tags]	under_development
+	[setup]	openInternalFrame
+	selectDialog	${internalFrameTitle}
+	${context}=	getCurrentContextSourceAsString
+	contains	${context}	Internal Frame
+	[teardown]	closeInternalFrame
+
+Close Internal Frame	[tags]	under_development
+	[setup]	openInternalFrame
+	closeDialog	${internalFrameTitle}
+	dialogShouldNotBeOpen	${internalFrameTitle}
+
+Internal Frame Should Not Be Open	[tags]	under_development
+	dialogShouldNotBeOpen	Non existent Internal Frame
+
+Internal Frame Should Not Be Open Fails If Internal Frame Is Open	[tags]	under_development
+	[setup]	openInternalFrame
+	runKeywordAndExpectError	*Dialog '${internalFrameTitle}' is open*	dialogShouldNotBeOpen	${internalFrameTitle}
+	[teardown]	closeInternalFrame
+
+Internal Frame Should Be Open	[tags]	under_development
+	[setup]	openInternalFrame
+	dialogShouldBeOpen	${internalFrameTitle}
+	[teardown]	closeInternalFrame
+
+Internal Frame Should Be Open Fails If Internal Frame Is Not Open	[tags]	under_development
+	runKeywordAndExpectError	*Dialog '${internalFrameTitle}' is not open*	dialogShouldBeOpen	${internalFrameTitle}
 
 *Keyword*	*Action*	*Argument*	*Argument*
+openInternalFrame
+	selectFromMainMenu	${internalFrameMenu}
+
+closeInternalFrame
+	closeDialog	${internalFrameTitle}
+
 openTestDialog
 	selectFromMainMenu	${dialogMenu}
 

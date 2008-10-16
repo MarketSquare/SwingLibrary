@@ -40,6 +40,7 @@ public class TestApplication {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
         contentPane.add(panel, BorderLayout.CENTER);
+        contentPane.add(TestDesktopPane.INSTANCE, BorderLayout.NORTH);
     }
 
     private void createMainPanel() {
@@ -57,7 +58,7 @@ public class TestApplication {
     private void createFrame() {
         frame = new JFrame("Test App") {
             public Dimension getPreferredSize() {
-                return new Dimension(450, 450);
+                return new Dimension(1000, 1000);
             }
         };
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
