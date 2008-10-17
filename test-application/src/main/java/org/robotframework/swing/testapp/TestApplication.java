@@ -74,7 +74,8 @@ public class TestApplication {
         panel.add(new JCheckBox("Test Checkbox 4"));
         panel.add(new TestComboBox());
         panel.add(new TestLabel());
-        panel.add(new TestTable());
+        panel.add(new TestTable("testTable"));
+        panel.add(new TestTable("anotherTable"));
         panel.add(new TestTree());
         panel.add(new TestTabbedPane("testTabbedPane1"));
         panel.add(new TestTabbedPane("testTabbedPane2"));

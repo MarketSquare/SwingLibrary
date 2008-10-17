@@ -18,7 +18,8 @@ import org.robotframework.swing.table.EnhancedTableOperator;
 
 @RunWith(JDaveRunner.class)
 public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
-    private String tableIdentifier = "someTable";
+    private String id = "someTable";
+    private String[] tableIdentifier = new String[] { "ID=" + id };
     private EnhancedTableOperator tableOperator;
     private String columnIdentifier = "two";
     private String row = "1";
@@ -30,10 +31,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
         public void isRobotKeywordsAnnotated() {
             specify(context, satisfies(new RobotKeywordsContract()));
-        }
-
-        public void hasSelectTableKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("selectTable")));
         }
 
         public void hasSelectTableCellKeyword() {
@@ -74,32 +71,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
-        }
-
-        public void hasTableContextVerifier() {
-            specify(context, satisfies(new FieldIsNotNullContract("tableContextVerifier")));
-        }
-    }
-
-    public class SelectingTable {
-        private OperatorFactory operatorFactory;
-
-        public TableKeywords create() {
-            Context.setContext(null);
-            TableKeywords tableKeywords = new TableKeywords();
-            operatorFactory = injectMockTo(tableKeywords, OperatorFactory.class);
-            return tableKeywords;
-        }
-
-        public void selectsContext() {
-            final EnhancedTableOperator tableContext = dummy(EnhancedTableOperator.class);
-            checking(new Expectations() {{
-                one(operatorFactory).createOperator(tableIdentifier);
-                will(returnValue(tableContext));
-            }});
-
-            context.selectTable(tableIdentifier);
-            specify(Context.getContext(), must.equal(tableContext));
         }
     }
 
@@ -142,7 +113,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             tableOperator = mock(EnhancedTableOperator.class);
 
             checking(new Expectations() {{
-                one(operatorFactory).createOperator(tableIdentifier);
+                one(operatorFactory).createOperator(id);
                 will(returnValue(tableOperator));
             }});
         }
@@ -270,7 +241,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
     private TableKeywords createTableKeywordsWithMockContextVerifier() {
         TableKeywords tableKeywords = new TableKeywords();
-        final IContextVerifier contextVerifier = injectMockTo(tableKeywords, "tableContextVerifier", IContextVerifier.class);
+        final IContextVerifier contextVerifier = injectMockTo(tableKeywords, "contextVerifier", IContextVerifier.class);
 
         checking(new Expectations() {{
             one(contextVerifier).verifyContext();

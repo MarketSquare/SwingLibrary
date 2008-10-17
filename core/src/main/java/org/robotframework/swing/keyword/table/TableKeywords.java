@@ -20,6 +20,7 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
@@ -32,17 +33,10 @@ import org.robotframework.swing.table.TableOperatorFactory;
  * @author Heikki Hulkko
  */
 @RobotKeywords
-public class TableKeywords {
+public class TableKeywords extends IdentifierSupport {
     private OperatorFactory<EnhancedTableOperator> operatorFactory = new TableOperatorFactory();
     private IContextVerifier tableContextVerifier = new TableContextVerifier();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
-
-    @RobotKeyword("Selects a table as current context.\n\n"
-        + "Example:\n"
-        + "| Select Table | _myTable_ |\n")
-    public void selectTable(String identifier) {
-        Context.setContext(operatorFactory.createOperator(identifier));
-    }
 
     @RobotKeyword("Selects a cell.\n"
         + "Assumes current context is a table.\n\n"
@@ -50,7 +44,7 @@ public class TableKeywords {
         + "| Select Table Cell | _0_ | _2_       | # Selects cell from first row and third column |\n"
         + "| Select Table Cell | _1_ | _Keyword_ | # Selects cell from second row and column with header 'Keyword' |\n")
     public void selectTableCell(String row, String cellIdentifier) {
-        tableContextVerifier.verifyContext();
+        contextVerifier.verifyContext();
         tableOperator().selectCell(row, cellIdentifier);
     }
 
@@ -59,7 +53,7 @@ public class TableKeywords {
         + "Example:\n"
         + "| Clear Table Selection |\n")
     public void clearTableSelection() {
-        tableContextVerifier.verifyContext();
+        contextVerifier.verifyContext();
         tableOperator().clearSelection();
     }
 
@@ -69,7 +63,7 @@ public class TableKeywords {
         + "| Table Cell Should Be Selected | _0_ | _2_       |\n"
         + "| Table Cell Should Be Selected | _1_ | _Keyword_ |\n")
     public void tableCellShouldBeSelected(String row, String columnIdentifier) {
-        tableContextVerifier.verifyContext();
+        contextVerifier.verifyContext();
         Assert.assertTrue("Cell '" + row + "', '" + columnIdentifier + "' is not selected.", tableOperator().isCellSelected(row, columnIdentifier));
     }
 
@@ -79,7 +73,7 @@ public class TableKeywords {
         + "| Table Cell Should Be Selected | _0_ | _2_       |\n"
         + "| Table Cell Should Be Selected | _1_ | _Keyword_ |\n")
     public void tableCellShouldNotBeSelected(String row, String columnIdentifier) {
-        tableContextVerifier.verifyContext();
+        contextVerifier.verifyContext();
         Assert.assertFalse("Cell '" + row + "', '" + columnIdentifier + "' is selected.", tableOperator().isCellSelected(row, columnIdentifier));
     }
 
@@ -89,7 +83,7 @@ public class TableKeywords {
         + "| ${cellValue}=   | Get Table Cell Value   | _0_            | _2_ |\n"
         + "| Should Be Equal | _tuesday_              | _${cellValue}_ |     |\n")
     public String getTableCellValue(String row, String columnIdentifier) {
-        tableContextVerifier.verifyContext();
+        contextVerifier.verifyContext();
         return tableOperator().getValueAt(row, columnIdentifier).toString();
     }
 
@@ -99,7 +93,7 @@ public class TableKeywords {
         + "| ${cellValue}=   | Get Selected Table Cell Value   |              |\n"
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
     public Object getSelectedTableCellValue() {
-        tableContextVerifier.verifyContext();
+        contextVerifier.verifyContext();
         int selectedRow = tableOperator().getSelectedRow();
         int selectedColumn = tableOperator().getSelectedColumn();
         return tableOperator().getValueAt(selectedRow, selectedColumn).toString();
@@ -110,7 +104,7 @@ public class TableKeywords {
     	+ "Example:\n"
     	+ "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
     public void setTableCellValue(String row, String columnIdentifier, String newValue) {
-        tableContextVerifier.verifyContext();
+        contextVerifier.verifyContext();
         tableOperator().setValueAt(newValue, row, columnIdentifier);
     }
 
@@ -118,18 +112,22 @@ public class TableKeywords {
         + "Example:\n"
         + "| ${columnCount}= | Get Table Column Count | _myTable_ |\n"
         + "| Should Be Equal As Integers | _4_ | _${columnCount}_ |\n")
-    public int getTableColumnCount(String identifier) {
+    public int getTableColumnCount(String[] identifier) {
         contextVerifier.verifyContext();
-        return operatorFactory.createOperator(identifier).getColumnCount();
+        String id = extractId(identifier);
+        return operatorFactory.createOperator(id).getColumnCount();
     }
+
 
     @RobotKeyword("Returns the number of rows in the table.\n\n"
         + "Example:\n"
         + "| ${rowCount}= | Get Table Row Count | _myTable_ |\n"
         + "| Should Be Equal As Integers | _5_ | _${rowCount}_ |\n")
-    public int getTableRowCount(String identifier) {
+    public int getTableRowCount(String[] identifier) {
         contextVerifier.verifyContext();
-        return operatorFactory.createOperator(identifier).getRowCount();
+        String id = extractId(identifier);
+        EnhancedTableOperator tableOperator = operatorFactory.createOperator(id);
+        return tableOperator.getRowCount();
     }
 
     private EnhancedTableOperator tableOperator() {

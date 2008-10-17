@@ -16,23 +16,10 @@
 
 package org.robotframework.swing.table;
 
-import javax.swing.JTable;
-
-import org.robotframework.swing.context.ContextVerifier;
+import org.robotframework.swing.context.DefaultContextVerifier;
 
 /**
  * @author Heikki Hulkko
  */
-public class TableContextVerifier extends ContextVerifier {
-    static final String ERROR_MESSAGE =
-        "To use table keywords you must first select a table as context using the 'Select Table'-keyword.";
-
-    public TableContextVerifier() {
-        super(ERROR_MESSAGE);
-    }
-
-    @Override
-    protected Class[] getExpectedClasses() {
-        return new Class[] { JTable.class };
-    }
+public class TableContextVerifier extends DefaultContextVerifier {
 }

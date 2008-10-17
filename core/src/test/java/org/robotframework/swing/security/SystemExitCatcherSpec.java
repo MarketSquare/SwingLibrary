@@ -117,7 +117,6 @@ public class SystemExitCatcherSpec extends MockSupportSpecification<SystemExitCa
             return systemExitCatcher;
         }
         
-
         public void delegatesCheckExit() {
             final int status = 0;
             checking(new Expectations() {{

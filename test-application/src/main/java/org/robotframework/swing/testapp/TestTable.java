@@ -15,8 +15,8 @@ public class TestTable extends JScrollPane {
         new Object[] { "four/one", "four/two", "four/three", "four/four" }
     };
 
-    public TestTable() {
-        super(createTable());
+    public TestTable(String name) {
+        super(createTable(name));
     }
 
     @Override
@@ -24,9 +24,9 @@ public class TestTable extends JScrollPane {
         return new Dimension(200, 100);
     }
 
-    private static JTable createTable() {
+    private static JTable createTable(String name) {
         JTable table = new JTable(TABLE_MODEL, COLUMN_HEADERS);
-        table.setName("testTable");
+        table.setName(name);
         return table;
     }
 }
