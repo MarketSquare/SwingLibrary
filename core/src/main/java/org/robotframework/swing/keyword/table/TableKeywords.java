@@ -18,11 +18,9 @@ package org.robotframework.swing.keyword.table;
 
 import junit.framework.Assert;
 
-import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
-import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
@@ -37,43 +35,37 @@ public class TableKeywords extends IdentifierSupport {
     private OperatorFactory<EnhancedTableOperator> operatorFactory = new TableOperatorFactory();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
-    @RobotKeyword("Selects a cell.\n"
-        + "Assumes current context is a table.\n\n"
+    @RobotKeyword("Selects a cell in a table.\n\n"
         + "Example:\n"
-        + "| Select Table Cell | _0_ | _2_       | # Selects cell from first row and third column |\n"
-        + "| Select Table Cell | _1_ | _Keyword_ | # Selects cell from second row and column with header 'Keyword' |\n")
-    public void selectTableCell(String row, String cellIdentifier) {
-        contextVerifier.verifyContext();
-        tableOperator().selectCell(row, cellIdentifier);
+        + "| Select Table Cell | _myTable_ | _0_ | _2_       | # Selects cell from first row and third column |\n"
+        + "| Select Table Cell | _myTable_ | _1_ | _Keyword_ | # Selects cell from second row and column with header 'Keyword' |\n")
+    public void selectTableCell(String identifier, String row, String cellIdentifier) {
+        createTableOperator(identifier).selectCell(row, cellIdentifier);
     }
 
-    @RobotKeyword("Clears selection from table.\n"
-        + "Assumes current context is a table\n\n"
+    @RobotKeyword("Clears selection from a table.\n\n"
         + "Example:\n"
-        + "| Clear Table Selection |\n")
-    public void clearTableSelection() {
-        contextVerifier.verifyContext();
-        tableOperator().clearSelection();
+        + "| Clear Table Selection | _myTable_ |\n")
+    public void clearTableSelection(String identifier) {
+        createTableOperator(identifier).clearSelection();
     }
 
-    @RobotKeyword("Fails if given table cell is not selected.\n"
-        + "Assumes current context is a table.\n\n"
+    @RobotKeyword("Fails if given table cell is not selected in a table.\n\n"
         + "Example:\n"
-        + "| Table Cell Should Be Selected | _0_ | _2_       |\n"
-        + "| Table Cell Should Be Selected | _1_ | _Keyword_ |\n")
-    public void tableCellShouldBeSelected(String row, String columnIdentifier) {
-        contextVerifier.verifyContext();
-        Assert.assertTrue("Cell '" + row + "', '" + columnIdentifier + "' is not selected.", tableOperator().isCellSelected(row, columnIdentifier));
+        + "| Table Cell Should Be Selected | _myTable_ | _0_ | _2_       |\n"
+        + "| Table Cell Should Be Selected | _myTable_ | _1_ | _Keyword_ |\n")
+    public void tableCellShouldBeSelected(String identifier, String row, String columnIdentifier) {
+        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        Assert.assertTrue("Cell '" + row + "', '" + columnIdentifier + "' is not selected.", tableOperator.isCellSelected(row, columnIdentifier));
     }
 
-    @RobotKeyword("Fails if given table cell is selected.\n"
-        + "Assumes current context is a table.\n\n"
+    @RobotKeyword("Fails if given table cell is selected in a table.\n\n"
         + "Example:\n"
-        + "| Table Cell Should Be Selected | _0_ | _2_       |\n"
-        + "| Table Cell Should Be Selected | _1_ | _Keyword_ |\n")
-    public void tableCellShouldNotBeSelected(String row, String columnIdentifier) {
-        contextVerifier.verifyContext();
-        Assert.assertFalse("Cell '" + row + "', '" + columnIdentifier + "' is selected.", tableOperator().isCellSelected(row, columnIdentifier));
+        + "| Table Cell Should Be Selected | _myTable_ | _0_ | _2_       |\n"
+        + "| Table Cell Should Be Selected | _myTable_ | _1_ | _Keyword_ |\n")
+    public void tableCellShouldNotBeSelected(String identifier, String row, String columnIdentifier) {
+        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        Assert.assertFalse("Cell '" + row + "', '" + columnIdentifier + "' is selected.", tableOperator.isCellSelected(row, columnIdentifier));
     }
 
     @RobotKeyword("Returns cell's value from a table.\n\n"
@@ -85,8 +77,7 @@ public class TableKeywords extends IdentifierSupport {
         return tableOperator.getValueAt(row, columnIdentifier).toString();
     }
 
-    @RobotKeyword("Returns selected cell's value.\n"
-        + "Assumes current context is a table.\n\n"
+    @RobotKeyword("Returns selected cell's value from a table.\n\n"
         + "Example:\n"
         + "| ${cellValue}=   | Get Selected Table Cell Value   | _myTable_      |\n"
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
@@ -100,7 +91,6 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Sets cell value in a table.\n\n"
     	+ "Example:\n"
     	+ "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
-    @ArgumentNames({"identifier", "row", "columnIdentifier", "newValue"})
     public void setTableCellValue(String identifier, String row, String columnIdentifier, String newValue) {
         EnhancedTableOperator tableOperator = createTableOperator(identifier);
         tableOperator.setValueAt(newValue, row, columnIdentifier);
@@ -125,9 +115,5 @@ public class TableKeywords extends IdentifierSupport {
     private EnhancedTableOperator createTableOperator(String identifier) {
         contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);   
-    }
-    
-    private EnhancedTableOperator tableOperator() {
-        return (EnhancedTableOperator) Context.getContext();
     }
 }

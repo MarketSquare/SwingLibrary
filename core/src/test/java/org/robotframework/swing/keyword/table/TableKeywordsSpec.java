@@ -6,7 +6,6 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
@@ -18,8 +17,11 @@ import org.robotframework.swing.table.EnhancedTableOperator;
 
 @RunWith(JDaveRunner.class)
 public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
-    private String tableIdentifier = "someTable";
+    private TableKeywords tableKeywords = new TableKeywords();
+    private OperatorFactory operatorFactory;
+    private IContextVerifier contextVerifier;
     private EnhancedTableOperator tableOperator;
+    private String tableIdentifier = "someTable";
     private String columnIdentifier = "two";
     private String row = "1";
 
@@ -73,16 +75,43 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         }
     }
 
-    public class OperatingOnTable {
-        private OperatorFactory operatorFactory;
-        private IContextVerifier contextVerifier;
-        private TableKeywords tableKeywords = new TableKeywords();
+    public class GettingCellValuesFromTable {
         private Object cellValue = new Object() {
             public String toString() {
                 return "someValue";
             }
         };
+        
+        public TableKeywords create() {
+            injectMockOperatorFactory();
+            injectMockContextVerifier();
+            return tableKeywords;
+        }
+        
+        public void getsSelectedTableCellValue() {
+            final int row = 5;
+            final int column = 2;
+            checking(new Expectations() {{
+                one(tableOperator).getSelectedColumn(); will(returnValue(column));
+                one(tableOperator).getSelectedRow(); will(returnValue(row));
+                one(tableOperator).getValueAt(row, column);
+                will(returnValue(cellValue));
+            }});
 
+            specify(context.getSelectedTableCellValue(tableIdentifier), must.equal(cellValue.toString()));
+        }
+        
+        public void getsTableCellValue() {
+            checking(new Expectations() {{
+                one(tableOperator).getValueAt(row, columnIdentifier);
+                will(returnValue(cellValue));
+            }});
+
+            specify(context.getTableCellValue(tableIdentifier, row, columnIdentifier), must.equal(cellValue.toString()));
+        }
+    }
+    
+    public class OperatingOnTable {
         public TableKeywords create() {
             injectMockOperatorFactory();
             injectMockContextVerifier();
@@ -115,60 +144,12 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             context.setTableCellValue(tableIdentifier, row, columnIdentifier, newValue);
         }
 
-        public void getsSelectedTableCellValue() {
-            final int row = 5;
-            final int column = 2;
-            checking(new Expectations() {{
-                one(tableOperator).getSelectedColumn(); will(returnValue(column));
-                one(tableOperator).getSelectedRow(); will(returnValue(row));
-                one(tableOperator).getValueAt(row, column);
-                will(returnValue(cellValue));
-            }});
-
-            specify(context.getSelectedTableCellValue(tableIdentifier), must.equal(cellValue.toString()));
-        }
-        
-
-        public void getsTableCellValue() {
-            checking(new Expectations() {{
-                one(tableOperator).getValueAt(row, columnIdentifier);
-                will(returnValue(cellValue));
-            }});
-
-            specify(context.getTableCellValue(tableIdentifier, row, columnIdentifier), must.equal(cellValue.toString()));
-        }
-        
-        private void injectMockContextVerifier() {
-            contextVerifier = injectMockTo(tableKeywords, IContextVerifier.class);
-
-            checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
-            }});
-        }
-
-        private void injectMockOperatorFactory() {
-            operatorFactory = injectMockTo(tableKeywords, OperatorFactory.class);
-            tableOperator = mock(EnhancedTableOperator.class);
-
-            checking(new Expectations() {{
-                one(operatorFactory).createOperator(tableIdentifier);
-                will(returnValue(tableOperator));
-            }});
-        }
-    }
-
-    public class SelectingTableCells {
-        public TableKeywords create() {
-            setMockTableOperatorAsContext();
-            return createTableKeywordsWithMockContextVerifier();
-        }
-
         public void selectsTableCell() {
             checking(new Expectations() {{
                 one(tableOperator).selectCell(row, columnIdentifier);
             }});
 
-            context.selectTableCell(row, columnIdentifier);
+            context.selectTableCell(tableIdentifier, row, columnIdentifier);
         }
 
         public void clearsTableSelection() {
@@ -176,7 +157,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 one(tableOperator).clearSelection();
             }});
 
-            context.clearTableSelection();
+            context.clearTableSelection(tableIdentifier);
         }
 
         public void tableCellShouldBeSelectedPassesIfCellIsSelected() throws Throwable {
@@ -187,7 +168,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.tableCellShouldBeSelected(row, columnIdentifier);
+                    context.tableCellShouldBeSelected(tableIdentifier, row, columnIdentifier);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
@@ -200,7 +181,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.tableCellShouldBeSelected(row, columnIdentifier);
+                    context.tableCellShouldBeSelected(tableIdentifier, row, columnIdentifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Cell '" + row + "', '" + columnIdentifier + "' is not selected."));
         }
@@ -213,7 +194,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.tableCellShouldNotBeSelected(row, columnIdentifier);
+                    context.tableCellShouldNotBeSelected(tableIdentifier, row, columnIdentifier);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
@@ -226,25 +207,27 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.tableCellShouldNotBeSelected(row, columnIdentifier);
+                    context.tableCellShouldNotBeSelected(tableIdentifier, row, columnIdentifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Cell '" + row + "', '" + columnIdentifier + "' is selected."));
         }
     }
 
-    private TableKeywords createTableKeywordsWithMockContextVerifier() {
-        TableKeywords tableKeywords = new TableKeywords();
-        final IContextVerifier contextVerifier = injectMockTo(tableKeywords, "contextVerifier", IContextVerifier.class);
+    private void injectMockContextVerifier() {
+        contextVerifier = injectMockTo(tableKeywords, IContextVerifier.class);
 
         checking(new Expectations() {{
             one(contextVerifier).verifyContext();
         }});
-
-        return tableKeywords;
     }
 
-    private void setMockTableOperatorAsContext() {
+    private void injectMockOperatorFactory() {
+        operatorFactory = injectMockTo(tableKeywords, OperatorFactory.class);
         tableOperator = mock(EnhancedTableOperator.class);
-        Context.setContext(tableOperator);
+
+        checking(new Expectations() {{
+            one(operatorFactory).createOperator(tableIdentifier);
+            will(returnValue(tableOperator));
+        }});
     }
 }
