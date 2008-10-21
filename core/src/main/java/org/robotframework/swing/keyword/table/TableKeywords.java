@@ -81,9 +81,9 @@ public class TableKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| ${cellValue}=   | Get Table Cell Value   | _0_            | _2_ |\n"
         + "| Should Be Equal | _tuesday_              | _${cellValue}_ |     |\n")
-    public String getTableCellValue(String row, String columnIdentifier) {
-        contextVerifier.verifyContext();
-        return tableOperator().getValueAt(row, columnIdentifier).toString();
+    public String getTableCellValue(String identifier, String row, String columnIdentifier) {
+        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        return tableOperator.getValueAt(row, columnIdentifier).toString();
     }
 
     @RobotKeyword("Returns selected cell's value.\n"

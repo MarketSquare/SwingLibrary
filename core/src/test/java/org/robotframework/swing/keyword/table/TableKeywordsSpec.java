@@ -128,6 +128,16 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context.getSelectedTableCellValue(tableIdentifier), must.equal(cellValue.toString()));
         }
         
+
+        public void getsTableCellValue() {
+            checking(new Expectations() {{
+                one(tableOperator).getValueAt(row, columnIdentifier);
+                will(returnValue(cellValue));
+            }});
+
+            specify(context.getTableCellValue(tableIdentifier, row, columnIdentifier), must.equal(cellValue.toString()));
+        }
+        
         private void injectMockContextVerifier() {
             contextVerifier = injectMockTo(tableKeywords, IContextVerifier.class);
 
@@ -219,28 +229,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                     context.tableCellShouldNotBeSelected(row, columnIdentifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Cell '" + row + "', '" + columnIdentifier + "' is selected."));
-        }
-    }
-
-    public class OperatingOnCellValues {
-        private Object cellValue = new Object() {
-            public String toString() {
-                return "someValue";
-            }
-        };
-
-        public TableKeywords create() {
-            setMockTableOperatorAsContext();
-            return createTableKeywordsWithMockContextVerifier();
-        }
-
-        public void getsTableCellValue() {
-            checking(new Expectations() {{
-                one(tableOperator).getValueAt(row, columnIdentifier);
-                will(returnValue(cellValue));
-            }});
-
-            specify(context.getTableCellValue(row, columnIdentifier), must.equal(cellValue.toString()));
         }
     }
 
