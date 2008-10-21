@@ -7,13 +7,26 @@ import org.junit.runner.RunWith;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
+import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.tree.EnhancedTreeOperator;
-import org.robotframework.swing.tree.TreeSupport;
 
 
 @RunWith(JDaveRunner.class)
 public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
+    public class Any {
+        public TreeSupport create() {
+            return new TreeSupport();
+        }
+        
+        public void hasOperatorFactory() {
+            specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
+        }
+        
+        public void hasContextVerifier() {
+            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
+        }
+    }
+    
     public class GettingContext {
         private EnhancedTreeOperator dummyContext;
         private IContextVerifier contextVerifier;
@@ -25,10 +38,6 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
             TreeSupport treeSupport = new TreeSupport();
             contextVerifier = injectMockTo(treeSupport, IContextVerifier.class);
             return treeSupport;
-        }
-
-        public void hasContextVerifier() {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
         }
 
         public void treeOperatorReturnsCurrentContextAndVerifiesIt() {
@@ -45,6 +54,37 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
             }});
 
             context.verifyContext();
+        }
+    }
+    
+    public class CreatingTreeOperator {
+        private TreeSupport treeSupport = new TreeSupport();
+        private String treeIdentifier = "someTree";
+        private EnhancedTreeOperator treeOperator = dummy(EnhancedTreeOperator.class);
+        
+        public TreeSupport create() {
+            injectMockOperatorFactory();
+            injectMockContextVerifier();
+            return treeSupport;
+        }
+
+        public void createsTreeOperatorAndVerifiesContext() {
+            specify(context.createTreeOperator(treeIdentifier), must.equal(treeOperator));
+        }
+        
+        private void injectMockContextVerifier() {
+            final IContextVerifier contextVerifier = injectMockTo(treeSupport, IContextVerifier.class);
+            checking(new Expectations() {{
+                one(contextVerifier).verifyContext();
+            }});
+        }
+        
+        private void injectMockOperatorFactory() {
+            final OperatorFactory operatorFactory = injectMockTo(treeSupport, OperatorFactory.class);
+            checking(new Expectations() {{
+                one(operatorFactory).createOperator(treeIdentifier);
+                will(returnValue(treeOperator));
+            }});
         }
     }
 }

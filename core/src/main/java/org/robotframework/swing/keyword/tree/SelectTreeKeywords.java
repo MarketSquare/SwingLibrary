@@ -18,10 +18,6 @@ package org.robotframework.swing.keyword.tree;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.tree.EnhancedTreeOperator;
-import org.robotframework.swing.tree.EnhancedTreeOperatorFactory;
 import org.robotframework.swing.tree.TreeSupport;
 
 /**
@@ -29,22 +25,10 @@ import org.robotframework.swing.tree.TreeSupport;
  */
 @RobotKeywords
 public class SelectTreeKeywords extends TreeSupport {
-    private OperatorFactory<EnhancedTreeOperator> operatorFactory = new EnhancedTreeOperatorFactory();
-
-    @RobotKeyword("Selects a tree as current context\n\n"
+    @RobotKeyword("Clears selections from a tree.\n\n"
         + "Example:\n"
-        + "| Select Tree | _My Tree_ |\n")
-    public void selectTree(String identifier) {
-        Context.setContext(operatorFactory.createOperator(identifier));
+        + "| Clear Tree Selection | _myTree_ |\n")
+    public void clearTreeSelection(String identifier) {
+        createTreeOperator(identifier).clearSelection();
     }
-
-    @RobotKeyword("Clears selections from tree.\n"
-        + "Assumes current context is a tree.\n\n"
-        + "Example:\n"
-        + "| Clear Tree Selection | _My Tree_ |\n")
-    public void clearTreeSelection() {
-        verifyContext();
-        treeOperator().clearSelection();
-    }
-
 }

@@ -1,6 +1,6 @@
 *Setting*	*Value*
 library	SwingLibrary
-testSetup	selectTestTree
+suiteSetup	selectMainWindow
 
 *Variable*	*Value*	*Value*
 ${treeName}	testTree
@@ -13,144 +13,134 @@ ${anotherNodePath}	${rootNode}|${childNode2}
 ${leafNodePath}	${anotherNodePath}|${leafNode}
 
 *Test Case*	*Action*	*Argument*	*Argument*
-Select Tree By Index
-	selectMainWindow
-	selectTree	0
-	currentContextIsATree
-
-Select Tree By Name
-	selectMainWindow
-	selectTree	${treeName}
-	currentContextIsATree
-
 Expand Node by Index
-	expandTreeNode	0
-	expandTreeNode	${nodeIndex}
-	treeNodeShouldBeExpanded	${nodeIndex}
-	collapseTreeNode	${nodeIndex}
-	collapseTreeNode	0
+	expandTreeNode	${treeName}	0
+	expandTreeNode	${treeName}	${nodeIndex}
+	treeNodeShouldBeExpanded	${treeName}	${nodeIndex}
+	collapseTreeNode	${treeName}	${nodeIndex}
+	collapseTreeNode	${treeName}	0
 
 Expand Node By Name
-	expandTreeNode	${rootNode}
-	expandTreeNode	${anotherNodePath}
-	treeNodeShouldBeExpanded	${anotherNodePath}
-	collapseTreeNode	${anotherNodePath}
-	collapseTreeNode	${rootNode}
+	expandTreeNode	${treeName}	${rootNode}
+	expandTreeNode	${treeName}	${anotherNodePath}
+	treeNodeShouldBeExpanded	${treeName}	${anotherNodePath}
+	collapseTreeNode	${treeName}	${anotherNodePath}
+	collapseTreeNode	${treeName}	${rootNode}
 
 Collapse Node By Index
-	expandTreeNode	0
-	expandTreeNode	${nodeIndex}
-	treeNodeShouldBeExpanded	${nodeIndex}
-	collapseTreeNode	${nodeIndex}
-	treeNodeShouldBeCollapsed	${nodeIndex}
-	collapseTreeNode	${nodeIndex}
-	collapseTreeNode	0
+	expandTreeNode	${treeName}	0
+	expandTreeNode	${treeName}	${nodeIndex}
+	treeNodeShouldBeExpanded	${treeName}	${nodeIndex}
+	collapseTreeNode	${treeName}	${nodeIndex}
+	treeNodeShouldBeCollapsed	${treeName}	${nodeIndex}
+	collapseTreeNode	${treeName}	${nodeIndex}
+	collapseTreeNode	${treeName}	0
 
 Collapse Node By Name
-	expandTreeNode	${rootNode}
-	treeNodeShouldBeExpanded	${rootNode}
-	collapseTreeNode	${rootNode}
-	treeNodeShouldBeCollapsed	${rootNode}
-	collapseTreeNode	${rootNode}
+	expandTreeNode	${treeName}	${rootNode}
+	treeNodeShouldBeExpanded	${treeName}	${rootNode}
+	collapseTreeNode	${treeName}	${rootNode}
+	treeNodeShouldBeCollapsed	${treeName}	${rootNode}
+	collapseTreeNode	${treeName}	${rootNode}
 
 Tree Node Should Be Collapsed
-	collapseTreeNode	${rootNode}
-	treeNodeShouldBeCollapsed	0
-	treeNodeShouldBeCollapsed	${rootNode}
+	collapseTreeNode	${treeName}	${rootNode}
+	treeNodeShouldBeCollapsed	${treeName}	0
+	treeNodeShouldBeCollapsed	${treeName}	${rootNode}
 
 Tree Node Should Be Expanded
-	expandTreeNode	${rootNode}
-	treeNodeShouldBeExpanded	0
-	treeNodeShouldBeExpanded	${rootNode}
+	expandTreeNode	${treeName}	${rootNode}
+	treeNodeShouldBeExpanded	${treeName}	0
+	treeNodeShouldBeExpanded	${treeName}	${rootNode}
 
 Select Tree Node By Index
-	clearTreeSelection
-	selectTreeNode	0
-	treeNodeShouldBeSelected	0
-	unselectTreeNode	0
+	clearTreeSelection	${treeName}
+	selectTreeNode	${treeName}	0
+	treeNodeShouldBeSelected	${treeName}	0
+	unselectTreeNode	${treeName}	0
 
 Select Tree Node By Name
-	clearTreeSelection
-	selectTreeNode	${rootNode}
-	treeNodeShouldBeSelected	${rootNode}
-	unselectTreeNode	${rootNode}
+	clearTreeSelection	${treeName}
+	selectTreeNode	${treeName}	${rootNode}
+	treeNodeShouldBeSelected	${treeName}	${rootNode}
+	unselectTreeNode	${treeName}	${rootNode}
 
 Unselect Tree Node By Index
-	clearTreeSelection
-	selectTreeNode	0
-	unselectTreeNode	0
-	treeNodeShouldNotBeSelected	0
+	clearTreeSelection	${treeName}
+	selectTreeNode	${treeName}	0
+	unselectTreeNode	${treeName}	0
+	treeNodeShouldNotBeSelected	${treeName}	0
 
 Unselect Tree Node By name
-	clearTreeSelection
-	selectTreeNode	${rootNode}
-	unselectTreeNode	${rootNode}
-	treeNodeShouldNotBeSelected	${rootNode}
+	clearTreeSelection	${treeName}
+	selectTreeNode	${treeName}	${rootNode}
+	unselectTreeNode	${treeName}	${rootNode}
+	treeNodeShouldNotBeSelected	${treeName}	${rootNode}
 
 Tree Node Should Be Selected AND Tree Node Should Not Be Selected
-	clearTreeSelection
-	treeNodeShouldNotBeSelected	0
-	treeNodeShouldNotBeSelected	${rootNode}
-	selectTreeNode	0
-	treeNodeShouldBeSelected	0
-	treeNodeShouldBeSelected	${rootNode}
+	clearTreeSelection	${treeName}
+	treeNodeShouldNotBeSelected	${treeName}	0
+	treeNodeShouldNotBeSelected	${treeName}	${rootNode}
+	selectTreeNode	${treeName}	0
+	treeNodeShouldBeSelected	${treeName}	0
+	treeNodeShouldBeSelected	${treeName}	${rootNode}
 
 Select From Tree Node Popup Menu
-	selectFromTreeNodePopupMenu	${rootNode}	Insert a child
-	expandTreeNode	${rootNode}
-	treeNodeShouldBeVisible	${rootNode}|child
-	selectFromTreeNodePopupMenu	${rootNode}|child	Remove this node
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Insert a child
+	expandTreeNode	${treeName}	${rootNode}
+	treeNodeShouldBeVisible	${treeName}	${rootNode}|child
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}|child	Remove this node
 
 Select From Tree Node Popup Menu Fails If Menu Item Is Disabled	[tags]	development
-	runKeywordAndExpectError	Menu item 'Disabled menuitem' was disabled.	selectFromTreeNodePopupMenu	${rootNode}	Disabled menuitem
+	runKeywordAndExpectError	Menu item 'Disabled menuitem' was disabled.	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Disabled menuitem
 
 Select From Tree Node Popup Menu In Separate Thread
-	selectFromTreeNodePopupMenuInSeparateThread	${rootNode}	Show dialog
+	selectFromTreeNodePopupMenuInSeparateThread	${treeName}	${rootNode}	Show dialog
 	dialogShouldBeOpen	Message
 	closeDialog	Message
 
 Tree Node Should Be Visible AND Tree Node Should Not Be Visible
-	treeNodeShouldBeVisible	${rootNode}
-	expandTreeNode	${rootNode}
-	treeNodeShouldBeVisible	${anotherNodePath}
-	expandTreeNode	${anotherNodePath}
-	treeNodeShouldBeVisible	${leafNodePath}
-	collapseTreeNode	${rootNode}
-	treeNodeShouldNotBeVisible	${anotherNodePath}
-	treeNodeShouldNotBeVisible	${leafNodePath}
+	treeNodeShouldBeVisible	${treeName}	${rootNode}
+	expandTreeNode	${treeName}	${rootNode}
+	treeNodeShouldBeVisible	${treeName}	${anotherNodePath}
+	expandTreeNode	${treeName}	${anotherNodePath}
+	treeNodeShouldBeVisible	${treeName}	${leafNodePath}
+	collapseTreeNode	${treeName}	${rootNode}
+	treeNodeShouldNotBeVisible	${treeName}	${anotherNodePath}
+	treeNodeShouldNotBeVisible	${treeName}	${leafNodePath}
 
 Tree Node Should Be Leaf AND Tree Node Should Not Be Leaf
-	expandTreeNode	${rootNode}
-	expandTreeNode	${anotherNodePath}
-	treeNodeShouldBeLeaf	${leafNodePath}
-	treeNodeShouldNotBeLeaf	${anotherNodePath}
-	collapseTreeNode	${rootNode}
-	treeNodeShouldNotBeLeaf	${rootNode}
+	expandTreeNode	${treeName}	${rootNode}
+	expandTreeNode	${treeName}	${anotherNodePath}
+	treeNodeShouldBeLeaf	${treeName}	${leafNodePath}
+	treeNodeShouldNotBeLeaf	${treeName}	${anotherNodePath}
+	collapseTreeNode	${treeName}	${rootNode}
+	treeNodeShouldNotBeLeaf	${treeName}	${rootNode}
 
 Tree Node Should Exist By Name
-	treeNodeShouldExist	${rootNode}
-	treeNodeShouldExist	${anotherNodePath}
-	treeNodeShouldExist	${leafNodePath}
+	treeNodeShouldExist	${treeName}	${rootNode}
+	treeNodeShouldExist	${treeName}	${anotherNodePath}
+	treeNodeShouldExist	${treeName}	${leafNodePath}
 
 Tree Node Should Exist By Index
-	treeNodeShouldExist	0
+	treeNodeShouldExist	${treeName}	0
 
 Tree Node Should Not Exist By Name
-	treeNodeShouldNotExist	Unexisting|node|name
-	treeNodeShouldNotExist	Unexisting_root_node_name
+	treeNodeShouldNotExist	${treeName}	Unexisting|node|name
+	treeNodeShouldNotExist	${treeName}	Unexisting_root_node_name
 
 Tree Node Should Not Exist By Index
-	treeNodeShouldNotExist	9999
+	treeNodeShouldNotExist	${treeName}	9999
 
 Test Selecting Multiple Nodes
-	expandTreeNode	${rootNode}
-	clearTreeSelection
-	selectTreeNode	${rootNode}
-	selectTreeNode	${anotherNodePath}
-	treeNodeShouldBeSelected	${rootNode}
-	treeNodeShouldBeSelected	${anotherNodePath}
-	collapseTreeNode	${rootNode}
-	clearTreeSelection
+	expandTreeNode	${treeName}	${rootNode}
+	clearTreeSelection	${treeName}
+	selectTreeNode	${treeName}	${rootNode}
+	selectTreeNode	${treeName}	${anotherNodePath}
+	treeNodeShouldBeSelected	${treeName}	${rootNode}
+	treeNodeShouldBeSelected	${treeName}	${anotherNodePath}
+	collapseTreeNode	${treeName}	${rootNode}
+	clearTreeSelection	${treeName}
 
 Tree Node Popup Menu Item Should Be Enabled
 	treeNodePopupMenuItemShouldBeEnabled	${rootNode}	Insert a child
@@ -158,31 +148,31 @@ Tree Node Popup Menu Item Should Be Enabled
 	popupMenuShouldNotBeDisplayed
 
 Tree Node Popup Menu Item Should Be Disabled
-	treeNodePopupMenuItemShouldBeDisabled	${rootNode}	Disabled menuitem
-	treeNodePopupMenuItemShouldBeDisabled	${rootNode}	Submenu|Disabled menuitem
+	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	Disabled menuitem
+	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	Submenu|Disabled menuitem
 	popupMenuShouldNotBeDisplayed
 
 Tree Node Popup Menu Item Should Be Disabled Should Fail If Menu Item Is Enabled
-	runKeywordAndExpectError	*Menu item 'Insert a child' was enabled*	treeNodePopupMenuItemShouldBeDisabled	${rootNode}	Insert a child
+	runKeywordAndExpectError	*Menu item 'Insert a child' was enabled*	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	Insert a child
 
 Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
-	runKeywordAndExpectError	*Menu item 'Disabled menuitem' was disabled*	treeNodePopupMenuItemShouldBeEnabled	${rootNode}	Disabled menuitem
+	runKeywordAndExpectError	*Menu item 'Disabled menuitem' was disabled*	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Disabled menuitem
 
 Keywords Also Work With Invisible Root
-	expandTreeNode	${rootNode}
-	selectFromTreeNodePopupMenu	${rootNode}	Hide root node
-	treeNodeShouldBeVisible	${childNode1}
-	treeNodeShouldBeVisible	${childNode2}
-	treeNodeShouldExist	${childNode1}
-	treeNodeShouldExist	${childNode2}
-	treeNodeShouldExist	${childNode2}|${leafNode}
-	expandTreeNode	${childNode2}
-	treeNodeShouldBeVisible	${childNode2}|${leafNode}
-	collapseTreeNode	${childNode2}
-	[Teardown]	selectFromTreeNodePopupMenu	0	Show root node
+	expandTreeNode	${treeName}	${rootNode}
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
+	treeNodeShouldBeVisible	${treeName}	${childNode1}
+	treeNodeShouldBeVisible	${treeName}	${childNode2}
+	treeNodeShouldExist	${treeName}	${childNode1}
+	treeNodeShouldExist	${treeName}	${childNode2}
+	treeNodeShouldExist	${treeName}	${childNode2}|${leafNode}
+	expandTreeNode	${treeName}	${childNode2}
+	treeNodeShouldBeVisible	${treeName}	${childNode2}|${leafNode}
+	collapseTreeNode	${treeName}	${childNode2}
+	[Teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 
 Tree Keywords Fail If Context Is Not a tree
-	selectMainWindow
+	selectEmptyContext
 	keywordShouldFailBecauseContextIsIllegal	clearTreeSelection
 	keywordShouldFailBecauseContextIsIllegal	expandTreeNode	Path|To|Tree|Node
 	keywordShouldFailBecauseContextIsIllegal	collapseTreeNode	Path|To|Tree|Node
@@ -204,20 +194,10 @@ Tree Keywords Fail If Context Is Not a tree
 	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	Path|To|Tree|Node	SomethingInMenu
 	[teardown]	selectMainWindow
 
-
 *Keyword*	*Action*	*Argument*	*Argument*
-selectTestTree
-	selectMainWindow
-	selectTree	${treeName}
-
-currentContextIsATree
-	${context}=	getCurrentContextSourceAsString
-	shouldContain	${context}	${treeName}
-
 keywordShouldFailBecauseContextIsIllegal	[arguments]	${keyword}	@{arguments}
-	runKeywordAndExpectError	*To use tree keywords you must first select a tree as context using the 'Select Tree'-keyword.*	${keyword}	@{arguments}
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	${keyword}	@{arguments}
 
 popupMenuShouldNotBeDisplayed
-	selectMainWindow
 	componentShouldNotExist	popupMenu
 
