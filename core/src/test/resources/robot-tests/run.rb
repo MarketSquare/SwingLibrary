@@ -31,6 +31,7 @@ require "#{root_dir}/lib/dependencies"
 deps = ["#{root_dir}/core/target/classes",
         "#{root_dir}/test-application/target/classes",
         "#{root_dir}/test-keywords/target/classes",
+        Buildr.artifacts(ABBOT),
         Buildr.artifacts(DEPENDENCIES),
         Buildr.artifacts(TEST_DEPENDENCIES)].flatten
 
