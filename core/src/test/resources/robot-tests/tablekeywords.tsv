@@ -7,82 +7,82 @@ ${tableName}	testTable
 ${columnHeaderOne}	column one
 
 *Test Case*	*Action*	*Argument*	*Argument*
-Table Cell Should Not Be Selected By Index	[tags]	under_development
-	tableCellShouldNotBeSelected	0	0
+Table Cell Should Not Be Selected By Index
+	tableCellShouldNotBeSelected	${tableName}	0	0
 
-Table Cell Should Not Be Selected By Column Header	[tags]	under_development
-	tableCellShouldNotBeSelected	0	${columnHeaderOne}
+Table Cell Should Not Be Selected By Column Header
+	tableCellShouldNotBeSelected	${tableName}	0	${columnHeaderOne}
 
-Table Cell Should Be Selected By Index	[tags]	under_development
-	selectTableCell	3	2
-	tableCellShouldBeSelected	3	2
+Table Cell Should Be Selected By Index
+	selectTableCell	${tableName}	3	2
+	tableCellShouldBeSelected	${tableName}	3	2
 
-Table Cell Should Be Selected By Column Header	[tags]	under_development
-	selectTableCell	3	column two
-	tableCellShouldBeSelected	3	column two
+Table Cell Should Be Selected By Column Header
+	selectTableCell	${tableName}	3	column two
+	tableCellShouldBeSelected	${tableName}	3	column two
 
-Select Table Cell By Index	[tags]	under_development
-	selectTableCell	3	2
-	${cellValue}=	getSelectedTableCellValue
+Select Table Cell By Index
+	selectTableCell	${tableName}	3	2
+	${cellValue}=	getSelectedTableCellValue	${tableName}
 	shouldBeEqual	four/three	${cellValue}
 
-Select Table Cell By Column Header Name	[tags]	under_development
-	selectTableCell	1	column three
-	${cellValue}=	getSelectedTableCellValue
+Select Table Cell By Column Header Name
+	selectTableCell	${tableName}	1	column three
+	${cellValue}=	getSelectedTableCellValue	${tableName}
 	shouldBeEqual	two/three	${cellValue}
 
 Select Table Cell Should Fail If The Cell Doesn't Exist	[tags]	under_development
-	runKeywordAndExpectError	Table cell (row: 10, column: 15) doesn't exist.	selectTableCell	10	15
-	runKeywordAndExpectError	Table cell (row: 10, column: nonexisting) doesn't exist.	selectTableCell	10	nonexisting
+	runKeywordAndExpectError	Table cell (row: 10, column: 15) doesn't exist.	selectTableCell	${tableName}	10	15
+	runKeywordAndExpectError	Table cell (row: 10, column: nonexisting) doesn't exist.	selectTableCell	${tableName}	10	nonexisting
 
-Clear Table Selection	[tags]	under_development
-	selectTableCell	1	2
-	tableCellShouldBeSelected	1	2
-	clearTableSelection
-	tableCellShouldNotBeSelected	1	2
+Clear Table Selection
+	selectTableCell	${tableName}	1	2
+	tableCellShouldBeSelected	${tableName}	1	2
+	clearTableSelection	${tableName}
+	tableCellShouldNotBeSelected	${tableName}	1	2
 
-Get Selected Table Cell Value	[tags]	under_development
-	selectTableCell	3	2
-	${cellValue}=	getSelectedTableCellValue
+Get Selected Table Cell Value
+	selectTableCell	${tableName}	3	2
+	${cellValue}=	getSelectedTableCellValue	${tableName}
 	shouldBeEqual	four/three	${cellValue}
 
-Get Table Cell Value By Index	[tags]	under_development
-	${cellValue}=	getTableCellValue	2	1
+Get Table Cell Value By Index
+	${cellValue}=	getTableCellValue	${tableName}	2	1
 	shouldBeEqual	three/two	${cellValue}
 
-Get Table Cell Value By Column Header	[tags]	under_development
-	${cellValue}=	getTableCellValue	1	column two
+Get Table Cell Value By Column Header
+	${cellValue}=	getTableCellValue	${tableName}	1	column two
 	shouldBeEqual	two/two	${cellValue}
 
-Set Table Cell Value	[tags]	under_development
-	setTableCellValue	2	1	newValue
-	${cellValue}=	getTableCellValue	2	1
+Set Table Cell Value
+	setTableCellValue	${tableName}	2	1	newValue
+	${cellValue}=	getTableCellValue	${tableName}	2	1
 	shouldBeEqual	newValue	${cellValue}
 
-Get Table Column Count By Name	[tags]	under_development
+Get Table Column Count By Name
 	${columnCount}=	getTableColumnCount	${tableName}
 	shouldBeEqualAsIntegers	4	${columnCount}
 
-Get Table Column Count By Index	[tags]	under_development
+Get Table Column Count By Index
 	${columnCount}=	getTableColumnCount	0
 	shouldBeEqualAsIntegers	4	${columnCount}
 
-Get Table Row Count By Name	[tags]	under_development
+Get Table Row Count By Name
 	${rowCount}=	getTableRowCount	${tableName}
 	shouldBeEqualAsIntegers	4	${rowCount}
 
-Get Table Row Count By Index	[tags]	under_development
+Get Table Row Count By Index
 	${rowCount}=	getTableRowCount	0
 	shouldBeEqualAsIntegers	4	${rowCount}
 
-Table Keywords Fail If Context Is Not a Table	[tags]	under_development
+Table Keywords Fail If Context Is Not a Table
 	selectEmptyContext
-	tableKeywordShouldFail	getTableCellValue	0	0
-	tableKeywordShouldFail	getSelectedTableCellValue
-	tableKeywordShouldFail	tableCellShouldBeSelected	0	0
-	tableKeywordShouldFail	tableCellShouldNotBeSelected	0	0
-	tableKeywordShouldFail	selectTableCell	0	0
-	tableKeywordShouldFail	clearTableSelection
+	tableKeywordShouldFail	getTableCellValue	someTable	0	0
+	tableKeywordShouldFail	getSelectedTableCellValue	someTable
+	tableKeywordShouldFail	tableCellShouldBeSelected	someTable	0	0
+	tableKeywordShouldFail	tableCellShouldNotBeSelected	someTable	0	0
+	tableKeywordShouldFail	selectTableCell	someTable	0	0
+	tableKeywordShouldFail	clearTableSelection	someTable
 	tableKeywordShouldFail	getTableColumnCount	someTable
 	tableKeywordShouldFail	getTableRowCount	someTable
 	[teardown]	selectMainWindow
@@ -93,4 +93,4 @@ tableKeywordShouldFail	[Arguments]	${keyword}	@{arguments}
 
 clearTable
 	selectMainWindow
-	clearTableSelection
+	clearTableSelection	${tableName}
