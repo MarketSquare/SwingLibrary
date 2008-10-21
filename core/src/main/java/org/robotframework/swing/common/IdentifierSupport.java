@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.common;
 
+
 /**
  * @author Heikki Hulkko
  */
@@ -34,23 +35,5 @@ public class IdentifierSupport {
             return false;
         }
         return true;
-    }
-
-    public String extractId(String[] args) {
-        if (containsId(args))
-            return args[findIndex(args)].substring(idTag .length());
-        return defaultId;
-    }
-
-    private boolean containsId(String[] args) {
-        return findIndex(args) >= 0;
-    }
-    
-    private int findIndex(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-            if (args[i].startsWith(idTag))
-                return i;
-        }
-        return -1;
     }
 }

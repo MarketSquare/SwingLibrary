@@ -18,8 +18,7 @@ import org.robotframework.swing.table.EnhancedTableOperator;
 
 @RunWith(JDaveRunner.class)
 public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
-    private String id = "someTable";
-    private String[] tableIdentifier = new String[] { "ID=" + id };
+    private String tableIdentifier = "someTable";
     private EnhancedTableOperator tableOperator;
     private String columnIdentifier = "two";
     private String row = "1";
@@ -84,6 +83,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             injectMockContextVerifier();
             return tableKeywords;
         }
+        
         public void getsTableColumnCount() {
             checking(new Expectations() {{
                 one(tableOperator).getColumnCount(); will(returnValue(7));
@@ -100,6 +100,16 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context.getTableRowCount(tableIdentifier), must.equal(7));
         }
 
+        public void setsTableCellValue() {
+            final String newValue = "newValue";
+
+            checking(new Expectations() {{
+                one(tableOperator).setValueAt(newValue, row, columnIdentifier);
+            }});
+
+            context.setTableCellValue(tableIdentifier, row, columnIdentifier, newValue);
+        }
+        
         private void injectMockContextVerifier() {
             contextVerifier = injectMockTo(tableKeywords, IContextVerifier.class);
 
@@ -113,7 +123,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             tableOperator = mock(EnhancedTableOperator.class);
 
             checking(new Expectations() {{
-                one(operatorFactory).createOperator(id);
+                one(operatorFactory).createOperator(tableIdentifier);
                 will(returnValue(tableOperator));
             }});
         }
@@ -226,16 +236,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
 
             specify(context.getSelectedTableCellValue(), must.equal(cellValue.toString()));
-        }
-
-        public void setsTableCellValue() {
-            final String newValue = "newValue";
-
-            checking(new Expectations() {{
-                one(tableOperator).setValueAt(newValue, row, columnIdentifier);
-            }});
-
-            context.setTableCellValue(row, columnIdentifier, newValue);
         }
     }
 

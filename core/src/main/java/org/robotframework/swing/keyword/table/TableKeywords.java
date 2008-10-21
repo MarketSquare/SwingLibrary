@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.table;
 
 import junit.framework.Assert;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
@@ -26,7 +27,6 @@ import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.table.EnhancedTableOperator;
-import org.robotframework.swing.table.TableContextVerifier;
 import org.robotframework.swing.table.TableOperatorFactory;
 
 /**
@@ -35,7 +35,6 @@ import org.robotframework.swing.table.TableOperatorFactory;
 @RobotKeywords
 public class TableKeywords extends IdentifierSupport {
     private OperatorFactory<EnhancedTableOperator> operatorFactory = new TableOperatorFactory();
-    private IContextVerifier tableContextVerifier = new TableContextVerifier();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects a cell.\n"
@@ -103,33 +102,41 @@ public class TableKeywords extends IdentifierSupport {
     	+ "Assumes current context is a table.\n\n"
     	+ "Example:\n"
     	+ "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
-    public void setTableCellValue(String row, String columnIdentifier, String newValue) {
-        contextVerifier.verifyContext();
-        tableOperator().setValueAt(newValue, row, columnIdentifier);
+    @ArgumentNames({"identifier", "row", "columnIdentifier", "newValue"})
+    public void setTableCellValue(String identifier, String row, String columnIdentifier, String newValue) {
+        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        tableOperator.setValueAt(newValue, row, columnIdentifier);
     }
 
-    @RobotKeyword("Returns the number of rows in the table.\n\n"
+    @RobotKeyword("Returns the number of columns in the table.\n"
+        + "If no table identifier is specified, returns the column count from the first table\n"
+        + "encountered in the current context.\n\n"
         + "Example:\n"
-        + "| ${columnCount}= | Get Table Column Count | _myTable_ |\n"
-        + "| Should Be Equal As Integers | _4_ | _${columnCount}_ |\n")
-    public int getTableColumnCount(String[] identifier) {
-        contextVerifier.verifyContext();
-        String id = extractId(identifier);
-        return operatorFactory.createOperator(id).getColumnCount();
+        + "| ${columnCount}= | Get Table Column Count | |\n"
+        + "| Should Be Equal As Integers | _4_ | _${columnCount}_ |\n\n"
+        + "If you want to specify on which table to operate you can do it the following way:\n"
+        + "| ${columnCount}= | Get Table Column Count | _ID=myTable_ |\n")
+    public int getTableColumnCount(String identifier) {
+        return createTableOperator(identifier).getColumnCount();
     }
 
-
-    @RobotKeyword("Returns the number of rows in the table.\n\n"
+    @RobotKeyword("Returns the number of rows in the table.\n"
+        + "encountered in the current context.\n\n"
+        + "If no table identifier is specified, returns the row count from the first table\n"
         + "Example:\n"
-        + "| ${rowCount}= | Get Table Row Count | _myTable_ |\n"
-        + "| Should Be Equal As Integers | _5_ | _${rowCount}_ |\n")
-    public int getTableRowCount(String[] identifier) {
-        contextVerifier.verifyContext();
-        String id = extractId(identifier);
-        EnhancedTableOperator tableOperator = operatorFactory.createOperator(id);
-        return tableOperator.getRowCount();
+        + "| ${rowCount}= | Get Table Row Count | |\n"
+        + "| Should Be Equal As Integers | _4_ | _${rowCount}_ |\n\n"
+        + "If you want to specify on which table to operate you can do it the following way:\n"
+        + "| ${rowCount}= | Get Table Row Count | _ID=myTable_ |\n")
+    public int getTableRowCount(String identifier) {
+        return createTableOperator(identifier).getRowCount();
     }
-
+    
+    private EnhancedTableOperator createTableOperator(String identifier) {
+        contextVerifier.verifyContext();
+        return operatorFactory.createOperator(identifier);   
+    }
+    
     private EnhancedTableOperator tableOperator() {
         return (EnhancedTableOperator) Context.getContext();
     }

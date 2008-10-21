@@ -40,21 +40,4 @@ public class IdentifierSupportSpec extends Specification<IdentifierSupport> {
             specify(identifierSupport.asIndex("1"), must.equal(1));
         }
     }
-    
-    public class ExtractingIdentifiers {
-        public void extractsIdentifier() {
-            String[] id = new String[] { "ID=someIdentifier" };
-            specify(identifierSupport.extractId(id), must.equal("someIdentifier"));
-        }
-        
-        public void extractsIdentifierFromAnyIndex() {
-            String[] id = new String[] { "", "", "ID=someIdentifier" };
-            specify(identifierSupport.extractId(id), must.equal("someIdentifier"));
-        }
-        
-        public void returnsDefaultIdentifierWhenNoIdentiferFound() {
-            String[] id = new String[0];
-            specify(identifierSupport.extractId(id), must.equal("0"));
-        }
-    }
 }
