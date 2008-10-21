@@ -76,11 +76,10 @@ public class TableKeywords extends IdentifierSupport {
         Assert.assertFalse("Cell '" + row + "', '" + columnIdentifier + "' is selected.", tableOperator().isCellSelected(row, columnIdentifier));
     }
 
-    @RobotKeyword("Returns cell's value.\n"
-        + "Assumes current context is a table.\n\n"
+    @RobotKeyword("Returns cell's value from a table.\n\n"
         + "Example:\n"
-        + "| ${cellValue}=   | Get Table Cell Value   | _0_            | _2_ |\n"
-        + "| Should Be Equal | _tuesday_              | _${cellValue}_ |     |\n")
+        + "| ${cellValue}=   | Get Table Cell Value | _myTable_ | _0_            | _2_ |\n"
+        + "| Should Be Equal | _tuesday_            |           | _${cellValue}_ |     |\n")
     public String getTableCellValue(String identifier, String row, String columnIdentifier) {
         EnhancedTableOperator tableOperator = createTableOperator(identifier);
         return tableOperator.getValueAt(row, columnIdentifier).toString();
@@ -89,7 +88,7 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Returns selected cell's value.\n"
         + "Assumes current context is a table.\n\n"
         + "Example:\n"
-        + "| ${cellValue}=   | Get Selected Table Cell Value   |              |\n"
+        + "| ${cellValue}=   | Get Selected Table Cell Value   | _myTable_      |\n"
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
     public Object getSelectedTableCellValue(String identifier) {
         EnhancedTableOperator tableOperator = createTableOperator(identifier);
