@@ -108,26 +108,18 @@ public class TableKeywords extends IdentifierSupport {
         tableOperator.setValueAt(newValue, row, columnIdentifier);
     }
 
-    @RobotKeyword("Returns the number of columns in the table.\n"
-        + "If no table identifier is specified, returns the column count from the first table\n"
-        + "encountered in the current context.\n\n"
+    @RobotKeyword("Returns the number of columns from a table.\n\n"
         + "Example:\n"
-        + "| ${columnCount}= | Get Table Column Count | |\n"
-        + "| Should Be Equal As Integers | _4_ | _${columnCount}_ |\n\n"
-        + "If you want to specify on which table to operate you can do it the following way:\n"
-        + "| ${columnCount}= | Get Table Column Count | _ID=myTable_ |\n")
+        + "| ${columnCount}= | Get Table Column Count | _myTable_ |\n"
+        + "| Should Be Equal As Integers | _4_ | _${columnCount}_ |\n")
     public int getTableColumnCount(String identifier) {
         return createTableOperator(identifier).getColumnCount();
     }
 
-    @RobotKeyword("Returns the number of rows in the table.\n"
-        + "encountered in the current context.\n\n"
-        + "If no table identifier is specified, returns the row count from the first table\n"
+    @RobotKeyword("Returns the number of rows from a table.\n\n"
         + "Example:\n"
-        + "| ${rowCount}= | Get Table Row Count | |\n"
-        + "| Should Be Equal As Integers | _4_ | _${rowCount}_ |\n\n"
-        + "If you want to specify on which table to operate you can do it the following way:\n"
-        + "| ${rowCount}= | Get Table Row Count | _ID=myTable_ |\n")
+        + "| ${rowCount}= | Get Table Row Count | _myTable_ |\n"
+        + "| Should Be Equal As Integers | _4_ | _${rowCount}_ |\n")
     public int getTableRowCount(String identifier) {
         return createTableOperator(identifier).getRowCount();
     }
