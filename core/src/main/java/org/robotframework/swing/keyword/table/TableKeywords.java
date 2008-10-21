@@ -91,15 +91,14 @@ public class TableKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| ${cellValue}=   | Get Selected Table Cell Value   |              |\n"
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
-    public Object getSelectedTableCellValue() {
-        contextVerifier.verifyContext();
-        int selectedRow = tableOperator().getSelectedRow();
-        int selectedColumn = tableOperator().getSelectedColumn();
-        return tableOperator().getValueAt(selectedRow, selectedColumn).toString();
+    public Object getSelectedTableCellValue(String identifier) {
+        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        int selectedRow = tableOperator.getSelectedRow();
+        int selectedColumn = tableOperator.getSelectedColumn();
+        return tableOperator.getValueAt(selectedRow, selectedColumn).toString();
     }
 
-    @RobotKeyword("Sets the cell value.\n"
-    	+ "Assumes current context is a table.\n\n"
+    @RobotKeyword("Sets cell value in a table.\n\n"
     	+ "Example:\n"
     	+ "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "newValue"})

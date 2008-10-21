@@ -77,6 +77,11 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         private OperatorFactory operatorFactory;
         private IContextVerifier contextVerifier;
         private TableKeywords tableKeywords = new TableKeywords();
+        private Object cellValue = new Object() {
+            public String toString() {
+                return "someValue";
+            }
+        };
 
         public TableKeywords create() {
             injectMockOperatorFactory();
@@ -108,6 +113,19 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
 
             context.setTableCellValue(tableIdentifier, row, columnIdentifier, newValue);
+        }
+
+        public void getsSelectedTableCellValue() {
+            final int row = 5;
+            final int column = 2;
+            checking(new Expectations() {{
+                one(tableOperator).getSelectedColumn(); will(returnValue(column));
+                one(tableOperator).getSelectedRow(); will(returnValue(row));
+                one(tableOperator).getValueAt(row, column);
+                will(returnValue(cellValue));
+            }});
+
+            specify(context.getSelectedTableCellValue(tableIdentifier), must.equal(cellValue.toString()));
         }
         
         private void injectMockContextVerifier() {
@@ -223,19 +241,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
 
             specify(context.getTableCellValue(row, columnIdentifier), must.equal(cellValue.toString()));
-        }
-
-        public void getsSelectedTableCellValue() {
-            final int row = 5;
-            final int column = 2;
-            checking(new Expectations() {{
-                one(tableOperator).getSelectedColumn(); will(returnValue(column));
-                one(tableOperator).getSelectedRow(); will(returnValue(row));
-                one(tableOperator).getValueAt(row, column);
-                will(returnValue(cellValue));
-            }});
-
-            specify(context.getSelectedTableCellValue(), must.equal(cellValue.toString()));
         }
     }
 
