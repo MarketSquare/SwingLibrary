@@ -43,11 +43,6 @@ public class TreePathFactory extends IdentifierHandler<TreePath> {
         return treeOperator().findPath(nodePath);
     }
 
-    @Override
-    public TreePath parseArgument(String nodeIdentifier) {
-        return super.parseArgument(nodeIdentifier);
-    }
-
     public TreePath createTreePath(String nodeIdentifier) {
         return parseArgument(nodeIdentifier);
     }
