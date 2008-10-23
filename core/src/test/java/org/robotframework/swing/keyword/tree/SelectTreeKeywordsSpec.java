@@ -26,8 +26,7 @@ public class SelectTreeKeywordsSpec extends TreeSpecification<SelectTreeKeywords
 
     public class ClearingSelection {
         public SelectTreeKeywords create() {
-            treeKeywords = new SelectTreeKeywords();
-            return createKeywordsWithMockInternals();
+            return populateWithMockOperatingFactoryAndContextVerifier(new SelectTreeKeywords());
         }
 
         public void clearsTreeSelection() {

@@ -16,14 +16,10 @@
 
 package org.robotframework.swing.keyword.tree;
 
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-
 import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.tree.TreePathFactory;
 import org.robotframework.swing.tree.TreeSupport;
 
 /**
@@ -31,79 +27,69 @@ import org.robotframework.swing.tree.TreeSupport;
  */
 @RobotKeywords
 public class TreeNodeKeywords extends TreeSupport {
-    private TreePathFactory treePathFactory = new TreePathFactory();
-
-    @RobotKeyword("Collapses a tree node.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Collapses a node in a tree.\n\n"
         + "Examples:\n"
-        + "| Collapse Tree Node | _Root|Folder_ |\n"
-        + "| Collapse Tree Node | _3_ |\n")
-    public void collapseTreeNode(String nodeIdentifier) {
-        treeOperator().collapsePath(treePathFactory.createTreePath(nodeIdentifier));
+        + "| Collapse Tree Node | _myTree_ | _Root|Folder_ |\n"
+        + "| Collapse Tree Node | _myTree_ | _3_ |\n")
+    public void collapseTreeNode(String identifier, String nodeIdentifier) {
+        createTreeOperator(identifier).collapse(nodeIdentifier);
     }
 
-    @RobotKeyword("Expands a tree node.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Expands a node in a tree.\n\n"
         + "Examples:\n"
-        + "| Expand Tree Node | _Root|Folder_ |\n"
-        + "| Expand Tree Node | _3_ |\n")
-    public void expandTreeNode(String nodeIdentifier) {
-        treeOperator().expandPath(treePathFactory.createTreePath(nodeIdentifier));
+        + "| Expand Tree Node | _myTree_ | _Root|Folder_ |\n"
+        + "| Expand Tree Node | _myTree_ | _3_ |\n")
+    public void expandTreeNode(String identifier, String nodeIdentifier) {
+        createTreeOperator(identifier).expand(nodeIdentifier);
     }
 
-    @RobotKeyword("Sets a tree node as selected.\n"
-        + "Does not clear earlier selections. Assumes current context is a tree.\n\n"
+    @RobotKeyword("Sets a node as selected in a tree.\n"
+        + "Does not clear earlier selections.\n\n"
         + "Example:\n"
-        + "| Select Tree Node | _Root|Folder_ |\n")
-    public void selectTreeNode(String nodeIdentifier) {
-        treeOperator().addSelectionPath(treePathFactory.createTreePath(nodeIdentifier));
+        + "| Select Tree Node | _myTree_ | _Root|Folder_ |\n")
+    public void selectTreeNode(String identifier, String nodeIdentifier) {
+        createTreeOperator(identifier).addSelection(nodeIdentifier);
     }
 
-    @RobotKeyword("Fails if the tree node is collapsed.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if the tree node is collapsed.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Expanded | _Root|Folder_ |\n")
-    public void treeNodeShouldBeExpanded(String nodeIdentifier) {
-        TreePath treePath = treePathFactory.createTreePath(nodeIdentifier);
-        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not expanded.", treeOperator().isExpanded(treePath));
+        + "| Tree Node Should Be Expanded | _myTree_ | _Root|Folder_ |\n")
+    public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier) {
+        boolean isExpanded = createTreeOperator(identifier).isExpanded(nodeIdentifier);
+        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not expanded.", isExpanded);
     }
 
-    @RobotKeyword("Fails if the tree node is expanded.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if the tree node is expanded.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Collapsed | _Root|Folder_ |\n")
-    public void treeNodeShouldBeCollapsed(String nodeIdentifier) {
-        TreePath treePath = treePathFactory.createTreePath(nodeIdentifier);
-        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not collapsed.", treeOperator().isCollapsed(treePath));
+        + "| Tree Node Should Be Collapsed | _myTree_ | _Root|Folder_ |\n")
+    public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier) {
+        boolean isCollapsed = createTreeOperator(identifier).isCollapsed(nodeIdentifier);
+        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not collapsed.", isCollapsed);
     }
 
-    @RobotKeyword("Sets a tree node as unselected.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Sets a tree node as unselected.\n\n"
         + "Example:\n"
-        + "| Unselect Tree Node | _Root|Folder_ |\n")
-    public void unselectTreeNode(String nodeIdentifier) {
-        treeOperator().removeSelectionPath(treePathFactory.createTreePath(nodeIdentifier));
+        + "| Unselect Tree Node | _myTree_ | _Root|Folder_ |\n")
+    public void unselectTreeNode(String identifier, String nodeIdentifier) {
+        createTreeOperator(identifier).removeSelection(nodeIdentifier);
     }
 
     @RobotKeyword("Fails if the node has child nodes.\n"
         + "Assumes current context is a tree.\n"
         + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Leaf | _Root|Folder_ |")
-    public void treeNodeShouldBeLeaf(String nodeIdentifier) {
-        TreeNode lastPathComponent =
-            (TreeNode) treePathFactory.createTreePath(nodeIdentifier).getLastPathComponent();
-        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", lastPathComponent.isLeaf());
+        + "| Tree Node Should Be Leaf | _myTree_ | _Root|Folder_ |")
+    public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier) {
+        boolean isLeaf = createTreeOperator(identifier).isLeaf(nodeIdentifier);
+        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", isLeaf);
     }
 
     @RobotKeyword("Fails if the node doesn't have child nodes.\n"
-        + "Assumes current context is a tree.\n"
         + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
-        + "| Tree Node Should Not Be Leaf | _Root|Folder_ |")
-    public void treeNodeShouldNotBeLeaf(String nodeIdentifier) {
-        TreeNode lastPathComponent =
-            (TreeNode) treePathFactory.createTreePath(nodeIdentifier).getLastPathComponent();
-        Assert.assertFalse("Tree node '" + nodeIdentifier + "' is leaf.", lastPathComponent.isLeaf());
+        + "| Tree Node Should Not Be Leaf | _myTree_ | _Root|Folder_ |")
+    public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier) {
+        boolean isLeaf = createTreeOperator(identifier).isLeaf(nodeIdentifier);
+        Assert.assertFalse("Tree node '" + nodeIdentifier + "' is leaf.", isLeaf);
     }
 }

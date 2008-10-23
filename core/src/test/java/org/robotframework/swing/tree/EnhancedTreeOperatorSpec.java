@@ -4,6 +4,8 @@ import java.awt.Point;
 
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 import jdave.ExpectationFailedException;
 import jdave.junit4.JDaveRunner;
@@ -19,6 +21,8 @@ import org.robotframework.swing.popup.IPopupCaller;
 
 @RunWith(JDaveRunner.class)
 public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<EnhancedTreeOperator> {
+    private String nodeIdentifier = "some|node";
+    
     public class Any {
         public void hasPopupCaller() {
             EnhancedTreeOperator enhancedTreeOperator = new EnhancedTreeOperator(createMockContainerOperator(), dummy(ComponentChooser.class));
@@ -26,6 +30,91 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
         }
     }
 
+    public class Operating {
+        private JTree tree;
+        private TreePath treePath;
+        private EnhancedTreeOperator enhancedTreeOperator;
+        
+        public EnhancedTreeOperator create() {
+            treePath = mock(TreePath.class);
+            tree = createMockJTree();
+            enhancedTreeOperator = new EnhancedTreeOperator(tree);
+            injectMockPathFactory();
+            return enhancedTreeOperator;
+        }
+
+        public void expandsPath() {
+            checking(new Expectations() {{
+                one(tree).expandPath(treePath);
+            }});
+            
+            context.expand(nodeIdentifier);
+        }
+        
+        public void collapsesPath() {
+            checking(new Expectations() {{
+                one(tree).collapsePath(treePath);
+            }});
+            
+            context.collapse(nodeIdentifier);
+        }
+        
+        public void addsSelection() {
+            checking(new Expectations() {{
+                one(tree).addSelectionPath(treePath);
+            }});
+            
+            context.addSelection(nodeIdentifier);
+        }
+        
+        public void removesSelection() {
+            checking(new Expectations() {{
+                one(tree).removeSelectionPath(treePath);
+            }});
+            
+            context.removeSelection(nodeIdentifier);
+        }
+        
+
+        public void checksExpanded() {
+            checking(new Expectations() {{
+                one(tree).isExpanded(treePath); will(returnValue(true));
+            }});
+            
+            specify(context.isExpanded(nodeIdentifier));
+        }
+        
+        public void checksCollapsed() {
+            checking(new Expectations() {{
+                one(tree).isCollapsed(treePath); will(returnValue(true));
+            }});
+            
+            specify(context.isCollapsed(nodeIdentifier));
+        }
+        
+        public void checksIsLeaf() {
+            final TreeNode treeNode = mock(TreeNode.class);
+            checking(new Expectations() {{
+                one(treePath).getLastPathComponent(); will(returnValue(treeNode));
+                one(treeNode).isLeaf(); will(returnValue(true));
+            }});
+            
+            specify(context.isLeaf(nodeIdentifier));
+            
+//            TreeNode lastPathComponent =
+//              (TreeNode) treePathFactory.createTreePath(nodeIdentifier).getLastPathComponent();
+//          Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", lastPathComponent.isLeaf());
+        }
+        
+        private void injectMockPathFactory() {
+            final TreePathFactory pathFactory = injectMockTo(enhancedTreeOperator, TreePathFactory.class);
+            checking(new Expectations() {{
+                one(pathFactory).createTreePath(nodeIdentifier);
+                will(returnValue(treePath));
+            }});
+        }
+    }
+    
     public class CallingPopup {
         private int selectRowCallCount = 0;
         private int scrollToRowCallCount = 0;

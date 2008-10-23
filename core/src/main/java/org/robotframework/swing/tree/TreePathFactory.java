@@ -20,18 +20,20 @@ import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.TimeoutExpiredException;
 import org.robotframework.swing.arguments.IdentifierHandler;
-import org.robotframework.swing.context.Context;
-import org.robotframework.swing.context.IContextVerifier;
 
 /**
  * @author Heikki Hulkko
  */
 public class TreePathFactory extends IdentifierHandler<TreePath> {
-    private IContextVerifier contextVerifier = new TreeContextVerifier();
+    private final EnhancedTreeOperator treeOperator;
+
+    public TreePathFactory(EnhancedTreeOperator treeOperator) {
+        this.treeOperator = treeOperator;
+    }
 
     @Override
     public TreePath indexArgument(int row) {
-        TreePath pathForRow = treeOperator().getPathForRow(row);
+        TreePath pathForRow = treeOperator.getPathForRow(row);
         if (pathForRow == null) {
             throw new TimeoutExpiredException("Couldn't find tree path for row '" + row + "'");
         }
@@ -40,15 +42,10 @@ public class TreePathFactory extends IdentifierHandler<TreePath> {
 
     @Override
     public TreePath nameArgument(String nodePath) {
-        return treeOperator().findPath(nodePath);
+        return treeOperator.findPath(nodePath);
     }
 
     public TreePath createTreePath(String nodeIdentifier) {
         return parseArgument(nodeIdentifier);
-    }
-
-    private EnhancedTreeOperator treeOperator() {
-        contextVerifier.verifyContext();
-        return (EnhancedTreeOperator) Context.getContext();
     }
 }

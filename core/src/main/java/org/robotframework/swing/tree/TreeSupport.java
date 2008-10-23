@@ -18,6 +18,7 @@ package org.robotframework.swing.tree;
 
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
+import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 
@@ -25,8 +26,8 @@ import org.robotframework.swing.factory.OperatorFactory;
  * @author Heikki Hulkko
  */
 public class TreeSupport extends IdentifierSupport {
-    private IContextVerifier contextVerifier = new TreeContextVerifier();
-    private OperatorFactory<EnhancedTreeOperator> operatorFactory = new EnhancedTreeOperatorFactory();
+    private IContextVerifier contextVerifier = new DefaultContextVerifier();
+    protected OperatorFactory<EnhancedTreeOperator> operatorFactory = new EnhancedTreeOperatorFactory();
     
     public EnhancedTreeOperator createTreeOperator(String identifier) {
         verifyContext();

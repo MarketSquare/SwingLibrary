@@ -9,8 +9,7 @@ import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.tree.TreeNodeExistenceKeywords;
-import org.robotframework.swing.util.IComponentConditionResolver;
+import org.robotframework.swing.tree.TreeNodeExistenceResolver;
 
 
 @RunWith(JDaveRunner.class)
@@ -34,13 +33,18 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
     }
 
     public class ResolvingExistence {
-        private IComponentConditionResolver conditionResolver;
         private String nodeIdentifier = "some|node";
+        private String treeIdentifier = "someTree";
+        private TreeNodeExistenceResolver nodeExistenceResolver;
 
         public TreeNodeExistenceKeywords create() {
-            TreeNodeExistenceKeywords treeNodeExistenceKeywords = new TreeNodeExistenceKeywords();
-            conditionResolver = injectMockTo(treeNodeExistenceKeywords, "treeNodeExistenceResolver", IComponentConditionResolver.class);
-            return treeNodeExistenceKeywords;
+            nodeExistenceResolver = mock(TreeNodeExistenceResolver.class);
+            
+            return new TreeNodeExistenceKeywords() {
+                TreeNodeExistenceResolver createExistenceResolver(String treeIdentifier) {
+                    return nodeExistenceResolver;
+                }
+            };
         }
 
         public void treeNodeShouldExistPassesIfTreeNodeExists() throws Throwable {
@@ -48,7 +52,7 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldExist(nodeIdentifier);
+                    context.treeNodeShouldExist(treeIdentifier, nodeIdentifier);
                 }
             }, must.not().raise(Exception.class));
         }
@@ -58,7 +62,7 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldExist(nodeIdentifier);
+                    context.treeNodeShouldExist(treeIdentifier, nodeIdentifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' doesn't exist."));
         }
@@ -68,7 +72,7 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldNotExist(nodeIdentifier);
+                    context.treeNodeShouldNotExist(treeIdentifier, nodeIdentifier);
                 }
             }, must.not().raise(Exception.class));
         }
@@ -79,14 +83,14 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldNotExist(nodeIdentifier);
+                    context.treeNodeShouldNotExist(treeIdentifier, nodeIdentifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' exists."));
         }
 
         private void setNodeFound(final boolean nodeFound) {
             checking(new Expectations() {{
-                one(conditionResolver).satisfiesCondition(nodeIdentifier);
+                one(nodeExistenceResolver).treeNodeExists(nodeIdentifier);
                 will(returnValue(nodeFound));
             }});
         }

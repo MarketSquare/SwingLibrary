@@ -20,10 +20,8 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.tree.TreePathFactory;
+import org.robotframework.swing.tree.TreeNodeExistenceResolver;
 import org.robotframework.swing.tree.TreeSupport;
-import org.robotframework.swing.util.ComponentExistenceResolver;
-import org.robotframework.swing.util.IComponentConditionResolver;
 
 
 /**
@@ -31,17 +29,21 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class TreeNodeExistenceKeywords extends TreeSupport {
-    private IComponentConditionResolver treeNodeExistenceResolver = new ComponentExistenceResolver(new TreePathFactory());
-
     @RobotKeyword("Fails if the tree node does not exist.\n" + " Assumes current context is a tree.\n\n" + "Example:\n"
         + "| Tree Node Should Exist | _Root|Folder_ |\n")
-    public void treeNodeShouldExist(String nodeIdentifier) {
-        Assert.assertTrue("Tree node '" + nodeIdentifier + "' doesn't exist.", treeNodeExistenceResolver.satisfiesCondition(nodeIdentifier));
+    public void treeNodeShouldExist(String identifier, String nodeIdentifier) {
+        boolean treeNodeExists = createExistenceResolver(identifier).treeNodeExists(nodeIdentifier);
+        Assert.assertTrue("Tree node '" + nodeIdentifier + "' doesn't exist.", treeNodeExists);
     }
 
     @RobotKeyword("Fails if the tree node exists.\n" + " Assumes current context is a tree.\n\n" + "Example:\n"
         + "| Tree Node Should Not Exist | _Root|Folder_ |\n")
-    public void treeNodeShouldNotExist(String nodeIdentifier) {
-        Assert.assertFalse("Tree node '" + nodeIdentifier + "' exists.", treeNodeExistenceResolver.satisfiesCondition(nodeIdentifier));
+    public void treeNodeShouldNotExist(String identifier, String nodeIdentifier) {
+        boolean treeNodeExists = createExistenceResolver(identifier).treeNodeExists(nodeIdentifier);
+        Assert.assertFalse("Tree node '" + nodeIdentifier + "' exists.", treeNodeExists);
+    }
+    
+    TreeNodeExistenceResolver createExistenceResolver(String treeIdentifier) {
+        return new TreeNodeExistenceResolver(createTreeOperator(treeIdentifier));
     }
 }

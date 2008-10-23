@@ -20,6 +20,7 @@ import java.awt.Point;
 
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.ComponentChooser;
@@ -38,6 +39,7 @@ import org.robotframework.swing.popup.IPopupCaller;
  */
 public class EnhancedTreeOperator extends JTreeOperator implements IOperator {
     private IPopupCaller popupCaller = new DefaultPopupCaller();
+    private TreePathFactory treePathFactory = new TreePathFactory(this);
 
     public EnhancedTreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {
         super(containerOperator, componentChooser);
@@ -66,7 +68,40 @@ public class EnhancedTreeOperator extends JTreeOperator implements IOperator {
             throw new RuntimeException(e);
         }
     }
-
+    
+    public void expand(String nodeIdentifier) {
+        expandPath(createTreePath(nodeIdentifier));
+    }
+    
+    public void collapse(String nodeIdentifier) {
+        collapsePath(createTreePath(nodeIdentifier));
+    }
+    
+    public void addSelection(String nodeIdentifier) {
+        addSelectionPath(createTreePath(nodeIdentifier));
+    }
+    
+    public void removeSelection(String nodeIdentifier) {
+        removeSelectionPath(createTreePath(nodeIdentifier));
+    }
+    
+    public boolean isExpanded(String nodeIdentifier) {
+        return isExpanded(createTreePath(nodeIdentifier));
+    }
+    
+    public boolean isCollapsed(String nodeIdentifier) {
+        return isCollapsed(createTreePath(nodeIdentifier));
+    }
+    
+    public boolean isLeaf(String nodeIdentifier) {
+        TreeNode lastPathComponent = (TreeNode) createTreePath(nodeIdentifier).getLastPathComponent();
+        return lastPathComponent.isLeaf();
+    }
+    
+    private TreePath createTreePath(String nodeIdentifier) {
+        return treePathFactory.createTreePath(nodeIdentifier);
+    }
+    
     private Waiter createTreeWaiter(String treePath) {
         Waiter waiter = new Waiter(new TreePathWaitable(treePath));
         Timeouts nextNodeTimeout = copyTimeout("JTreeOperator.WaitNextNodeTimeout");

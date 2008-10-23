@@ -29,11 +29,8 @@ public abstract class TreeSpecification<T extends TreeSupport> extends MockSuppo
     protected EnhancedTreeOperator treeOperator;
     protected String treeIdentifier = "someTree";
 
-    protected T createKeywordsWithMockInternals() {
-        if (treeKeywords == null) {
-            throw new IllegalStateException("Please create treeKeywords first and assign it to 'treeKeywords'.");
-        }
-
+    protected T populateWithMockOperatingFactoryAndContextVerifier(T treeKeywords) {
+        this.treeKeywords = treeKeywords;
         treeOperator = mock(EnhancedTreeOperator.class);
         
         injectMockOperatorFactory();

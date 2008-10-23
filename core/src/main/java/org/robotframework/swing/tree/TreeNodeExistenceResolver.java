@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.common;
 
+package org.robotframework.swing.tree;
 
-/**
- * @author Heikki Hulkko
- */
-public class IdentifierSupport {
-    public int asIndex(String identifier) {
-        return Integer.parseInt(identifier);
+import org.robotframework.swing.util.ComponentExistenceResolver;
+
+public class TreeNodeExistenceResolver {
+    private TreePathFactory treePathFactory;
+
+    public TreeNodeExistenceResolver(EnhancedTreeOperator treeOperator) {
+        treePathFactory = new TreePathFactory(treeOperator);
     }
 
-    public boolean isIndex(String identifier) {
-        try {
-            Integer.parseInt(identifier);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return true;
+    public boolean treeNodeExists(String nodePath) {
+        return new ComponentExistenceResolver(treePathFactory).satisfiesCondition(nodePath);
     }
 }
