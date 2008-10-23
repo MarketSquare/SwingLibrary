@@ -103,6 +103,22 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
             specify(context.isLeaf(nodeIdentifier));
         }
         
+        public void checksIsSelected() {
+            checking(new Expectations() {{
+                one(tree).isPathSelected(treePath); will(returnValue(true));
+            }});
+            
+            specify(context.isPathSelected(nodeIdentifier));
+        }
+
+        public void checksIsVisible() {
+            checking(new Expectations() {{
+                one(tree).isVisible(treePath); will(returnValue(true));
+            }});
+            
+            specify(context.isVisible(nodeIdentifier));
+        }
+        
         private void injectMockPathFactory() {
             final TreePathFactory pathFactory = injectMockTo(enhancedTreeOperator, TreePathFactory.class);
             checking(new Expectations() {{

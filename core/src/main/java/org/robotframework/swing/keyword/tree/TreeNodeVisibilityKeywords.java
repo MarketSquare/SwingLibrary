@@ -27,37 +27,27 @@ import org.robotframework.swing.tree.TreeSupport;
  */
 @RobotKeywords
 public class TreeNodeVisibilityKeywords extends TreeSupport {
-    @RobotKeyword("Fails if the tree node is not visible.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if the tree node is not visible.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Visible | _Root|Folder_ |\n")
-    public void treeNodeShouldBeVisible(String nodePath) {
-        verifyContextAndPath(nodePath);
-
-        Assert.assertTrue("Tree node '" + nodePath + "' is not visible.", isVisible(nodePath));
+        + "| Tree Node Should Be Visible | _myTree_ | _Root|Folder_ |\n")
+    public void treeNodeShouldBeVisible(String identifier, String nodePath) {
+        Assert.assertTrue("Tree node '" + nodePath + "' is not visible.", isVisible(identifier, nodePath));
     }
 
-    @RobotKeyword("Fails if the tree node is visible.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if the tree node is visible.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Not Be Visible | _Root|Folder_ |\n")
-    public void treeNodeShouldNotBeVisible(String nodePath) {
-        verifyContextAndPath(nodePath);
-
-        Assert.assertFalse("Tree node '" + nodePath + "' is visible.", isVisible(nodePath));
+        + "| Tree Node Should Not Be Visible | _myTree_ | _Root|Folder_ |\n")
+    public void treeNodeShouldNotBeVisible(String identifier, String nodePath) {
+        Assert.assertFalse("Tree node '" + nodePath + "' is visible.", isVisible(identifier, nodePath));
     }
 
-    private boolean isVisible(String nodePath) {
-        return treeOperator().isVisible(treeOperator().findPath(nodePath));
-    }
-
-    private void verifyContextAndPath(String nodePath) {
-        verifyContext();
+    private boolean isVisible(String identifier, String nodePath) {
         verifyPath(nodePath);
+        return createTreeOperator(identifier).isVisible(nodePath);
     }
 
     private void verifyPath(String nodePath) {
         if (isIndex(nodePath))
-            throw new IllegalArgumentException("Node's visibility cannot be checked by it's index by it's index");
+            throw new IllegalArgumentException("Node's visibility cannot be checked by it's index.");
     }
 }

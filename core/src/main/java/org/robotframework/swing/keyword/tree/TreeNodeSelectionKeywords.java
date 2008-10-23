@@ -27,27 +27,19 @@ import org.robotframework.swing.tree.TreeSupport;
  */
 @RobotKeywords
 public class TreeNodeSelectionKeywords extends TreeSupport {
-    @RobotKeyword("Fails if the tree node is not selected.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if the tree node is not selected.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Selected | _Root|Folder_ |\n")
-    public void treeNodeShouldBeSelected(String nodeIdentifier) {
-        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not selected.", isSelected(nodeIdentifier));
+        + "| Tree Node Should Be Selected | _myTree_ | _Root|Folder_ |\n")
+    public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier) {
+        boolean isSelected = createTreeOperator(identifier).isPathSelected(nodeIdentifier);
+        Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not selected.", isSelected);
     }
 
-    @RobotKeyword("Fails if the tree node is selected.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if the tree node is selected.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Selected | _Root|Folder_ |\n")
-    public void treeNodeShouldNotBeSelected(String nodeIdentifier) {
-        Assert.assertFalse("Tree node '" + nodeIdentifier + "' is selected.", isSelected(nodeIdentifier));
-    }
-
-    private boolean isSelected(String nodeIdentifier) {
-        if (isIndex(nodeIdentifier)) {
-            return treeOperator().isRowSelected(asIndex(nodeIdentifier));
-        } else {
-            return treeOperator().isPathSelected(treeOperator().findPath(nodeIdentifier));
-        }
+        + "| Tree Node Should Be Selected | _myTree_ | _Root|Folder_ |\n")
+    public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier) {
+        boolean isSelected = createTreeOperator(identifier).isPathSelected(nodeIdentifier);
+        Assert.assertFalse("Tree node '" + nodeIdentifier + "' is selected.", isSelected);
     }
 }

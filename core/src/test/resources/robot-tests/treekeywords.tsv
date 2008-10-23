@@ -171,27 +171,27 @@ Keywords Also Work With Invisible Root
 	collapseTreeNode	${treeName}	${childNode2}
 	[Teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 
-Tree Keywords Fail If Context Is Not a tree
+Tree Keywords Fail If Context Is Not Correct
 	selectEmptyContext
-	keywordShouldFailBecauseContextIsIllegal	clearTreeSelection
-	keywordShouldFailBecauseContextIsIllegal	expandTreeNode	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	collapseTreeNode	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeExpanded	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeCollapsed	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	selectFromTreeNodePopupMenu	Path|To|Tree|Node	SomethingInMenu
-	keywordShouldFailBecauseContextIsIllegal	selectFromTreeNodePopupMenuInSeparateThread	Path|To|Tree|Node	SomethingInMenu
-	keywordShouldFailBecauseContextIsIllegal	selectTreeNode	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	unselectTreeNode	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeSelected	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeSelected	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeVisible	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeVisible	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeLeaf	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeLeaf	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldExist	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotExist	Path|To|Tree|Node
-	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	Path|To|Tree|Node	SomethingInMenu
-	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	clearTreeSelection	${treeName}
+	keywordShouldFailBecauseContextIsIllegal	expandTreeNode	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	collapseTreeNode	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeExpanded	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeCollapsed	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	selectFromTreeNodePopupMenu	${treeName}	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	selectFromTreeNodePopupMenuInSeparateThread	${treeName}	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	selectTreeNode	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	unselectTreeNode	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeSelected	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeSelected	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeVisible	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeVisible	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldBeLeaf	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotBeLeaf	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldExist	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotExist	${treeName}	Path|To|Tree|Node
+	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	${treeName}	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	${treeName}	Path|To|Tree|Node	SomethingInMenu
 	[teardown]	selectMainWindow
 
 *Keyword*	*Action*	*Argument*	*Argument*

@@ -99,6 +99,14 @@ public class EnhancedTreeOperator extends JTreeOperator implements IOperator {
         return lastPathComponent.isLeaf();
     }
     
+    public boolean isPathSelected(String nodeIdentifier) {
+        return isPathSelected(createTreePath(nodeIdentifier));
+    }
+    
+    public boolean isVisible(String nodeIdentifier) {
+        return isVisible(createTreePath(nodeIdentifier));
+    }
+    
     public JPopupMenuOperator createPopupOperator(String nodeIdentifier) {
         return createPopupFactory().createOperator(nodeIdentifier);
     }
