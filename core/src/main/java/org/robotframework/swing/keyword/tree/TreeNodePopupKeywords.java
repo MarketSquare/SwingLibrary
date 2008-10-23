@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.keyword.tree;
 
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JMenuItem;
@@ -25,12 +26,9 @@ import junit.framework.Assert;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.IContextVerifier;
-import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
-import org.robotframework.swing.tree.TreeContextVerifier;
 import org.robotframework.swing.tree.TreePopupMenuItemFinder;
-import org.robotframework.swing.tree.TreePopupMenuOperatorFactory;
+import org.robotframework.swing.tree.TreeSupport;
 
 import abbot.tester.ComponentTester;
 
@@ -38,53 +36,46 @@ import abbot.tester.ComponentTester;
  * @author Heikki Hulkko
  */
 @RobotKeywords
-public class TreeNodePopupKeywords {
-    private OperatorFactory<JPopupMenuOperator> operatorFactory = new TreePopupMenuOperatorFactory();
-    private IContextVerifier contextVerifier = new TreeContextVerifier();
-    private ITreePopupMenuItemFinder treePopupMenuItemFinder = new TreePopupMenuItemFinder();
-
-    @RobotKeyword("Selects an item from the tree node's popup menu.\n"
-        + "Assumes current context is a tree.\n\n"
+public class TreeNodePopupKeywords extends TreeSupport {
+    @RobotKeyword("Selects an item from the tree node's popup menu.\n\n"
         + "Examples:\n"
-        + "| Select From Tree Node Popup Menu | _Root|Folder_ | _New Folder_ | ")
-    public void selectFromTreeNodePopupMenu(String nodeIdentifier, String menuPath) {
-        contextVerifier.verifyContext();
-        operatorFactory.createOperator(nodeIdentifier).pushMenu(menuPath);
+        + "| Select From Tree Node Popup Menu | _myTree_ | _Root|Folder_ | _New Folder_ | ")
+    public void selectFromTreeNodePopupMenu(String identifier, String nodeIdentifier, String menuPath) {
+        JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
+        popupOperator.pushMenu(menuPath);
     }
 
     @RobotKeyword("Selects an item from the tree node's popup menu and does not wait for a result.\n"
         + "Needed if the action starts a process that stays running (e.g. opens a dialog) and the above keyword doesn't return.\n"
-        + "Assumes current context is a tree. Separator for items is '|'.\n\n"
+        + "Separator for items is '|'.\n\n"
         + "Examples:\n"
-        + "| Select From Tree Node Popup Menu In Separate Thread | _Root|Folder_ | _New Folder_ | ")
-    public void selectFromTreeNodePopupMenuInSeparateThread(String nodeIdentifier, String menuPath) {
-        contextVerifier.verifyContext();
-        operatorFactory.createOperator(nodeIdentifier).pushMenuNoBlock(menuPath);
+        + "| Select From Tree Node Popup Menu In Separate Thread | _myTree_ | _Root|Folder_ | _New Folder_ | ")
+    public void selectFromTreeNodePopupMenuInSeparateThread(String identifier, String nodeIdentifier, String menuPath) {
+        JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
+        popupOperator.pushMenuNoBlock(menuPath);
     }
 
-    @RobotKeyword("Fails if given popup menu item is disabled.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if given popup menu item is disabled.\n\n"
         + "Example:\n"
-        + "| Tree Node Popup Menu Item Should Be Enabled | _Root|Folder_ | _New Folder_ |\n"
-        + "| Tree Node Popup Menu Item Should Be Enabled | _1_ | _New Folder_ |\n")
-    public void treeNodePopupMenuItemShouldBeEnabled(String nodeIdentifier, String menuPath) {
-        contextVerifier.verifyContext();
-        Assert.assertTrue("Menu item '" + menuPath + "' was disabled", menuItemIsEnabled(nodeIdentifier, menuPath));
+        + "| Tree Node Popup Menu Item Should Be Enabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
+        + "| Tree Node Popup Menu Item Should Be Enabled | _0_ | _1_ | _New Folder_ |\n")
+    public void treeNodePopupMenuItemShouldBeEnabled(String identifier, String nodeIdentifier, String menuPath) {
+        boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);
+        Assert.assertTrue("Menu item '" + menuPath + "' was disabled", menuItemIsEnabled);
     }
 
-    @RobotKeyword("Fails if given popup menu item is enabled.\n"
-        + "Assumes current context is a tree.\n\n"
+    @RobotKeyword("Fails if given popup menu item is enabled.\n\n"
         + "Example:\n"
-        + "| Tree Node Popup Menu Item Should Be Disabled | _Root|Folder_ | _New Folder_ |\n"
-        + "| Tree Node Popup Menu Item Should Be Disabled | _1_ | _New Folder_ |\n")
-    public void treeNodePopupMenuItemShouldBeDisabled(String nodeIdentifier, String menuPath) {
-        contextVerifier.verifyContext();
-        Assert.assertFalse("Menu item '" + menuPath + "' was enabled", menuItemIsEnabled(nodeIdentifier, menuPath));
+        + "| Tree Node Popup Menu Item Should Be Disabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
+        + "| Tree Node Popup Menu Item Should Be Disabled | _0_      | _1_ | _New Folder_ |\n")
+    public void treeNodePopupMenuItemShouldBeDisabled(String identifier, String nodeIdentifier, String menuPath) {
+        boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);
+        Assert.assertFalse("Menu item '" + menuPath + "' was enabled", menuItemIsEnabled);
     }
-
-    private boolean menuItemIsEnabled(String nodeIdentifier, String menuPath) {
+    
+    private boolean menuItemIsEnabled(String identifier, String nodeIdentifier, String menuPath) {
         try {
-            return createPopupMenuItem(nodeIdentifier, menuPath).isEnabled();
+            return createPopupMenuItem(identifier, nodeIdentifier, menuPath).isEnabled();
         } finally {
             closePopup();
         }
@@ -94,7 +85,12 @@ public class TreeNodePopupKeywords {
         new ComponentTester().actionKeyStroke(KeyEvent.VK_ESCAPE);
     }
 
-    private JMenuItem createPopupMenuItem(String nodeIdentifier, String menuPath) {
-        return treePopupMenuItemFinder.findMenu(nodeIdentifier, menuPath);
+    private JMenuItem createPopupMenuItem(String identifier, String nodeIdentifier, String menuPath) {
+        Component source = createTreeOperator(identifier).getSource();
+        return createPopupMenuItemFinder(source).findMenu(nodeIdentifier, menuPath);
+    }
+    
+    ITreePopupMenuItemFinder createPopupMenuItemFinder(Component source) {
+        return new TreePopupMenuItemFinder(source);
     }
 }

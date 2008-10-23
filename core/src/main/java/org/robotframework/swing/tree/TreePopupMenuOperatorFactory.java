@@ -21,7 +21,6 @@ import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 /**
@@ -29,16 +28,22 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
  * @author Heikki Hulkko
  */
 public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFactory<JPopupMenuOperator> {
+    private final EnhancedTreeOperator treeOperator;
+
+    public TreePopupMenuOperatorFactory(EnhancedTreeOperator treeOperator) {
+        this.treeOperator = treeOperator;
+    }
+
     @Override
     public JPopupMenuOperator createOperatorByIndex(int index) {
-        JPopupMenu popupMenu = treeContext().callPopupOnRow(index);
+        JPopupMenu popupMenu = treeOperator.callPopupOnRow(index);
         return createPopupOperator(popupMenu);
     }
 
     @Override
     public JPopupMenuOperator createOperatorByName(String path) {
-        TreePath treePath = treeContext().findPath(path);
-        JPopupMenu popupMenu = treeContext().callPopupOnPath(treePath);
+        TreePath treePath = treeOperator.findPath(path);
+        JPopupMenu popupMenu = treeOperator.callPopupOnPath(treePath);
         return createPopupOperator(popupMenu);
     }
 
@@ -51,9 +56,5 @@ public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFacto
 
     private void waitToAvoidInstability() {
         new EventTool().waitNoEvent(500);
-    }
-
-    private EnhancedTreeOperator treeContext() {
-        return (EnhancedTreeOperator) Context.getContext();
     }
 }

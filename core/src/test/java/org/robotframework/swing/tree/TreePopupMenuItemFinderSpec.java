@@ -7,11 +7,8 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.arguments.IdentifierHandler;
-import org.robotframework.swing.context.Context;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.tree.TreePopupMenuItemFinder;
 
 import abbot.finder.BasicFinder;
 import abbot.finder.matchers.JMenuItemMatcher;
@@ -26,12 +23,11 @@ public class TreePopupMenuItemFinderSpec extends MockSupportSpecification<TreePo
         private JMenuItem menuItem = dummy(JMenuItem.class);
 
         public TreePopupMenuItemFinder create() {
-            return new TreePopupMenuItemFinder();
+            return new TreePopupMenuItemFinder(tree);
         }
 
         public void findsPopupMenuItemWithTreeRowIndexAndMenuPath() throws Exception {
             injectMockTreeLocationFactory();
-            setMockContainerToContext();
 
             final BasicFinder basicFinder = injectMockToContext(BasicFinder.class);
 
@@ -52,15 +48,6 @@ public class TreePopupMenuItemFinderSpec extends MockSupportSpecification<TreePo
                 one(treeLocationFactory).parseArgument("some|node");
                 will(returnValue(treeLocation));
                 one(componentTester).actionShowPopupMenu(tree, treeLocation);
-            }});
-        }
-
-        private void setMockContainerToContext() {
-            final ContainerOperator containerOperator = mock(ContainerOperator.class);
-            Context.setContext(containerOperator);
-
-            checking(new Expectations() {{
-                atLeast(1).of(containerOperator).getSource(); will(returnValue(tree));
             }});
         }
     }

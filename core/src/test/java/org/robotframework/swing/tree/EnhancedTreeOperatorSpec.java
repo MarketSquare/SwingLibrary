@@ -14,6 +14,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 import org.robotframework.swing.popup.IPopupCaller;
@@ -100,10 +101,6 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
             }});
             
             specify(context.isLeaf(nodeIdentifier));
-            
-//            TreeNode lastPathComponent =
-//              (TreeNode) treePathFactory.createTreePath(nodeIdentifier).getLastPathComponent();
-//          Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", lastPathComponent.isLeaf());
         }
         
         private void injectMockPathFactory() {
@@ -112,6 +109,29 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
                 one(pathFactory).createTreePath(nodeIdentifier);
                 will(returnValue(treePath));
             }});
+        }
+    }
+    
+    public class CreatingPopupOperator {
+        private TreePopupMenuOperatorFactory popupFactory;
+
+        public EnhancedTreeOperator create() {
+            popupFactory = mock(TreePopupMenuOperatorFactory.class);
+            return new EnhancedTreeOperator(dummy(JTree.class)) {
+                TreePopupMenuOperatorFactory createPopupFactory() {
+                    return popupFactory;
+                }
+            };
+        }
+        
+        public void createsPopupOperator() {
+            final JPopupMenuOperator popupMenuOperator = dummy(JPopupMenuOperator.class);
+            checking(new Expectations() {{
+                one(popupFactory).createOperator(nodeIdentifier);
+                will(returnValue(popupMenuOperator));
+            }});
+            
+            specify(context.createPopupOperator(nodeIdentifier), must.equal(popupMenuOperator));
         }
     }
     

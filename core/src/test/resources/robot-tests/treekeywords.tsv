@@ -143,8 +143,8 @@ Test Selecting Multiple Nodes
 	clearTreeSelection	${treeName}
 
 Tree Node Popup Menu Item Should Be Enabled
-	treeNodePopupMenuItemShouldBeEnabled	${rootNode}	Insert a child
-	treeNodePopupMenuItemShouldBeEnabled	${rootNode}	Submenu|Enabled menuitem
+	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Insert a child
+	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Submenu|Enabled menuitem
 	popupMenuShouldNotBeDisplayed
 
 Tree Node Popup Menu Item Should Be Disabled

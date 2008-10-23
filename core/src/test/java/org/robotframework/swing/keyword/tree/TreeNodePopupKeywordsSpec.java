@@ -1,6 +1,9 @@
 package org.robotframework.swing.keyword.tree;
 
+import java.awt.Component;
+
 import javax.swing.JMenuItem;
+import javax.swing.JTree;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
@@ -9,18 +12,15 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.tree.TreeNodePopupKeywords;
 import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
 
 
 @RunWith(JDaveRunner.class)
-public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNodePopupKeywords> {
+public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKeywords> {
+    private String treeIdentifier = "someTree";
     private String nodeIdentifier = "some|path";
     private String menuPath = "some|menu";
 
@@ -56,25 +56,18 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
         public void hasContextVerifier() {
             specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
         }
-
-        public void hasTreePopupMenuItemFinder() {
-            specify(context, satisfies(new FieldIsNotNullContract("treePopupMenuItemFinder")));
-        }
     }
 
     public class Operating {
-        private OperatorFactory operatorFactory;
         private JPopupMenuOperator popupMenuOperator;
 
         public TreeNodePopupKeywords create() {
-            TreeNodePopupKeywords treePopupKeywords = new TreeNodePopupKeywords();
-            injectContextVerifierTo(treePopupKeywords);
+            TreeNodePopupKeywords treePopupKeywords = populateWithMockOperatingFactoryAndContextVerifier(new TreeNodePopupKeywords());
 
-            operatorFactory = injectMockTo(treePopupKeywords, OperatorFactory.class);
             popupMenuOperator = mock(JPopupMenuOperator.class);
 
             checking(new Expectations() {{
-                one(operatorFactory).createOperator(nodeIdentifier);
+                one(treeOperator).createPopupOperator(nodeIdentifier);
                 will(returnValue(popupMenuOperator));
             }});
 
@@ -86,7 +79,7 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
                 one(popupMenuOperator).pushMenu(menuPath);
             }});
 
-            context.selectFromTreeNodePopupMenu(nodeIdentifier, menuPath);
+            context.selectFromTreeNodePopupMenu(treeIdentifier, nodeIdentifier, menuPath);
         }
 
         public void selectsFromTreeNodePopupMenuInSeparateThread() {
@@ -94,7 +87,7 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
                 one(popupMenuOperator).pushMenuNoBlock(menuPath);
             }});
 
-            context.selectFromTreeNodePopupMenuInSeparateThread(nodeIdentifier, menuPath);
+            context.selectFromTreeNodePopupMenuInSeparateThread(treeIdentifier, nodeIdentifier, menuPath);
         }
     }
 
@@ -102,11 +95,18 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
         private JMenuItem menuItem;
 
         public TreeNodePopupKeywords create() {
-            TreeNodePopupKeywords treePopupKeywords = new TreeNodePopupKeywords();
-            injectMockMenuFinderTo(treePopupKeywords);
-            injectContextVerifierTo(treePopupKeywords);
-
-            return treePopupKeywords;
+            final ITreePopupMenuItemFinder menuFinder = createMockMenuFinder();
+            TreeNodePopupKeywords treeKeywords = populateWithMockOperatingFactoryAndContextVerifier(new TreeNodePopupKeywords() {
+                ITreePopupMenuItemFinder createPopupMenuItemFinder(Component source) {
+                    return menuFinder;
+                }
+            });
+            
+            checking(new Expectations() {{
+                one(treeOperator).getSource(); will(returnValue(dummy(JTree.class)));
+            }});
+            
+            return treeKeywords;
         }
 
 
@@ -117,7 +117,7 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodePopupMenuItemShouldBeEnabled(nodeIdentifier, menuPath);
+                    context.treeNodePopupMenuItemShouldBeEnabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
@@ -129,7 +129,7 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodePopupMenuItemShouldBeEnabled(nodeIdentifier, menuPath);
+                    context.treeNodePopupMenuItemShouldBeEnabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' was disabled"));
         }
@@ -141,7 +141,7 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodePopupMenuItemShouldBeDisabled(nodeIdentifier, menuPath);
+                    context.treeNodePopupMenuItemShouldBeDisabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
@@ -153,27 +153,19 @@ public class TreeNodePopupKeywordsSpec extends MockSupportSpecification<TreeNode
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodePopupMenuItemShouldBeDisabled(nodeIdentifier, menuPath);
+                    context.treeNodePopupMenuItemShouldBeDisabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' was enabled"));
         }
 
-        private void injectMockMenuFinderTo(TreeNodePopupKeywords treePopupKeywords) {
-            final ITreePopupMenuItemFinder popupMenuItemFinder =
-                injectMockTo(treePopupKeywords, "treePopupMenuItemFinder", ITreePopupMenuItemFinder.class);
-
+        private ITreePopupMenuItemFinder createMockMenuFinder() {
+            final ITreePopupMenuItemFinder popupMenuItemFinder = mock(ITreePopupMenuItemFinder.class);
             menuItem = mock(JMenuItem.class);
             checking(new Expectations() {{
                 one(popupMenuItemFinder).findMenu(nodeIdentifier, menuPath);
                 will(returnValue(menuItem));
             }});
+            return popupMenuItemFinder;
         }
-    }
-
-    private void injectContextVerifierTo(TreeNodePopupKeywords treePopupKeywords) {
-        final IContextVerifier contextVerifier = injectMockTo(treePopupKeywords, "contextVerifier", IContextVerifier.class);
-        checking(new Expectations() {{
-            one(contextVerifier).verifyContext();
-        }});
     }
 }

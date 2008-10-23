@@ -16,10 +16,11 @@
 
 package org.robotframework.swing.tree;
 
+import java.awt.Component;
+
 import javax.swing.JMenuItem;
 
 import org.robotframework.swing.arguments.IdentifierHandler;
-import org.robotframework.swing.context.Context;
 
 import abbot.finder.BasicFinder;
 import abbot.finder.matchers.JMenuItemMatcher;
@@ -34,7 +35,12 @@ public class TreePopupMenuItemFinder implements ITreePopupMenuItemFinder {
     private BasicFinder basicFinder = new BasicFinder();
     private ComponentTester componentTester = new JComponentTester();
     private IdentifierHandler<JTreeLocation> treeLocationFactory = new JTreeLocationFactory();
+    private final Component tree;
 
+    public TreePopupMenuItemFinder(Component tree) {
+        this.tree = tree;
+    }
+    
     public JMenuItem findMenu(String nodeIdentifier, String menuPath) {
         return findMenu(treeLocationFactory.parseArgument(nodeIdentifier), menuPath);
     }
@@ -45,7 +51,7 @@ public class TreePopupMenuItemFinder implements ITreePopupMenuItemFinder {
     }
 
     private void popupMenuOnContainer(JTreeLocation nodeLocation) {
-        componentTester.actionShowPopupMenu(Context.getContext().getSource(), nodeLocation);
+        componentTester.actionShowPopupMenu(tree, nodeLocation);
     }
 
     private JMenuItem findMenu(String menuPath) {

@@ -28,6 +28,7 @@ import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.swing.operator.IOperator;
 import org.robotframework.swing.popup.DefaultPopupCaller;
@@ -96,6 +97,14 @@ public class EnhancedTreeOperator extends JTreeOperator implements IOperator {
     public boolean isLeaf(String nodeIdentifier) {
         TreeNode lastPathComponent = (TreeNode) createTreePath(nodeIdentifier).getLastPathComponent();
         return lastPathComponent.isLeaf();
+    }
+    
+    public JPopupMenuOperator createPopupOperator(String nodeIdentifier) {
+        return createPopupFactory().createOperator(nodeIdentifier);
+    }
+    
+    TreePopupMenuOperatorFactory createPopupFactory() {
+        return new TreePopupMenuOperatorFactory(this);
     }
     
     private TreePath createTreePath(String nodeIdentifier) {
