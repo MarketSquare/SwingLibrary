@@ -5,10 +5,6 @@ import jdave.Specification;
 import org.laughingpanda.beaninject.Inject;
 
 public abstract class MockSupportSpecification<T> extends Specification<T> {
-    public MockSupportSpecification() {
-        super();
-    }
-
     protected <T> T injectMockTo(Object target, String fieldName, Class<T> clss) {
         T mock = mock(clss);
         Inject.field(fieldName).of(target).with(mock);

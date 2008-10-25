@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.tree;
 
-import org.robotframework.swing.common.IdentifierSupport;
-import org.robotframework.swing.context.DefaultContextVerifier;
+package org.robotframework.swing.keyword;
+
+import org.jmock.Expectations;
 import org.robotframework.swing.context.IContextVerifier;
-import org.robotframework.swing.factory.OperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
-public class TreeSupport extends IdentifierSupport {
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
-    protected OperatorFactory<EnhancedTreeOperator> operatorFactory = new EnhancedTreeOperatorFactory();
-    
-    public EnhancedTreeOperator createTreeOperator(String identifier) {
-        contextVerifier.verifyContext();
-        return operatorFactory.createOperator(identifier);
+public class KeywordSupportSpecification<T> extends MockSupportSpecification<T> {
+    protected T injectMockContextVerifier(T keywords) {
+        final IContextVerifier contextVerifier = injectMockTo(keywords, IContextVerifier.class);
+        checking(new Expectations() {{
+            one(contextVerifier).verifyContext();
+        }});
+        return keywords;
     }
 }

@@ -27,36 +27,6 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
         }
     }
     
-    public class GettingContext {
-        private EnhancedTreeOperator dummyContext;
-        private IContextVerifier contextVerifier;
-
-        public TreeSupport create() {
-            dummyContext = dummy(EnhancedTreeOperator.class);
-            Context.setContext(dummyContext);
-
-            TreeSupport treeSupport = new TreeSupport();
-            contextVerifier = injectMockTo(treeSupport, IContextVerifier.class);
-            return treeSupport;
-        }
-
-        public void treeOperatorReturnsCurrentContextAndVerifiesIt() {
-            checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
-            }});
-
-            specify(context.treeOperator(), must.equal(dummyContext));
-        }
-
-        public void verifiesContext() {
-            checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
-            }});
-
-            context.verifyContext();
-        }
-    }
-    
     public class CreatingTreeOperator {
         private TreeSupport treeSupport = new TreeSupport();
         private String treeIdentifier = "someTree";

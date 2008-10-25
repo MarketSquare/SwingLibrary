@@ -34,7 +34,6 @@ public class TestDesktopPane extends JDesktopPane {
     private TestDesktopPane() {
         setName("testDesktopPane");
         add(internalFrame);
-        showInternalFrame();
     }
     
     public void showInternalFrame() {
