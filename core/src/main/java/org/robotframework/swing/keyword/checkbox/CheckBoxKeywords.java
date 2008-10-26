@@ -59,14 +59,14 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Fails if checkbox is checked.\n\n"
         + "Example:\n"
-        + "| Check Box Should Be Un Checked | _My Checkbox_ |\n")
-    public void checkBoxShouldBeUnChecked(String identifier) {
+        + "| Check Box Should Be Unchecked | _My Checkbox_ |\n")
+    public void checkBoxShouldBeUnchecked(String identifier) {
         contextVerifier.verifyContext();
         Assert.assertFalse(operatorFactory.createOperator(identifier).isSelected());
     }
 
-    @RobotKeyword("Alias for `Check Box Should Be Un Checked` keyword.\n")
+    @RobotKeyword("Alias for `Check Box Should Be Unchecked` keyword.\n")
     public void checkBoxShouldNotBeChecked(String identifier) {
-        checkBoxShouldBeUnChecked(identifier);
+        checkBoxShouldBeUnchecked(identifier);
     }
 }

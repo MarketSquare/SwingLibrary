@@ -38,7 +38,7 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
         }
 
         public void hasCheckBoxShouldBeUnCheckedKeyword() {
-            specify(checkboxKeywords, satisfies(new RobotKeywordContract("checkBoxShouldBeUnChecked")));
+            specify(checkboxKeywords, satisfies(new RobotKeywordContract("checkBoxShouldBeUnchecked")));
         }
 
         public void hasCheckBoxShouldNotBeCheckedKeyword() {
@@ -105,7 +105,7 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.checkBoxShouldBeUnChecked(checkboxIdentifier);
+                    context.checkBoxShouldBeUnchecked(checkboxIdentifier);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
@@ -115,7 +115,7 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.checkBoxShouldBeUnChecked(checkboxIdentifier);
+                    context.checkBoxShouldBeUnchecked(checkboxIdentifier);
                 }
             }, must.raise(AssertionFailedError.class));
         }
@@ -149,7 +149,7 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
         public void checkBoxShouldNotBeCheckedIsAnAliasForCheckBoxShouldBeUnchecked() {
             checkboxKeywords = new CheckBoxKeywords() {
                 @Override
-                public void checkBoxShouldBeUnChecked(String identifier) {
+                public void checkBoxShouldBeUnchecked(String identifier) {
                     if (identifier.equals(checkboxIdentifier)) {
                         isAnAlias = true;
                     }
