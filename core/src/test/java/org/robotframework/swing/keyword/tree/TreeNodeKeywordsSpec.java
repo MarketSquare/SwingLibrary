@@ -54,6 +54,10 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         public void hasTreeNodeShouldNotBeLeafKeyword() {
             specify(context, satisfies(new RobotKeywordContract("treeNodeShouldNotBeLeaf")));
         }
+
+        public void hasClearTreeSelectionKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("clearTreeSelection")));
+        }
     }
 
     public class OperatingOnTree {
@@ -62,6 +66,14 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         
         public TreeNodeKeywords create() {
             return populateWithMockOperatingFactoryAndContextVerifier(new TreeNodeKeywords());
+        }
+        
+        public void clearsTreeSelection() {
+            checking(new Expectations() {{
+                one(treeOperator).clearSelection();
+            }});
+
+            context.clearTreeSelection(treeIdentifier);
         }
         
         public void collapsesTreeNode() {

@@ -27,6 +27,13 @@ import org.robotframework.swing.tree.TreeSupport;
  */
 @RobotKeywords
 public class TreeNodeKeywords extends TreeSupport {
+    @RobotKeyword("Clears selections from a tree.\n\n"
+        + "Example:\n"
+        + "| Clear Tree Selection | _myTree_ |\n")
+    public void clearTreeSelection(String identifier) {
+        createTreeOperator(identifier).clearSelection();
+    }
+    
     @RobotKeyword("Collapses a node in a tree.\n\n"
         + "Examples:\n"
         + "| Collapse Tree Node | _myTree_ | _Root|Folder_ |\n"
