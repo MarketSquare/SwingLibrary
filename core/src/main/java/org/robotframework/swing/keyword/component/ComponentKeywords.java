@@ -58,7 +58,7 @@ public class ComponentKeywords {
         + "Example:\n"
         + "| Click On Component | _myComponent_ |   |\n"
         + "| Click On Component | _myComponent_ | 2 | # double click \n")
-    @ArgumentNames({"identifier", "*times"})
+    @ArgumentNames({"identifier", "times=1"})
     public void clickOnComponent(String identifier, String[] times) {
         contextVerifier.verifyContext();
         createOperator(identifier).clickMouse(getTimes(times));

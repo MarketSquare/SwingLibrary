@@ -43,7 +43,7 @@ public class SpinnerKeywords {
             + "Examle:\n"
             + "| Increase Spinner Value | _mySpinner_ |   | # scrolls spinner button up a notch |\n"
             + "| Increase Spinner Value | _mySpinner_ | 4 | # scrolls spinner button up four notches |\n")
-    @ArgumentNames({"identifier", "*times"})
+    @ArgumentNames({"identifier", "times=1"})
     public void increaseSpinnerValue(String identifier, String[] times) {
         contextVerifier.verifyContext();
         increase(operatorFactory.createOperator(identifier), getNotches(times));
@@ -54,7 +54,7 @@ public class SpinnerKeywords {
             + "Examle:\n"
             + "| Decrease Spinner Value | _mySpinner_ |   | # scrolls spinner button down a notch |\n"
             + "| Decrease Spinner Value | _mySpinner_ | 4 | # scrolls spinner button down four notches |\n")
-    @ArgumentNames({"identifier", "*times"})
+    @ArgumentNames({"identifier", "times=1"})
     public void decreaseSpinnerValue(String identifier, String[] times) {
         contextVerifier.verifyContext();
         decrease(operatorFactory.createOperator(identifier), getNotches(times));
