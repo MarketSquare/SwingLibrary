@@ -12,6 +12,7 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -76,7 +77,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
 
         public void selectsFromTreeNodePopupMenu() {
             checking(new Expectations() {{
-                one(popupMenuOperator).pushMenu(menuPath);
+                one(popupMenuOperator).pushMenu(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
             }});
 
             context.selectFromTreeNodePopupMenu(treeIdentifier, nodeIdentifier, menuPath);
@@ -84,7 +85,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
 
         public void selectsFromTreeNodePopupMenuInSeparateThread() {
             checking(new Expectations() {{
-                one(popupMenuOperator).pushMenuNoBlock(menuPath);
+                one(popupMenuOperator).pushMenuNoBlock(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
             }});
 
             context.selectFromTreeNodePopupMenuInSeparateThread(treeIdentifier, nodeIdentifier, menuPath);

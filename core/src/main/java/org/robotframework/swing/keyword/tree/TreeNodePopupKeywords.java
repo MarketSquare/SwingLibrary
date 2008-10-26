@@ -26,6 +26,7 @@ import junit.framework.Assert;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
 import org.robotframework.swing.tree.TreePopupMenuItemFinder;
 import org.robotframework.swing.tree.TreeSupport;
@@ -42,7 +43,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "| Select From Tree Node Popup Menu | _myTree_ | _Root|Folder_ | _New Folder_ | ")
     public void selectFromTreeNodePopupMenu(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
-        popupOperator.pushMenu(menuPath);
+        popupOperator.pushMenu(menuPath, new EqualsStringComparator());
     }
 
     @RobotKeyword("Selects an item from the tree node's popup menu and does not wait for a result.\n"
@@ -52,7 +53,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "| Select From Tree Node Popup Menu In Separate Thread | _myTree_ | _Root|Folder_ | _New Folder_ | ")
     public void selectFromTreeNodePopupMenuInSeparateThread(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
-        popupOperator.pushMenuNoBlock(menuPath);
+        popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
     }
 
     @RobotKeyword("Fails if given popup menu item is disabled.\n\n"
