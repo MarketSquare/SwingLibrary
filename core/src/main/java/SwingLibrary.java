@@ -18,7 +18,6 @@ import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
-import org.robotframework.swing.security.SystemExitCatcher;
 
 /**
  * @author Heikki Hulkko
@@ -28,7 +27,6 @@ public class SwingLibrary extends AnnotationLibrary {
         super("org/robotframework/swing/keyword/**/*.class");
         disableOutput();
         setDefaultTimeouts();
-        catchSystemExits();
     }
 
     private void setDefaultTimeouts() {
@@ -37,9 +35,5 @@ public class SwingLibrary extends AnnotationLibrary {
 
     private void disableOutput() {
         JemmyProperties.setCurrentOutput(TestOut.getNullOutput());
-    }
-    
-    private void catchSystemExits() {
-        new SystemExitCatcher().catchSystemExitsFromAWTThread();
     }
 }
