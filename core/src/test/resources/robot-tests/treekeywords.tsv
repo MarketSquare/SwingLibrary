@@ -159,6 +159,7 @@ Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
 	runKeywordAndExpectError	*Menu item 'Disabled menuitem' was disabled*	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Disabled menuitem
 
 Get Tree Node Count Returns The Count Of All Visible Nodes
+	[setup]	resetNodes
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	3	${visibleNodes}
 	expandTreeNode	${treeName}	${rootNode}|${childNode2}
@@ -172,7 +173,7 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
 	shouldBeEqualAsIntegers	2	${visibleNodes}
 
 Keywords Also Work With Invisible Root
-	expandTreeNode	${treeName}	${rootNode}
+	[setup]	resetNodes
 	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
 	treeNodeShouldBeVisible	${treeName}	${childNode1}
 	treeNodeShouldBeVisible	${treeName}	${childNode2}
@@ -182,7 +183,7 @@ Keywords Also Work With Invisible Root
 	expandTreeNode	${treeName}	${childNode2}
 	treeNodeShouldBeVisible	${treeName}	${childNode2}|${leafNode}
 	collapseTreeNode	${treeName}	${childNode2}
-	[Teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
+	[teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 
 Tree Keywords Fail If Context Is Not Correct
 	selectEmptyContext
@@ -214,3 +215,8 @@ keywordShouldFailBecauseContextIsIllegal	[arguments]	${keyword}	@{arguments}
 popupMenuShouldNotBeDisplayed
 	componentShouldNotExist	popupMenu
 
+resetNodes
+	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
+	expandTreeNode	${treeName}	${rootNode}
+	collapseTreeNode	${treeName}	${rootNode}|${childNode2}
+	collapseTreeNode	${treeName}	${rootNode}|${childNode1}
