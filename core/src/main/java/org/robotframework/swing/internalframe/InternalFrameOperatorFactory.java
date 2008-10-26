@@ -21,6 +21,9 @@ import org.robotframework.swing.chooser.ByTitleComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class InternalFrameOperatorFactory extends IdentifierParsingOperatorFactory<MyInternalFrameOperator> {
     @Override
     public MyInternalFrameOperator createOperatorByIndex(int index) {

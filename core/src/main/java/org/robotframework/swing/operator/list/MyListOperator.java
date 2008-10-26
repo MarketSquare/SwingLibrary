@@ -5,6 +5,9 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.operator.IOperator;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class MyListOperator extends JListOperator implements IOperator {
     public MyListOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);

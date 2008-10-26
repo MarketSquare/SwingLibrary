@@ -19,6 +19,9 @@ package org.robotframework.swing.tree;
 
 import org.robotframework.swing.util.ComponentExistenceResolver;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class TreeNodeExistenceResolver {
     private TreePathFactory treePathFactory;
 

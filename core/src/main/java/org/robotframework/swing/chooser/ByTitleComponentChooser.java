@@ -23,6 +23,9 @@ import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.ComponentChooser;
 import org.springframework.util.ObjectUtils;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class ByTitleComponentChooser implements ComponentChooser {
     private final String expectedTitle;
 

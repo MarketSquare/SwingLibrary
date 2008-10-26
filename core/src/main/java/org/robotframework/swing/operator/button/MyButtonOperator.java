@@ -5,6 +5,9 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.robotframework.swing.operator.IOperator;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class MyButtonOperator extends JButtonOperator implements IOperator {
     public MyButtonOperator(ContainerOperator container, int index) {
         super(container, index);

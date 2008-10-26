@@ -5,6 +5,9 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.operator.IOperator;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class MyComboBoxOperator extends JComboBoxOperator implements IOperator {
     public MyComboBoxOperator(ContainerOperator container, int index) {
         super(container, index);

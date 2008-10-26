@@ -5,6 +5,9 @@ import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class SpinnerOperatorFactory extends IdentifierParsingOperatorFactory<SpinnerOperator> {
     @Override
     public SpinnerOperator createOperatorByIndex(int index) {

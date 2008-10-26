@@ -2,6 +2,9 @@ package org.robotframework.swing.spinner;
 
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class DefaultSpinnerOperator implements SpinnerOperator {
     private final JSpinnerOperator spinnerOperator;
 

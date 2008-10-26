@@ -22,6 +22,9 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
 import org.robotframework.swing.operator.IOperator;
 
+/**
+ * @author Heikki Hulkko
+ */
 public class MyInternalFrameOperator extends JInternalFrameOperator implements IOperator {
     public MyInternalFrameOperator(ContainerOperator container, int index) {
         super(container, index);
