@@ -50,6 +50,11 @@ Get Table Cell Value By Index
 	${cellValue}=	getTableCellValue	${tableName}	2	1
 	shouldBeEqual	three/two	${cellValue}
 
+Clear Table Cell
+	clearTableCell	${tableName}	2	1
+	${cellValue}=	getTableCellValue	${tableName}	2	1
+	shouldBeEmpty	${cellValue}
+
 Get Table Cell Value By Column Header
 	${cellValue}=	getTableCellValue	${tableName}	1	column two
 	shouldBeEqual	two/two	${cellValue}

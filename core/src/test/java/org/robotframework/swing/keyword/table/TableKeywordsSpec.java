@@ -70,6 +70,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context, satisfies(new RobotKeywordContract("getTableRowCount")));
         }
 
+        public void hasClearTableCellValueKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("clearTableCell")));
+        }
+        
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
@@ -210,6 +214,14 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                     context.tableCellShouldNotBeSelected(tableIdentifier, row, columnIdentifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Cell '" + row + "', '" + columnIdentifier + "' is selected."));
+        }
+
+        public void clearsTableCell() {
+            checking(new Expectations() {{
+                one(tableOperator).changeCellObject(row, columnIdentifier, "");
+            }});
+            
+            context.clearTableCell(tableIdentifier, row, columnIdentifier);
         }
     }
 

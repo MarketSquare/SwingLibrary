@@ -112,6 +112,14 @@ public class TableKeywords extends IdentifierSupport {
         return createTableOperator(identifier).getRowCount();
     }
     
+    @RobotKeyword("Clears table cell contents.\n\n"
+        + "Example:\n"
+        + "| Clear Table Cell Value | _myTable_ | _1_ | _2_ |\n")
+    public void clearTableCell(String identifier, String row, String columnIdentifier) {
+        createTableOperator(identifier).changeCellObject(row, columnIdentifier, "");
+    }
+    
+    
     private EnhancedTableOperator createTableOperator(String identifier) {
         contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);   
