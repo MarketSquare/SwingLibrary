@@ -6,7 +6,7 @@ testSetup	resetButton
 *Variable*	*Value*
 ${buttonName}	testButton
 ${buttonText}	Test Button
-${buttonTextAfterPush}	Button Was Pushed
+${buttonTextAfterPush}	Button Was Pushed1
 ${buttonIndex}	0
 
 *Test Case*	*Action*	*Argument*

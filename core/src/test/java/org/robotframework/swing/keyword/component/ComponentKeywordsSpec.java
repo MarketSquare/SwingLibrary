@@ -6,16 +6,20 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.netbeans.jemmy.operators.ComponentOperator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.component.ComponentKeywords;
+import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.keyword.KeywordSupportSpecification;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 
 @RunWith(JDaveRunner.class)
-public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKeywords> {
+public class ComponentKeywordsSpec extends KeywordSupportSpecification<ComponentKeywords> {
+    private String componentIdentifier = "someComponent";
+
     public class Any {
         public ComponentKeywords create() {
             return new ComponentKeywords();
@@ -40,10 +44,43 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
         public void hasComponentShouldExistKeyword() {
             specify(context, satisfies(new RobotKeywordContract("componentShouldExist")));
         }
+        
+        public void hasClickOnComponentKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("clickOnComponent")));
+        }
     }
 
     public class Operating {
-        private String componentIdentifier = "someComponent";
+        private ComponentOperator operator;
+
+        public ComponentKeywords create() {
+            ComponentKeywords keywords = injectMockContextVerifier(new ComponentKeywords());
+            final OperatorFactory operatorFactory = injectMockTo(keywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
+            operator = mock(ComponentOperator.class);
+            checking(new Expectations() {{
+                one(operatorFactory).createOperator(componentIdentifier); will(returnValue(operator));
+            }});
+            return keywords;
+        }
+        
+        public void clicksOnComponent() {
+            checking(new Expectations() {{
+                one(operator).clickMouse(1);
+            }});
+            
+            context.clickOnComponent(componentIdentifier, new String[0]);
+        }
+        
+        public void doubleclicksOnComponent() {
+            checking(new Expectations() {{
+                one(operator).clickMouse(2);
+            }});
+            
+            context.clickOnComponent(componentIdentifier, new String[] { "2" });
+        }
+    }
+    
+    public class ResolvingExistence {
         private IComponentConditionResolver componentExistenceResolver;
         private ComponentKeywords componentKeywords;
 
@@ -52,7 +89,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
             injectMockComponentExistenceResolverToKeywords();
             return componentKeywords;
         }
-
+        
         public void componentShouldNotExistPassesIfComponentIsNotFound() throws Throwable {
             checking(new Expectations() {{
                 one(componentExistenceResolver).satisfiesCondition(componentIdentifier);

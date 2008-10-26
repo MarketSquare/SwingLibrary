@@ -3,6 +3,7 @@ library	SwingLibrary
 
 *Variable*	*Value*
 ${componentName}	Main Panel
+${buttonName}	testButton
 
 *Test Case*	*Action*	*Argument*
 Component Should Exist By Index
@@ -25,4 +26,21 @@ Component Should Not Exist Fails If The Component Exists
 	runKeywordAndExpectError	*Component '${componentName}' exists*	componentShouldNotExist	${componentName}
 	runKeywordAndExpectError	*Component '0' exists*	componentShouldNotExist	0
 
+Click On Component
+	[setup]	resetButton
+	clickOnComponent	testButton
+	${text}=	getButtonText	${buttonName}
+	shouldBeEqual	Button Was Pushed1	${text}
+
+Doubleclick On Component
+	[setup]	resetButton
+	doubleClickOnComponent	testButton
+	${text}=	getButtonText	${buttonName}
+	shouldBeEqual	Button Was Pushed2	${text}
+
 *Keyword*	*Action*	*Argument*
+resetButton
+	setButtonText	${buttonName}	Test Button
+
+doubleClickOnComponent	[arguments]	${identifier}
+	clickOnComponent	${identifier}	2

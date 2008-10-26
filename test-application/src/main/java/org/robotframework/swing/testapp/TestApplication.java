@@ -81,6 +81,5 @@ public class TestApplication {
         panel.add(new TestTabbedPane("testTabbedPane2"));
         panel.add(new TestTextArea());
         panel.add(new TestSpinnerButton());
-        panel.add(new SystemExitButton());
     }
 }

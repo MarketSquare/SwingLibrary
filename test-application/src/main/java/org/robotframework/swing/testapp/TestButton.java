@@ -14,11 +14,7 @@ public class TestButton extends JButton {
         setName("testButton");
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (INITIAL_TEXT.equals(getText())) {
-                    setText(BUTTON_PUSHED_TEXT);
-                } else {
-                    setText(INITIAL_TEXT);
-                }
+                setText(BUTTON_PUSHED_TEXT + e.getClickCount());
             }
         });
     }

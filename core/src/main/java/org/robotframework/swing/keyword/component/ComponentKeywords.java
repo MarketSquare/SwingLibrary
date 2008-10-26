@@ -19,8 +19,11 @@ package org.robotframework.swing.keyword.component;
 import junit.framework.Assert;
 
 import org.netbeans.jemmy.operators.ComponentOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.context.DefaultContextVerifier;
+import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
@@ -30,6 +33,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class ComponentKeywords {
+    private IContextVerifier contextVerifier = new DefaultContextVerifier();
     private IdentifierParsingOperatorFactory<ComponentOperator> operatorFactory = new ComponentOperatorFactory();
     private IComponentConditionResolver componentExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
@@ -47,5 +51,24 @@ public class ComponentKeywords {
         + "| Component Should Not Exist | _myPanel_ |\n")
     public void componentShouldExist(String identifier) {
         Assert.assertTrue("Component '" + identifier + "' does not exist", componentExistenceResolver.satisfiesCondition(identifier));
+    }
+
+    @RobotKeyword("Clicks on a component.\n"
+        + "The number of clicks can be given as second argument.\n\n"
+        + "Example:\n"
+        + "| Click On Component | _myComponent_ |   |\n"
+        + "| Click On Component | _myComponent_ | 2 | # double click \n")
+    @ArgumentNames({"identifier", "*times"})
+    public void clickOnComponent(String identifier, String[] times) {
+        contextVerifier.verifyContext();
+        createOperator(identifier).clickMouse(getTimes(times));
+    }
+
+    private ComponentOperator createOperator(String identifier) {
+        return operatorFactory.createOperator(identifier);
+    }
+
+    private int getTimes(String[] times) {
+        return times.length == 1 ? Integer.parseInt(times[0]) : 1;
     }
 }
