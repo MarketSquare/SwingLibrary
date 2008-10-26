@@ -1,7 +1,5 @@
 package org.robotframework.swing.keyword.tree;
 
-import javax.swing.tree.TreePath;
-
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
 import junit.framework.AssertionFailedError;
@@ -61,7 +59,6 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
     }
 
     public class OperatingOnTree {
-        private TreePath treePath = mock(TreePath.class);
         private String nodeIdentifier = "path|to|node";
         
         public TreeNodeKeywords create() {
