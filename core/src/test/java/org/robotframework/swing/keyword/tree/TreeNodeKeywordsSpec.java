@@ -200,6 +200,14 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is leaf."));
         }
+        
+        public void getsTreeNodeCount() {
+            checking(new Expectations() {{
+                one(treeOperator).getRowCount(); will(returnValue(3));
+            }});
+            
+            specify(context.getTreeNodeCount(treeIdentifier), must.equal(3));
+        }
     }
 }
 

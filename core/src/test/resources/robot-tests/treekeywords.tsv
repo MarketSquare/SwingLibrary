@@ -158,6 +158,19 @@ Tree Node Popup Menu Item Should Be Disabled Should Fail If Menu Item Is Enabled
 Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
 	runKeywordAndExpectError	*Menu item 'Disabled menuitem' was disabled*	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Disabled menuitem
 
+Get Tree Node Count Returns The Count Of All Visible Nodes
+	${visibleNodes}=	getTreeNodeCount	${treeName}
+	shouldBeEqualAsIntegers	3	${visibleNodes}
+	expandTreeNode	${treeName}	${rootNode}|${childNode2}
+	${visibleNodes}=	getTreeNodeCount	${treeName}
+	shouldBeEqualAsIntegers	6	${visibleNodes}
+	collapseTreeNode	${treeName}	${rootNode}|${childNode2}
+	${visibleNodes}=	getTreeNodeCount	${treeName}
+	shouldBeEqualAsIntegers	3	${visibleNodes}
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
+	${visibleNodes}=	getTreeNodeCount	${treeName}
+	shouldBeEqualAsIntegers	2	${visibleNodes}
+
 Keywords Also Work With Invisible Root
 	expandTreeNode	${treeName}	${rootNode}
 	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node

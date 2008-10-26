@@ -99,4 +99,12 @@ public class TreeNodeKeywords extends TreeSupport {
         boolean isLeaf = createTreeOperator(identifier).isLeaf(nodeIdentifier);
         Assert.assertFalse("Tree node '" + nodeIdentifier + "' is leaf.", isLeaf);
     }
+    
+    @RobotKeyword("Returns the count of all visible nodes.\n\n"
+        + "Example:\n"
+        + "| ${nodeCount} | Get Tree Node Count | _myTree_ |"
+        + "| Should Be Equal As Integers | _3_ | _${nodeCount}_ |")
+    public int getTreeNodeCount(String identifier) {
+        return createTreeOperator(identifier).getRowCount();
+    }
 }
