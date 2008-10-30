@@ -40,8 +40,7 @@ public class ButtonKeywords {
         + "Example:\n"
         + "| Push Button | _OK_ |\n")
     public void pushButton(String identifier) {
-        contextVerifier.verifyContext();
-        operatorFactory.createOperator(identifier).push();
+        createOperator(identifier).push();
     }
 
     @RobotKeyword("Uses current context to search for a button and when found, "
@@ -50,16 +49,14 @@ public class ButtonKeywords {
         + "| ${buttonText}=  | Get Button Text | _myButton_    |\n"
         + "| Should Be Equal | _My Button_     | _${buttonText}_ |\n")
     public String getButtonText(String identifier) {
-        contextVerifier.verifyContext();
-        return operatorFactory.createOperator(identifier).getText();
+        return createOperator(identifier).getText();
     }
 
     @RobotKeyword("Fails if button does not exist within current context.\n\n"
         + "Example:\n"
         + "| Button Should Exist | _OK_ |\n")
     public void buttonShouldExist(String identifier) {
-        contextVerifier.verifyContext();
-        Assert.assertTrue("Button '" + identifier + "' doesn't exist", buttonExistenceResolver.satisfiesCondition(identifier));
+        Assert.assertTrue("Button '" + identifier + "' doesn't exist", buttonExists(identifier));
     }
 
     @RobotKeyword("Fails if button exists within current context.\n"
@@ -68,23 +65,30 @@ public class ButtonKeywords {
         + "| Set Jemmy Timeouts      | _1_  |\n"
         + "| Button Should Not Exist | _OK_ |\n")
     public void buttonShouldNotExist(String identifier) {
-        contextVerifier.verifyContext();
-        Assert.assertFalse("Button '" + identifier + "' exists", buttonExistenceResolver.satisfiesCondition(identifier));
+        Assert.assertFalse("Button '" + identifier + "' exists", buttonExists(identifier));
     }
 
     @RobotKeyword("Fails if button is disabled\n\n"
         + "Example:\n"
         + "| Button Should Be Enabled | _OK_ |\n")
     public void buttonShouldBeEnabled(String identifier) {
-        contextVerifier.verifyContext();
-        Assert.assertTrue("Button was disabled.", operatorFactory.createOperator(identifier).isEnabled());
+        Assert.assertTrue("Button was disabled.", createOperator(identifier).isEnabled());
     }
 
     @RobotKeyword("Fails if button is enabled\n\n"
         + "Example:\n"
         + "| Button Should Be Disabled | _OK_ |\n")
     public void buttonShouldBeDisabled(String identifier) {
+        Assert.assertFalse("Button was enabled.", createOperator(identifier).isEnabled());
+    }
+    
+    private MyButtonOperator createOperator(String identifier) {
         contextVerifier.verifyContext();
-        Assert.assertFalse("Button was enabled.", operatorFactory.createOperator(identifier).isEnabled());
+        return operatorFactory.createOperator(identifier);
+    }
+    
+    private boolean buttonExists(String identifier) {
+        contextVerifier.verifyContext();
+        return buttonExistenceResolver.satisfiesCondition(identifier);
     }
 }
