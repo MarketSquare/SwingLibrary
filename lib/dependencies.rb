@@ -1,7 +1,7 @@
 JRETROFIT = 'jretrofit:jretrofit:jar:1.0rc1'
 JEMMY = 'org.netbeans:jemmy:jar:2.2.7.5'
 PARANAMER = 'com.thoughtworks.paranamer:paranamer:jar:1.1.2'
-JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.7'
+JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.7.2'
 JDOM = 'jdom:jdom:jar:1.0'
 
 ABBOT = ['abbot:abbot:jar:1.0.2', 'abbot:costello:jar:1.0.2']
@@ -12,7 +12,8 @@ JAVALIB_CORE_DEPENDENCIES =
   JAVALIB_CORE,
   'commons-collections:commons-collections:jar:3.2',
   'commons-logging:commons-logging:jar:1.1',
-  'junit:junit:jar:3.8.1',
+  'commons-io:commons-io:jar:1.4',
+  'junit:junit:jar:4.5',
   'log4j:log4j:jar:1.2.12',
   'logkit:logkit:jar:1.0.1',
   'org.netbeans:jemmy:jar:2.2.7.5',
