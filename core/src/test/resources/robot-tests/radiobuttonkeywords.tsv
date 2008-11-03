@@ -3,36 +3,19 @@ library	SwingLibrary
 
 *Test Case*	*Action*	*Argument*
 Select Radio Button Selects Radio Button	[tags]	development
-	selectRadioButton	0
-	radioButtonShouldBeSelected	0
-	selectRadioButton	one
-	radioButtonShouldBeSelected	one
-	selectRadioButton	1
-	radioButtonShouldBeSelected	1
-	selectRadioButton	three
-	radioButtonShouldBeSelected	three
+	radioButtonShouldBeSelectableWithIndex
+	radioButtonShouldBeSelectableWithName
+	radioButtonShouldBeSelectableWithText
 
 Radio Button Should Be Selected Passes If Button Is Selected	[tags]	development
-	selectRadioButton	0
-	radioButtonShouldBeSelected	one
-	selectRadioButton	1
-	radioButtonShouldBeSelected	two
-	selectRadioButton	2
-	radioButtonShouldBeSelected	three
-
-Radio Button Should Be Selected Fails If Button Is Not Selected	[tags]	development
-	selectRadioButton	0
-	runKeywordAndExpectError	*	radioButtonShouldBeSelected	two
+	radioButtonShouldBeSelectedShouldWorkWithIndexes
+	radioButtonShouldBeSelectedShouldWorkWithNames
+	radioButtonShouldBeSelectedShouldWorkWithText
 
 Radio Button Should Not Be Selected Passes If Button Is Not Selected	[tags]	development
-	selectRadioButton	0
-	radioButtonShouldNotBeSelected	two
-	selectRadioButton	two
-	radioButtonShouldNotBeSelected	0
-
-Radio Button Should Not Be Selected Fails If Button Is Selected	[tags]	development
-	selectRadioButton	0
-	runKeywordAndExpectError	*	radioButtonShouldNotBeSelected	0
+	radioButtonShouldNotBeSelectedShouldWorkWithIndexes
+	radioButtonShouldNotBeSelectedShouldWorkWithNames
+	radioButtonShouldNotBeSelectedShouldWorkWithText
 
 Radio Button Keywords Should Fail If Context Is Not A Window	[tags]	development
 	selectEmptyContext
@@ -40,3 +23,70 @@ Radio Button Keywords Should Fail If Context Is Not A Window	[tags]	development
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	radioButtonShouldBeSelected	someButton
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	radioButtonShouldNotBeSelected	someButton
 	[teardown]	selectMainWindow
+
+*Keyword*	*Action*	*Argument*
+radioButtonShouldBeSelectableWithIndex
+	selectRadioButton	0
+	radioButtonShouldBeSelected	0
+	selectRadioButton	1
+	radioButtonShouldBeSelected	1
+
+radioButtonShouldBeSelectableWithName
+	selectRadioButton	one
+	radioButtonShouldBeSelected	0
+	selectRadioButton	three
+	radioButtonShouldBeSelected	2
+
+radioButtonShouldBeSelectableWithText
+	selectRadioButton	Two
+	radioButtonShouldBeSelected	1
+	selectRadioButton	One
+	radioButtonShouldBeSelected	0
+
+radioButtonShouldBeSelectedShouldWorkWithIndexes
+	selectRadioButton	0
+	radioButtonShouldBeSelected	0
+	selectRadioButton	1
+	radioButtonShouldBeSelected	1
+	selectRadioButton	0
+	runKeywordAndExpectError	*	radioButtonShouldBeSelected	1
+
+radioButtonShouldBeSelectedShouldWorkWithNames
+	selectRadioButton	0
+	radioButtonShouldBeSelected	one
+	selectRadioButton	2
+	radioButtonShouldBeSelected	three
+	selectRadioButton	0
+	runKeywordAndExpectError	*	radioButtonShouldBeSelected	two
+
+radioButtonShouldBeSelectedShouldWorkWithText
+	selectRadioButton	1
+	radioButtonShouldBeSelected	Two
+	selectRadioButton	2
+	radioButtonShouldBeSelected	Three
+	selectRadioButton	0
+	runKeywordAndExpectError	*	radioButtonShouldBeSelected	Two
+
+radioButtonShouldNotBeSelectedShouldWorkWithIndexes
+	selectRadioButton	0
+	radioButtonShouldNotBeSelected	1
+	selectRadioButton	1
+	radioButtonShouldNotBeSelected	0
+	selectRadioButton	0
+	runKeywordAndExpectError	*	radioButtonShouldNotBeSelected	0
+
+radioButtonShouldNotBeSelectedShouldWorkWithNames
+	selectRadioButton	0
+	radioButtonShouldNotBeSelected	two
+	selectRadioButton	1
+	radioButtonShouldNotBeSelected	one
+	selectRadioButton	0
+	runKeywordAndExpectError	*	radioButtonShouldNotBeSelected	one
+
+radioButtonShouldNotBeSelectedShouldWorkWithText
+	selectRadioButton	0
+	radioButtonShouldNotBeSelected	Two
+	selectRadioButton	1
+	radioButtonShouldNotBeSelected	One
+	selectRadioButton	0
+	runKeywordAndExpectError	*	radioButtonShouldNotBeSelected	One
