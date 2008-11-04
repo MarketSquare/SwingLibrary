@@ -10,9 +10,9 @@ import javax.swing.JRadioButton;
 public class TestRadioButton extends JPanel {
     public TestRadioButton() {
         ButtonGroup buttonGroup = new ButtonGroup() {{
-            add(new JRadioButton("one") {{ setName("one"); }});
-            add(new JRadioButton("two") {{ setName("two"); }});
-            add(new JRadioButton("three") {{ setName("three"); }});
+            add(new JRadioButton("One") {{ setName("one"); }});
+            add(new JRadioButton("Two") {{ setName("two"); }});
+            add(new JRadioButton("Three") {{ setName("three"); }});
         }};
         
         Enumeration<AbstractButton> elements = buttonGroup.getElements();
