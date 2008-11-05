@@ -21,12 +21,12 @@ import org.robotframework.swing.popup.IPopupCaller;
 
 
 @RunWith(JDaveRunner.class)
-public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<EnhancedTreeOperator> {
+public class TreeOperatorSpec extends OperatorFactorySpecification<TreeOperator> {
     private String nodeIdentifier = "some|node";
     
     public class Any {
         public void hasPopupCaller() {
-            EnhancedTreeOperator enhancedTreeOperator = new EnhancedTreeOperator(createMockContainerOperator(), dummy(ComponentChooser.class));
+            TreeOperator enhancedTreeOperator = new TreeOperator(createMockContainerOperator(), dummy(ComponentChooser.class));
             specify(enhancedTreeOperator, satisfies(new FieldIsNotNullContract("popupCaller")));
         }
     }
@@ -34,12 +34,12 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
     public class Operating {
         private JTree tree;
         private TreePath treePath;
-        private EnhancedTreeOperator enhancedTreeOperator;
+        private TreeOperator enhancedTreeOperator;
         
-        public EnhancedTreeOperator create() {
+        public TreeOperator create() {
             treePath = mock(TreePath.class);
             tree = createMockJTree();
-            enhancedTreeOperator = new EnhancedTreeOperator(tree);
+            enhancedTreeOperator = new TreeOperator(tree);
             injectMockPathFactory();
             return enhancedTreeOperator;
         }
@@ -131,9 +131,9 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
     public class CreatingPopupOperator {
         private TreePopupMenuOperatorFactory popupFactory;
 
-        public EnhancedTreeOperator create() {
+        public TreeOperator create() {
             popupFactory = mock(TreePopupMenuOperatorFactory.class);
-            return new EnhancedTreeOperator(dummy(JTree.class)) {
+            return new TreeOperator(dummy(JTree.class)) {
                 TreePopupMenuOperatorFactory createPopupFactory() {
                     return popupFactory;
                 }
@@ -158,7 +158,7 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
 
         public void callsPopupOnRow() {
             int expectedRow = 2;
-            EnhancedTreeOperator treeOperator = createTreeOperatorWithExpectedRow(expectedRow);
+            TreeOperator treeOperator = createTreeOperatorWithExpectedRow(expectedRow);
             JPopupMenu popupMenu = injectPopupCallerTo(treeOperator);
 
             specify(treeOperator.callPopupOnRow(expectedRow), must.equal(popupMenu));
@@ -166,7 +166,7 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
             specify(scrollToRowCallCount, must.equal(1));
         }
 
-        private JPopupMenu injectPopupCallerTo(final EnhancedTreeOperator treeOperator) {
+        private JPopupMenu injectPopupCallerTo(final TreeOperator treeOperator) {
             final IPopupCaller popupCaller = injectMockTo(treeOperator, IPopupCaller.class);
             final JPopupMenu popupMenu = dummy(JPopupMenu.class);
             checking(new Expectations() {{
@@ -176,8 +176,8 @@ public class EnhancedTreeOperatorSpec extends OperatorFactorySpecification<Enhan
             return popupMenu;
         }
 
-        private EnhancedTreeOperator createTreeOperatorWithExpectedRow(final int expectedRow) {
-            return new EnhancedTreeOperator(createMockContainerOperator(), dummy(ComponentChooser.class)) {
+        private TreeOperator createTreeOperatorWithExpectedRow(final int expectedRow) {
+            return new TreeOperator(createMockContainerOperator(), dummy(ComponentChooser.class)) {
                 public void selectRow(int row) {
                     if (expectedRow == row) {
                         selectRowCallCount++;

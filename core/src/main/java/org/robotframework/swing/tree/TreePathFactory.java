@@ -25,9 +25,9 @@ import org.robotframework.swing.arguments.IdentifierHandler;
  * @author Heikki Hulkko
  */
 public class TreePathFactory extends IdentifierHandler<TreePath> {
-    private final EnhancedTreeOperator treeOperator;
+    private final TreeOperator treeOperator;
 
-    public TreePathFactory(EnhancedTreeOperator treeOperator) {
+    public TreePathFactory(TreeOperator treeOperator) {
         this.treeOperator = treeOperator;
     }
 

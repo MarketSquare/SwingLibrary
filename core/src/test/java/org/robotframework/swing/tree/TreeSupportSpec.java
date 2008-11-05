@@ -30,7 +30,7 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
     public class CreatingTreeOperator {
         private TreeSupport treeSupport = new TreeSupport();
         private String treeIdentifier = "someTree";
-        private EnhancedTreeOperator treeOperator = dummy(EnhancedTreeOperator.class);
+        private TreeOperator treeOperator = dummy(TreeOperator.class);
         
         public TreeSupport create() {
             injectMockOperatorFactory();

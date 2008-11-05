@@ -16,11 +16,11 @@ public class TreePathFactorySpec extends MockSupportSpecification<TreePathFactor
     private String nodePath = "some|node";
 
     public class CreatingTreePath {
-        private EnhancedTreeOperator treeOperator;
+        private TreeOperator treeOperator;
         private TreePath treePath = dummy(TreePath.class);
 
         public TreePathFactory create() {
-            treeOperator = mock(EnhancedTreeOperator.class);
+            treeOperator = mock(TreeOperator.class);
             return new TreePathFactory(treeOperator);
         }
 

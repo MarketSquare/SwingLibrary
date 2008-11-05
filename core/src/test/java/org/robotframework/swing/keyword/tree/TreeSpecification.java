@@ -21,11 +21,11 @@ import org.jmock.Expectations;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.tree.EnhancedTreeOperator;
+import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreeSupport;
 
 public abstract class TreeSpecification<T extends TreeSupport> extends MockSupportSpecification<T> {
-    protected EnhancedTreeOperator treeOperator;
+    protected TreeOperator treeOperator;
     protected String treeIdentifier = "someTree";
 
     protected T populateWithMockOperatingFactoryAndContextVerifier(T treeKeywords) {
@@ -44,7 +44,7 @@ public abstract class TreeSpecification<T extends TreeSupport> extends MockSuppo
     }
 
     protected T injectMockOperatorFactory(T treeKeywords) {
-        treeOperator = mock(EnhancedTreeOperator.class);
+        treeOperator = mock(TreeOperator.class);
         final OperatorFactory operatorFactory = injectMockTo(treeKeywords, OperatorFactory.class);
         checking(new Expectations() {{
             one(operatorFactory).createOperator(treeIdentifier);

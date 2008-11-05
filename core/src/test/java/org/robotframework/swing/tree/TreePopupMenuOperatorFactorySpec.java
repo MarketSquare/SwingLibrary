@@ -15,13 +15,13 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 @RunWith(JDaveRunner.class)
 public class TreePopupMenuOperatorFactorySpec extends Specification<TreePopupMenuOperatorFactory> {
     public class Any {
-        private EnhancedTreeOperator treeOperator;
+        private TreeOperator treeOperator;
         private JPopupMenuOperator popupMenuOperator;
         private JPopupMenu dummyPopupMenu = dummy(JPopupMenu.class);
 
         public TreePopupMenuOperatorFactory create() {
             popupMenuOperator = mock(JPopupMenuOperator.class);
-            treeOperator = mock(EnhancedTreeOperator.class);
+            treeOperator = mock(TreeOperator.class);
             
             return new TreePopupMenuOperatorFactory(treeOperator) {
                 JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {

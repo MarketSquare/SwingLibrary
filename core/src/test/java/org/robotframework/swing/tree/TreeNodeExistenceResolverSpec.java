@@ -31,7 +31,7 @@ public class TreeNodeExistenceResolverSpec extends MockSupportSpecification<Tree
         private String nodePath = "some|path";
 
         public TreeNodeExistenceResolver create() {
-            TreeNodeExistenceResolver treeNodeExistenceResolver = new TreeNodeExistenceResolver(dummy(EnhancedTreeOperator.class));
+            TreeNodeExistenceResolver treeNodeExistenceResolver = new TreeNodeExistenceResolver(dummy(TreeOperator.class));
             treePathFactory = injectMockTo(treeNodeExistenceResolver, TreePathFactory.class);
             return treeNodeExistenceResolver;
         }

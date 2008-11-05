@@ -28,9 +28,9 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
  * @author Heikki Hulkko
  */
 public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFactory<JPopupMenuOperator> {
-    private final EnhancedTreeOperator treeOperator;
+    private final TreeOperator treeOperator;
 
-    public TreePopupMenuOperatorFactory(EnhancedTreeOperator treeOperator) {
+    public TreePopupMenuOperatorFactory(TreeOperator treeOperator) {
         this.treeOperator = treeOperator;
     }
 

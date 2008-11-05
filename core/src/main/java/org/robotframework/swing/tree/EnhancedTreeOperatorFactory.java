@@ -23,12 +23,12 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 /**
  * @author Heikki Hulkko
  */
-public class EnhancedTreeOperatorFactory extends IdentifierParsingOperatorFactory<EnhancedTreeOperator> {
-    public EnhancedTreeOperator createOperatorByIndex(int index) {
-        return new EnhancedTreeOperator(Context.getContext(), index);
+public class EnhancedTreeOperatorFactory extends IdentifierParsingOperatorFactory<TreeOperator> {
+    public TreeOperator createOperatorByIndex(int index) {
+        return new TreeOperator(Context.getContext(), index);
     }
 
-    public EnhancedTreeOperator createOperatorByName(String name) {
-        return new EnhancedTreeOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public TreeOperator createOperatorByName(String name) {
+        return new TreeOperator(Context.getContext(), new ByNameComponentChooser(name));
     }
 }

@@ -38,19 +38,19 @@ import org.robotframework.swing.popup.IPopupCaller;
  * @author Sami Honkonen
  * @author Heikki Hulkko
  */
-public class EnhancedTreeOperator extends JTreeOperator implements IOperator {
+public class TreeOperator extends JTreeOperator implements IOperator {
     private IPopupCaller popupCaller = new DefaultPopupCaller();
     private TreePathFactory treePathFactory = new TreePathFactory(this);
 
-    public EnhancedTreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {
+    public TreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {
         super(containerOperator, componentChooser);
     }
 
-    public EnhancedTreeOperator(ContainerOperator containerOperator, int index) {
+    public TreeOperator(ContainerOperator containerOperator, int index) {
         super(containerOperator, index);
     }
 
-    public EnhancedTreeOperator(JTree tree) {
+    public TreeOperator(JTree tree) {
         super(tree);
     }
 
@@ -140,7 +140,7 @@ public class EnhancedTreeOperator extends JTreeOperator implements IOperator {
         }
 
         public Object actionProduced(Object arg0) {
-            return new TreePathFinder(EnhancedTreeOperator.this).findPath(path);
+            return new TreePathFinder(TreeOperator.this).findPath(path);
         }
 
         public String getDescription() {

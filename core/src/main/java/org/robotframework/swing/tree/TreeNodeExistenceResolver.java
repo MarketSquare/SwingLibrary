@@ -25,7 +25,7 @@ import org.robotframework.swing.util.ComponentExistenceResolver;
 public class TreeNodeExistenceResolver {
     private TreePathFactory treePathFactory;
 
-    public TreeNodeExistenceResolver(EnhancedTreeOperator treeOperator) {
+    public TreeNodeExistenceResolver(TreeOperator treeOperator) {
         treePathFactory = new TreePathFactory(treeOperator);
     }
 
