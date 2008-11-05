@@ -16,7 +16,7 @@ public class InvalidCellExceptionSpec extends Specification<InvalidCellException
         }
 
         public void errorMessageShouldDescribeThatCellDoesntExist() {
-            String expectedErrorMessage = "Table cell (row: " + rowIdentifier + ", column: " + columnIdentifier + ") doesn't exist.";
+            String expectedErrorMessage = "The specified table cell (row: " + rowIdentifier + ", column: " + columnIdentifier + ") is invalid.";
             specify(context.getMessage(), should.equal(expectedErrorMessage));
         }
     }

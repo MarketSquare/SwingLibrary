@@ -32,8 +32,8 @@ Select Table Cell By Column Header Name
 	shouldBeEqual	two/three	${cellValue}
 
 Select Table Cell Should Fail If The Cell Doesn't Exist
-	runKeywordAndExpectError	Table cell (row: 10, column: 15) doesn't exist.	selectTableCell	${tableName}	10	15
-	runKeywordAndExpectError	Table cell (row: 10, column: nonexisting) doesn't exist.	selectTableCell	${tableName}	10	nonexisting
+	runKeywordAndExpectError	The specified table cell (row: 10, column: 15) is invalid.	selectTableCell	${tableName}	10	15
+	runKeywordAndExpectError	The specified table cell (row: 10, column: nonexisting) is invalid.	selectTableCell	${tableName}	10	nonexisting
 
 Clear Table Selection
 	selectTableCell	${tableName}	1	2
