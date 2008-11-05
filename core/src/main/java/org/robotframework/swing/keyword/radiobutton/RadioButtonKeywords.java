@@ -32,7 +32,7 @@ public class RadioButtonKeywords {
         + "Example:\n"
         + "| Select Radio Button | _My Radio Button_ |\n")
     public void selectRadioButton(String identifier) {
-        operatorFactory.createOperator(identifier).pushNoBlock();
+        operatorFactory.createOperator(identifier).push();
     }
     
     @RobotKeyword("Fails if radiobutton is not selected.\n\n"

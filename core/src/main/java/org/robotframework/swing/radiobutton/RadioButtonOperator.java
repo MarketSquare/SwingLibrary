@@ -19,6 +19,6 @@ package org.robotframework.swing.radiobutton;
 import org.robotframework.swing.operator.IOperator;
 
 public interface RadioButtonOperator extends IOperator {
-    void pushNoBlock();
+    void push();
     boolean isSelected();
 }

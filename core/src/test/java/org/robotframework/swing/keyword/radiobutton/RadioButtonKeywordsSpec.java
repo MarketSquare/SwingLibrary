@@ -48,7 +48,7 @@ public class RadioButtonKeywordsSpec extends KeywordSupportSpecification<RadioBu
         
         public void selectsRadioButton() {
             checking(new Expectations() {{
-                one(operator).pushNoBlock();
+                one(operator).push();
             }});
             
             context.selectRadioButton(identifier);
