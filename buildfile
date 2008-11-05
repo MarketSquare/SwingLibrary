@@ -80,7 +80,13 @@ task :acceptance_tests => :dist do
     set_env('PATH', ["#{java14_home}/bin"])
   end
 
-  sh "jybot -d /tmp --critical regression " + __('src/test/resources/robot-tests')
+  output_dir = if ENV['ROBOT_OUTPUTDIR'].nil?
+    Dir.tmpdir
+  else
+    ENV['ROBOT_OUTPUTDIR']
+  end
+  
+  sh "jybot --outputdir #{output_dir} --critical regression " + __('src/test/resources/robot-tests')
 end
 
 task :doc => :compile do
