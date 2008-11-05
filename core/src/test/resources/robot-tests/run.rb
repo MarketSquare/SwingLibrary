@@ -24,8 +24,6 @@ def root_dir
   root
 end
 
-root_dir
-
 require "#{root_dir}/lib/dependencies"
 
 deps = ["#{root_dir}/core/target/classes",
