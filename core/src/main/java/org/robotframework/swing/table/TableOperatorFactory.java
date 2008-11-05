@@ -25,10 +25,10 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
  */
 public class TableOperatorFactory extends IdentifierParsingOperatorFactory<TableOperator> {
     public TableOperator createOperatorByIndex(int index) {
-        return new TableOperator(Context.getContext(), index);
+        return new DefaultTableOperator(Context.getContext(), index);
     }
 
     public TableOperator createOperatorByName(String name) {
-        return new TableOperator(Context.getContext(), new ByNameComponentChooser(name));
+        return new DefaultTableOperator(Context.getContext(), new ByNameComponentChooser(name));
     }
 }

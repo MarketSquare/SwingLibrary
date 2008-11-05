@@ -13,6 +13,7 @@ import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.table.TableOperator;
+import org.robotframework.swing.table.DefaultTableOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -235,7 +236,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
     private void injectMockOperatorFactory() {
         operatorFactory = injectMockTo(tableKeywords, OperatorFactory.class);
-        tableOperator = mock(TableOperator.class);
+        tableOperator = mock(DefaultTableOperator.class);
 
         checking(new Expectations() {{
             one(operatorFactory).createOperator(tableIdentifier);

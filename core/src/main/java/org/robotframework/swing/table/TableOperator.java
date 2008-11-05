@@ -18,100 +18,19 @@ package org.robotframework.swing.table;
 
 import java.awt.Point;
 
-import javax.swing.JTable;
+import org.robotframework.swing.operator.IOperator;
 
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.robotframework.swing.arguments.IdentifierHandler;
-import org.springframework.util.ObjectUtils;
-
-/**
- * @author Heikki Hulkko
- */
-public class TableOperator extends JTableOperator {
-    public TableOperator(JTable table) {
-        super(table);
-    }
-
-    public TableOperator(ContainerOperator context, int index) {
-        super(context, index);
-    }
-
-    public TableOperator(ContainerOperator context, ComponentChooser componentChooser) {
-        super(context, componentChooser);
-    }
-
-    public Object getValueAt(String rowIdentifier, String columnIdentifier) {
-        Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        return getValueAt(coordinates.y, coordinates.x);
-    }
-
-    public boolean isCellSelected(String rowIdentifier, String columnIdentifier) {
-        Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        return isCellSelected(coordinates.y, coordinates.x);
-    }
-
-    public void selectCell(String rowIdentifier, String columnIdentifier) {
-        Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        selectCell(coordinates.y, coordinates.x);
-    }
-
-    public void setValueAt(Object newValue, String rowIdentifier, String columnIdentifier) {
-        Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        setValueAt(newValue, coordinates.y, coordinates.x);
-    }
-    
-    public void changeCellObject(String row, String columnIdentifier, String newValue) {
-        Point coordinates = findCell(row, columnIdentifier);
-        changeCellObject(coordinates.y, coordinates.x, newValue);
-    }
-
-    public Point findCell(String row, String columnIdentifier) {
-        TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
-        Point cell = findCell(cellChooser);
-        if (cellIsInvalid(cell))
-            throw new InvalidCellException(row, columnIdentifier);
-        return cell;
-    }
-
-    private boolean cellIsInvalid(Point cell) {
-        return cell.x < 0 || cell.y < 0;
-    }
-
-    private TableCellChooser createCellChooser(String row, String columnIdentifier) {
-        return new CellChooserFactory(row).createCellChooser(columnIdentifier);
-    }
-
-    private Object getColumHeader(int columnIndex) {
-        return getColumnModel().getColumn(columnIndex).getHeaderValue();
-    }
-
-    private class CellChooserFactory extends IdentifierHandler<TableCellChooser> {
-        private int row;
-
-        public CellChooserFactory(String rowAsString) {
-            row = Integer.parseInt(rowAsString);
-        }
-
-        public TableCellChooser indexArgument(final int column) {
-            return new AbstractTableCellChooser(row) {
-                protected boolean checkColumn(int index) {
-                    return column == index;
-                }
-            };
-        }
-
-        public TableCellChooser nameArgument(final String columnHeader) {
-            return new AbstractTableCellChooser(row) {
-                protected boolean checkColumn(int columnIndex) {
-                    return ObjectUtils.nullSafeEquals(columnHeader, getColumHeader(columnIndex));
-                }
-            };
-        }
-
-        public TableCellChooser createCellChooser(String columnIdentifier) {
-            return parseArgument(columnIdentifier);
-        }
-    }
+public interface TableOperator extends IOperator {
+    void selectCell(String row, String column);
+    void setValueAt(Object newValue, String row, String column);
+    void changeCellObject(String row, String column, String newValue);
+    void clearSelection();
+    boolean isCellSelected(String row, String column);
+    int getSelectedRow();
+    int getSelectedColumn();
+    int getColumnCount();
+    int getRowCount();
+    Object getValueAt(int row, int column);
+    Object getValueAt(String row, String column);
+    Point findCell(String row, String column);
 }
