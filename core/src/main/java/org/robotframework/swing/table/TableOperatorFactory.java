@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.table;
 
+import org.netbeans.jemmy.operators.JTableOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
@@ -25,10 +26,10 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
  */
 public class TableOperatorFactory extends IdentifierParsingOperatorFactory<TableOperator> {
     public TableOperator createOperatorByIndex(int index) {
-        return new DefaultTableOperator(Context.getContext(), index);
+        return new DefaultTableOperator(new JTableOperator(Context.getContext(), index));
     }
 
     public TableOperator createOperatorByName(String name) {
-        return new DefaultTableOperator(Context.getContext(), new ByNameComponentChooser(name));
+        return new DefaultTableOperator(new JTableOperator(Context.getContext(), new ByNameComponentChooser(name)));
     }
 }

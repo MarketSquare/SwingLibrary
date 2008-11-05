@@ -18,61 +18,80 @@ package org.robotframework.swing.table;
 
 import java.awt.Point;
 
-import javax.swing.JTable;
-
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
+import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 import org.robotframework.swing.arguments.IdentifierHandler;
 import org.springframework.util.ObjectUtils;
 
 /**
  * @author Heikki Hulkko
  */
-public class DefaultTableOperator extends JTableOperator implements TableOperator {
-    public DefaultTableOperator(JTable table) {
-        super(table);
-    }
+public class DefaultTableOperator implements TableOperator {
+    private final JTableOperator delegate;
 
-    public DefaultTableOperator(ContainerOperator context, int index) {
-        super(context, index);
+    public DefaultTableOperator(JTableOperator delegate) {
+        this.delegate = delegate;
     }
-
-    public DefaultTableOperator(ContainerOperator context, ComponentChooser componentChooser) {
-        super(context, componentChooser);
-    }
-
+    
     public Object getValueAt(String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        return getValueAt(coordinates.y, coordinates.x);
+        return delegate.getValueAt(coordinates.y, coordinates.x);
     }
 
     public boolean isCellSelected(String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        return isCellSelected(coordinates.y, coordinates.x);
+        return delegate.isCellSelected(coordinates.y, coordinates.x);
     }
 
     public void selectCell(String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        selectCell(coordinates.y, coordinates.x);
+        delegate.selectCell(coordinates.y, coordinates.x);
     }
 
     public void setValueAt(Object newValue, String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        setValueAt(newValue, coordinates.y, coordinates.x);
+        delegate.setValueAt(newValue, coordinates.y, coordinates.x);
     }
     
     public void changeCellObject(String row, String columnIdentifier, String newValue) {
         Point coordinates = findCell(row, columnIdentifier);
-        changeCellObject(coordinates.y, coordinates.x, newValue);
+        delegate.changeCellObject(coordinates.y, coordinates.x, newValue);
     }
 
     public Point findCell(String row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
-        Point cell = findCell(cellChooser);
+        Point cell = delegate.findCell(cellChooser);
         if (cellIsInvalid(cell))
             throw new InvalidCellException(row, columnIdentifier);
         return cell;
+    }
+    
+    public void clearSelection() {
+        delegate.clearSelection();
+    }
+
+    public int getColumnCount() {
+        return delegate.getColumnCount();
+    }
+
+    public int getRowCount() {
+        return delegate.getRowCount();
+    }
+
+    public int getSelectedColumn() {
+        return delegate.getSelectedColumn();
+    }
+
+    public int getSelectedRow() {
+        return delegate.getSelectedRow();
+    }
+
+    public Object getValueAt(int row, int column) {
+        return delegate.getValueAt(row, column);
+    }
+
+    public Object getSource() {
+        return delegate.getSource();
     }
 
     private boolean cellIsInvalid(Point cell) {
@@ -84,7 +103,7 @@ public class DefaultTableOperator extends JTableOperator implements TableOperato
     }
 
     private Object getColumHeader(int columnIndex) {
-        return getColumnModel().getColumn(columnIndex).getHeaderValue();
+        return delegate.getColumnModel().getColumn(columnIndex).getHeaderValue();
     }
 
     private class CellChooserFactory extends IdentifierHandler<TableCellChooser> {
