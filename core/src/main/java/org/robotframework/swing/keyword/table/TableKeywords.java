@@ -24,7 +24,7 @@ import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.table.EnhancedTableOperator;
+import org.robotframework.swing.table.TableOperator;
 import org.robotframework.swing.table.TableOperatorFactory;
 
 /**
@@ -32,7 +32,7 @@ import org.robotframework.swing.table.TableOperatorFactory;
  */
 @RobotKeywords
 public class TableKeywords extends IdentifierSupport {
-    private OperatorFactory<EnhancedTableOperator> operatorFactory = new TableOperatorFactory();
+    private OperatorFactory<TableOperator> operatorFactory = new TableOperatorFactory();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects a cell in a table.\n\n"
@@ -55,7 +55,7 @@ public class TableKeywords extends IdentifierSupport {
         + "| Table Cell Should Be Selected | _myTable_ | _0_ | _2_       |\n"
         + "| Table Cell Should Be Selected | _myTable_ | _1_ | _Keyword_ |\n")
     public void tableCellShouldBeSelected(String identifier, String row, String columnIdentifier) {
-        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        TableOperator tableOperator = createTableOperator(identifier);
         Assert.assertTrue("Cell '" + row + "', '" + columnIdentifier + "' is not selected.", tableOperator.isCellSelected(row, columnIdentifier));
     }
 
@@ -64,7 +64,7 @@ public class TableKeywords extends IdentifierSupport {
         + "| Table Cell Should Be Selected | _myTable_ | _0_ | _2_       |\n"
         + "| Table Cell Should Be Selected | _myTable_ | _1_ | _Keyword_ |\n")
     public void tableCellShouldNotBeSelected(String identifier, String row, String columnIdentifier) {
-        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        TableOperator tableOperator = createTableOperator(identifier);
         Assert.assertFalse("Cell '" + row + "', '" + columnIdentifier + "' is selected.", tableOperator.isCellSelected(row, columnIdentifier));
     }
 
@@ -73,7 +73,7 @@ public class TableKeywords extends IdentifierSupport {
         + "| ${cellValue}=   | Get Table Cell Value | _myTable_ | _0_            | _2_ |\n"
         + "| Should Be Equal | _tuesday_            |           | _${cellValue}_ |     |\n")
     public String getTableCellValue(String identifier, String row, String columnIdentifier) {
-        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        TableOperator tableOperator = createTableOperator(identifier);
         return tableOperator.getValueAt(row, columnIdentifier).toString();
     }
 
@@ -82,7 +82,7 @@ public class TableKeywords extends IdentifierSupport {
         + "| ${cellValue}=   | Get Selected Table Cell Value   | _myTable_      |\n"
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
     public Object getSelectedTableCellValue(String identifier) {
-        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        TableOperator tableOperator = createTableOperator(identifier);
         int selectedRow = tableOperator.getSelectedRow();
         int selectedColumn = tableOperator.getSelectedColumn();
         return tableOperator.getValueAt(selectedRow, selectedColumn).toString();
@@ -92,7 +92,7 @@ public class TableKeywords extends IdentifierSupport {
     	+ "Example:\n"
     	+ "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
     public void setTableCellValue(String identifier, String row, String columnIdentifier, String newValue) {
-        EnhancedTableOperator tableOperator = createTableOperator(identifier);
+        TableOperator tableOperator = createTableOperator(identifier);
         tableOperator.setValueAt(newValue, row, columnIdentifier);
     }
 
@@ -120,7 +120,7 @@ public class TableKeywords extends IdentifierSupport {
     }
     
     
-    private EnhancedTableOperator createTableOperator(String identifier) {
+    private TableOperator createTableOperator(String identifier) {
         contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);   
     }

@@ -29,16 +29,16 @@ import org.springframework.util.ObjectUtils;
 /**
  * @author Heikki Hulkko
  */
-public class EnhancedTableOperator extends JTableOperator {
-    public EnhancedTableOperator(JTable table) {
+public class TableOperator extends JTableOperator {
+    public TableOperator(JTable table) {
         super(table);
     }
 
-    public EnhancedTableOperator(ContainerOperator context, int index) {
+    public TableOperator(ContainerOperator context, int index) {
         super(context, index);
     }
 
-    public EnhancedTableOperator(ContainerOperator context, ComponentChooser componentChooser) {
+    public TableOperator(ContainerOperator context, ComponentChooser componentChooser) {
         super(context, componentChooser);
     }
 

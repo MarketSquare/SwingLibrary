@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.netbeans.jemmy.ComponentChooser;
 
 @RunWith(JDaveRunner.class)
-public class EnhancedTableOperatorSpec extends Specification<Void> {
+public class TableOperatorSpec extends Specification<Void> {
 	private String row = "12";
 	private String column = "21";
     private Point cell = new Point(Integer.parseInt(column), Integer.parseInt(row));
@@ -61,10 +61,10 @@ public class EnhancedTableOperatorSpec extends Specification<Void> {
     }
 
     public class HandlingErrorScenarios {
-        private EnhancedTableOperator tableOperator;
+        private TableOperator tableOperator;
 
         public void create() {
-            tableOperator = new EnhancedTableOperator(dummy(JTable.class)) {
+            tableOperator = new TableOperator(dummy(JTable.class)) {
                 public Point findCell(ComponentChooser chooser) {
                     return new Point(-1, -1);
                 }
@@ -80,7 +80,7 @@ public class EnhancedTableOperatorSpec extends Specification<Void> {
         }
     }
 
-    private class FakeEnhancedTableOperator extends EnhancedTableOperator {
+    private class FakeEnhancedTableOperator extends TableOperator {
         private int row, column;
 
         public FakeEnhancedTableOperator() {

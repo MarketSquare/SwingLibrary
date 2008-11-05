@@ -23,12 +23,12 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 /**
  * @author Heikki Hulkko
  */
-public class TableOperatorFactory extends IdentifierParsingOperatorFactory<EnhancedTableOperator> {
-    public EnhancedTableOperator createOperatorByIndex(int index) {
-        return new EnhancedTableOperator(Context.getContext(), index);
+public class TableOperatorFactory extends IdentifierParsingOperatorFactory<TableOperator> {
+    public TableOperator createOperatorByIndex(int index) {
+        return new TableOperator(Context.getContext(), index);
     }
 
-    public EnhancedTableOperator createOperatorByName(String name) {
-        return new EnhancedTableOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public TableOperator createOperatorByName(String name) {
+        return new TableOperator(Context.getContext(), new ByNameComponentChooser(name));
     }
 }

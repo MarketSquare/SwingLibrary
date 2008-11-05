@@ -80,6 +80,16 @@ Get Table Row Count By Index
 	${rowCount}=	getTableRowCount	0
 	shouldBeEqualAsIntegers	4	${rowCount}
 
+Select From Table Cell Popup	[tags]	development
+	selectFromTableCellPopup	${tableName}	2	column one	Submenu|Enabled menuitem
+	selectFromTableCellPopup	${tableName}	2	1	Replace text
+	${newCellValue}=	getTableCellValue	${tableName}	2	1
+	shouldBeEqual	newValue	${newCellValue}
+
+Select From Table Cell Popup Should Fail With Descriptive Error Message If Menuitem Is Disabled	[tags]	development
+	runKeywordAndExpectError	Menuitem was disabled.	selectFromTableCellPopup	${tableName}	2	1	Disabled menuitem
+	runKeywordAndExpectError	Menuitem was disabled.	selectFromTableCellPopup	${tableName}	2	1	Submenu|Disabled menuitem
+
 Table Keywords Fail If Context Is Not a Table
 	selectEmptyContext
 	tableKeywordShouldFail	getTableCellValue	someTable	0	0

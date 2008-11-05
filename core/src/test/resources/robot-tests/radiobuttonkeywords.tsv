@@ -2,22 +2,22 @@
 library	SwingLibrary
 
 *Test Case*	*Action*	*Argument*
-Select Radio Button Selects Radio Button	[tags]	development
+Select Radio Button Selects Radio Button
 	radioButtonShouldBeSelectableWithIndex
 	radioButtonShouldBeSelectableWithName
 	radioButtonShouldBeSelectableWithText
 
-Radio Button Should Be Selected Passes If Button Is Selected	[tags]	development
+Radio Button Should Be Selected Passes If Button Is Selected
 	radioButtonShouldBeSelectedShouldWorkWithIndexes
 	radioButtonShouldBeSelectedShouldWorkWithNames
 	radioButtonShouldBeSelectedShouldWorkWithText
 
-Radio Button Should Not Be Selected Passes If Button Is Not Selected	[tags]	development
+Radio Button Should Not Be Selected Passes If Button Is Not Selected
 	radioButtonShouldNotBeSelectedShouldWorkWithIndexes
 	radioButtonShouldNotBeSelectedShouldWorkWithNames
 	radioButtonShouldNotBeSelectedShouldWorkWithText
 
-Radio Button Keywords Should Fail If Context Is Not A Window	[tags]	development
+Radio Button Keywords Should Fail If Context Is Not A Window
 	selectEmptyContext
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectRadioButton	someButton
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	radioButtonShouldBeSelected	someButton

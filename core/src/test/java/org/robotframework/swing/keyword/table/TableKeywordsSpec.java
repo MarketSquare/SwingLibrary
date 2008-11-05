@@ -12,7 +12,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.table.EnhancedTableOperator;
+import org.robotframework.swing.table.TableOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -20,7 +20,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
     private TableKeywords tableKeywords = new TableKeywords();
     private OperatorFactory operatorFactory;
     private IContextVerifier contextVerifier;
-    private EnhancedTableOperator tableOperator;
+    private TableOperator tableOperator;
     private String tableIdentifier = "someTable";
     private String columnIdentifier = "two";
     private String row = "1";
@@ -235,7 +235,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
     private void injectMockOperatorFactory() {
         operatorFactory = injectMockTo(tableKeywords, OperatorFactory.class);
-        tableOperator = mock(EnhancedTableOperator.class);
+        tableOperator = mock(TableOperator.class);
 
         checking(new Expectations() {{
             one(operatorFactory).createOperator(tableIdentifier);
