@@ -29,13 +29,13 @@ abstract class AbstractTableCellChooser implements TableCellChooser {
         this.expectedRow = expectedRow;
     }
 
-    public boolean checkCell(JTableOperator ignored, int actualRow, int column) {
-        return expectedRow == actualRow && checkColumn(column);
+    public boolean checkCell(JTableOperator tableOperator, int actualRow, int column) {
+        return expectedRow == actualRow && checkColumn(tableOperator, column);
     }
 
     public String getDescription() {
         return "Chooses table cell according to row index and column identifier";
     }
 
-    protected abstract boolean checkColumn(int column);
+    protected abstract boolean checkColumn(JTableOperator tableOperator, int column);
 }
