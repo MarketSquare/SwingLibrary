@@ -22,6 +22,7 @@ public interface TableOperator extends IOperator {
     void selectCell(String row, String column);
     void setCellValue(Object newValue, String row, String column);
     void clearSelection();
+    void clearCell(String row, String columnIdentifier);
     boolean isCellSelected(String row, String column);
     int getColumnCount();
     int getRowCount();

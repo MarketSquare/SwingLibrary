@@ -112,7 +112,7 @@ public class TableKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| Clear Table Cell Value | _myTable_ | _1_ | _2_ |\n")
     public void clearTableCell(String identifier, String row, String columnIdentifier) {
-        createTableOperator(identifier).changeCellObject(row, columnIdentifier, "");
+        createTableOperator(identifier).clearCell(row, columnIdentifier);
     }
     
     private TableOperator createTableOperator(String identifier) {

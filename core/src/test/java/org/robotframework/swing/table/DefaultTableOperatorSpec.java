@@ -182,6 +182,14 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
             
             context.setCellValue(newValue, row, columnHeaderName);
         }
+        
+        public void clearsCell() {
+            checking(new Expectations() {{
+                one(jTableOperator).prepareEditor(with(instanceOf(CellClearingEditor.class)), with(equal(coordinates.y)), with(equal(coordinates.x)));
+            }});
+            
+            context.clearCell(row, columnHeaderName);
+        }
     }
     
     @SuppressWarnings("unchecked")

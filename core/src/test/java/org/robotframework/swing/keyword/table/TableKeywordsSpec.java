@@ -12,8 +12,8 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.table.TableOperator;
 import org.robotframework.swing.table.DefaultTableOperator;
+import org.robotframework.swing.table.TableOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -217,7 +217,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
         public void clearsTableCell() {
             checking(new Expectations() {{
-                one(tableOperator).changeCellObject(row, columnIdentifier, "");
+                one(tableOperator).clearCell(row, columnIdentifier);
             }});
             
             context.clearTableCell(tableIdentifier, row, columnIdentifier);

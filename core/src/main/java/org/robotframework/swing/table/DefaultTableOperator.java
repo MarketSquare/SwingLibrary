@@ -32,24 +32,29 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         this.jTableOperator = jTableOperator;
     }
     
-    public Object getCellValue(String rowIdentifier, String columnIdentifier) {
-        Point coordinates = findCell(rowIdentifier, columnIdentifier);
+    public Object getCellValue(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
         return jTableOperator.getValueAt(coordinates.y, coordinates.x);
     }
 
-    public boolean isCellSelected(String rowIdentifier, String columnIdentifier) {
-        Point coordinates = findCell(rowIdentifier, columnIdentifier);
+    public boolean isCellSelected(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
         return jTableOperator.isCellSelected(coordinates.y, coordinates.x);
     }
 
-    public void selectCell(String rowIdentifier, String columnIdentifier) {
-        Point coordinates = findCell(rowIdentifier, columnIdentifier);
+    public void selectCell(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.selectCell(coordinates.y, coordinates.x);
     }
 
     public void setCellValue(Object newValue, String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
         jTableOperator.changeCellObject(coordinates.y, coordinates.x, newValue);
+    }
+    
+    public void clearCell(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        jTableOperator.prepareEditor(new CellClearingEditor(), coordinates.y, coordinates.x);
     }
     
     public void clearSelection() {
@@ -73,7 +78,7 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
     public Object getSource() {
         return jTableOperator.getSource();
     }
-
+    
     private Point findCell(String row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
         Point cell = jTableOperator.findCell(cellChooser);
