@@ -23,12 +23,12 @@ import javax.swing.table.TableColumnModel;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 import org.robotframework.swing.arguments.IdentifierHandler;
-import org.springframework.util.ObjectUtils;
+import org.robotframework.swing.common.IdentifierSupport;
 
 /**
  * @author Heikki Hulkko
  */
-public class DefaultTableOperator implements TableOperator {
+public class DefaultTableOperator extends IdentifierSupport implements TableOperator {
     private final JTableOperator jTableOperator;
 
     public DefaultTableOperator(JTableOperator jTableOperator) {
@@ -101,31 +101,10 @@ public class DefaultTableOperator implements TableOperator {
     }
 
     private TableCellChooser createCellChooser(String row, String columnIdentifier) {
-        return new CellChooserFactory(row).createCellChooser(columnIdentifier);
-    }
-
-    private Object getColumHeader(int columnIndex) {
-        TableColumnModel columnModel = jTableOperator.getColumnModel();
-		return columnModel.getColumn(columnIndex).getHeaderValue();
-    }
-
-    private class CellChooserFactory extends IdentifierHandler<TableCellChooser> {
-        private int row;
-
-        public CellChooserFactory(String rowAsString) {
-            row = Integer.parseInt(rowAsString);
-        }
-
-        public TableCellChooser indexArgument(final int column) {
-        	return new ColumnIndexTableCellChooser(row, column);
-        }
-
-        public TableCellChooser nameArgument(final String columnHeader) {
-            return new ColumnNameTableCellChooser(row, columnHeader);
-        }
-
-        public TableCellChooser createCellChooser(String columnIdentifier) {
-            return parseArgument(columnIdentifier);
-        }
+    	if (isIndex(columnIdentifier)) {
+    		return new ColumnIndexTableCellChooser(row, columnIdentifier);
+    	} else {
+    		return new ColumnNameTableCellChooser(row, columnIdentifier);
+    	}
     }
 }

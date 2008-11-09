@@ -6,9 +6,9 @@ import org.netbeans.jemmy.operators.JTableOperator;
 public class ColumnIndexTableCellChooser extends AbstractTableCellChooser {
 	private final int expectedColumn;
 
-	ColumnIndexTableCellChooser(int expectedRow, int expectedColumn) {
+	ColumnIndexTableCellChooser(String expectedRow, String expectedColumn) {
 		super(expectedRow);
-		this.expectedColumn = expectedColumn;
+		this.expectedColumn = Integer.parseInt(expectedColumn);
 	}
 
 	@Override
