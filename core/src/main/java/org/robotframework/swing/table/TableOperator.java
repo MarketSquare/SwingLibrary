@@ -26,11 +26,9 @@ public interface TableOperator extends IOperator {
     void changeCellObject(String row, String column, String newValue);
     void clearSelection();
     boolean isCellSelected(String row, String column);
-    int getSelectedRow();
-    int getSelectedColumn();
     int getColumnCount();
     int getRowCount();
-    Object getValueAt(int row, int column);
     Object getValueAt(String row, String column);
     Point findCell(String row, String column);
+    Object getSelectedCellValue();
 }

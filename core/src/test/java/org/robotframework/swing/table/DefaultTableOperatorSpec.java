@@ -13,12 +13,12 @@ import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 
 @RunWith(JDaveRunner.class)
 public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator> {
-    public class HandlingErrorScenarios {
+    public class OperatingOnCellValues {
         private JTableOperator jTableOperator;
 
-		public DefaultTableOperator create() {
+        public DefaultTableOperator create() {
             jTableOperator = mock(JTableOperator.class);
-			return new DefaultTableOperator(jTableOperator);
+            return new DefaultTableOperator(jTableOperator);
         }
 
         public void findingNonexistentCellFails() {
@@ -31,6 +31,17 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
                     context.selectCell("12", "nonexisting");
                 }
             }, should.raise(InvalidCellException.class));
+        }
+        
+        public void getsSelectedCellValue() {
+            final Object cellValue = new Object();
+            checking(new Expectations() {{
+                one(jTableOperator).getSelectedRow(); will(returnValue(2));
+                one(jTableOperator).getSelectedColumn(); will(returnValue(3));
+                one(jTableOperator).getValueAt(2, 3); will(returnValue(cellValue));
+            }});
+            
+            specify(context.getSelectedCellValue(), cellValue);
         }
     }
 }

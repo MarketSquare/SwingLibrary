@@ -85,10 +85,12 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         return jTableOperator.getSelectedRow();
     }
 
-    public Object getValueAt(int row, int column) {
-        return jTableOperator.getValueAt(row, column);
+    public Object getSelectedCellValue() {
+      int selectedRow = jTableOperator.getSelectedRow();
+      int selectedColumn = jTableOperator.getSelectedColumn();
+      return jTableOperator.getValueAt(selectedRow, selectedColumn);
     }
-
+    
     public Object getSource() {
         return jTableOperator.getSource();
     }

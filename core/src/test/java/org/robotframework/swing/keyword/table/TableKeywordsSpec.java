@@ -97,9 +97,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             final int row = 5;
             final int column = 2;
             checking(new Expectations() {{
-                one(tableOperator).getSelectedColumn(); will(returnValue(column));
-                one(tableOperator).getSelectedRow(); will(returnValue(row));
-                one(tableOperator).getValueAt(row, column);
+                one(tableOperator).getSelectedCellValue();
                 will(returnValue(cellValue));
             }});
 

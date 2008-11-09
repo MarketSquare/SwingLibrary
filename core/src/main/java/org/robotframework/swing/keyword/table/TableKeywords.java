@@ -73,8 +73,7 @@ public class TableKeywords extends IdentifierSupport {
         + "| ${cellValue}=   | Get Table Cell Value | _myTable_ | _0_            | _2_ |\n"
         + "| Should Be Equal | _tuesday_            |           | _${cellValue}_ |     |\n")
     public String getTableCellValue(String identifier, String row, String columnIdentifier) {
-        TableOperator tableOperator = createTableOperator(identifier);
-        return tableOperator.getValueAt(row, columnIdentifier).toString();
+        return createTableOperator(identifier).getValueAt(row, columnIdentifier).toString();
     }
 
     @RobotKeyword("Returns selected cell's value from a table.\n\n"
@@ -82,10 +81,7 @@ public class TableKeywords extends IdentifierSupport {
         + "| ${cellValue}=   | Get Selected Table Cell Value   | _myTable_      |\n"
         + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
     public Object getSelectedTableCellValue(String identifier) {
-        TableOperator tableOperator = createTableOperator(identifier);
-        int selectedRow = tableOperator.getSelectedRow();
-        int selectedColumn = tableOperator.getSelectedColumn();
-        return tableOperator.getValueAt(selectedRow, selectedColumn).toString();
+        return createTableOperator(identifier).getSelectedCellValue().toString();
     }
 
     @RobotKeyword("Sets cell value in a table.\n\n"
@@ -118,7 +114,6 @@ public class TableKeywords extends IdentifierSupport {
     public void clearTableCell(String identifier, String row, String columnIdentifier) {
         createTableOperator(identifier).changeCellObject(row, columnIdentifier, "");
     }
-    
     
     private TableOperator createTableOperator(String identifier) {
         contextVerifier.verifyContext();
