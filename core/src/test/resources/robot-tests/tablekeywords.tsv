@@ -51,7 +51,9 @@ Get Table Cell Value By Index
 	shouldBeEqual	three/two	${cellValue}
 
 Clear Table Cell
+	selectTableCell	${tableName}	2	1
 	clearTableCell	${tableName}	2	1
+	sleep	5
 	${cellValue}=	getTableCellValue	${tableName}	2	1
 	shouldBeEmpty	${cellValue}
 

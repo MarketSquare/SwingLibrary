@@ -92,108 +92,82 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
         }
     }
     
-    public class OperatingOnTableWithColumnIndex {
-        private String columnIndexAsString = "2";
-        
-        public DefaultTableOperator create() {
+    public class OperatingOnTableWithColumnIndex extends OperatingOnTable {
+        protected JTableOperator createMockJTableOperator() {
+            column = "2";
             jTableOperator = mock(JTableOperator.class);
             checking(new Expectations() {{
                 one(jTableOperator).findCell(with(instanceOf(ColumnIndexTableCellChooser.class))); will(returnValue(coordinates));
             }});
             
-            return new DefaultTableOperator(jTableOperator);
-        }
-        
-        public void getsCellValue() {
-            checking(new Expectations() {{
-                one(jTableOperator).getValueAt(coordinates.y, coordinates.x); will(returnValue(cellValue));
-            }});
-            
-            specify(context.getCellValue(row, columnIndexAsString), cellValue);
-        }
-        
-        public void checksCellIsSelected() {
-            checking(new Expectations() {{
-                one(jTableOperator).isCellSelected(coordinates.y, coordinates.x); will(returnValue(true));
-            }});
-            
-            specify(context.isCellSelected(row, columnIndexAsString));
-        }
-        
-        public void selectsCell() {
-            checking(new Expectations() {{
-                one(jTableOperator).selectCell(coordinates.y, coordinates.x);
-            }});
-            
-            context.selectCell(row, columnIndexAsString);
-        }
-        
-        public void setsCellValue() {
-            final Object newValue = new Object();
-            checking(new Expectations() {{
-                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
-            }});
-            
-            context.setCellValue(newValue, row, columnIndexAsString);
+            return jTableOperator;
         }
     }
     
-    public class OperatingOnTableWithColumnHeaderName {
-        private String columnHeaderName = "someColumn";
-        
-        public DefaultTableOperator create() {
+    public class OperatingOnTableWithColumnHeaderName extends OperatingOnTable {
+        protected JTableOperator createMockJTableOperator() {
+            column = "someColumn";
             jTableOperator = mock(JTableOperator.class);
             checking(new Expectations() {{
                 one(jTableOperator).findCell(with(instanceOf(ColumnNameTableCellChooser.class))); will(returnValue(coordinates));
             }});
             
-            return new DefaultTableOperator(jTableOperator);
-        }
-        
-        public void getsCellValue() {
-            checking(new Expectations() {{
-                one(jTableOperator).getValueAt(coordinates.y, coordinates.x); will(returnValue(cellValue));
-            }});
-            
-            specify(context.getCellValue(row, columnHeaderName), cellValue);
-        }
-        
-        public void checksCellIsSelected() {
-            checking(new Expectations() {{
-                one(jTableOperator).isCellSelected(coordinates.y, coordinates.x); will(returnValue(true));
-            }});
-            
-            specify(context.isCellSelected(row, columnHeaderName));
-        }
-        
-        public void selectsCell() {
-            checking(new Expectations() {{
-                one(jTableOperator).selectCell(coordinates.y, coordinates.x);
-            }});
-            
-            context.selectCell(row, columnHeaderName);
-        }
-        
-        public void setsCellValue() {
-            final Object newValue = new Object();
-            checking(new Expectations() {{
-                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
-            }});
-            
-            context.setCellValue(newValue, row, columnHeaderName);
-        }
-        
-        public void clearsCell() {
-            checking(new Expectations() {{
-                one(jTableOperator).prepareEditor(with(instanceOf(CellClearingEditor.class)), with(equal(coordinates.y)), with(equal(coordinates.x)));
-            }});
-            
-            context.clearCell(row, columnHeaderName);
+            return jTableOperator;
         }
     }
     
     @SuppressWarnings("unchecked")
     private <T> Matcher<T> instanceOf(Class<T> type) {
         return (Matcher<T>) new IsInstanceOf(type);
+    }
+    
+    public abstract class OperatingOnTable {
+        protected String column;
+        protected abstract JTableOperator createMockJTableOperator();
+        
+        public DefaultTableOperator create() {
+            return new DefaultTableOperator(createMockJTableOperator());
+        }
+        
+        public void getsCellValue() {
+            checking(new Expectations() {{
+                one(jTableOperator).getValueAt(coordinates.y, coordinates.x); will(returnValue(cellValue));
+            }});
+            
+            specify(context.getCellValue(row, column), cellValue);
+        }
+        
+        public void checksCellIsSelected() {
+            checking(new Expectations() {{
+                one(jTableOperator).isCellSelected(coordinates.y, coordinates.x); will(returnValue(true));
+            }});
+            
+            specify(context.isCellSelected(row, column));
+        }
+        
+        public void selectsCell() {
+            checking(new Expectations() {{
+                one(jTableOperator).selectCell(coordinates.y, coordinates.x);
+            }});
+            
+            context.selectCell(row, column);
+        }
+        
+        public void setsCellValue() {
+            final Object newValue = new Object();
+            checking(new Expectations() {{
+                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
+            }});
+            
+            context.setCellValue(newValue, row, column);
+        }
+        
+        public void clearsCell() {
+            checking(new Expectations() {{
+                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, "");
+            }});
+            
+            context.clearCell(row, column);
+        }
     }
 }
