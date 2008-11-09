@@ -127,6 +127,15 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
             
             context.selectCell(row, columnIndexAsString);
         }
+        
+        public void setsCellValue() {
+            final Object newValue = new Object();
+            checking(new Expectations() {{
+                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
+            }});
+            
+            context.setCellValue(newValue, row, columnIndexAsString);
+        }
     }
     
     public class OperatingOnTableWithColumnHeaderName {
@@ -163,6 +172,15 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
             }});
             
             context.selectCell(row, columnHeaderName);
+        }
+        
+        public void setsCellValue() {
+            final Object newValue = new Object();
+            checking(new Expectations() {{
+                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
+            }});
+            
+            context.setCellValue(newValue, row, columnHeaderName);
         }
     }
     

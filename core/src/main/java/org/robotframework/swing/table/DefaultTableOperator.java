@@ -47,16 +47,11 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         jTableOperator.selectCell(coordinates.y, coordinates.x);
     }
 
-    public void setValueAt(Object newValue, String rowIdentifier, String columnIdentifier) {
+    public void setCellValue(Object newValue, String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
-        jTableOperator.setValueAt(newValue, coordinates.y, coordinates.x);
-    }
-    
-    public void changeCellObject(String row, String columnIdentifier, String newValue) {
-        Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.changeCellObject(coordinates.y, coordinates.x, newValue);
     }
-
+    
     public void clearSelection() {
         jTableOperator.clearSelection();
     }

@@ -89,7 +89,7 @@ public class TableKeywords extends IdentifierSupport {
     	+ "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
     public void setTableCellValue(String identifier, String row, String columnIdentifier, String newValue) {
         TableOperator tableOperator = createTableOperator(identifier);
-        tableOperator.setValueAt(newValue, row, columnIdentifier);
+        tableOperator.setCellValue(newValue, row, columnIdentifier);
     }
 
     @RobotKeyword("Returns the number of columns from a table.\n\n"

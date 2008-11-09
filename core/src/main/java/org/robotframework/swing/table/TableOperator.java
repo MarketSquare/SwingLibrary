@@ -20,8 +20,7 @@ import org.robotframework.swing.operator.IOperator;
 
 public interface TableOperator extends IOperator {
     void selectCell(String row, String column);
-    void setValueAt(Object newValue, String row, String column);
-    void changeCellObject(String row, String column, String newValue);
+    void setCellValue(Object newValue, String row, String column);
     void clearSelection();
     boolean isCellSelected(String row, String column);
     int getColumnCount();

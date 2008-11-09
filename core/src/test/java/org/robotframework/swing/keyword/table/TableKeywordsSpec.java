@@ -141,7 +141,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             final String newValue = "newValue";
 
             checking(new Expectations() {{
-                one(tableOperator).setValueAt(newValue, row, columnIdentifier);
+                one(tableOperator).setCellValue(newValue, row, columnIdentifier);
             }});
 
             context.setTableCellValue(tableIdentifier, row, columnIdentifier, newValue);
