@@ -18,11 +18,8 @@ package org.robotframework.swing.table;
 
 import java.awt.Point;
 
-import javax.swing.table.TableColumnModel;
-
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
-import org.robotframework.swing.arguments.IdentifierHandler;
 import org.robotframework.swing.common.IdentifierSupport;
 
 /**

@@ -8,7 +8,7 @@ import org.springframework.util.ObjectUtils;
 public class ColumnNameTableCellChooser extends AbstractTableCellChooser {
 	private final String expectedColumnName;
 
-	ColumnNameTableCellChooser(String expectedRow, String expectedColumnName) {
+	public ColumnNameTableCellChooser(String expectedRow, String expectedColumnName) {
 		super(expectedRow);
 		this.expectedColumnName = expectedColumnName;
 	}

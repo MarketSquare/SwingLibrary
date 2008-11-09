@@ -22,10 +22,10 @@ import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 /**
  * @author Heikki Hulkko
  */
-abstract class AbstractTableCellChooser implements TableCellChooser {
+public abstract class AbstractTableCellChooser implements TableCellChooser {
     private final int expectedRow;
 
-    AbstractTableCellChooser(String rowAsString) {
+    public AbstractTableCellChooser(String rowAsString) {
         this.expectedRow = Integer.parseInt(rowAsString);
     }
 
