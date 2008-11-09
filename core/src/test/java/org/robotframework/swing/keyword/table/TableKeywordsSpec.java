@@ -106,7 +106,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         
         public void getsTableCellValue() {
             checking(new Expectations() {{
-                one(tableOperator).getValueAt(row, columnIdentifier);
+                one(tableOperator).getCellValue(row, columnIdentifier);
                 will(returnValue(cellValue));
             }});
 

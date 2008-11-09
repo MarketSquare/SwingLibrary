@@ -16,8 +16,6 @@
 
 package org.robotframework.swing.table;
 
-import java.awt.Point;
-
 import org.robotframework.swing.operator.IOperator;
 
 public interface TableOperator extends IOperator {
@@ -28,7 +26,6 @@ public interface TableOperator extends IOperator {
     boolean isCellSelected(String row, String column);
     int getColumnCount();
     int getRowCount();
-    Object getValueAt(String row, String column);
-    Point findCell(String row, String column);
+    Object getCellValue(String row, String column);
     Object getSelectedCellValue();
 }

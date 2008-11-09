@@ -32,7 +32,7 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         this.jTableOperator = jTableOperator;
     }
     
-    public Object getValueAt(String rowIdentifier, String columnIdentifier) {
+    public Object getCellValue(String rowIdentifier, String columnIdentifier) {
         Point coordinates = findCell(rowIdentifier, columnIdentifier);
         return jTableOperator.getValueAt(coordinates.y, coordinates.x);
     }
@@ -57,14 +57,6 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         jTableOperator.changeCellObject(coordinates.y, coordinates.x, newValue);
     }
 
-    public Point findCell(String row, String columnIdentifier) {
-        TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
-        Point cell = jTableOperator.findCell(cellChooser);
-        if (cellIsInvalid(cell))
-            throw new InvalidCellException(row, columnIdentifier);
-        return cell;
-    }
-    
     public void clearSelection() {
         jTableOperator.clearSelection();
     }
@@ -77,14 +69,6 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         return jTableOperator.getRowCount();
     }
 
-    public int getSelectedColumn() {
-        return jTableOperator.getSelectedColumn();
-    }
-
-    public int getSelectedRow() {
-        return jTableOperator.getSelectedRow();
-    }
-
     public Object getSelectedCellValue() {
       int selectedRow = jTableOperator.getSelectedRow();
       int selectedColumn = jTableOperator.getSelectedColumn();
@@ -95,6 +79,14 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         return jTableOperator.getSource();
     }
 
+    private Point findCell(String row, String columnIdentifier) {
+        TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
+        Point cell = jTableOperator.findCell(cellChooser);
+        if (cellIsInvalid(cell))
+            throw new InvalidCellException(row, columnIdentifier);
+        return cell;
+    }
+    
     private boolean cellIsInvalid(Point cell) {
         return cell.x < 0 || cell.y < 0;
     }
