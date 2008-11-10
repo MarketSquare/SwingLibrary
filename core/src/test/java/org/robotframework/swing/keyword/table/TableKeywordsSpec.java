@@ -6,6 +6,9 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
@@ -73,6 +76,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
         public void hasClearTableCellValueKeyword() {
             specify(context, satisfies(new RobotKeywordContract("clearTableCell")));
+        }
+        
+        public void hasSelectFromTableCellPopupMenuKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("selectFromTableCellPopupMenu")));
         }
         
         public void hasOperatorFactory() {
@@ -221,6 +228,33 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
             
             context.clearTableCell(tableIdentifier, row, columnIdentifier);
+        }
+    }
+    
+    public class CallingPopupOnTableCell {
+        private String menuPath = "some|menu";
+        
+        public TableKeywords create() {
+            injectMockOperatorFactory();
+            injectMockContextVerifier();
+            return tableKeywords;
+        }
+        
+        public void selectsFromTableCellPopupMenu() {
+            final JPopupMenuOperator popupMenuOperator = mock(JPopupMenuOperator.class);
+            final JMenuItemOperator menuItemOperator = mock(JMenuItemOperator.class);
+            
+            checking(new Expectations() {{
+                one(tableOperator).callPopupOnCell(row, columnIdentifier);
+                will(returnValue(popupMenuOperator));
+                
+                one(popupMenuOperator).showMenuItem(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
+                will(returnValue(menuItemOperator));
+                
+                one(menuItemOperator).push();
+            }});
+            
+            context.selectFromTableCellPopupMenu(tableIdentifier, row, columnIdentifier, menuPath);
         }
     }
 

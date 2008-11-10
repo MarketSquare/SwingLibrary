@@ -18,9 +18,12 @@ package org.robotframework.swing.keyword.table;
 
 import junit.framework.Assert;
 
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
@@ -113,6 +116,17 @@ public class TableKeywords extends IdentifierSupport {
         + "| Clear Table Cell Value | _myTable_ | _1_ | _2_ |\n")
     public void clearTableCell(String identifier, String row, String columnIdentifier) {
         createTableOperator(identifier).clearCell(row, columnIdentifier);
+    }
+    
+    @RobotKeyword("Selects an item from a table cell popup.\n"
+        + "Separator for items is '|'.\n\n"
+        + "Examples:\n"
+        + "| Select From Table Cell Popup Menu | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ | ")
+    public void selectFromTableCellPopupMenu(String identifier, String row, String columnIdentifier, String menuPath) {
+        TableOperator tableOperator = createTableOperator(identifier);
+        JPopupMenuOperator popupMenuOperator = tableOperator.callPopupOnCell(row, columnIdentifier);
+        JMenuItemOperator menuItem = popupMenuOperator.showMenuItem(menuPath, new EqualsStringComparator());
+        menuItem.push();
     }
     
     private TableOperator createTableOperator(String identifier) {

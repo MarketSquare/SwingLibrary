@@ -18,6 +18,7 @@ package org.robotframework.swing.table;
 
 import java.awt.Point;
 
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 import org.robotframework.swing.common.IdentifierSupport;
@@ -73,6 +74,11 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
       int selectedRow = jTableOperator.getSelectedRow();
       int selectedColumn = jTableOperator.getSelectedColumn();
       return jTableOperator.getValueAt(selectedRow, selectedColumn);
+    }
+
+    public JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        return new JPopupMenuOperator(jTableOperator.callPopupOnCell(coordinates.y, coordinates.x));
     }
     
     public Object getSource() {

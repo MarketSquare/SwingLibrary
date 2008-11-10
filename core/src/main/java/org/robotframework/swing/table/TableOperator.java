@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.table;
 
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.operator.IOperator;
 
 public interface TableOperator extends IOperator {
@@ -28,4 +29,5 @@ public interface TableOperator extends IOperator {
     int getRowCount();
     Object getCellValue(String row, String column);
     Object getSelectedCellValue();
+    JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier);
 }

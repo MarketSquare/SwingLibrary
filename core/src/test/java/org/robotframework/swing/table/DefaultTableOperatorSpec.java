@@ -3,6 +3,8 @@ package org.robotframework.swing.table;
 import java.awt.Component;
 import java.awt.Point;
 
+import javax.swing.JPopupMenu;
+
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
@@ -168,6 +170,15 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
             }});
             
             context.clearCell(row, column);
+        }
+        
+        public void callsPopupOnCell() {
+            final JPopupMenu popupMenu = dummy(JPopupMenu.class);
+            checking(new Expectations() {{
+                one(jTableOperator).callPopupOnCell(coordinates.y, coordinates.x); will(returnValue(popupMenu));
+            }});
+            
+            specify(context.callPopupOnCell(row, column).getSource(), popupMenu);
         }
     }
 }
