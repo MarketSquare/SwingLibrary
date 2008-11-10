@@ -32,13 +32,7 @@ public class ApplicationLaunchingKeywords {
         + "| Launch Application | _com.acme.myapplication.MyApp_ | _C:\\data.txt_ |\n")
     @ArgumentNames({"className", "*args"})
     public void launchApplication(String className, String[] args) throws Exception {
-        Class<?> clss = Class.forName(className);
-        Method mainMethod;
-        try {
-            mainMethod = clss.getMethod("main", String[].class);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Class '" + className + "' doesn't have a main method.");
-        }
+        Method mainMethod = getMainMethod(className);
         mainMethod.invoke(null, new Object[] { args });
     }
 
@@ -67,5 +61,14 @@ public class ApplicationLaunchingKeywords {
 
     Thread createThread(Runnable runnable) {
         return new Thread(runnable);
+    }
+    
+    private Method getMainMethod(String className) throws ClassNotFoundException {
+        Class<?> clss = Class.forName(className);
+        try {
+            return clss.getMethod("main", String[].class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Class '" + className + "' doesn't have a main method.");
+        }
     }
 }

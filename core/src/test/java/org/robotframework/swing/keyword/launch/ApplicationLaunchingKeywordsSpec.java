@@ -1,12 +1,12 @@
 package org.robotframework.swing.keyword.launch;
 
+import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-
 import org.robotframework.swing.keyword.testapp.SomeApplication;
 
 @RunWith(JDaveRunner.class)
@@ -121,7 +121,26 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
             specify(exceptionWasThrown);
         }
     }
+    
+    public class ReportingErrors {
+        private String className = ApplicationLaunchingKeywordsSpec.class.getName() + "$ClassWithoutMainMethod";
+        public ApplicationLaunchingKeywords create() {
+            return new ApplicationLaunchingKeywords();
+        }
+        
+        public void failsWithNiceErrorMessageWhenClassHasNoMainMethod() {
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.launchApplication(className, null);
+                }
+            }, must.raiseExactly(RuntimeException.class, "Class '" + className + "' doesn't have a main method."));
+        }
+    }
 
+    @SuppressWarnings("unused")
+    private static class ClassWithoutMainMethod {    
+    }
+    
     private static class TestApplication {
         public static boolean wasCalled = false;
         public static void main(String[] args) throws InterruptedException {
