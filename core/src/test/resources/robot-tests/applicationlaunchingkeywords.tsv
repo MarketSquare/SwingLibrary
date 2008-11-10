@@ -3,12 +3,16 @@ library	SwingLibrary
 
 *Variable*	*Value*
 ${testApplicationName}	org.robotframework.swing.keyword.testapp.SomeApplication
+${classWithoutMainMethod}	org.robotframework.swing.keyword.launch.ApplicationLaunchingKeywords
 
 *Test Case*	*Action*	*Argument*
 Launch Application
 	runKeywordAndExpectError	Application was not called	assertApplicationWasCalled
 	launchApplication	${testApplicationName}
 	assertApplicationWasCalled
+
+Launch Application Gives Descriptive Error Message If Main Method Is Not Found
+	runKeywordAndExpectError	Class '${classWithoutMainMethod}' doesn't have a main method.	launchApplication	${classWithoutMainMethod}
 
 *Keyword*	*Action*	*Argument*
 shouldNotHaveBeenCalled

@@ -33,7 +33,12 @@ public class ApplicationLaunchingKeywords {
     @ArgumentNames({"className", "*args"})
     public void launchApplication(String className, String[] args) throws Exception {
         Class<?> clss = Class.forName(className);
-        Method mainMethod = clss.getMethod("main", String[].class);
+        Method mainMethod;
+        try {
+            mainMethod = clss.getMethod("main", String[].class);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Class '" + className + "' doesn't have a main method.");
+        }
         mainMethod.invoke(null, new Object[] { args });
     }
 
