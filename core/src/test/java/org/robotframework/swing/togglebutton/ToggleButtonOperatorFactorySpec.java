@@ -1,8 +1,8 @@
-package org.robotframework.swing.radiobutton;
+package org.robotframework.swing.togglebutton;
 
 import java.awt.Component;
 
-import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
 
 import jdave.junit4.JDaveRunner;
 
@@ -16,11 +16,11 @@ import org.robotframework.swing.factory.OperatorFactorySpecification;
 import org.robotframework.swing.operator.IOperator;
 
 @RunWith(JDaveRunner.class)
-public class RadioButtonOperatorFactorySpec extends OperatorFactorySpecification<RadioButtonOperatorFactory> {
+public class ToggleButtonOperatorFactorySpec extends OperatorFactorySpecification<ToggleButtonOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
         protected Component createComponent() {
-            return new JRadioButton() {
+            return new JToggleButton() {
                 public boolean isShowing() {
                     return true;
                 }
@@ -29,21 +29,21 @@ public class RadioButtonOperatorFactorySpec extends OperatorFactorySpecification
 
         @Override
         protected OperatorFactory<? extends IOperator> createOperatorFactory() {
-            RadioButtonOperatorFactory radioButtonOperatorFactory = new RadioButtonOperatorFactory();
-            final IContextVerifier contextVerifier = injectMockTo(radioButtonOperatorFactory, IContextVerifier.class);
+            ToggleButtonOperatorFactory toggleButtonOperatorFactory = new ToggleButtonOperatorFactory();
+            final IContextVerifier contextVerifier = injectMockTo(toggleButtonOperatorFactory, IContextVerifier.class);
             checking(new Expectations() {{
                 ignoring(contextVerifier);
             }});
             
-            return radioButtonOperatorFactory;
+            return toggleButtonOperatorFactory;
         }
     }
     
     public class VerifyingContext {
         private AbstractButtonOperator operator = dummy(AbstractButtonOperator.class);
         
-        public RadioButtonOperatorFactory create() {
-            return new RadioButtonOperatorFactory() {
+        public ToggleButtonOperatorFactory create() {
+            return new ToggleButtonOperatorFactory() {
                 public AbstractButtonOperator createOperatorByIndex(int index) {
                     return operator;
                 }
@@ -64,7 +64,7 @@ public class RadioButtonOperatorFactorySpec extends OperatorFactorySpecification
                 one(contextVerifier).verifyContext();
             }});
             
-            context.createOperator("someRadioButton");
+            context.createOperator("someToggleButton");
         }
     }
 }

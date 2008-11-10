@@ -82,5 +82,6 @@ public class TestApplication {
         panel.add(new TestTextArea());
         panel.add(new TestSpinnerButton());
         panel.add(new TestRadioButton());
+        panel.add(new TestToggleButton());
     }
 }

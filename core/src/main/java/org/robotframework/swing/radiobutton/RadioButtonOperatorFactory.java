@@ -19,32 +19,33 @@ package org.robotframework.swing.radiobutton;
 
 import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
-public class RadioButtonOperatorFactory extends IdentifierParsingOperatorFactory<RadioButtonOperator> {
+public class RadioButtonOperatorFactory extends IdentifierParsingOperatorFactory<AbstractButtonOperator> {
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
     
     @Override
-    public RadioButtonOperator createOperator(String identifier) {
+    public AbstractButtonOperator createOperator(String identifier) {
         contextVerifier.verifyContext();
         return super.createOperator(identifier);
     }
     
     @Override
-    public RadioButtonOperator createOperatorByIndex(int index) {
+    public AbstractButtonOperator createOperatorByIndex(int index) {
         return coerceToRadioButtonOperator(new JRadioButtonOperator(Context.getContext(), index));
     }
 
     @Override
-    public RadioButtonOperator createOperatorByName(String name) {
+    public AbstractButtonOperator createOperatorByName(String name) {
         return coerceToRadioButtonOperator(new JRadioButtonOperator(Context.getContext(), new ByNameOrTextComponentChooser(name)));
     }
     
-    private RadioButtonOperator coerceToRadioButtonOperator(JRadioButtonOperator radioButtonOperator) {
-        return (RadioButtonOperator) Retrofit.partial(radioButtonOperator, RadioButtonOperator.class);
+    private AbstractButtonOperator coerceToRadioButtonOperator(JRadioButtonOperator radioButtonOperator) {
+        return (AbstractButtonOperator) Retrofit.partial(radioButtonOperator, AbstractButtonOperator.class);
     }
 }

@@ -20,13 +20,13 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.radiobutton.RadioButtonOperator;
 import org.robotframework.swing.radiobutton.RadioButtonOperatorFactory;
 
 @RobotKeywords
 public class RadioButtonKeywords {
-    private OperatorFactory<RadioButtonOperator> operatorFactory = new RadioButtonOperatorFactory();
+    private OperatorFactory<AbstractButtonOperator> operatorFactory = new RadioButtonOperatorFactory();
     
     @RobotKeyword("Uses current context to search for a radiobutton and when found, sets it selected.\n\n"
         + "Example:\n"

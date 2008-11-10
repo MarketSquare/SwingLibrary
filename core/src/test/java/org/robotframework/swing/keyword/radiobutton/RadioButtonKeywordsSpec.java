@@ -6,11 +6,11 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.KeywordSupportSpecification;
-import org.robotframework.swing.radiobutton.RadioButtonOperator;
 
 @RunWith(JDaveRunner.class)
 public class RadioButtonKeywordsSpec extends KeywordSupportSpecification<RadioButtonKeywords> {
@@ -38,7 +38,7 @@ public class RadioButtonKeywordsSpec extends KeywordSupportSpecification<RadioBu
     
     public class OperatingOnRadioButtons {
         private String identifier = "someRadioButton";
-        private RadioButtonOperator operator;
+        private AbstractButtonOperator operator;
         
         public RadioButtonKeywords create() {
             RadioButtonKeywords radioButtonKeywords = new RadioButtonKeywords();
@@ -103,7 +103,7 @@ public class RadioButtonKeywordsSpec extends KeywordSupportSpecification<RadioBu
         }
 
         private void injectMockOperatingFactory(RadioButtonKeywords radioButtonKeywords) {
-            operator = mock(RadioButtonOperator.class);
+            operator = mock(AbstractButtonOperator.class);
             final OperatorFactory operatorFactory = injectMockTo(radioButtonKeywords, OperatorFactory.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(identifier);

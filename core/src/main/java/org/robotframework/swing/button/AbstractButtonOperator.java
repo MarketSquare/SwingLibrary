@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.radiobutton;
+package org.robotframework.swing.button;
 
 import org.robotframework.swing.operator.IOperator;
 
-public interface RadioButtonOperator extends IOperator {
+public interface AbstractButtonOperator extends IOperator {
     void push();
     boolean isSelected();
 }
