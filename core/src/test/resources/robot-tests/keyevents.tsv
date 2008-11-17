@@ -1,0 +1,28 @@
+*Setting*	*Value*
+library	SwingLibrary
+
+*Variable*	*Value*
+${textFieldName}	testTextField
+${testText}	someText
+${tableName}	testTable
+
+*Test Case*	*Action*	*Argument*
+Send Key Event Keyword Can Send Strings As Events	[tags]	development
+	clearAndSelectTextField
+	sendKeyEvent	${testText}
+	textFieldContentsShouldBe	${testText}
+
+Send Key Event Keyword Can Send Key Events	[tags]	development
+	selectTableCell	${tableName}	0	0
+	sendKeyEvent	VK_TAB
+	tableCellShouldBeSelected	${tableName}	0	1
+
+*Keyword*	*Action*	*Argument*
+clearAndSelectTextField
+	clearTextField	${textFieldName}
+	selectContext	${textFieldName}
+
+textFieldContentsShouldBe	[arguments]	${expectedText}
+	selectMainWindow
+	${textFieldContents}=	getTextFieldValue	${textFieldName}
+	shouldBeEqual	${expectedText}	${textFieldContents}

@@ -3,10 +3,6 @@ library	SwingLibrary
 suiteSetup	launchApplicationAndSetTimeouts
 defaultTags	regression
 
-*Variable*	*Value*
-
-*Test Case*	*Action*	*Argument*
-
 *Keyword*	*Action*	*Argument*
 launchApplicationAndSetTimeouts
 	startApplication	org.robotframework.swing.testapp.TestApplication
