@@ -32,7 +32,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 /**
  * @author Heikki Hulkko
  */
-
 @RobotKeywords
 public class InternalFrameKeywords {
     private IdentifierParsingOperatorFactory<MyInternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();

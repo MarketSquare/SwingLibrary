@@ -16,6 +16,8 @@ Send Key Event Keyword Can Send Key Events	[tags]	development
 	selectTableCell	${tableName}	0	0
 	sendKeyEvent	VK_TAB
 	tableCellShouldBeSelected	${tableName}	0	1
+	sendKeyEvent	VK_TAB	SHIFT_DOWN_MASK
+	tableCellShouldBeSelected	${tableName}	0	0
 
 *Keyword*	*Action*	*Argument*
 clearAndSelectTextField
