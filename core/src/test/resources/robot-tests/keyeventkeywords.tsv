@@ -1,5 +1,6 @@
 *Setting*	*Value*
 library	SwingLibrary
+testSetup	selectMainWindow
 
 *Variable*	*Value*
 ${textFieldName}	testTextField
@@ -7,19 +8,23 @@ ${testText}	someText
 ${tableName}	testTable
 
 *Test Case*	*Action*	*Argument*
-Send Key Event Keyword Can Send Strings As Events	[tags]	development
-	clearAndSelectTextField
-	sendKeyEvent	${testText}
-	textFieldContentsShouldBe	${testText}
-
-Send Key Event Keyword Can Send Key Events	[tags]	development
-	selectTableCell	${tableName}	0	0
-	sendKeyEvent	VK_TAB
-	tableCellShouldBeSelected	${tableName}	0	1
-	sendKeyEvent	VK_TAB	SHIFT_DOWN_MASK
-	tableCellShouldBeSelected	${tableName}	0	0
+Send Key Event Keyword Sends Key Events
+	shouldInsertKeysToTextField
+	shouldSwitchCellsWithTabs
 
 *Keyword*	*Action*	*Argument*
+shouldInsertKeysToTextField
+	clearAndSelectTextField
+	sendKeyEvent	VK_S
+	sendKeyEvent	VK_O
+	sendKeyEvent	VK_M
+	sendKeyEvent	VK_E
+	sendKeyEvent	VK_T	SHIFT_MASK	
+	sendKeyEvent	VK_E
+	sendKeyEvent	VK_X
+	sendKeyEvent	VK_T
+	textFieldContentsShouldBe	${testText}
+
 clearAndSelectTextField
 	clearTextField	${textFieldName}
 	selectContext	${textFieldName}
@@ -28,3 +33,10 @@ textFieldContentsShouldBe	[arguments]	${expectedText}
 	selectMainWindow
 	${textFieldContents}=	getTextFieldValue	${textFieldName}
 	shouldBeEqual	${expectedText}	${textFieldContents}
+
+shouldSwitchCellsWithTabs
+	selectTableCell	${tableName}	0	0
+	sendKeyEvent	VK_TAB
+	tableCellShouldBeSelected	${tableName}	0	1
+	sendKeyEvent	VK_TAB	SHIFT_DOWN_MASK
+	tableCellShouldBeSelected	${tableName}	0	0

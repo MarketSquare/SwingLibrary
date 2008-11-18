@@ -1,26 +1,35 @@
-package org.robotframework.swing.keyword.keyboard;
+/*
+ * Copyright 2008 Nokia Siemens Networks Oyj
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import java.awt.event.KeyEvent;
+package org.robotframework.swing.keyword.keyboard;
 
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 
+/**
+ * @author Heikki Hulkko
+ */
 @RobotKeywords
 public class KeyEventKeywords {
+    private KeyEventSender keyEventSender = new KeyEventSender();
+    
     @RobotKeyword
     @ArgumentNames({"keyCode", "*modifiers"})
-    public void sendKeyEvent(String keyCodeAsString, String[] modifiers) throws Exception {
-        createEventSender(keyCodeAsString).sendEvent(0);
-    }
-
-    private KeyEventSender createEventSender(String keyCodeAsString) {
-        try {
-            return new KeyCodeSender(KeyEvent.class.getField(keyCodeAsString).getInt(null));
-        } catch (NoSuchFieldException e) {
-            return new StringKeySender(keyCodeAsString);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public void sendKeyEvent(String keyCode, String[] modifiers) {
+        keyEventSender.sendEvent(keyCode, modifiers);
     }
 }

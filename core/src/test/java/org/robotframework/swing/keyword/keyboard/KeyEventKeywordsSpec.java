@@ -1,14 +1,16 @@
 package org.robotframework.swing.keyword.keyboard;
 
-import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
+import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
+import org.robotframework.swing.keyword.KeywordSupportSpecification;
 
 @RunWith(JDaveRunner.class)
-public class KeyEventKeywordsSpec extends Specification<KeyEventKeywords> {
+public class KeyEventKeywordsSpec extends KeywordSupportSpecification<KeyEventKeywords> {
     public class Any {
         public KeyEventKeywords create () {
             return new KeyEventKeywords();
@@ -20,6 +22,31 @@ public class KeyEventKeywordsSpec extends Specification<KeyEventKeywords> {
         
         public void hasSendKeyEventKeyword() {
             specify(context, satisfies(new RobotKeywordContract("sendKeyEvent")));
+        }
+        
+        public void hasKeyEventSender() {
+            specify(context, satisfies(new FieldIsNotNullContract("keyEventSender")));
+        }
+    }
+    
+    public class SendingKeyEvents {
+        private KeyEventSender keyEventSender;
+
+        public KeyEventKeywords create() {
+            KeyEventKeywords keyEventKeywords = new KeyEventKeywords();
+            keyEventSender = injectMockTo(keyEventKeywords, KeyEventSender.class);
+            return keyEventKeywords;
+        }
+        
+        public void sendsKeyEvents() {
+            final String keyCode = "VK_TAB";
+            final String[] modifiers = new String[] { "SHIFT_DOWN_MASK" };
+            
+            checking(new Expectations() {{
+                one(keyEventSender).sendEvent(keyCode, modifiers);
+            }});
+            
+            context.sendKeyEvent(keyCode, modifiers);
         }
     }
 }
