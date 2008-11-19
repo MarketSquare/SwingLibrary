@@ -17,9 +17,7 @@ Toggle Button Should Be Selected Passes If Button Is Selected
 
 Toggle Button Should Not Be Selected Passes If Button Is Not Selected
 	unSelectToggleButton	${buttonName}
-	sleep	1
 	toggleButtonShouldNotBeSelected	${buttonName}
-	sleep	1
 	toggleButtonShouldNotBeSelected	${buttonText}
 	selectToggleButton	${buttonName}
 	runKeywordAndExpectError	Toggle Button '${buttonName}' is selected.	toggleButtonShouldNotBeSelected	${buttonName}
