@@ -27,11 +27,10 @@ public class ToggleButtonKeywordsSpec extends KeywordSupportSpecification<Toggle
             specify(context, satisfies(new RobotKeywordContract("toggleButtonShouldBeSelected")));
         }
         
-        public void hasToggleButtonShouldNotBeSelectedKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("toggleButtonShouldNotBeSelected")));
+        public void hasSelectToggleButtonKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("pushToggleButton")));
         }
     }
-    
     
     public class OperatingOnToggleButtons {
         private String identifier = "someToggleButton";
@@ -91,6 +90,14 @@ public class ToggleButtonKeywordsSpec extends KeywordSupportSpecification<Toggle
             }, must.raiseExactly(AssertionFailedError.class, "Toggle Button '" + identifier + "' is selected."));
         }
 
+        public void pushesToggleButton() {
+            checking(new Expectations() {{
+                one(operator).push();
+            }});
+            
+            context.pushToggleButton(identifier);
+        }
+        
         private void injectMockOperatingFactory(ToggleButtonKeywords toggleButtonKeywords) {
             operator = mock(AbstractButtonOperator.class);
             final OperatorFactory operatorFactory = injectMockTo(toggleButtonKeywords, OperatorFactory.class);
