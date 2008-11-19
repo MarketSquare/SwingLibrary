@@ -27,7 +27,9 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 public class KeyEventKeywords {
     private KeyEventSender keyEventSender = new KeyEventSender();
     
-    @RobotKeyword("Sends key strokes to the currently selected component.\n\n"
+    @RobotKeyword("Sends keystrokes to the currently selected component.\n"
+    	+ "Keystroke codes must be one of the constants in _java.awt.event.KeyEvent_ starting with _VK__.\n"
+    	+ "Constants from _java.awt.event.InputEvent_ can be used as optional modifiers.\n\n"
         + "Example with textfield:\n"
         + "| Select Context        | _myTextfield_        |                      |\n"
         + "| Send Keyboard Event   | _VK_S_               |                      |\n"
