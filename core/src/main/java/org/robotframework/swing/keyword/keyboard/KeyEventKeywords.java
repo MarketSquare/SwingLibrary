@@ -28,10 +28,24 @@ public class KeyEventKeywords {
     private KeyEventSender keyEventSender = new KeyEventSender();
     
     @RobotKeyword("Sends key strokes to the currently selected component.\n\n"
-        + "Examples:\n"
-        + "| Select Context | _${textFieldName}_ |\n"
-        + "| Select Context | _${textFieldName}_ |\n"
-        )
+        + "Example with textfield:\n"
+        + "| Select Context        | _myTextfield_        |                      |\n"
+        + "| Send Keyboard Event   | _VK_S_               |                      |\n"
+        + "| Send Keyboard Event   | _VK_O_               |                      |\n"
+        + "| Send Keyboard Event   | _VK_M_               |                      |\n"
+        + "| Send Keyboard Event   | _VK_E_               |                      |\n"
+        + "| Send Keyboard Event   | _VK_T_               | _SHIFT_MASK_         |\n"
+        + "| Send Keyboard Event   | _VK_E_               |                      |\n"
+        + "| Send Keyboard Event   | _VK_X_               |                      |\n"
+        + "| Send Keyboard Event   | _VK_T_               |                      |\n"
+        + "| ${textFieldContents}= | Get Text Field Value | _myTextfield_        |\n"
+        + "| Should Be Equal       | someText             | ${textFieldContents} |\n\n"
+        + "Example with table:\n"
+        + "| SelectTableCell               | _myTable_ | _0_          | _0_ |\n"
+        + "| Send Keyboard Event           | _VK_TAB_  |              |     |\n" 
+        + "| Table Cell Should Be Selected | _myTable_ | _0_          | _1_ |\n"
+        + "| Send Keyboard Event           | _VK_TAB_  | _SHIFT_MASK_ |     |\n" 
+        + "| Table Cell Should Be Selected | _myTable_ | _0_          | _0_ |\n")
     @ArgumentNames({"keyCode", "*modifiers"})
     public void sendKeyboardEvent(String keyCode, String[] modifiers) {
         keyEventSender.sendEvent(keyCode, modifiers);

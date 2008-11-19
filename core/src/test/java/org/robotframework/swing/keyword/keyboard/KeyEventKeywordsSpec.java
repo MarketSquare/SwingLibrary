@@ -20,8 +20,8 @@ public class KeyEventKeywordsSpec extends KeywordSupportSpecification<KeyEventKe
             specify(context, satisfies(new RobotKeywordsContract()));
         }
         
-        public void hasSendKeyEventKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("sendKeyEvent")));
+        public void hasSendKeyboardEventKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("sendKeyboardEvent")));
         }
         
         public void hasKeyEventSender() {

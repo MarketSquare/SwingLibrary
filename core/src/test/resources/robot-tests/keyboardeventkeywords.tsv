@@ -15,14 +15,14 @@ Send Key Event Keyword Sends Key Events
 *Keyword*	*Action*	*Argument*
 shouldInsertKeysToTextField
 	clearAndSelectTextField
-	sendKeyboardEvents	VK_S
-	sendKeyboardEvents	VK_O
-	sendKeyboardEvents	VK_M
-	sendKeyboardEvents	VK_E
-	sendKeyboardEvents	VK_T	SHIFT_MASK	
-	sendKeyboardEvents	VK_E
-	sendKeyboardEvents	VK_X
-	sendKeyboardEvents	VK_T
+	sendKeyboardEvent	VK_S
+	sendKeyboardEvent	VK_O
+	sendKeyboardEvent	VK_M
+	sendKeyboardEvent	VK_E
+	sendKeyboardEvent	VK_T	SHIFT_MASK	
+	sendKeyboardEvent	VK_E
+	sendKeyboardEvent	VK_X
+	sendKeyboardEvent	VK_T
 	textFieldContentsShouldBe	${testText}
 
 clearAndSelectTextField
@@ -36,7 +36,7 @@ textFieldContentsShouldBe	[arguments]	${expectedText}
 
 shouldSwitchCellsWithTabs
 	selectTableCell	${tableName}	0	0
-	sendKeyboardEvents	VK_TAB
+	sendKeyboardEvent	VK_TAB
 	tableCellShouldBeSelected	${tableName}	0	1
-	sendKeyboardEvents	VK_TAB	SHIFT_DOWN_MASK
+	sendKeyboardEvent	VK_TAB	SHIFT_DOWN_MASK
 	tableCellShouldBeSelected	${tableName}	0	0
