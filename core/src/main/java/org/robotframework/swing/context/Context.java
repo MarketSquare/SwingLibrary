@@ -20,6 +20,7 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 
 /**
  * @author Sami Honkonen
+ * @author Heikki Hulkko
  */
 public class Context {
     private static ContainerOperator context;

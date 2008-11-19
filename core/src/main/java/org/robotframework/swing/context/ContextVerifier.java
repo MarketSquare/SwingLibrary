@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.context;
 
+import java.awt.Component;
+
 import junit.framework.Assert;
 
 /**
@@ -29,8 +31,8 @@ public abstract class ContextVerifier implements IContextVerifier {
     }
 
     public void verifyContext() {
-        Class[] expectedClasses = getExpectedClasses();
-        for (Class expectedClass : expectedClasses) {
+        Class<? extends Component>[] expectedClasses = getExpectedClasses();
+        for (Class<? extends Component> expectedClass : expectedClasses) {
             if (expectedClass.isAssignableFrom(contextClass())) {
                 return;
             }
@@ -38,9 +40,9 @@ public abstract class ContextVerifier implements IContextVerifier {
         Assert.fail(errorMessage + " Current context is " + contextClass().getName());
     }
 
-    protected abstract Class[] getExpectedClasses();
+    protected abstract Class<? extends Component>[] getExpectedClasses();
     
-    private Class contextClass() {
+    private Class<? extends Component> contextClass() {
         return Context.getContext().getSource().getClass();
     }
 }
