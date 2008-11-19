@@ -27,9 +27,13 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 public class KeyEventKeywords {
     private KeyEventSender keyEventSender = new KeyEventSender();
     
-    @RobotKeyword
+    @RobotKeyword("Sends key strokes to the currently selected component.\n\n"
+        + "Examples:\n"
+        + "| Select Context | _${textFieldName}_ |\n"
+        + "| Select Context | _${textFieldName}_ |\n"
+        )
     @ArgumentNames({"keyCode", "*modifiers"})
-    public void sendKeyEvent(String keyCode, String[] modifiers) {
+    public void sendKeyboardEvent(String keyCode, String[] modifiers) {
         keyEventSender.sendEvent(keyCode, modifiers);
     }
 }

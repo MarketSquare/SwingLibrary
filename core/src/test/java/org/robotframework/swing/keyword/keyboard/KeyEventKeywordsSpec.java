@@ -46,7 +46,7 @@ public class KeyEventKeywordsSpec extends KeywordSupportSpecification<KeyEventKe
                 one(keyEventSender).sendEvent(keyCode, modifiers);
             }});
             
-            context.sendKeyEvent(keyCode, modifiers);
+            context.sendKeyboardEvent(keyCode, modifiers);
         }
     }
 }
