@@ -88,8 +88,8 @@ Tree Node Should Be Selected AND Tree Node Should Not Be Selected
 Select From Tree Node Popup Menu
 	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Insert a child
 	expandTreeNode	${treeName}	${rootNode}
-	treeNodeShouldBeVisible	${treeName}	${rootNode}|child
-	selectFromTreeNodePopupMenu	${treeName}	${rootNode}|child	Remove this node
+	treeNodeShouldBeVisible	${treeName}	${rootNode}|child0
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}|child0	Remove this node
 
 Select From Tree Node Popup Menu Should Accept Only Exact Matches For Menupaths
 	runKeywordAndExpectError	*	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Submenu|Enabled
