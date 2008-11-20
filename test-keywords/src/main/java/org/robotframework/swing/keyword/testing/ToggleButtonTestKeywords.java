@@ -1,5 +1,6 @@
 package org.robotframework.swing.keyword.testing;
 
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -19,6 +20,6 @@ public class ToggleButtonTestKeywords {
     }
 
     private JToggleButtonOperator createToggleButtonOperator(String identifier) {
-        return new JToggleButtonOperator(Context.getContext(), new ByNameComponentChooser(identifier));
+        return new JToggleButtonOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(identifier));
     }
 }

@@ -23,7 +23,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.operator.button.MyButtonOperator;
+import org.robotframework.swing.operator.button.DefaultButtonOperator;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -32,7 +32,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class ButtonKeywords {
-    private IdentifierParsingOperatorFactory<MyButtonOperator> operatorFactory = new ButtonOperatorFactory();
+    private IdentifierParsingOperatorFactory<DefaultButtonOperator> operatorFactory = new ButtonOperatorFactory();
     private IComponentConditionResolver buttonExistenceResolver = new ComponentExistenceResolver(operatorFactory);
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
@@ -82,7 +82,7 @@ public class ButtonKeywords {
         Assert.assertFalse("Button was enabled.", createOperator(identifier).isEnabled());
     }
     
-    private MyButtonOperator createOperator(String identifier) {
+    private DefaultButtonOperator createOperator(String identifier) {
         contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);
     }

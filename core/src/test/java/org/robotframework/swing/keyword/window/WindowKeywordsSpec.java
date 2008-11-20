@@ -8,18 +8,17 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.JFrameOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.window.WindowKeywords;
+import org.robotframework.swing.window.FrameOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords> {
-    private JFrameOperator frameOperator = mock(JFrameOperator.class);
+    private FrameOperator frameOperator = mock(FrameOperator.class);
 
     public class Any {
         public WindowKeywords create() {
@@ -61,7 +60,7 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
     }
 
     public class OperatingOnWindows {
-        private IdentifierParsingOperatorFactory<JFrameOperator> operatorFactory;
+        private IdentifierParsingOperatorFactory<FrameOperator> operatorFactory;
         private String windowIdentifier = "title";
 
         public WindowKeywords create() {

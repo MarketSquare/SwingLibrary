@@ -18,43 +18,44 @@ package org.robotframework.swing.keyword.tab;
 
 import javax.swing.JTabbedPane;
 
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.ContextBasedOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.operator.tab.MyTabbedPaneOperator;
+import org.robotframework.swing.operator.tab.DefaultTabbedPaneOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class TabPaneOperatorFactory extends IdentifierParsingOperatorFactory<MyTabbedPaneOperator> implements
-    ContextBasedOperatorFactory<MyTabbedPaneOperator> {
+public class TabPaneOperatorFactory extends IdentifierParsingOperatorFactory<DefaultTabbedPaneOperator> implements
+    ContextBasedOperatorFactory<DefaultTabbedPaneOperator> {
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @Override
-    public MyTabbedPaneOperator createOperator(String identifier) {
+    public DefaultTabbedPaneOperator createOperator(String identifier) {
         contextVerifier.verifyContext();
         return super.createOperator(identifier);
     }
 
     @Override
-    public MyTabbedPaneOperator createOperatorByIndex(int index) {
-        return new MyTabbedPaneOperator(Context.getContext(), index);
+    public DefaultTabbedPaneOperator createOperatorByIndex(int index) {
+        return new DefaultTabbedPaneOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public MyTabbedPaneOperator createOperatorByName(String name) {
-        return new MyTabbedPaneOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public DefaultTabbedPaneOperator createOperatorByName(String name) {
+        return new DefaultTabbedPaneOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 
-    public MyTabbedPaneOperator createOperatorFromContext() {
+    public DefaultTabbedPaneOperator createOperatorFromContext() {
         if (JTabbedPane.class.isAssignableFrom(Context.getContext().getSource().getClass())) {
-            return new MyTabbedPaneOperator((JTabbedPane) Context.getContext().getSource());
+            return new DefaultTabbedPaneOperator((JTabbedPane) Context.getContext().getSource());
         } else {
             contextVerifier.verifyContext();
-            return new MyTabbedPaneOperator(Context.getContext());
+            return new DefaultTabbedPaneOperator((ContainerOperator) Context.getContext());
         }
     }
 }

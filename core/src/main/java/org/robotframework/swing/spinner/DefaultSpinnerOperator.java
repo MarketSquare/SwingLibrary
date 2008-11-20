@@ -1,5 +1,7 @@
 package org.robotframework.swing.spinner;
 
+import java.awt.Component;
+
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 /**
@@ -12,7 +14,7 @@ public class DefaultSpinnerOperator implements SpinnerOperator {
         this.spinnerOperator = spinnerOperator;
     }
 
-    public Object getSource() {
+    public Component getSource() {
         return spinnerOperator.getSource();
     }
 

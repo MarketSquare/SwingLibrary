@@ -20,10 +20,10 @@ import java.awt.Component;
 import java.awt.Container;
 import java.util.ArrayList;
 
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
+import org.robotframework.swing.operator.IOperator;
 
 /**
  * @author Heikki Hulkko
@@ -38,7 +38,7 @@ public class DevelopmentKeywords {
         + "| Select Main Window         |\n"
         + "| List Components In Context |\n")
     public String listComponentsInContext() {
-        ContainerOperator operator = Context.getContext();
+        IOperator operator = Context.getContext();
         new ContainerIteratorForListing((Container) operator.getSource()).iterate();
         return resultComponentList.toString();
     }

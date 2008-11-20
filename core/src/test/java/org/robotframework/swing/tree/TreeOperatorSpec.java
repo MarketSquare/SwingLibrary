@@ -12,21 +12,19 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
-import org.robotframework.swing.factory.OperatorFactorySpecification;
+import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.popup.IPopupCaller;
 
 
 @RunWith(JDaveRunner.class)
-public class TreeOperatorSpec extends OperatorFactorySpecification<TreeOperator> {
+public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
     private String nodeIdentifier = "some|node";
     
     public class Any {
         public void hasPopupCaller() {
-            TreeOperator enhancedTreeOperator = new TreeOperator(createMockContainerOperator(), dummy(ComponentChooser.class));
+            TreeOperator enhancedTreeOperator = new TreeOperator(dummy(JTree.class));
             specify(enhancedTreeOperator, satisfies(new FieldIsNotNullContract("popupCaller")));
         }
     }
@@ -177,7 +175,7 @@ public class TreeOperatorSpec extends OperatorFactorySpecification<TreeOperator>
         }
 
         private TreeOperator createTreeOperatorWithExpectedRow(final int expectedRow) {
-            return new TreeOperator(createMockContainerOperator(), dummy(ComponentChooser.class)) {
+            return new TreeOperator(dummy(JTree.class)) {
                 public void selectRow(int row) {
                     if (expectedRow == row) {
                         selectRowCallCount++;
@@ -185,6 +183,7 @@ public class TreeOperatorSpec extends OperatorFactorySpecification<TreeOperator>
                         throw new ExpectationFailedException("Expected " + expectedRow + ", but got: " + row);
                     }
                 }
+                
                 public void scrollToRow(int row) {
                     if (expectedRow == row) {
                         scrollToRowCallCount++;
@@ -192,6 +191,7 @@ public class TreeOperatorSpec extends OperatorFactorySpecification<TreeOperator>
                         throw new ExpectationFailedException("Expected " + expectedRow + ", but got: " + row);
                     }
                 }
+                
                 public Point getPointToClick(int row) {
                     if (expectedRow == row) {
                         return pointToClick;
@@ -200,12 +200,6 @@ public class TreeOperatorSpec extends OperatorFactorySpecification<TreeOperator>
                 }
             };
         }
-    }
-
-    private ContainerOperator createMockContainerOperator() {
-        dummyContainerOperator = mock(ContainerOperator.class, "containerOp");
-        mockFindsByName(createMockJTree());
-        return dummyContainerOperator;
     }
 
     private JTree createMockJTree() {

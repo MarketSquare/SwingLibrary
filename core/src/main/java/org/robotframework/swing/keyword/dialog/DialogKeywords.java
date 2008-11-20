@@ -18,10 +18,11 @@ package org.robotframework.swing.keyword.dialog;
 
 import junit.framework.Assert;
 
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
+import org.robotframework.swing.dialog.DialogOperator;
+import org.robotframework.swing.dialog.DialogOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
@@ -31,7 +32,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class DialogKeywords {
-    private IdentifierParsingOperatorFactory<JDialogOperator> operatorFactory = new DialogOperatorFactory();
+    private IdentifierParsingOperatorFactory<DialogOperator> operatorFactory = new DialogOperatorFactory();
     private IComponentConditionResolver dialogExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
     @RobotKeyword("Selects a dialog as current context.\n\n"

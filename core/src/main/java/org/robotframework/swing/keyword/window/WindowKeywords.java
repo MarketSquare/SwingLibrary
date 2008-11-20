@@ -16,23 +16,25 @@
 
 package org.robotframework.swing.keyword.window;
 
+import java.awt.Component;
 import java.awt.Window;
 
 import javax.swing.JFrame;
 
-import org.netbeans.jemmy.operators.JFrameOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.ContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.window.FrameOperator;
+import org.robotframework.swing.window.FrameOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
 @RobotKeywords
 public class WindowKeywords extends ContextVerifier {
-    private IdentifierParsingOperatorFactory<JFrameOperator> operatorFactory = new JFrameOperatorFactory();
+    private IdentifierParsingOperatorFactory<FrameOperator> operatorFactory = new FrameOperatorFactory();
 
     public WindowKeywords() {
         super("To use this keyword you must first select a window as context using the 'Select Window'-keyword.");
@@ -42,21 +44,21 @@ public class WindowKeywords extends ContextVerifier {
         + "Example:\n"
         + "| Select Main Window |\n")
     public void selectMainWindow() {
-        Context.setContext(operatorFactory.createOperatorByIndex(0));
+        setContext(operatorFactory.createOperatorByIndex(0));
     }
 
     @RobotKeyword("Selects a window was as current context.\n\n"
         + "Example:\n"
         + "| Select Window | _Help_ |\n")
     public void selectWindow(String identifier) {
-        Context.setContext(operatorFactory.createOperator(identifier));
+        setContext(operatorFactory.createOperator(identifier));
     }
 
     @RobotKeyword("Closes a window.\n\n"
         + "Example:\n"
         + "| Close Window | _Help_ |\n")
     public void closeWindow(String identifier) {
-        JFrameOperator frameOperator = operatorFactory.createOperator(identifier);
+        FrameOperator frameOperator = operatorFactory.createOperator(identifier);
         frameOperator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameOperator.close();
     }
@@ -71,12 +73,16 @@ public class WindowKeywords extends ContextVerifier {
     }
 
     @Override
-    protected Class[] getExpectedClasses() {
+    protected Class<? extends Component>[] getExpectedClasses() {
         return new Class[] { Window.class };
     }
-
-    private JFrameOperator frameOperator() {
+    
+    private void setContext(FrameOperator frameOperator) {
+        Context.setContext(frameOperator);
+    }
+    
+    private FrameOperator frameOperator() {
         verifyContext();
-        return (JFrameOperator) Context.getContext();
+        return (FrameOperator) Context.getContext();
     }
 }

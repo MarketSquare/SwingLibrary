@@ -8,12 +8,12 @@ import org.robotframework.swing.operator.IOperator;
 /**
  * @author Heikki Hulkko
  */
-public class MyButtonOperator extends JButtonOperator implements IOperator {
-    public MyButtonOperator(ContainerOperator container, int index) {
+public class DefaultButtonOperator extends JButtonOperator implements IOperator {
+    public DefaultButtonOperator(ContainerOperator container, int index) {
         super(container, index);
     }
 
-    public MyButtonOperator(ContainerOperator container, ComponentChooser chooser) {
+    public DefaultButtonOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 }

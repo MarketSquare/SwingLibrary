@@ -8,12 +8,12 @@ import org.robotframework.swing.operator.IOperator;
 /**
  * @author Heikki Hulkko
  */
-public class MyLabelOperator extends JLabelOperator implements IOperator {
-    public MyLabelOperator(ContainerOperator container, ComponentChooser chooser) {
+public class DefaultLabelOperator extends JLabelOperator implements IOperator {
+    public DefaultLabelOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 
-    public MyLabelOperator(ContainerOperator container, int index) {
+    public DefaultLabelOperator(ContainerOperator container, int index) {
         super(container, index);
     }
 }

@@ -9,12 +9,12 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.combobox.MyComboBoxOperator;
+import org.robotframework.swing.operator.combobox.DefaultComboBoxOperator;
 
 @RunWith(JDaveRunner.class)
 public class ComboBoxOperatorFactorySpec extends OperatorFactorySpecification<ComboBoxOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
-        protected OperatorFactory<MyComboBoxOperator> createOperatorFactory() {
+        protected OperatorFactory<DefaultComboBoxOperator> createOperatorFactory() {
             return new ComboBoxOperatorFactory();
         }
 

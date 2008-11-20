@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *
+ *  
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
+package org.robotframework.swing.dialog;
 
-package org.robotframework.swing.internalframe;
-
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JInternalFrameOperator;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
-public class MyInternalFrameOperator extends JInternalFrameOperator implements IOperator {
-    public MyInternalFrameOperator(ContainerOperator container, int index) {
-        super(container, index);
+public class DialogOperatorFactory extends IdentifierParsingOperatorFactory<DialogOperator> {
+    public DialogOperator createOperatorByIndex(int index) {
+        return new DialogOperator(index);
     }
 
-    public MyInternalFrameOperator(ContainerOperator container, ComponentChooser chooser) {
-        super(container, chooser);
+    public DialogOperator createOperatorByName(String name) {
+        return new DialogOperator(name);
     }
 }

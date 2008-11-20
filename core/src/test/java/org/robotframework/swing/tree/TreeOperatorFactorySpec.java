@@ -12,7 +12,7 @@ import org.robotframework.swing.factory.OperatorFactorySpecification;
 
 
 @RunWith(JDaveRunner.class)
-public class TreeOperatorFactorySpec extends OperatorFactorySpecification<EnhancedTreeOperatorFactory> {
+public class TreeOperatorFactorySpec extends OperatorFactorySpecification<TreeOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
         protected Component createComponent() {
@@ -25,7 +25,7 @@ public class TreeOperatorFactorySpec extends OperatorFactorySpecification<Enhanc
 
         @Override
         protected OperatorFactory<TreeOperator> createOperatorFactory() {
-            return new EnhancedTreeOperatorFactory();
+            return new TreeOperatorFactory();
         }
     }
 }

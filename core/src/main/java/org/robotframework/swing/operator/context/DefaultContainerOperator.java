@@ -7,12 +7,12 @@ import org.robotframework.swing.operator.IOperator;
 /**
  * @author Heikki Hulkko
  */
-public class MyContainerOperator extends ContainerOperator implements IOperator {
-    public MyContainerOperator(ContainerOperator container, int index) {
+public class DefaultContainerOperator extends ContainerOperator implements IOperator {
+    public DefaultContainerOperator(ContainerOperator container, int index) {
         super(container, index);
     }
 
-    public MyContainerOperator(ContainerOperator container, ComponentChooser chooser) {
+    public DefaultContainerOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 }

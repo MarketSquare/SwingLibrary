@@ -5,11 +5,10 @@ import javax.swing.JTree;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.ContextVerifierSpecification;
 import org.robotframework.swing.context.IContextVerifier;
-import org.robotframework.swing.tree.TreeContextVerifier;
+import org.robotframework.swing.operator.IOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -23,7 +22,7 @@ public class TreeContextVerifierSpec extends ContextVerifierSpecification<TreeCo
 
     public class WithContext {
         public TreeContextVerifier create() {
-            Context.setContext(mock(ContainerOperator.class));
+            Context.setContext(mock(IOperator.class));
             return new TreeContextVerifier();
         }
 

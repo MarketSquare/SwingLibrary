@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.dialog;
+package org.robotframework.swing.window;
 
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
-public class DialogOperatorFactory extends IdentifierParsingOperatorFactory<JDialogOperator> {
-    public JDialogOperator createOperatorByIndex(int index) {
-        return new JDialogOperator(index);
+public class FrameOperatorFactory extends IdentifierParsingOperatorFactory<FrameOperator> {
+    public FrameOperator createOperatorByIndex(int index) {
+        return new FrameOperator(index);
     }
 
-    public JDialogOperator createOperatorByName(String name) {
-        return new JDialogOperator(name);
+    public FrameOperator createOperatorByName(String name) {
+        return new FrameOperator(name);
     }
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.robotframework.swing.window;
 
-package org.robotframework.swing.tree;
-
-import org.robotframework.swing.chooser.ByNameComponentChooser;
-import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.robotframework.swing.operator.IOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class EnhancedTreeOperatorFactory extends IdentifierParsingOperatorFactory<TreeOperator> {
-    public TreeOperator createOperatorByIndex(int index) {
-        return new TreeOperator(Context.getContext(), index);
+public class FrameOperator extends JFrameOperator implements IOperator {
+    public FrameOperator(int index) {
+        super(index);
     }
-
-    public TreeOperator createOperatorByName(String name) {
-        return new TreeOperator(Context.getContext(), new ByNameComponentChooser(name));
+    
+    public FrameOperator(String title) {
+        super(title);
     }
 }

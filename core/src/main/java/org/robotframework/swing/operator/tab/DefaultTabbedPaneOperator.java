@@ -10,20 +10,20 @@ import org.robotframework.swing.operator.IOperator;
 /**
  * @author Heikki Hulkko
  */
-public class MyTabbedPaneOperator extends JTabbedPaneOperator implements IOperator {
-    public MyTabbedPaneOperator(ContainerOperator container, ComponentChooser chooser) {
+public class DefaultTabbedPaneOperator extends JTabbedPaneOperator implements IOperator {
+    public DefaultTabbedPaneOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 
-    public MyTabbedPaneOperator(ContainerOperator container, int index) {
+    public DefaultTabbedPaneOperator(ContainerOperator container, int index) {
         super(container, index);
     }
 
-    public MyTabbedPaneOperator(JTabbedPane source) {
+    public DefaultTabbedPaneOperator(JTabbedPane source) {
         super(source);
     }
 
-    public MyTabbedPaneOperator(ContainerOperator container) {
+    public DefaultTabbedPaneOperator(ContainerOperator container) {
         super(container);
     }
 }

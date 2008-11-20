@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.window;
+package org.robotframework.swing.tree;
 
-import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.ContainerOperator;
+import org.robotframework.swing.chooser.ByNameComponentChooser;
+import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
-public class JFrameOperatorFactory extends IdentifierParsingOperatorFactory<JFrameOperator> {
-    public JFrameOperator createOperatorByIndex(int index) {
-        return new JFrameOperator(index);
+public class TreeOperatorFactory extends IdentifierParsingOperatorFactory<TreeOperator> {
+    public TreeOperator createOperatorByIndex(int index) {
+        return new TreeOperator((ContainerOperator) Context.getContext(), index);
     }
 
-    public JFrameOperator createOperatorByName(String name) {
-        return new JFrameOperator(name);
+    public TreeOperator createOperatorByName(String name) {
+        return new TreeOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

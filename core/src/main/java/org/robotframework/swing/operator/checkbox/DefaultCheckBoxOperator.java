@@ -8,12 +8,12 @@ import org.robotframework.swing.operator.IOperator;
 /**
  * @author Heikki Hulkko
  */
-public class MyCheckBoxOperator extends JCheckBoxOperator implements IOperator {
-    public MyCheckBoxOperator(ContainerOperator container, int index) {
+public class DefaultCheckBoxOperator extends JCheckBoxOperator implements IOperator {
+    public DefaultCheckBoxOperator(ContainerOperator container, int index) {
         super(container, index);
     }
 
-    public MyCheckBoxOperator(ContainerOperator container, ComponentChooser chooser) {
+    public DefaultCheckBoxOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 }

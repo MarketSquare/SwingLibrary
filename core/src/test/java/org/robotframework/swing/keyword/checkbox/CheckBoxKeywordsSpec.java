@@ -12,7 +12,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.checkbox.MyCheckBoxOperator;
+import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -55,8 +55,8 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
     }
 
     public class Operating {
-        private OperatorFactory<MyCheckBoxOperator> operatorFactory;
-        private MyCheckBoxOperator operator;
+        private OperatorFactory<DefaultCheckBoxOperator> operatorFactory;
+        private DefaultCheckBoxOperator operator;
 
         public CheckBoxKeywords create() {
             injectMockContextVerifier();
@@ -127,7 +127,7 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
         }
 
         private void injectMockOperatorFactory() {
-            operator = mock(MyCheckBoxOperator.class);
+            operator = mock(DefaultCheckBoxOperator.class);
             operatorFactory = injectMockTo(checkboxKeywords, OperatorFactory.class);
 
             checking(new Expectations() {{

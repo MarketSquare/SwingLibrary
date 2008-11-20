@@ -20,14 +20,14 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.operator.context.MyContainerOperator;
+import org.robotframework.swing.operator.context.DefaultContainerOperator;
 
 /**
  * @author Heikki Hulkko
  */
 @RobotKeywords
 public class ContextKeywords {
-    private OperatorFactory<MyContainerOperator> operatorFactory = new ContainerOperatorFactory();
+    private OperatorFactory<DefaultContainerOperator> operatorFactory = new ContainerOperatorFactory();
 
     @RobotKeyword("Selects a container as current context.\n\n"
         + "Example:\n"

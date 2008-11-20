@@ -13,7 +13,7 @@ import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.button.MyButtonOperator;
+import org.robotframework.swing.operator.button.DefaultButtonOperator;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 
@@ -69,8 +69,8 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
     }
 
     public class Operating {
-        private OperatorFactory<MyButtonOperator> operatorFactory;
-        private MyButtonOperator operator;
+        private OperatorFactory<DefaultButtonOperator> operatorFactory;
+        private DefaultButtonOperator operator;
 
         public ButtonKeywords create() {
             injectMockContextVerifier();
@@ -141,7 +141,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
         }
 
         private void injectMockOperatorFactory() {
-            operator = mock(MyButtonOperator.class);
+            operator = mock(DefaultButtonOperator.class);
             operatorFactory = injectMockTo(buttonKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(buttonIdentifier);

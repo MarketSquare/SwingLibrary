@@ -8,14 +8,14 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.context.MyContainerOperator;
+import org.robotframework.swing.operator.context.DefaultContainerOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class ContainerOperatorFactorySpec extends OperatorFactorySpecification<ContainerOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<MyContainerOperator> createOperatorFactory() {
+        protected OperatorFactory<DefaultContainerOperator> createOperatorFactory() {
             return new ContainerOperatorFactory();
         }
 

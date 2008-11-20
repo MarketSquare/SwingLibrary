@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.menu;
+package org.robotframework.swing.internalframe;
 
+import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JMenuBarOperator;
-import org.robotframework.swing.common.IdentifierSupport;
-import org.robotframework.swing.context.Context;
+import org.netbeans.jemmy.operators.JInternalFrameOperator;
+import org.robotframework.swing.operator.IOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class MenuSupport extends IdentifierSupport {
-    protected JMenuBarOperator menubarOperator() {
-        return new JMenuBarOperator((ContainerOperator) Context.getContext());
+public class DefaultInternalFrameOperator extends JInternalFrameOperator implements IOperator {
+    public DefaultInternalFrameOperator(ContainerOperator container, int index) {
+        super(container, index);
+    }
+
+    public DefaultInternalFrameOperator(ContainerOperator container, ComponentChooser chooser) {
+        super(container, chooser);
     }
 }

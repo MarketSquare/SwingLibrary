@@ -28,7 +28,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.internalframe.MyInternalFrameOperator;
+import org.robotframework.swing.internalframe.DefaultInternalFrameOperator;
 import org.robotframework.swing.keyword.KeywordSupportSpecification;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -80,7 +80,7 @@ public class InternalFrameKeywordsSpec extends KeywordSupportSpecification<Inter
     
     public class Operating {
         private OperatorFactory operatorFactory;
-        private MyInternalFrameOperator operator;
+        private DefaultInternalFrameOperator operator;
 
         public InternalFrameKeywords create() {
             InternalFrameKeywords internalFrameKeywords = new InternalFrameKeywords();
@@ -146,7 +146,7 @@ public class InternalFrameKeywordsSpec extends KeywordSupportSpecification<Inter
         
         private void injectMockOperatorFactory(InternalFrameKeywords internalFrameKeywords) {
             operatorFactory = injectMockTo(internalFrameKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
-            operator = mock(MyInternalFrameOperator.class);
+            operator = mock(DefaultInternalFrameOperator.class);
             
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(identifier); will(returnValue(operator));

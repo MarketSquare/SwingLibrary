@@ -22,14 +22,14 @@ import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.operator.combobox.MyComboBoxOperator;
+import org.robotframework.swing.operator.combobox.DefaultComboBoxOperator;
 
 /**
  * @author Heikki Hulkko
  */
 @RobotKeywords
 public class ComboBoxKeywords {
-    private OperatorFactory<MyComboBoxOperator> operatorFactory = new ComboBoxOperatorFactory();
+    private OperatorFactory<DefaultComboBoxOperator> operatorFactory = new ComboBoxOperatorFactory();
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects an item from a combobox.\n\n"
@@ -38,7 +38,7 @@ public class ComboBoxKeywords {
         + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n")
     public void selectFromComboBox(String comboBoxIdentifier, String comboItemIdentifier) {
         contextVerifier.verifyContext();
-        MyComboBoxOperator comboBoxOperator = operatorFactory.createOperator(comboBoxIdentifier);
+        DefaultComboBoxOperator comboBoxOperator = operatorFactory.createOperator(comboBoxIdentifier);
         comboBoxOperator.pushComboButton();
         comboBoxOperator.selectItem(comboItemIdentifier, new EqualsStringComparator());
     }

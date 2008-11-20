@@ -7,15 +7,14 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.laughingpanda.beaninject.Inject;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
+import org.robotframework.swing.dialog.DialogOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.dialog.DialogKeywords;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 
@@ -59,12 +58,12 @@ public class DialogKeywordsSpec extends MockSupportSpecification<DialogKeywords>
 
     public class Operating {
         private OperatorFactory operatorFactory;
-        private JDialogOperator containerOperator;
+        private DialogOperator containerOperator;
 
         public DialogKeywords create() {
             DialogKeywords dialogKeywords = new DialogKeywords();
             operatorFactory = injectMockTo(dialogKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
-            containerOperator = mock(JDialogOperator.class);
+            containerOperator = mock(DialogOperator.class);
 
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(with(equal(dialogIdentifier)));

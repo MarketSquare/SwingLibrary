@@ -8,12 +8,11 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.javalib.util.StdStreamRedirecter;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.development.DevelopmentKeywords;
+import org.robotframework.swing.operator.IOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -34,7 +33,7 @@ public class DevelopmentKeywordsSpec extends Specification<DevelopmentKeywords> 
 
     public class Debugging {
         public void printsComponentHierarchy() {
-            final ContainerOperator containerOperator = mock(ContainerOperator.class);
+            final IOperator containerOperator = mock(IOperator.class);
             final Container container = mock(Container.class);
             final Component component1 = mock(Component.class, "comp1");
             final Component component2 = mock(Component.class, "comp2");

@@ -8,12 +8,12 @@ import org.robotframework.swing.operator.IOperator;
 /**
  * @author Heikki Hulkko
  */
-public class MyListOperator extends JListOperator implements IOperator {
-    public MyListOperator(ContainerOperator container, ComponentChooser chooser) {
+public class DefaultListOperator extends JListOperator implements IOperator {
+    public DefaultListOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 
-    public MyListOperator(ContainerOperator container, int index) {
+    public DefaultListOperator(ContainerOperator container, int index) {
         super(container, index);
     }
 }

@@ -9,14 +9,14 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.button.MyButtonOperator;
+import org.robotframework.swing.operator.button.DefaultButtonOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class ButtonOperatorFactorySpec extends OperatorFactorySpecification<ButtonOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<MyButtonOperator> createOperatorFactory() {
+        protected OperatorFactory<DefaultButtonOperator> createOperatorFactory() {
             return new ButtonOperatorFactory();
         }
 

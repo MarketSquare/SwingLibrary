@@ -25,7 +25,7 @@ import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.internalframe.InternalFrameOperatorFactory;
-import org.robotframework.swing.internalframe.MyInternalFrameOperator;
+import org.robotframework.swing.internalframe.DefaultInternalFrameOperator;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -34,7 +34,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class InternalFrameKeywords {
-    private IdentifierParsingOperatorFactory<MyInternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();
+    private IdentifierParsingOperatorFactory<DefaultInternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();
     private IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(operatorFactory);
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
     
@@ -75,7 +75,7 @@ public class InternalFrameKeywords {
         Assert.assertFalse("Internal frame '" + identifier + "' is open.", createOperator(identifier).isVisible());
     }
     
-    private MyInternalFrameOperator createOperator(String identifier) {
+    private DefaultInternalFrameOperator createOperator(String identifier) {
         contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);
     }

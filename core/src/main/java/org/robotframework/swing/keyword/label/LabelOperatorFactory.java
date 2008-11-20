@@ -16,20 +16,21 @@
 
 package org.robotframework.swing.keyword.label;
 
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.operator.label.MyLabelOperator;
+import org.robotframework.swing.operator.label.DefaultLabelOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class LabelOperatorFactory extends IdentifierParsingOperatorFactory<MyLabelOperator> {
-    public MyLabelOperator createOperatorByIndex(int index) {
-        return new MyLabelOperator(Context.getContext(), index);
+public class LabelOperatorFactory extends IdentifierParsingOperatorFactory<DefaultLabelOperator> {
+    public DefaultLabelOperator createOperatorByIndex(int index) {
+        return new DefaultLabelOperator((ContainerOperator) Context.getContext(), index);
     }
 
-    public MyLabelOperator createOperatorByName(String name) {
-        return new MyLabelOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public DefaultLabelOperator createOperatorByName(String name) {
+        return new DefaultLabelOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

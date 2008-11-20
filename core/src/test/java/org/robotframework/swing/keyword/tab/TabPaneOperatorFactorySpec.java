@@ -15,7 +15,8 @@ import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.tab.MyTabbedPaneOperator;
+import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.tab.DefaultTabbedPaneOperator;
 
 @RunWith(JDaveRunner.class)
 public class TabPaneOperatorFactorySpec extends OperatorFactorySpecification<TabPaneOperatorFactory> {
@@ -42,7 +43,7 @@ public class TabPaneOperatorFactorySpec extends OperatorFactorySpecification<Tab
         }
 
         @Override
-        protected OperatorFactory<MyTabbedPaneOperator> createOperatorFactory() {
+        protected OperatorFactory<DefaultTabbedPaneOperator> createOperatorFactory() {
             TabPaneOperatorFactory tabPaneOperatorFactory = new TabPaneOperatorFactory();
             Inject.field("contextVerifier").of(tabPaneOperatorFactory).with(dummy(IContextVerifier.class));
             return tabPaneOperatorFactory;
@@ -59,7 +60,7 @@ public class TabPaneOperatorFactorySpec extends OperatorFactorySpecification<Tab
         }
 
         public void createsOperatorFromContextSourceIfSourceIsJTabbedPane() {
-            final JTabbedPaneOperator operator = mock(JTabbedPaneOperator.class);
+            final IOperator operator = mock(IOperator.class);
             final JTabbedPane source = dummy(JTabbedPane.class);
             checking(new Expectations() {{
                 exactly(2).of(operator).getSource(); will(returnValue(source));

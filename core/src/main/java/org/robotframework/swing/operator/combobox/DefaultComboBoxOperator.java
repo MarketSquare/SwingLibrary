@@ -8,12 +8,12 @@ import org.robotframework.swing.operator.IOperator;
 /**
  * @author Heikki Hulkko
  */
-public class MyComboBoxOperator extends JComboBoxOperator implements IOperator {
-    public MyComboBoxOperator(ContainerOperator container, int index) {
+public class DefaultComboBoxOperator extends JComboBoxOperator implements IOperator {
+    public DefaultComboBoxOperator(ContainerOperator container, int index) {
         super(container, index);
     }
 
-    public MyComboBoxOperator(ContainerOperator container, ComponentChooser chooser) {
+    public DefaultComboBoxOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 }

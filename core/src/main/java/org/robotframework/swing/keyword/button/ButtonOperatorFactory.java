@@ -16,23 +16,23 @@
 
 package org.robotframework.swing.keyword.button;
 
-import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.operator.button.MyButtonOperator;
+import org.robotframework.swing.operator.button.DefaultButtonOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ButtonOperatorFactory extends IdentifierParsingOperatorFactory<MyButtonOperator> {
+public class ButtonOperatorFactory extends IdentifierParsingOperatorFactory<DefaultButtonOperator> {
     @Override
-    public MyButtonOperator createOperatorByIndex(int index) {
-        return new MyButtonOperator(Context.getContext(), index);
+    public DefaultButtonOperator createOperatorByIndex(int index) {
+        return new DefaultButtonOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public MyButtonOperator createOperatorByName(String name) {
-        return new MyButtonOperator(Context.getContext(), new ByNameOrTextComponentChooser(name));
+    public DefaultButtonOperator createOperatorByName(String name) {
+        return new DefaultButtonOperator((ContainerOperator) Context.getContext(), new ByNameOrTextComponentChooser(name));
     }
 }

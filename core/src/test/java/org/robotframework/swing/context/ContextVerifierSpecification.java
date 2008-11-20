@@ -8,9 +8,7 @@ import jdave.Specification;
 import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
-import org.netbeans.jemmy.operators.ContainerOperator;
-import org.robotframework.swing.context.Context;
-import org.robotframework.swing.context.IContextVerifier;
+import org.robotframework.swing.operator.IOperator;
 
 public abstract class ContextVerifierSpecification<T extends IContextVerifier> extends Specification<T> {
     public abstract class EmptyContext {
@@ -47,7 +45,7 @@ public abstract class ContextVerifierSpecification<T extends IContextVerifier> e
 
     private void selectEmptyContext() {
         final Container container = new Container();
-        Context.setContext(new ContainerOperator(container) {
+        Context.setContext(new IOperator() {
             public Component getSource() {
                 return container;
             }

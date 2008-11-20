@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.ContainerOperator;
+import org.robotframework.swing.operator.IOperator;
 
 @RunWith(JDaveRunner.class)
 public class DefaultContextVerifierSpec extends ContextVerifierSpecification<DefaultContextVerifier> {
@@ -22,7 +22,7 @@ public class DefaultContextVerifierSpec extends ContextVerifierSpecification<Def
 
     public class WithContext {
         public DefaultContextVerifier create() {
-            Context.setContext(mock(ContainerOperator.class));
+            Context.setContext(mock(IOperator.class));
             return new DefaultContextVerifier();
         }
 

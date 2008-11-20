@@ -13,7 +13,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.list.MyListOperator;
+import org.robotframework.swing.operator.list.DefaultListOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -54,14 +54,14 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
 
     public class WhenOperating {
         private String listIdentifier = "someList";
-        private OperatorFactory<MyListOperator> operatorFactory;
-        private MyListOperator listOperator;
+        private OperatorFactory<DefaultListOperator> operatorFactory;
+        private DefaultListOperator listOperator;
         private IContextVerifier contextVerifier;
 
         public ListKeywords create() {
             ListKeywords listKeywords = new ListKeywords();
             operatorFactory = injectMockTo(listKeywords, OperatorFactory.class);
-            listOperator = mock(MyListOperator.class);
+            listOperator = mock(DefaultListOperator.class);
 
             contextVerifier = injectMockTo(listKeywords, "contextVerifier", IContextVerifier.class);
             checking(new Expectations() {{

@@ -11,7 +11,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.combobox.MyComboBoxOperator;
+import org.robotframework.swing.operator.combobox.DefaultComboBoxOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -53,11 +53,11 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
     }
 
     public class WhenOperating {
-        private OperatorFactory<MyComboBoxOperator> operatorFactory;
-        private MyComboBoxOperator operator;
+        private OperatorFactory<DefaultComboBoxOperator> operatorFactory;
+        private DefaultComboBoxOperator operator;
 
         public ComboBoxKeywords create() {
-            operator = mock(MyComboBoxOperator.class);
+            operator = mock(DefaultComboBoxOperator.class);
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords();
             operatorFactory = injectMockTo(comboBoxKeywords, OperatorFactory.class);
             final IContextVerifier contextVerifier = injectMockTo(comboBoxKeywords, "contextVerifier", IContextVerifier.class);

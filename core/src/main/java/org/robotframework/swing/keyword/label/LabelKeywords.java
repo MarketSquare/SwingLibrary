@@ -23,7 +23,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.operator.label.MyLabelOperator;
+import org.robotframework.swing.operator.label.DefaultLabelOperator;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -32,7 +32,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class LabelKeywords {
-    private IdentifierParsingOperatorFactory<MyLabelOperator> operatorFactory = new LabelOperatorFactory();
+    private IdentifierParsingOperatorFactory<DefaultLabelOperator> operatorFactory = new LabelOperatorFactory();
     private IComponentConditionResolver labelExistenceResolver = new ComponentExistenceResolver(operatorFactory);
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
 

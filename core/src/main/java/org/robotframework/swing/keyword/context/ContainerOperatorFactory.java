@@ -16,22 +16,23 @@
 
 package org.robotframework.swing.keyword.context;
 
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.operator.context.MyContainerOperator;
+import org.robotframework.swing.operator.context.DefaultContainerOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ContainerOperatorFactory extends IdentifierParsingOperatorFactory<MyContainerOperator> {
+public class ContainerOperatorFactory extends IdentifierParsingOperatorFactory<DefaultContainerOperator> {
     @Override
-    public MyContainerOperator createOperatorByIndex(int index) {
-        return new MyContainerOperator(Context.getContext(), index);
+    public DefaultContainerOperator createOperatorByIndex(int index) {
+        return new DefaultContainerOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public MyContainerOperator createOperatorByName(String name) {
-        return new MyContainerOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public DefaultContainerOperator createOperatorByName(String name) {
+        return new DefaultContainerOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

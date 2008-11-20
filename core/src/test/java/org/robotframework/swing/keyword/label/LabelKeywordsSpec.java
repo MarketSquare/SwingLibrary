@@ -13,7 +13,7 @@ import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.label.MyLabelOperator;
+import org.robotframework.swing.operator.label.DefaultLabelOperator;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 
@@ -56,7 +56,7 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
     }
 
     public class Operating {
-        private MyLabelOperator labelOperator = mock(MyLabelOperator.class);
+        private DefaultLabelOperator labelOperator = mock(DefaultLabelOperator.class);
 
         public LabelKeywords create() {
             LabelKeywords labelKeywords = new LabelKeywords();

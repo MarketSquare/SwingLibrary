@@ -9,14 +9,14 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.checkbox.MyCheckBoxOperator;
+import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class CheckBoxOperatorFactorySpec extends OperatorFactorySpecification<CheckBoxOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<MyCheckBoxOperator> createOperatorFactory() {
+        protected OperatorFactory<DefaultCheckBoxOperator> createOperatorFactory() {
             return new CheckBoxOperatorFactory();
         }
 

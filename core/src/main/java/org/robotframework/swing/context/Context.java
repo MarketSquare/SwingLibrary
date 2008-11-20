@@ -16,20 +16,20 @@
 
 package org.robotframework.swing.context;
 
-import org.netbeans.jemmy.operators.ContainerOperator;
+import org.robotframework.swing.operator.IOperator;
 
 /**
  * @author Sami Honkonen
  * @author Heikki Hulkko
  */
 public class Context {
-    private static ContainerOperator context;
+    private static IOperator context;
 
-    public static void setContext(ContainerOperator operator) {
+    public static void setContext(IOperator operator) {
         context = operator;
     }
 
-    public static ContainerOperator getContext() {
+    public static IOperator getContext() {
         if (context == null) {
             throw new IllegalStateException("Current context is null. Please select a context.");
         }

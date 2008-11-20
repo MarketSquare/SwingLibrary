@@ -17,6 +17,7 @@
 
 package org.robotframework.swing.internalframe;
 
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByTitleComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
@@ -24,14 +25,14 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 /**
  * @author Heikki Hulkko
  */
-public class InternalFrameOperatorFactory extends IdentifierParsingOperatorFactory<MyInternalFrameOperator> {
+public class InternalFrameOperatorFactory extends IdentifierParsingOperatorFactory<DefaultInternalFrameOperator> {
     @Override
-    public MyInternalFrameOperator createOperatorByIndex(int index) {
-        return new MyInternalFrameOperator(Context.getContext(), index);
+    public DefaultInternalFrameOperator createOperatorByIndex(int index) {
+        return new DefaultInternalFrameOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public MyInternalFrameOperator createOperatorByName(String title) {
-        return new MyInternalFrameOperator(Context.getContext(), new ByTitleComponentChooser(title));
+    public DefaultInternalFrameOperator createOperatorByName(String title) {
+        return new DefaultInternalFrameOperator((ContainerOperator) Context.getContext(), new ByTitleComponentChooser(title));
     }
 }

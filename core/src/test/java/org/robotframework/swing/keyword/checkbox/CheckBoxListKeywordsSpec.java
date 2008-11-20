@@ -9,7 +9,6 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.IContextVerifier;
@@ -18,7 +17,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorListFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.checkbox.CheckBoxListKeywords;
+import org.robotframework.swing.operator.IOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -152,7 +151,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
         }
 
         private void createMockContext() {
-            final ContainerOperator contextOperator = mock(ContainerOperator.class);
+            final IOperator contextOperator = mock(IOperator.class);
             containerContext = mock(Container.class);
             checking(new Expectations() {{
                 one(contextOperator).getSource(); will(returnValue(containerContext));

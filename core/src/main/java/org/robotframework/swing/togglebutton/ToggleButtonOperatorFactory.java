@@ -1,6 +1,7 @@
 package org.robotframework.swing.togglebutton;
 
 import org.laughingpanda.jretrofit.Retrofit;
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
@@ -20,12 +21,12 @@ public class ToggleButtonOperatorFactory extends IdentifierParsingOperatorFactor
 
     @Override
     public AbstractButtonOperator createOperatorByIndex(int index) {
-        return coerceToAbstractButtonOperator(new JToggleButtonOperator(Context.getContext(), index));
+        return coerceToAbstractButtonOperator(new JToggleButtonOperator((ContainerOperator) Context.getContext(), index));
     }
 
     @Override
     public AbstractButtonOperator createOperatorByName(String name) {
-        return coerceToAbstractButtonOperator(new JToggleButtonOperator(Context.getContext(), new ByNameOrTextComponentChooser(name)));
+        return coerceToAbstractButtonOperator(new JToggleButtonOperator((ContainerOperator) Context.getContext(), new ByNameOrTextComponentChooser(name)));
     }
 
     private AbstractButtonOperator coerceToAbstractButtonOperator(JToggleButtonOperator toggleButtonOperator) {

@@ -9,12 +9,12 @@ import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.tab.MyTabbedPaneOperator;
+import org.robotframework.swing.operator.tab.DefaultTabbedPaneOperator;
 
 @RunWith(JDaveRunner.class)
 public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
     private TabKeywords tabKeywords = new TabKeywords();
-    private MyTabbedPaneOperator operator;
+    private DefaultTabbedPaneOperator operator;
 
     public class Any {
         public TabKeywords create() {
@@ -48,7 +48,7 @@ public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
         private String tabIndex = "2";
 
         public TabKeywords create() {
-            operator = mock(MyTabbedPaneOperator.class);
+            operator = mock(DefaultTabbedPaneOperator.class);
             injectMockOperatorFactory();
             return tabKeywords;
         }
@@ -90,7 +90,7 @@ public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
         private TabPaneOperatorFactory operatorFactory;
 
         public TabKeywords create() {
-            operator = mock(MyTabbedPaneOperator.class);
+            operator = mock(DefaultTabbedPaneOperator.class);
             operatorFactory = injectMockTo(tabKeywords, "operatorFactory", TabPaneOperatorFactory.class);
             return tabKeywords;
         }

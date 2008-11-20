@@ -17,6 +17,7 @@
 package org.robotframework.swing.keyword.component;
 
 import org.netbeans.jemmy.operators.ComponentOperator;
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
@@ -27,11 +28,11 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 public class ComponentOperatorFactory extends IdentifierParsingOperatorFactory<ComponentOperator> {
     @Override
     public ComponentOperator createOperatorByIndex(int index) {
-        return new ComponentOperator(Context.getContext(), index);
+        return new ComponentOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
     public ComponentOperator createOperatorByName(String name) {
-        return new ComponentOperator(Context.getContext(), new ByNameComponentChooser(name));
+        return new ComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

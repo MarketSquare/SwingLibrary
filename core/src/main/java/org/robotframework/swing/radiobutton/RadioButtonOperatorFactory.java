@@ -18,6 +18,7 @@
 package org.robotframework.swing.radiobutton;
 
 import org.laughingpanda.jretrofit.Retrofit;
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
@@ -37,12 +38,12 @@ public class RadioButtonOperatorFactory extends IdentifierParsingOperatorFactory
     
     @Override
     public AbstractButtonOperator createOperatorByIndex(int index) {
-        return coerceToRadioButtonOperator(new JRadioButtonOperator(Context.getContext(), index));
+        return coerceToRadioButtonOperator(new JRadioButtonOperator((ContainerOperator) Context.getContext(), index));
     }
 
     @Override
     public AbstractButtonOperator createOperatorByName(String name) {
-        return coerceToRadioButtonOperator(new JRadioButtonOperator(Context.getContext(), new ByNameOrTextComponentChooser(name)));
+        return coerceToRadioButtonOperator(new JRadioButtonOperator((ContainerOperator) Context.getContext(), new ByNameOrTextComponentChooser(name)));
     }
     
     private AbstractButtonOperator coerceToRadioButtonOperator(JRadioButtonOperator radioButtonOperator) {

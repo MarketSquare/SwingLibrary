@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.table;
 
+import java.awt.Component;
 import java.awt.Point;
 
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
@@ -81,7 +82,7 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         return new JPopupMenuOperator(jTableOperator.callPopupOnCell(coordinates.y, coordinates.x));
     }
     
-    public Object getSource() {
+    public Component getSource() {
         return jTableOperator.getSource();
     }
     

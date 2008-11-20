@@ -16,22 +16,23 @@
 
 package org.robotframework.swing.keyword.list;
 
+import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.operator.list.MyListOperator;
+import org.robotframework.swing.operator.list.DefaultListOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ListOperatorFactory extends IdentifierParsingOperatorFactory<MyListOperator> {
+public class ListOperatorFactory extends IdentifierParsingOperatorFactory<DefaultListOperator> {
     @Override
-    public MyListOperator createOperatorByIndex(int index) {
-        return new MyListOperator(Context.getContext(), index);
+    public DefaultListOperator createOperatorByIndex(int index) {
+        return new DefaultListOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public MyListOperator createOperatorByName(String name) {
-        return new MyListOperator(Context.getContext(), new ByNameComponentChooser(name));
+    public DefaultListOperator createOperatorByName(String name) {
+        return new DefaultListOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

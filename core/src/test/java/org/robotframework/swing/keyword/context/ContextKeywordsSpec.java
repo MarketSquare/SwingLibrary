@@ -6,13 +6,12 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.laughingpanda.beaninject.Inject;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.keyword.context.ContextKeywords;
+import org.robotframework.swing.operator.context.DefaultContainerOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -45,7 +44,7 @@ public class ContextKeywordsSpec extends Specification<ContextKeywords> {
 
         public void selectsContext() {
             final OperatorFactory operatorFactory = mock(OperatorFactory.class);
-            final ContainerOperator containerOperator = dummy(ContainerOperator.class);
+            final DefaultContainerOperator containerOperator = dummy(DefaultContainerOperator.class);
 
             Inject.field("operatorFactory").of(context).with(operatorFactory);
 

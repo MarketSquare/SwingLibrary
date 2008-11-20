@@ -9,14 +9,14 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.drivers.KeyDriver;
 import org.netbeans.jemmy.drivers.MouseDriver;
-import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.context.DefaultContainerOperator;
 
 
-public abstract class OperatorFactorySpecification<T> extends MockSupportSpecification<T> {
-    protected ContainerOperator dummyContainerOperator;
+public class OperatorFactorySpecification<T> extends MockSupportSpecification<T> {
+    protected DefaultContainerOperator dummyContainerOperator;
 
     protected void mockFindsByName(final Component componentToFind) {
         setDummyContext();
@@ -66,7 +66,7 @@ public abstract class OperatorFactorySpecification<T> extends MockSupportSpecifi
     }
 
     private void setDummyContext() {
-        dummyContainerOperator = mock(ContainerOperator.class);
+        dummyContainerOperator = mock(DefaultContainerOperator.class);
         Context.setContext(dummyContainerOperator);
     }
 
