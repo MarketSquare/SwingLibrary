@@ -27,6 +27,10 @@ public class RadioButtonKeywordsSpec extends KeywordSupportSpecification<RadioBu
             specify(context, satisfies(new RobotKeywordContract("selectRadioButton")));
         }
         
+        public void hasPushRadioButtonKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("pushRadioButton")));
+        }
+        
         public void hasRadioButtonShouldBeSelectedKeyword() {
             specify(context, satisfies(new RobotKeywordContract("radioButtonShouldBeSelected")));
         }
@@ -44,6 +48,14 @@ public class RadioButtonKeywordsSpec extends KeywordSupportSpecification<RadioBu
             RadioButtonKeywords radioButtonKeywords = new RadioButtonKeywords();
             injectMockOperatingFactory(radioButtonKeywords);
             return radioButtonKeywords;
+        }
+        
+        public void pushesRadioButton() {
+            checking(new Expectations() {{
+                one(operator).push();
+            }});
+            
+            context.pushRadioButton(identifier);
         }
         
         public void selectsRadioButton() {

@@ -28,11 +28,16 @@ import org.robotframework.swing.radiobutton.RadioButtonOperatorFactory;
 public class RadioButtonKeywords {
     private OperatorFactory<AbstractButtonOperator> operatorFactory = new RadioButtonOperatorFactory();
     
-    @RobotKeyword("Uses current context to search for a radiobutton and when found, sets it selected.\n\n"
+    @RobotKeyword("Uses current context to search for a radiobutton and when found, pushes it.\n\n"
         + "Example:\n"
         + "| Select Radio Button | _My Radio Button_ |\n")
-    public void selectRadioButton(String identifier) {
+    public void pushRadioButton(String identifier) {
         operatorFactory.createOperator(identifier).push();
+    }
+    
+    @RobotKeyword("*DEPRECATED* Use keyword `Push Radio Button` instead.\n")
+    public void selectRadioButton(String identifier) {
+        pushRadioButton(identifier);
     }
     
     @RobotKeyword("Fails if radiobutton is not selected.\n\n"

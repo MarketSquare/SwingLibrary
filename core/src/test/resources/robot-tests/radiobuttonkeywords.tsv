@@ -19,74 +19,74 @@ Radio Button Should Not Be Selected Passes If Button Is Not Selected
 
 Radio Button Keywords Should Fail If Context Is Not A Window
 	selectEmptyContext
-	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectRadioButton	someButton
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	pushRadioButton	someButton
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	radioButtonShouldBeSelected	someButton
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	radioButtonShouldNotBeSelected	someButton
 	[teardown]	selectMainWindow
 
 *Keyword*	*Action*	*Argument*
 radioButtonShouldBeSelectableWithIndex
-	selectRadioButton	0
+	pushRadioButton	0
 	radioButtonShouldBeSelected	0
-	selectRadioButton	1
+	pushRadioButton	1
 	radioButtonShouldBeSelected	1
 
 radioButtonShouldBeSelectableWithName
-	selectRadioButton	one
+	pushRadioButton	one
 	radioButtonShouldBeSelected	0
-	selectRadioButton	three
+	pushRadioButton	three
 	radioButtonShouldBeSelected	2
 
 radioButtonShouldBeSelectableWithText
-	selectRadioButton	Two
+	pushRadioButton	Two
 	radioButtonShouldBeSelected	1
-	selectRadioButton	One
+	pushRadioButton	One
 	radioButtonShouldBeSelected	0
 
 radioButtonShouldBeSelectedShouldWorkWithIndexes
-	selectRadioButton	0
+	pushRadioButton	0
 	radioButtonShouldBeSelected	0
-	selectRadioButton	1
+	pushRadioButton	1
 	radioButtonShouldBeSelected	1
-	selectRadioButton	0
+	pushRadioButton	0
 	runKeywordAndExpectError	*	radioButtonShouldBeSelected	1
 
 radioButtonShouldBeSelectedShouldWorkWithNames
-	selectRadioButton	0
+	pushRadioButton	0
 	radioButtonShouldBeSelected	one
-	selectRadioButton	2
+	pushRadioButton	2
 	radioButtonShouldBeSelected	three
-	selectRadioButton	0
+	pushRadioButton	0
 	runKeywordAndExpectError	*	radioButtonShouldBeSelected	two
 
 radioButtonShouldBeSelectedShouldWorkWithText
-	selectRadioButton	1
+	pushRadioButton	1
 	radioButtonShouldBeSelected	Two
-	selectRadioButton	2
+	pushRadioButton	2
 	radioButtonShouldBeSelected	Three
-	selectRadioButton	0
+	pushRadioButton	0
 	runKeywordAndExpectError	*	radioButtonShouldBeSelected	Two
 
 radioButtonShouldNotBeSelectedShouldWorkWithIndexes
-	selectRadioButton	0
+	pushRadioButton	0
 	radioButtonShouldNotBeSelected	1
-	selectRadioButton	1
+	pushRadioButton	1
 	radioButtonShouldNotBeSelected	0
-	selectRadioButton	0
+	pushRadioButton	0
 	runKeywordAndExpectError	*	radioButtonShouldNotBeSelected	0
 
 radioButtonShouldNotBeSelectedShouldWorkWithNames
-	selectRadioButton	0
+	pushRadioButton	0
 	radioButtonShouldNotBeSelected	two
-	selectRadioButton	1
+	pushRadioButton	1
 	radioButtonShouldNotBeSelected	one
-	selectRadioButton	0
+	pushRadioButton	0
 	runKeywordAndExpectError	*	radioButtonShouldNotBeSelected	one
 
 radioButtonShouldNotBeSelectedShouldWorkWithText
-	selectRadioButton	0
+	pushRadioButton	0
 	radioButtonShouldNotBeSelected	Two
-	selectRadioButton	1
+	pushRadioButton	1
 	radioButtonShouldNotBeSelected	One
-	selectRadioButton	0
+	pushRadioButton	0
 	runKeywordAndExpectError	*	radioButtonShouldNotBeSelected	One
