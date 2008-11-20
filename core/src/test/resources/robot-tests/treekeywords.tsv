@@ -63,7 +63,7 @@ Select Tree Node By Name
 	clearTreeSelection	${treeName}
 	selectTreeNode	${treeName}	${rootNode}
 	treeNodeShouldBeSelected	${treeName}	${rootNode}
-	unselectTreeNode	${treeName}	${rootNode}
+	[teardown]	unselectTreeNode	${treeName}	${rootNode}
 
 Unselect Tree Node By Index
 	clearTreeSelection	${treeName}

@@ -19,6 +19,8 @@ import javax.swing.tree.TreePath;
 import org.robotframework.javalib.util.KeywordNameNormalizer;
 
 public class TestTree extends JTree implements ActionListener {
+    private int insertedChildrenCounter = 0;
+    
     private JPopupMenu popup = new JPopupMenu() {{
         add(new MenuItemWithCommand("Insert a child", "insert"));
         add(new MenuItemWithCommand("Remove this node", "remove"));
@@ -39,7 +41,7 @@ public class TestTree extends JTree implements ActionListener {
         setLightWeightPopupEnabled(true);
         setName("popupMenu");
     }};
-
+    
     public TestTree() {
         this(new DefaultMutableTreeNode("The Java Series") {{
                 add(new DefaultMutableTreeNode("Books for Java Programmers") {{
@@ -70,20 +72,17 @@ public class TestTree extends JTree implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getActionCommand().equals("insert")) {
-            getLastPathComponent().add(new DefaultMutableTreeNode("child"));
-            refresh();
+            getLastPathComponent().add(new DefaultMutableTreeNode("child" + (insertedChildrenCounter++)));
         } else if (ae.getActionCommand().equals("remove")) {
             getLastPathComponent().removeFromParent();
-            refresh();
         } else if (ae.getActionCommand().equals("showdialog")) {
             JOptionPane.showMessageDialog(this, "This is an example message");
         } else if (ae.getActionCommand().equals("hideroot")) {
             setRootVisible(false);
-            refresh();
         } else if (ae.getActionCommand().equals("showroot")) {
             setRootVisible(true);
-            refresh();
         }
+        refresh();
     }
 
     private DefaultMutableTreeNode getLastPathComponent() {
