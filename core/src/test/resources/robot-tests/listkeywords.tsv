@@ -20,6 +20,8 @@ Get Selected List Value From List By Name
 Select From List By Index
 	selectFromList	${listIndex}	0
 	listSelectionShouldBe	${listIndex}	one
+	selectFromList	${listIndex}	1
+	listSelectionShouldBe	${listIndex}	two
 
 Select From List By Name
 	selectFromList	${listName}	0
