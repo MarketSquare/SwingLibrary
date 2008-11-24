@@ -9,14 +9,14 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.drivers.KeyDriver;
 import org.netbeans.jemmy.drivers.MouseDriver;
+import org.robotframework.swing.context.ContainerOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.IOperator;
-import org.robotframework.swing.operator.context.DefaultContainerOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 
 public class OperatorFactorySpecification<T> extends MockSupportSpecification<T> {
-    protected DefaultContainerOperator dummyContainerOperator;
+    protected ContainerOperator dummyContainerOperator;
     private Window container;
 
     protected void mockFindsByName(final Component componentToFind) {
@@ -63,7 +63,7 @@ public class OperatorFactorySpecification<T> extends MockSupportSpecification<T>
     }
 
     private void setDummyContext() {
-        dummyContainerOperator = mock(DefaultContainerOperator.class);
+        dummyContainerOperator = mock(ContainerOperator.class);
         container = mock(Window.class);
         checking(new Expectations() {{
             allowing(dummyContainerOperator).getSource(); will(returnValue(container));
@@ -73,7 +73,7 @@ public class OperatorFactorySpecification<T> extends MockSupportSpecification<T>
 
     public abstract class AnyIdentifierParsingOperatorFactory {
         private Component component;
-        private OperatorFactory<? extends IOperator> operatorFactory;
+        private OperatorFactory<? extends ComponentWrapper> operatorFactory;
 
         public void create() {
             operatorFactory =  createOperatorFactory();
@@ -87,18 +87,18 @@ public class OperatorFactorySpecification<T> extends MockSupportSpecification<T>
         public void findsComponentWithNameAndCreatesOperatorForIt() {
             mockFindsByName(component);
 
-            IOperator operator = operatorFactory.createOperator("someComponent");
+            ComponentWrapper operator = operatorFactory.createOperator("someComponent");
             specify(operator.getSource(), must.equal(component));
         }
 
         public void findsComponentWithIndexAndCreatesOperatorForIt() {
             mockFindsByIndex(component);
 
-            IOperator operator = operatorFactory.createOperator("0");
+            ComponentWrapper operator = operatorFactory.createOperator("0");
             specify(operator.getSource(), must.equal(component));
         }
 
-        protected abstract OperatorFactory<? extends IOperator> createOperatorFactory();
+        protected abstract OperatorFactory<? extends ComponentWrapper> createOperatorFactory();
         protected abstract Component createComponent();
     }
 }

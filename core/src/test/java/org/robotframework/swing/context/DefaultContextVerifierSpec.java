@@ -9,20 +9,20 @@ import javax.swing.JPanel;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 @RunWith(JDaveRunner.class)
 public class DefaultContextVerifierSpec extends ContextVerifierSpecification<DefaultContextVerifier> {
     public class WithEmptyContext extends EmptyContext {
         @Override
-        protected IContextVerifier createVerifier() {
+        protected ContextVerifier createVerifier() {
             return new DefaultContextVerifier();
         }
     }
 
     public class WithContext {
         public DefaultContextVerifier create() {
-            Context.setContext(mock(IOperator.class));
+            Context.setContext(mock(ComponentWrapper.class));
             return new DefaultContextVerifier();
         }
 

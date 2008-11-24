@@ -25,7 +25,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 /**
  * @author Heikki Hulkko
@@ -66,7 +66,7 @@ public class DefaultContextVerifyingOperatorFactorySpec extends MockSupportSpeci
         }
 
         private void setContextClass(final Class<? extends Component> contextClass) {
-            final IOperator operator = mock(IOperator.class);
+            final ComponentWrapper operator = mock(ComponentWrapper.class);
             checking(new Expectations() {{
                 atLeast(1).of(operator).getSource(); will(returnValue(dummy(contextClass)));
             }});

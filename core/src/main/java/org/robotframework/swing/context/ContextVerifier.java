@@ -16,33 +16,9 @@
 
 package org.robotframework.swing.context;
 
-import java.awt.Component;
-
-import junit.framework.Assert;
-
 /**
  * @author Heikki Hulkko
  */
-public abstract class ContextVerifier implements IContextVerifier {
-    private final String errorMessage;
-
-    public ContextVerifier(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public void verifyContext() {
-        Class<? extends Component>[] expectedClasses = getExpectedClasses();
-        for (Class<? extends Component> expectedClass : expectedClasses) {
-            if (expectedClass.isAssignableFrom(contextClass())) {
-                return;
-            }
-        }
-        Assert.fail(errorMessage + " Current context is " + contextClass().getName());
-    }
-
-    protected abstract Class<? extends Component>[] getExpectedClasses();
-    
-    private Class<? extends Component> contextClass() {
-        return Context.getContext().getSource().getClass();
-    }
+public interface ContextVerifier {
+    void verifyContext();
 }

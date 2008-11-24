@@ -16,20 +16,20 @@
 
 package org.robotframework.swing.context;
 
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 /**
  * @author Sami Honkonen
  * @author Heikki Hulkko
  */
 public class Context {
-    private static IOperator context;
+    private static ComponentWrapper context;
 
-    public static void setContext(IOperator operator) {
+    public static void setContext(ComponentWrapper operator) {
         context = operator;
     }
 
-    public static IOperator getContext() {
+    public static ComponentWrapper getContext() {
         if (context == null) {
             throw new IllegalStateException("Current context is null. Please select a context.");
         }

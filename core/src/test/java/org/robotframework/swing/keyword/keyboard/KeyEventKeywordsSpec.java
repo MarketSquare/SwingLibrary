@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
+import org.robotframework.swing.keyboard.keyword.KeyEventKeywords;
+import org.robotframework.swing.keyboard.keyword.KeyEventSender;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)

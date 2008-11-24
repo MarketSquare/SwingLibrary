@@ -7,6 +7,7 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.ComponentOperator;
+import org.robotframework.swing.component.keyword.ComponentKeywords;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;

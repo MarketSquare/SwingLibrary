@@ -12,7 +12,8 @@ import org.robotframework.javalib.util.StdStreamRedirecter;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.development.keyword.DevelopmentKeywords;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 
 @RunWith(JDaveRunner.class)
@@ -33,7 +34,7 @@ public class DevelopmentKeywordsSpec extends Specification<DevelopmentKeywords> 
 
     public class Debugging {
         public void printsComponentHierarchy() {
-            final IOperator containerOperator = mock(IOperator.class);
+            final ComponentWrapper containerOperator = mock(ComponentWrapper.class);
             final Container container = mock(Container.class);
             final Component component1 = mock(Component.class, "comp1");
             final Component component2 = mock(Component.class, "comp2");

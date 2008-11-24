@@ -9,7 +9,8 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.label.DefaultLabelOperator;
+import org.robotframework.swing.label.LabelOperator;
+import org.robotframework.swing.label.keyword.LabelOperatorFactory;
 
 
 @RunWith(JDaveRunner.class)
@@ -25,7 +26,7 @@ public class LabelOperatorFactorySpec extends OperatorFactorySpecification<Label
         }
 
         @Override
-        protected OperatorFactory<DefaultLabelOperator> createOperatorFactory() {
+        protected OperatorFactory<LabelOperator> createOperatorFactory() {
             return new LabelOperatorFactory();
         }
     }

@@ -10,15 +10,16 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.robotframework.swing.checkbox.CheckBoxOperator;
+import org.robotframework.swing.checkbox.keyword.CheckBoxListKeywords;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.context.IContextVerifier;
+import org.robotframework.swing.context.ContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorListFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.IOperator;
-import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 
 @RunWith(JDaveRunner.class)
@@ -56,7 +57,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
     }
 
     public class Operating {
-        private DefaultCheckBoxOperator operator;
+        private CheckBoxOperator operator;
         private Container containerContext;
         private String checkboxText = "Some checkbox";
 
@@ -137,7 +138,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
         }
 
         private void injectMockInternals() {
-            operator = mock(DefaultCheckBoxOperator.class);
+            operator = mock(CheckBoxOperator.class);
             createMockContext();
             injectMockContextVerifier();
             injectMockOperatorFactory();
@@ -152,7 +153,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
         }
 
         private void createMockContext() {
-            final IOperator contextOperator = mock(IOperator.class);
+            final ComponentWrapper contextOperator = mock(ComponentWrapper.class);
             containerContext = mock(Container.class);
             checking(new Expectations() {{
                 one(contextOperator).getSource(); will(returnValue(containerContext));
@@ -162,7 +163,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
         }
 
         private void injectMockContextVerifier() {
-            final IContextVerifier contextVerifier = injectMockTo(checkboxListKeywords, IContextVerifier.class);
+            final ContextVerifier contextVerifier = injectMockTo(checkboxListKeywords, ContextVerifier.class);
             checking(new Expectations() {{
                 one(contextVerifier).verifyContext();
             }});

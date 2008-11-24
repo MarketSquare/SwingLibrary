@@ -22,7 +22,7 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.arguments.VoidIdentifierHandler;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.operator.list.DefaultListOperator;
+import org.robotframework.swing.list.ListOperator;
 import org.springframework.util.ObjectUtils;
 
 /**
@@ -30,7 +30,7 @@ import org.springframework.util.ObjectUtils;
  */
 @RobotKeywords
 public class ListKeywords {
-    private OperatorFactory<DefaultListOperator> operatorFactory = new ListOperatorFactory();
+    private OperatorFactory<ListOperator> operatorFactory = new ListOperatorFactory();
 
     @RobotKeyword("Clears selection from list.\n\n"
         + "Example:\n"
@@ -44,7 +44,7 @@ public class ListKeywords {
         + "| Select From List | _myList_ | _myItem_ | # selects 'myItem'                   |\n"
         + "| Select From List | _myList_ | _0_      | # selects the first item in the list |\n")
     public void selectFromList(String identifier, String listItemIdentifier) {
-        DefaultListOperator listOperator = operatorFactory.createOperator(identifier);
+        ListOperator listOperator = operatorFactory.createOperator(identifier);
         new ListSelector(listOperator).parseArgument(listItemIdentifier);
     }
 
@@ -65,9 +65,9 @@ public class ListKeywords {
     }
 
     private static class ListSelector extends VoidIdentifierHandler {
-        private final DefaultListOperator listOperator;
+        private final ListOperator listOperator;
 
-        public ListSelector(DefaultListOperator listOperator) {
+        public ListSelector(ListOperator listOperator) {
             this.listOperator = listOperator;
         }
 

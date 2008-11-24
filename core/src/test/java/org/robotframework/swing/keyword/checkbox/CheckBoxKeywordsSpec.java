@@ -6,12 +6,13 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.swing.checkbox.CheckBoxOperator;
+import org.robotframework.swing.checkbox.keyword.CheckBoxKeywords;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
 
 
 @RunWith(JDaveRunner.class)
@@ -50,8 +51,8 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
     }
 
     public class Operating {
-        private OperatorFactory<DefaultCheckBoxOperator> operatorFactory;
-        private DefaultCheckBoxOperator operator;
+        private OperatorFactory<CheckBoxOperator> operatorFactory;
+        private CheckBoxOperator operator;
 
         public CheckBoxKeywords create() {
             injectMockOperatorFactory();
@@ -121,7 +122,7 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
         }
 
         private void injectMockOperatorFactory() {
-            operator = mock(DefaultCheckBoxOperator.class);
+            operator = mock(CheckBoxOperator.class);
             operatorFactory = injectMockTo(checkboxKeywords, OperatorFactory.class);
 
             checking(new Expectations() {{

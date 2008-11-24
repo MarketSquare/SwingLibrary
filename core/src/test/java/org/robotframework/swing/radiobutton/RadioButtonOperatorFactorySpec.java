@@ -9,7 +9,7 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 @RunWith(JDaveRunner.class)
 public class RadioButtonOperatorFactorySpec extends OperatorFactorySpecification<RadioButtonOperatorFactory> {
@@ -24,7 +24,7 @@ public class RadioButtonOperatorFactorySpec extends OperatorFactorySpecification
         }
 
         @Override
-        protected OperatorFactory<? extends IOperator> createOperatorFactory() {
+        protected OperatorFactory<? extends ComponentWrapper> createOperatorFactory() {
             return new RadioButtonOperatorFactory();
         }
     }

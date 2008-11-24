@@ -18,12 +18,12 @@ package org.robotframework.swing.textcomponent;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTextComponentOperator;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 /**
  * @author Heikki Hulkko
  */
-public class TextComponentOperator extends JTextComponentOperator implements IOperator {
+public class TextComponentOperator extends JTextComponentOperator implements ComponentWrapper {
     public TextComponentOperator(ContainerOperator container, int index) {
         super(container, index);
     }

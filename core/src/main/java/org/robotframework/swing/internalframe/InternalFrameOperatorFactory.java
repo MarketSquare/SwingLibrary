@@ -25,14 +25,14 @@ import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 /**
  * @author Heikki Hulkko
  */
-public class InternalFrameOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultInternalFrameOperator> {
+public class InternalFrameOperatorFactory extends DefaultContextVerifyingOperatorFactory<InternalFrameOperator> {
     @Override
-    public DefaultInternalFrameOperator createOperatorByIndex(int index) {
-        return new DefaultInternalFrameOperator((ContainerOperator) Context.getContext(), index);
+    public InternalFrameOperator createOperatorByIndex(int index) {
+        return new InternalFrameOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public DefaultInternalFrameOperator createOperatorByName(String title) {
-        return new DefaultInternalFrameOperator((ContainerOperator) Context.getContext(), new ByTitleComponentChooser(title));
+    public InternalFrameOperator createOperatorByName(String title) {
+        return new InternalFrameOperator((ContainerOperator) Context.getContext(), new ByTitleComponentChooser(title));
     }
 }

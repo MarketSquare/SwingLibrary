@@ -9,6 +9,7 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
+import org.robotframework.swing.tree.keyword.TreeNodeSelectionKeywords;
 
 
 @RunWith(JDaveRunner.class)

@@ -18,12 +18,12 @@ package org.robotframework.swing.tree;
 
 import javax.swing.JTree;
 
-import org.robotframework.swing.context.ContextVerifier;
+import org.robotframework.swing.context.AbstractContextVerifier;
 
 /**
  * @author Heikki Hulkko
  */
-public class TreeContextVerifier extends ContextVerifier {
+public class TreeContextVerifier extends AbstractContextVerifier {
     static final String ERROR_MESSAGE = "To use tree keywords you must first select a tree as context using the 'Select Tree'-keyword.";
     public TreeContextVerifier() {
         super(ERROR_MESSAGE);

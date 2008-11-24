@@ -6,16 +6,17 @@ import java.awt.Container;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
+import org.robotframework.swing.context.ContainerOperator;
+import org.robotframework.swing.context.keyword.ContainerOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.context.DefaultContainerOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class ContainerOperatorFactorySpec extends OperatorFactorySpecification<ContainerOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<DefaultContainerOperator> createOperatorFactory() {
+        protected OperatorFactory<ContainerOperator> createOperatorFactory() {
             return new ContainerOperatorFactory();
         }
 

@@ -20,19 +20,19 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
-import org.robotframework.swing.operator.list.DefaultListOperator;
+import org.robotframework.swing.list.ListOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ListOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultListOperator> {
+public class ListOperatorFactory extends DefaultContextVerifyingOperatorFactory<ListOperator> {
     @Override
-    public DefaultListOperator createOperatorByIndex(int index) {
-        return new DefaultListOperator((ContainerOperator) Context.getContext(), index);
+    public ListOperator createOperatorByIndex(int index) {
+        return new ListOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public DefaultListOperator createOperatorByName(String name) {
-        return new DefaultListOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+    public ListOperator createOperatorByName(String name) {
+        return new ListOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

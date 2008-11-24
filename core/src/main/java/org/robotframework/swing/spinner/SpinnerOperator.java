@@ -1,11 +1,11 @@
 package org.robotframework.swing.spinner;
 
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 /**
  * @author Heikki Hulkko
  */
-public interface SpinnerOperator extends IOperator {
+public interface SpinnerOperator extends ComponentWrapper {
     Object getValue();
     void increase();
     void increaseToMaximum();

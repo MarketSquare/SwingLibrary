@@ -16,9 +16,9 @@
 
 package org.robotframework.swing.button;
 
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
-public interface AbstractButtonOperator extends IOperator {
+public interface AbstractButtonOperator extends ComponentWrapper {
     void push();
     boolean isSelected();
 }

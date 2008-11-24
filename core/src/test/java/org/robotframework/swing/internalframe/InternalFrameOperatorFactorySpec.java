@@ -31,7 +31,7 @@ import org.robotframework.swing.factory.OperatorFactorySpecification;
 public class InternalFrameOperatorFactorySpec extends OperatorFactorySpecification<InternalFrameOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<DefaultInternalFrameOperator> createOperatorFactory() {
+        protected OperatorFactory<InternalFrameOperator> createOperatorFactory() {
             return new InternalFrameOperatorFactory();
         }
 

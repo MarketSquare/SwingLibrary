@@ -8,6 +8,7 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.swing.keyboard.keyword.KeyEventSender;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 
 import abbot.tester.ComponentTester;

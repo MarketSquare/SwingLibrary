@@ -2,7 +2,7 @@ package org.robotframework.swing.keyword.testing;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.keyword.button.ButtonOperatorFactory;
+import org.robotframework.swing.button.keyword.ButtonOperatorFactory;
 
 
 @RobotKeywords

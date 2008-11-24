@@ -8,6 +8,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
+import org.robotframework.swing.tree.keyword.TreeNodeVisibilityKeywords;
 
 @RunWith(JDaveRunner.class)
 public class TreeNodeVisibilityKeywordsSpec extends TreeSpecification<TreeNodeVisibilityKeywords> {

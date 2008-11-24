@@ -17,9 +17,9 @@
 package org.robotframework.swing.table;
 
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
-public interface TableOperator extends IOperator {
+public interface TableOperator extends ComponentWrapper {
     void selectCell(String row, String column);
     void setCellValue(Object newValue, String row, String column);
     void clearSelection();

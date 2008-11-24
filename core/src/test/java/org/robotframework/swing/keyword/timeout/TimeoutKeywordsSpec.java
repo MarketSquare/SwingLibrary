@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.netbeans.jemmy.JemmyProperties;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
+import org.robotframework.swing.timeout.keyword.TimeoutKeywords;
 
 
 @RunWith(JDaveRunner.class)

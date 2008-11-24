@@ -10,6 +10,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.tree.TreeNodeExistenceResolver;
+import org.robotframework.swing.tree.keyword.TreeNodeExistenceKeywords;
 
 
 @RunWith(JDaveRunner.class)

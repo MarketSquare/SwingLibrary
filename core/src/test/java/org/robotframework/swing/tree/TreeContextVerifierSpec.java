@@ -7,22 +7,22 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.ContextVerifierSpecification;
-import org.robotframework.swing.context.IContextVerifier;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.context.ContextVerifier;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 
 @RunWith(JDaveRunner.class)
 public class TreeContextVerifierSpec extends ContextVerifierSpecification<TreeContextVerifier> {
     public class WithEmptyContext extends EmptyContext {
         @Override
-        protected IContextVerifier createVerifier() {
+        protected ContextVerifier createVerifier() {
             return new TreeContextVerifier();
         }
     }
 
     public class WithContext {
         public TreeContextVerifier create() {
-            Context.setContext(mock(IOperator.class));
+            Context.setContext(mock(ComponentWrapper.class));
             return new TreeContextVerifier();
         }
 

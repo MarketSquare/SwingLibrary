@@ -18,7 +18,7 @@ package org.robotframework.swing.keyword.menu;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.keyword.window.WindowKeywords;
+import org.robotframework.swing.window.keyword.WindowKeywords;
 
 /**
  * @author Heikki Hulkko

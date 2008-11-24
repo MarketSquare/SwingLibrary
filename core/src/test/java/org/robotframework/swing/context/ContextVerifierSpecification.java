@@ -8,11 +8,11 @@ import jdave.Specification;
 import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
-import org.robotframework.swing.operator.IOperator;
+import org.robotframework.swing.operator.ComponentWrapper;
 
-public abstract class ContextVerifierSpecification<T extends IContextVerifier> extends Specification<T> {
+public abstract class ContextVerifierSpecification<T extends ContextVerifier> extends Specification<T> {
     public abstract class EmptyContext {
-        public IContextVerifier create() {
+        public ContextVerifier create() {
             Context.setContext(null);
             return createVerifier();
         }
@@ -26,7 +26,7 @@ public abstract class ContextVerifierSpecification<T extends IContextVerifier> e
             }, must.raiseExactly(AssertionFailedError.class, getExpectedErrorMessage() + " Current context is java.awt.Container"));
         }
 
-        protected abstract IContextVerifier createVerifier();
+        protected abstract ContextVerifier createVerifier();
     }
 
     protected void specifyContextClassMatches(final Class contextClass) throws Throwable {
@@ -45,7 +45,7 @@ public abstract class ContextVerifierSpecification<T extends IContextVerifier> e
 
     private void selectEmptyContext() {
         final Container container = new Container();
-        Context.setContext(new IOperator() {
+        Context.setContext(new ComponentWrapper() {
             public Component getSource() {
                 return container;
             }

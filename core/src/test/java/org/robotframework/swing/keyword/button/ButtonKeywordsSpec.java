@@ -6,13 +6,14 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.swing.button.ButtonOperator;
+import org.robotframework.swing.button.keyword.ButtonKeywords;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.operator.button.DefaultButtonOperator;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 
@@ -64,8 +65,8 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
     }
 
     public class Operating {
-        private OperatorFactory<DefaultButtonOperator> operatorFactory;
-        private DefaultButtonOperator operator;
+        private OperatorFactory<?> operatorFactory;
+        private ButtonOperator operator;
 
         public ButtonKeywords create() {
             injectMockOperatorFactory();
@@ -135,7 +136,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
         }
 
         private void injectMockOperatorFactory() {
-            operator = mock(DefaultButtonOperator.class);
+            operator = mock(ButtonOperator.class);
             operatorFactory = injectMockTo(buttonKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(buttonIdentifier);

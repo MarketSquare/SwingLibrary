@@ -9,14 +9,14 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.operator.list.DefaultListOperator;
+import org.robotframework.swing.list.ListOperator;
 
 
 @RunWith(JDaveRunner.class)
 public class ListOperatorFactorySpec extends OperatorFactorySpecification<ListOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<DefaultListOperator> createOperatorFactory() {
+        protected OperatorFactory<ListOperator> createOperatorFactory() {
             return new ListOperatorFactory();
         }
 
