@@ -28,6 +28,7 @@ import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorListFactory;
+import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
 
 /**
  * @author Heikki Hulkko
@@ -35,7 +36,7 @@ import org.robotframework.swing.factory.OperatorListFactory;
 @RobotKeywords
 public class CheckBoxListKeywords {
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
-    private OperatorListFactory<JCheckBoxOperator> operatorListFactory = new CheckBoxListOperatorFactory();
+    private OperatorListFactory<DefaultCheckBoxOperator> operatorListFactory = new CheckBoxListOperatorFactory();
 
     @RobotKeyword("Checks all checkboxes in current context.\n\n"
         + "Example:\n"
@@ -85,14 +86,14 @@ public class CheckBoxListKeywords {
         });
     }
 
-    private List<JCheckBoxOperator> createOperators() {
+    private List<DefaultCheckBoxOperator> createOperators() {
         contextVerifier.verifyContext();
         return operatorListFactory.createOperators((Container) Context.getContext().getSource());
     }
 
     private void foreachCheckBox(CheckBoxAction action) {
-        List<JCheckBoxOperator> operators = createOperators();
-        for (JCheckBoxOperator checkBoxOperator : operators) {
+        List<DefaultCheckBoxOperator> operators = createOperators();
+        for (DefaultCheckBoxOperator checkBoxOperator : operators) {
             action.operateOnCheckBox(checkBoxOperator);
         }
     }

@@ -1,5 +1,7 @@
 package org.robotframework.swing.operator.checkbox;
 
+import javax.swing.JCheckBox;
+
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
@@ -15,5 +17,9 @@ public class DefaultCheckBoxOperator extends JCheckBoxOperator implements IOpera
 
     public DefaultCheckBoxOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
+    }
+    
+    public DefaultCheckBoxOperator(JCheckBox source) {
+        super(source);
     }
 }
