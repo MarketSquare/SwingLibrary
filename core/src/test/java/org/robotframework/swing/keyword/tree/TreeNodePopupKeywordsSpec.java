@@ -53,10 +53,6 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
-
-        public void hasContextVerifier() {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
-        }
     }
 
     public class Operating {
