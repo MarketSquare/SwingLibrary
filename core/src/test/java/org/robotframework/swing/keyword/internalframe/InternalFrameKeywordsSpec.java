@@ -29,8 +29,8 @@ import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.internalframe.InternalFrameOperator;
-import org.robotframework.swing.internalframe.keyword.InternalFrameKeywords;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.keyword.internalframe.InternalFrameKeywords;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RunWith(JDaveRunner.class)

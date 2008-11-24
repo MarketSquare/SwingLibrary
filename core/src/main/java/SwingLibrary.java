@@ -17,7 +17,7 @@
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
-import org.robotframework.swing.timeout.keyword.TimeoutKeywords;
+import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 /**
  * @author Heikki Hulkko

@@ -9,8 +9,8 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.keyword.textcomponent.TextComponentKeywords;
 import org.robotframework.swing.textcomponent.TextComponentOperator;
-import org.robotframework.swing.textcomponent.keyword.TextComponentKeywords;
 
 @RunWith(JDaveRunner.class)
 public class TextComponentKeywordsSpec extends MockSupportSpecification<TextComponentKeywords> {

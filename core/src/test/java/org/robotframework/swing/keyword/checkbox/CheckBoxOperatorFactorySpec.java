@@ -8,9 +8,9 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.robotframework.swing.checkbox.CheckBoxOperator;
-import org.robotframework.swing.checkbox.keyword.CheckBoxOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
+import org.robotframework.swing.keyword.checkbox.CheckBoxOperatorFactory;
 
 
 @RunWith(JDaveRunner.class)

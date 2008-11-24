@@ -7,12 +7,12 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.checkbox.CheckBoxOperator;
-import org.robotframework.swing.checkbox.keyword.CheckBoxKeywords;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.keyword.checkbox.CheckBoxKeywords;
 
 
 @RunWith(JDaveRunner.class)

@@ -12,10 +12,10 @@ import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.dialog.DialogOperator;
-import org.robotframework.swing.dialog.keyword.DialogKeywords;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.keyword.dialog.DialogKeywords;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 

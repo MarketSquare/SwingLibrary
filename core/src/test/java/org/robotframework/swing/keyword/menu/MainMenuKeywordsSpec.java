@@ -14,7 +14,7 @@ import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.keyword.menu.MainMenuKeywords;
 import org.robotframework.swing.keyword.menu.MenuKeywords;
 import org.robotframework.swing.keyword.menu.MenuSupport;
-import org.robotframework.swing.window.keyword.WindowKeywords;
+import org.robotframework.swing.keyword.window.WindowKeywords;
 
 
 @RunWith(JDaveRunner.class)

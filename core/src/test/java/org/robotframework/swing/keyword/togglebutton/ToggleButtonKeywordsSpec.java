@@ -11,7 +11,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.togglebutton.keyword.ToggleButtonKeywords;
+import org.robotframework.swing.keyword.togglebutton.ToggleButtonKeywords;
 
 @RunWith(JDaveRunner.class)
 public class ToggleButtonKeywordsSpec extends MockSupportSpecification<ToggleButtonKeywords> {

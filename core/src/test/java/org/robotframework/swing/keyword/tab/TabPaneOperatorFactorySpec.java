@@ -16,8 +16,8 @@ import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 import org.robotframework.swing.operator.ComponentWrapper;
+import org.robotframework.swing.tab.TabPaneOperatorFactory;
 import org.robotframework.swing.tab.TabbedPaneOperator;
-import org.robotframework.swing.tab.keyword.TabPaneOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class TabPaneOperatorFactorySpec extends OperatorFactorySpecification<TabPaneOperatorFactory> {

@@ -9,9 +9,8 @@ import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.tab.TabPaneOperatorFactory;
 import org.robotframework.swing.tab.TabbedPaneOperator;
-import org.robotframework.swing.tab.keyword.TabKeywords;
-import org.robotframework.swing.tab.keyword.TabPaneOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {

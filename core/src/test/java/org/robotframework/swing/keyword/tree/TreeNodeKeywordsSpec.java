@@ -8,7 +8,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.tree.keyword.TreeNodeKeywords;
+import org.robotframework.swing.keyword.tree.TreeNodeKeywords;
 
 
 @RunWith(JDaveRunner.class)

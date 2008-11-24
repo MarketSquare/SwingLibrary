@@ -3,7 +3,7 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.JemmyProperties;
-import org.robotframework.swing.timeout.keyword.TimeoutKeywords;
+import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 @RunWith(JDaveRunner.class)
 public class SwingLibrarySpec extends Specification<SwingLibrary> {

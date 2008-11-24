@@ -5,13 +5,13 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.combobox.ComboBoxOperator;
-import org.robotframework.swing.combobox.keyword.ComboBoxKeywords;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.keyword.combobox.ComboBoxKeywords;
 
 
 @RunWith(JDaveRunner.class)

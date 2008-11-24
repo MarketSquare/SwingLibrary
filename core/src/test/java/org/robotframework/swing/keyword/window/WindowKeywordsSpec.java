@@ -13,8 +13,8 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.keyword.window.WindowKeywords;
 import org.robotframework.swing.window.FrameOperator;
-import org.robotframework.swing.window.keyword.WindowKeywords;
 
 
 @RunWith(JDaveRunner.class)

@@ -16,8 +16,8 @@ import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
+import org.robotframework.swing.keyword.tree.TreeNodePopupKeywords;
 import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
-import org.robotframework.swing.tree.keyword.TreeNodePopupKeywords;
 
 
 @RunWith(JDaveRunner.class)

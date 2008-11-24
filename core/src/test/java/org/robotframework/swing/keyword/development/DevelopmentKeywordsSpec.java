@@ -12,7 +12,7 @@ import org.robotframework.javalib.util.StdStreamRedirecter;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.development.keyword.DevelopmentKeywords;
+import org.robotframework.swing.keyword.development.DevelopmentKeywords;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 
