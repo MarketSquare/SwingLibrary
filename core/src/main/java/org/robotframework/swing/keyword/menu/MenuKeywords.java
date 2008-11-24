@@ -23,6 +23,7 @@ import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.arguments.ArgumentParser;
+import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 

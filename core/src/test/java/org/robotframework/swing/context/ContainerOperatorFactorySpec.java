@@ -1,29 +1,29 @@
-package org.robotframework.swing.keyword.button;
+package org.robotframework.swing.context;
 
 import java.awt.Component;
-
-import javax.swing.JButton;
+import java.awt.Container;
 
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.button.ButtonOperator;
-import org.robotframework.swing.button.ButtonOperatorFactory;
+import org.robotframework.swing.context.ContainerOperator;
+import org.robotframework.swing.context.ContainerOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 
 
 @RunWith(JDaveRunner.class)
-public class ButtonOperatorFactorySpec extends OperatorFactorySpecification<ButtonOperatorFactory> {
+public class ContainerOperatorFactorySpec extends OperatorFactorySpecification<ContainerOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<ButtonOperator> createOperatorFactory() {
-            return new ButtonOperatorFactory();
+        protected OperatorFactory<ContainerOperator> createOperatorFactory() {
+            return new ContainerOperatorFactory();
         }
 
         @Override
         protected Component createComponent() {
-            return new JButton() {
+            return new Container() {
+                @Override
                 public boolean isShowing() {
                     return true;
                 }

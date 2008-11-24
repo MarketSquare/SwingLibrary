@@ -1,29 +1,29 @@
-package org.robotframework.swing.keyword.context;
+package org.robotframework.swing.list;
 
 import java.awt.Component;
-import java.awt.Container;
+
+import javax.swing.JList;
 
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.ContainerOperator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.context.ContainerOperatorFactory;
+import org.robotframework.swing.list.ListOperator;
+import org.robotframework.swing.list.ListOperatorFactory;
 
 
 @RunWith(JDaveRunner.class)
-public class ContainerOperatorFactorySpec extends OperatorFactorySpecification<ContainerOperatorFactory> {
+public class ListOperatorFactorySpec extends OperatorFactorySpecification<ListOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<ContainerOperator> createOperatorFactory() {
-            return new ContainerOperatorFactory();
+        protected OperatorFactory<ListOperator> createOperatorFactory() {
+            return new ListOperatorFactory();
         }
 
         @Override
         protected Component createComponent() {
-            return new Container() {
-                @Override
+            return new JList() {
                 public boolean isShowing() {
                     return true;
                 }

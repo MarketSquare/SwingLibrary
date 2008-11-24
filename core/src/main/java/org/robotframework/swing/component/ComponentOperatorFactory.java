@@ -14,18 +14,25 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.menu;
+package org.robotframework.swing.component;
 
+import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JMenuBarOperator;
-import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
-public class MenuSupport extends IdentifierSupport {
-    protected JMenuBarOperator menubarOperator() {
-        return new JMenuBarOperator((ContainerOperator) Context.getContext());
+public class ComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComponentOperator> {
+    @Override
+    public ComponentOperator createOperatorByIndex(int index) {
+        return new ComponentOperator((ContainerOperator) Context.getContext(), index);
+    }
+
+    @Override
+    public ComponentOperator createOperatorByName(String name) {
+        return new ComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

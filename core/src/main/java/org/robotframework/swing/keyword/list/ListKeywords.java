@@ -23,6 +23,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.arguments.VoidIdentifierHandler;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.list.ListOperator;
+import org.robotframework.swing.list.ListOperatorFactory;
 import org.springframework.util.ObjectUtils;
 
 /**

@@ -1,33 +1,33 @@
-package org.robotframework.swing.keyword.checkbox;
+package org.robotframework.swing.label;
 
 import java.awt.Component;
 
-import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.checkbox.CheckBoxOperator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.checkbox.CheckBoxOperatorFactory;
+import org.robotframework.swing.label.LabelOperator;
+import org.robotframework.swing.label.LabelOperatorFactory;
 
 
 @RunWith(JDaveRunner.class)
-public class CheckBoxOperatorFactorySpec extends OperatorFactorySpecification<CheckBoxOperatorFactory> {
+public class LabelOperatorFactorySpec extends OperatorFactorySpecification<LabelOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<CheckBoxOperator> createOperatorFactory() {
-            return new CheckBoxOperatorFactory();
-        }
-
-        @Override
         protected Component createComponent() {
-            return new JCheckBox() {
+            return new JLabel() {
                 public boolean isShowing() {
                     return true;
                 }
             };
+        }
+
+        @Override
+        protected OperatorFactory<LabelOperator> createOperatorFactory() {
+            return new LabelOperatorFactory();
         }
     }
 }

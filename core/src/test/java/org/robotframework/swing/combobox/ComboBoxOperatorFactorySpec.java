@@ -1,4 +1,4 @@
-package org.robotframework.swing.keyword.combobox;
+package org.robotframework.swing.combobox;
 
 import java.awt.Component;
 
@@ -8,9 +8,9 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.robotframework.swing.combobox.ComboBoxOperator;
+import org.robotframework.swing.combobox.ComboBoxOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.combobox.ComboBoxOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class ComboBoxOperatorFactorySpec extends OperatorFactorySpecification<ComboBoxOperatorFactory> {

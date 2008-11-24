@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.keyboard;
+package org.robotframework.swing.keyboard;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;

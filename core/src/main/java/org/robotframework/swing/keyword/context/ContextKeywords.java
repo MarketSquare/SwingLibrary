@@ -19,6 +19,7 @@ package org.robotframework.swing.keyword.context;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.ContainerOperator;
+import org.robotframework.swing.context.ContainerOperatorFactory;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.OperatorFactory;
 

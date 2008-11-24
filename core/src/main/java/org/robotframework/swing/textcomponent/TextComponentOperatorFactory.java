@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.textcomponent;
+package org.robotframework.swing.textcomponent;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;

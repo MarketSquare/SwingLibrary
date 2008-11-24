@@ -20,6 +20,7 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.textcomponent.TextComponentOperator;
+import org.robotframework.swing.textcomponent.TextComponentOperatorFactory;
 
 /**
  * @author Heikki Hulkko

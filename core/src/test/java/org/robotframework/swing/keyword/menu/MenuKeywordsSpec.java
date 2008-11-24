@@ -14,8 +14,7 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.menu.MenuKeywords;
-import org.robotframework.swing.keyword.menu.MenuSupport;
+import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 

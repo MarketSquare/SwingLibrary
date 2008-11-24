@@ -22,6 +22,7 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.label.LabelOperator;
+import org.robotframework.swing.label.LabelOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 

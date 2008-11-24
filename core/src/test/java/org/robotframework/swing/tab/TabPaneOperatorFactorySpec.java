@@ -1,4 +1,4 @@
-package org.robotframework.swing.keyword.tab;
+package org.robotframework.swing.tab;
 
 import java.awt.Component;
 

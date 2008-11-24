@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.checkbox;
+package org.robotframework.swing.list;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.robotframework.swing.checkbox.CheckBoxOperator;
-import org.robotframework.swing.chooser.ByTextComponentChooser;
+import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
+import org.robotframework.swing.list.ListOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class CheckBoxOperatorFactory extends DefaultContextVerifyingOperatorFactory<CheckBoxOperator> {
-    public CheckBoxOperator createOperatorByIndex(int index) {
-        return new CheckBoxOperator((ContainerOperator) Context.getContext(), index);
+public class ListOperatorFactory extends DefaultContextVerifyingOperatorFactory<ListOperator> {
+    @Override
+    public ListOperator createOperatorByIndex(int index) {
+        return new ListOperator((ContainerOperator) Context.getContext(), index);
     }
 
-    public CheckBoxOperator createOperatorByName(final String name) {
-        return new CheckBoxOperator((ContainerOperator) Context.getContext(), new ByTextComponentChooser(name));
+    @Override
+    public ListOperator createOperatorByName(String name) {
+        return new ListOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

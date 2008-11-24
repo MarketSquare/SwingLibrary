@@ -19,6 +19,7 @@ package org.robotframework.swing.keyword.keyboard;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.keyboard.KeyEventSender;
 
 /**
  * @author Heikki Hulkko

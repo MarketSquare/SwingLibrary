@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,25 +14,23 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.component;
+package org.robotframework.swing.label;
 
-import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
+import org.robotframework.swing.label.LabelOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComponentOperator> {
-    @Override
-    public ComponentOperator createOperatorByIndex(int index) {
-        return new ComponentOperator((ContainerOperator) Context.getContext(), index);
+public class LabelOperatorFactory extends DefaultContextVerifyingOperatorFactory<LabelOperator> {
+    public LabelOperator createOperatorByIndex(int index) {
+        return new LabelOperator((ContainerOperator) Context.getContext(), index);
     }
 
-    @Override
-    public ComponentOperator createOperatorByName(String name) {
-        return new ComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+    public LabelOperator createOperatorByName(String name) {
+        return new LabelOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

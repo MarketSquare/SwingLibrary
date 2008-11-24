@@ -1,4 +1,4 @@
-package org.robotframework.swing.keyword.keyboard;
+package org.robotframework.swing.keyboard;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -8,8 +8,8 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.swing.keyboard.KeyEventSender;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.keyboard.KeyEventSender;
 
 import abbot.tester.ComponentTester;
 

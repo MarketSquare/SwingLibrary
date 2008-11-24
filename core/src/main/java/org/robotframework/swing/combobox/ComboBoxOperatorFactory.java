@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.combobox;
+package org.robotframework.swing.combobox;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;

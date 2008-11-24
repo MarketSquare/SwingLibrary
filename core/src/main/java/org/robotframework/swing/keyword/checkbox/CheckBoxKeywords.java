@@ -21,6 +21,7 @@ import junit.framework.Assert;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.checkbox.CheckBoxOperator;
+import org.robotframework.swing.checkbox.CheckBoxOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 
 /**

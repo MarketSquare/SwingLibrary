@@ -1,28 +1,29 @@
-package org.robotframework.swing.keyword.list;
+package org.robotframework.swing.button;
 
 import java.awt.Component;
 
-import javax.swing.JList;
+import javax.swing.JButton;
 
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
+import org.robotframework.swing.button.ButtonOperator;
+import org.robotframework.swing.button.ButtonOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.list.ListOperator;
 
 
 @RunWith(JDaveRunner.class)
-public class ListOperatorFactorySpec extends OperatorFactorySpecification<ListOperatorFactory> {
+public class ButtonOperatorFactorySpec extends OperatorFactorySpecification<ButtonOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         @Override
-        protected OperatorFactory<ListOperator> createOperatorFactory() {
-            return new ListOperatorFactory();
+        protected OperatorFactory<ButtonOperator> createOperatorFactory() {
+            return new ButtonOperatorFactory();
         }
 
         @Override
         protected Component createComponent() {
-            return new JList() {
+            return new JButton() {
                 public boolean isShowing() {
                     return true;
                 }

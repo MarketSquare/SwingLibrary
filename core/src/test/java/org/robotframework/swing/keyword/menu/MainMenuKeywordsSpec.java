@@ -11,10 +11,8 @@ import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.menu.MainMenuKeywords;
-import org.robotframework.swing.keyword.menu.MenuKeywords;
-import org.robotframework.swing.keyword.menu.MenuSupport;
 import org.robotframework.swing.keyword.window.WindowKeywords;
+import org.robotframework.swing.menu.MenuSupport;
 
 
 @RunWith(JDaveRunner.class)

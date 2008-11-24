@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.context;
+package org.robotframework.swing.context;
 
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.ContainerOperator;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.checkbox;
+package org.robotframework.swing.checkbox;
 
 import java.awt.Component;
 

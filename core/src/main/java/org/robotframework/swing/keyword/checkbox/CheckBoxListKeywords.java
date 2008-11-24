@@ -24,10 +24,11 @@ import junit.framework.Assert;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.checkbox.CheckBoxListOperatorFactory;
 import org.robotframework.swing.checkbox.CheckBoxOperator;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.ContextVerifier;
+import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.factory.OperatorListFactory;
 
 /**

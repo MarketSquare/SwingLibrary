@@ -1,4 +1,4 @@
-package org.robotframework.swing.keyword.textcomponent;
+package org.robotframework.swing.textcomponent;
 
 import java.awt.Component;
 
@@ -9,8 +9,8 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.keyword.textcomponent.TextComponentOperatorFactory;
 import org.robotframework.swing.operator.ComponentWrapper;
+import org.robotframework.swing.textcomponent.TextComponentOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class TextComponentOperatorFactorySpec extends OperatorFactorySpecification<TextComponentOperatorFactory> {

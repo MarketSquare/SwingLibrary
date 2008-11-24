@@ -19,6 +19,7 @@ package org.robotframework.swing.keyword.combobox;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.combobox.ComboBoxOperator;
+import org.robotframework.swing.combobox.ComboBoxOperatorFactory;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
 
