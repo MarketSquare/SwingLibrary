@@ -15,12 +15,17 @@
  */
 package org.robotframework.swing.factory;
 
+import java.awt.Component;
+import java.awt.Window;
+
+import jdave.Block;
 import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.DefaultContextVerifier;
+import org.robotframework.swing.context.Context;
 import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.swing.operator.IOperator;
 
 /**
  * @author Heikki Hulkko
@@ -40,13 +45,32 @@ public class DefaultContextVerifyingOperatorFactorySpec extends MockSupportSpeci
             };
         }
         
-        public void verifiesContext() {
-            final DefaultContextVerifier contextVerifier = injectMockToContext("contextVerifier", DefaultContextVerifier.class);
-            checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
-            }});
+        public void passesIfContextIsDefaultContext() throws Throwable {
+            setContextClass(Window.class);
             
-            context.createOperator("someComponent");
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.createOperator("someComponent");
+                }
+            }, must.not().raiseAnyException());
+        }
+
+        public void failsIfContextIsNotDefaultContext() throws Throwable {
+            setContextClass(Component.class);
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.createOperator("someComponent");
+                }
+            }, must.raise(AssertionError.class));
+        }
+
+        private void setContextClass(final Class<? extends Component> contextClass) {
+            final IOperator operator = mock(IOperator.class);
+            checking(new Expectations() {{
+                atLeast(1).of(operator).getSource(); will(returnValue(dummy(contextClass)));
+            }});
+            Context.setContext(operator);
         }
     }
 }

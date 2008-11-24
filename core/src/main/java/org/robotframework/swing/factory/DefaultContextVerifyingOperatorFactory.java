@@ -16,12 +16,13 @@
 package org.robotframework.swing.factory;
 
 import org.robotframework.swing.context.DefaultContextVerifier;
+import org.robotframework.swing.context.IContextVerifier;
 
 /**
  * @author Heikki Hulkko
  */
 public abstract class DefaultContextVerifyingOperatorFactory<T> extends IdentifierParsingOperatorFactory<T> {
-    private DefaultContextVerifier contextVerifier;
+    private IContextVerifier contextVerifier = new DefaultContextVerifier();
     
     public T createOperator(String identifier) {
         contextVerifier.verifyContext();
