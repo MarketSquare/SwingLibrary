@@ -19,12 +19,12 @@ package org.robotframework.swing.tree;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
-public class TreeOperatorFactory extends IdentifierParsingOperatorFactory<TreeOperator> {
+public class TreeOperatorFactory extends DefaultContextVerifyingOperatorFactory<TreeOperator> {
     public TreeOperator createOperatorByIndex(int index) {
         return new TreeOperator((ContainerOperator) Context.getContext(), index);
     }

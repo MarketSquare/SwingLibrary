@@ -19,13 +19,13 @@ package org.robotframework.swing.keyword.button;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.operator.button.DefaultButtonOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ButtonOperatorFactory extends IdentifierParsingOperatorFactory<DefaultButtonOperator> {
+public class ButtonOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultButtonOperator> {
     @Override
     public DefaultButtonOperator createOperatorByIndex(int index) {
         return new DefaultButtonOperator((ContainerOperator) Context.getContext(), index);

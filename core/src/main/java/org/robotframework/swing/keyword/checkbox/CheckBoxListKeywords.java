@@ -86,11 +86,11 @@ public class CheckBoxListKeywords {
     }
 
     private List<JCheckBoxOperator> createOperators() {
+        contextVerifier.verifyContext();
         return operatorListFactory.createOperators((Container) Context.getContext().getSource());
     }
 
     private void foreachCheckBox(CheckBoxAction action) {
-        contextVerifier.verifyContext();
         List<JCheckBoxOperator> operators = createOperators();
         for (JCheckBoxOperator checkBoxOperator : operators) {
             action.operateOnCheckBox(checkBoxOperator);

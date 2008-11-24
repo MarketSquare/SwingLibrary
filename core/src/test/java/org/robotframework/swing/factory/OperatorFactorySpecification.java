@@ -1,7 +1,7 @@
 package org.robotframework.swing.factory;
 
 import java.awt.Component;
-import java.awt.Container;
+import java.awt.Window;
 
 import org.jmock.Expectations;
 import org.jmock.Sequence;
@@ -17,6 +17,7 @@ import org.robotframework.swing.operator.context.DefaultContainerOperator;
 
 public class OperatorFactorySpecification<T> extends MockSupportSpecification<T> {
     protected DefaultContainerOperator dummyContainerOperator;
+    private Window container;
 
     protected void mockFindsByName(final Component componentToFind) {
         setDummyContext();
@@ -28,16 +29,12 @@ public class OperatorFactorySpecification<T> extends MockSupportSpecification<T>
         stubRestOfDummyContainerOperator();
     }
 
-    protected void mockFindsByIndex(final Component componentToBeFound) {
+    protected void mockFindsByIndex(final Component componentToFind) {
         setDummyContext();
-        final Container container = mock(Container.class);
 
         checking(new Expectations() {{
             allowing(container).getComponents();
-            will(returnValue(new Component[] { componentToBeFound }));
-
-            allowing(dummyContainerOperator).getSource();
-            will(returnValue(container));
+            will(returnValue(new Component[] { componentToFind }));
         }});
 
         stubRestOfDummyContainerOperator();
@@ -67,6 +64,10 @@ public class OperatorFactorySpecification<T> extends MockSupportSpecification<T>
 
     private void setDummyContext() {
         dummyContainerOperator = mock(DefaultContainerOperator.class);
+        container = mock(Window.class);
+        checking(new Expectations() {{
+            allowing(dummyContainerOperator).getSource(); will(returnValue(container));
+        }});
         Context.setContext(dummyContainerOperator);
     }
 

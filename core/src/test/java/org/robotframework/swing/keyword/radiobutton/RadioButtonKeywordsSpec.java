@@ -10,10 +10,10 @@ import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.keyword.KeywordSupportSpecification;
+import org.robotframework.swing.keyword.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)
-public class RadioButtonKeywordsSpec extends KeywordSupportSpecification<RadioButtonKeywords> {
+public class RadioButtonKeywordsSpec extends MockSupportSpecification<RadioButtonKeywords> {
     public class Any {
         public RadioButtonKeywords create() {
             return new RadioButtonKeywords();

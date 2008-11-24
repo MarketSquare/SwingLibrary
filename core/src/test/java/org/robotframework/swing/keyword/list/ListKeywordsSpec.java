@@ -7,7 +7,6 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JListOperator.ListItemChooser;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -31,10 +30,6 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
 
-        public void hasContextVerifier() throws Throwable {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
-        }
-
         public void hasClearSelectionFromListKeyword() {
             specify(context, satisfies(new RobotKeywordContract("clearSelectionFromList")));
         }
@@ -56,19 +51,15 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
         private String listIdentifier = "someList";
         private OperatorFactory<DefaultListOperator> operatorFactory;
         private DefaultListOperator listOperator;
-        private IContextVerifier contextVerifier;
 
         public ListKeywords create() {
             ListKeywords listKeywords = new ListKeywords();
             operatorFactory = injectMockTo(listKeywords, OperatorFactory.class);
             listOperator = mock(DefaultListOperator.class);
 
-            contextVerifier = injectMockTo(listKeywords, "contextVerifier", IContextVerifier.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(with(equal(listIdentifier)));
                 will(returnValue(listOperator));
-
-                one(contextVerifier).verifyContext();
             }});
 
             return listKeywords;
@@ -86,8 +77,6 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
             final String numericIdentifier = "2";
 
             checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
-
                 one(operatorFactory).createOperator(listIdentifier);
                 will(returnValue(listOperator));
 

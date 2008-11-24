@@ -19,13 +19,13 @@ package org.robotframework.swing.keyword.list;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.operator.list.DefaultListOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ListOperatorFactory extends IdentifierParsingOperatorFactory<DefaultListOperator> {
+public class ListOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultListOperator> {
     @Override
     public DefaultListOperator createOperatorByIndex(int index) {
         return new DefaultListOperator((ContainerOperator) Context.getContext(), index);

@@ -6,7 +6,6 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -39,10 +38,6 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             specify(context, satisfies(new FieldIsNotNullContract("buttonExistenceResolver")));
         }
 
-        public void hasContextVerifier() throws Throwable {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
-        }
-
         public void hasPushButtonKeyword() {
             specify(context, satisfies(new RobotKeywordContract("pushButton")));
         }
@@ -73,7 +68,6 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
         private DefaultButtonOperator operator;
 
         public ButtonKeywords create() {
-            injectMockContextVerifier();
             injectMockOperatorFactory();
             return buttonKeywords;
         }
@@ -154,7 +148,6 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
         private IComponentConditionResolver conditionResolver;
 
         public ButtonKeywords create() {
-            injectMockContextVerifier();
             return buttonKeywords;
         }
 
@@ -204,12 +197,5 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
                 one(conditionResolver).satisfiesCondition(buttonIdentifier); will(returnValue(exists));
             }});
         }
-    }
-
-    private void injectMockContextVerifier() {
-        final IContextVerifier contextVerifier = injectMockTo(buttonKeywords, IContextVerifier.class);
-        checking(new Expectations() {{
-            one(contextVerifier).verifyContext();
-        }});
     }
 }

@@ -22,8 +22,6 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
@@ -33,7 +31,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class ComponentKeywords {
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
     private IdentifierParsingOperatorFactory<ComponentOperator> operatorFactory = new ComponentOperatorFactory();
     private IComponentConditionResolver componentExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
@@ -60,7 +57,6 @@ public class ComponentKeywords {
         + "| Click On Component | _myComponent_ | 2 | # double click |\n")
     @ArgumentNames({"identifier", "times=1"})
     public void clickOnComponent(String identifier, String[] times) {
-        contextVerifier.verifyContext();
         createOperator(identifier).clickMouse(getTimes(times));
     }
 

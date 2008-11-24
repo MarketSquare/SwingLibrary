@@ -20,8 +20,6 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.operator.button.DefaultButtonOperator;
 import org.robotframework.swing.util.ComponentExistenceResolver;
@@ -34,7 +32,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 public class ButtonKeywords {
     private IdentifierParsingOperatorFactory<DefaultButtonOperator> operatorFactory = new ButtonOperatorFactory();
     private IComponentConditionResolver buttonExistenceResolver = new ComponentExistenceResolver(operatorFactory);
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Uses current context to search for a button and when found, pushes it.\n\n"
         + "Example:\n"
@@ -83,12 +80,10 @@ public class ButtonKeywords {
     }
     
     private DefaultButtonOperator createOperator(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);
     }
     
     private boolean buttonExists(String identifier) {
-        contextVerifier.verifyContext();
         return buttonExistenceResolver.satisfiesCondition(identifier);
     }
 }

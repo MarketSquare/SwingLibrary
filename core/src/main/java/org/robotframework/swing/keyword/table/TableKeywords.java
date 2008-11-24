@@ -24,8 +24,6 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.table.TableOperator;
 import org.robotframework.swing.table.TableOperatorFactory;
@@ -36,7 +34,6 @@ import org.robotframework.swing.table.TableOperatorFactory;
 @RobotKeywords
 public class TableKeywords extends IdentifierSupport {
     private OperatorFactory<TableOperator> operatorFactory = new TableOperatorFactory();
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects a cell in a table.\n\n"
         + "Example:\n"
@@ -130,7 +127,6 @@ public class TableKeywords extends IdentifierSupport {
     }
     
     private TableOperator createTableOperator(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);   
     }
 }

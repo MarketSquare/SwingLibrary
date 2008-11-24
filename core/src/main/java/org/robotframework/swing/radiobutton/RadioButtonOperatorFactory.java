@@ -23,19 +23,9 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-public class RadioButtonOperatorFactory extends IdentifierParsingOperatorFactory<AbstractButtonOperator> {
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
-    
-    @Override
-    public AbstractButtonOperator createOperator(String identifier) {
-        contextVerifier.verifyContext();
-        return super.createOperator(identifier);
-    }
-    
+public class RadioButtonOperatorFactory extends DefaultContextVerifyingOperatorFactory<AbstractButtonOperator> {
     @Override
     public AbstractButtonOperator createOperatorByIndex(int index) {
         return coerceToRadioButtonOperator(new JRadioButtonOperator((ContainerOperator) Context.getContext(), index));

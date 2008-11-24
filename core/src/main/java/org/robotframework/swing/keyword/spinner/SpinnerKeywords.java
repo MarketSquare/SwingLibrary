@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.spinner.SpinnerOperator;
 import org.robotframework.swing.spinner.SpinnerOperatorFactory;
@@ -18,7 +16,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class SpinnerKeywords {
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
     private IdentifierParsingOperatorFactory<SpinnerOperator> operatorFactory = new SpinnerOperatorFactory();
     private IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(operatorFactory);
 
@@ -26,7 +23,6 @@ public class SpinnerKeywords {
             + "Example:\n"
             + "| Spinner Should Exist | _dateSpinner_ |\n")
     public void spinnerShouldExist(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertTrue("Spinner '" + identifier + "' doesn't exist.", existenceResolver.satisfiesCondition(identifier));
     }
 
@@ -34,7 +30,6 @@ public class SpinnerKeywords {
             + "Example:\n"
             + "| Spinner Should Not Exist | _dateSpinner_ |\n")
     public void spinnerShouldNotExist(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertFalse("Spinner '" + identifier + "' exists.", existenceResolver.satisfiesCondition(identifier));
     }
 
@@ -45,7 +40,6 @@ public class SpinnerKeywords {
             + "| Increase Spinner Value | _mySpinner_ | 4 | # scrolls spinner button up four notches |\n")
     @ArgumentNames({"identifier", "times=1"})
     public void increaseSpinnerValue(String identifier, String[] times) {
-        contextVerifier.verifyContext();
         increase(operatorFactory.createOperator(identifier), getNotches(times));
     }
 
@@ -56,7 +50,6 @@ public class SpinnerKeywords {
             + "| Decrease Spinner Value | _mySpinner_ | 4 | # scrolls spinner button down four notches |\n")
     @ArgumentNames({"identifier", "times=1"})
     public void decreaseSpinnerValue(String identifier, String[] times) {
-        contextVerifier.verifyContext();
         decrease(operatorFactory.createOperator(identifier), getNotches(times));
     }
 
@@ -66,7 +59,6 @@ public class SpinnerKeywords {
             + "| ${spinnerValue}=  | Get Spinner Value | _mySpinner_    |\n"
             + "| Should Be Equal As Integers | _12_     | _${spinnerValue}_ |\n")
     public Object getSpinnerValue(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier).getValue();
     }
 

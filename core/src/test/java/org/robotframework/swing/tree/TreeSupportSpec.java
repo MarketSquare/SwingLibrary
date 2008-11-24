@@ -4,8 +4,6 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.Context;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
@@ -21,10 +19,6 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
-        
-        public void hasContextVerifier() {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
-        }
     }
     
     public class CreatingTreeOperator {
@@ -34,7 +28,6 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
         
         public TreeSupport create() {
             injectMockOperatorFactory();
-            injectMockContextVerifier();
             return treeSupport;
         }
 
@@ -42,15 +35,8 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
             specify(context.createTreeOperator(treeIdentifier), must.equal(treeOperator));
         }
         
-        private void injectMockContextVerifier() {
-            final IContextVerifier contextVerifier = injectMockTo(treeSupport, IContextVerifier.class);
-            checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
-            }});
-        }
-        
         private void injectMockOperatorFactory() {
-            final OperatorFactory operatorFactory = injectMockTo(treeSupport, OperatorFactory.class);
+            final OperatorFactory<?> operatorFactory = injectMockTo(treeSupport, OperatorFactory.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(treeIdentifier);
                 will(returnValue(treeOperator));

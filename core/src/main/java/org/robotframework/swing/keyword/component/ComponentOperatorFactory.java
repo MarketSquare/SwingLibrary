@@ -20,12 +20,12 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
-public class ComponentOperatorFactory extends IdentifierParsingOperatorFactory<ComponentOperator> {
+public class ComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComponentOperator> {
     @Override
     public ComponentOperator createOperatorByIndex(int index) {
         return new ComponentOperator((ContainerOperator) Context.getContext(), index);

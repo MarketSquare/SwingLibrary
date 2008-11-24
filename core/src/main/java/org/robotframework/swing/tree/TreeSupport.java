@@ -17,19 +17,15 @@
 package org.robotframework.swing.tree;
 
 import org.robotframework.swing.common.IdentifierSupport;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
 public class TreeSupport extends IdentifierSupport {
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
     protected OperatorFactory<TreeOperator> operatorFactory = new TreeOperatorFactory();
     
     public TreeOperator createTreeOperator(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);
     }
 }

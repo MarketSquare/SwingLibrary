@@ -24,8 +24,9 @@ import org.robotframework.swing.context.IContextVerifier;
 public abstract class DefaultContextVerifyingOperatorFactory<T> extends IdentifierParsingOperatorFactory<T> {
     private IContextVerifier contextVerifier = new DefaultContextVerifier();
     
-    public T createOperator(String identifier) {
+    @Override
+    public T parseArgument(String argument) {
         contextVerifier.verifyContext();
-        return parseArgument(identifier);
+        return super.parseArgument(argument);
     }
 }

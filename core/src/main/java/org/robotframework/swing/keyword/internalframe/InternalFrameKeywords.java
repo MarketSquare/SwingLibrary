@@ -21,11 +21,9 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.internalframe.InternalFrameOperatorFactory;
 import org.robotframework.swing.internalframe.DefaultInternalFrameOperator;
+import org.robotframework.swing.internalframe.InternalFrameOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -36,7 +34,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 public class InternalFrameKeywords {
     private IdentifierParsingOperatorFactory<DefaultInternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();
     private IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(operatorFactory);
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
     
     @RobotKeyword("Uses current context to search for an internal frame and closes it.\n\n"
         + "Example:\n"
@@ -49,7 +46,6 @@ public class InternalFrameKeywords {
         + "Example:\n"
         + "| Internal Frame Should Exist | _My Internal Frame_ |\n")
     public void internalFrameShouldExist(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertTrue("Internal frame '" + identifier + "' doesn't exist.", existenceResolver.satisfiesCondition(identifier));
     }
     
@@ -57,7 +53,6 @@ public class InternalFrameKeywords {
         + "Example:\n"
         + "| Internal Frame Should Not Exist | _My Internal Frame_ |\n")
     public void internalFrameShouldNotExist(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertFalse("Internal frame '" + identifier + "' exists.", existenceResolver.satisfiesCondition(identifier));
     }
     
@@ -76,7 +71,6 @@ public class InternalFrameKeywords {
     }
     
     private DefaultInternalFrameOperator createOperator(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier);
     }
 }

@@ -20,8 +20,6 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
 
@@ -31,13 +29,11 @@ import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
 @RobotKeywords
 public class CheckBoxKeywords {
     private OperatorFactory<DefaultCheckBoxOperator> operatorFactory = new CheckBoxOperatorFactory();
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Uses current context to search for a checkbox and when found, checks it.\n\n"
         + "Example:\n"
         + "| Check Checkbox | _My Checkbox_ |\n")
     public void checkCheckBox(String identifier) {
-        contextVerifier.verifyContext();
         operatorFactory.createOperator(identifier).changeSelection(true);
     }
 
@@ -45,7 +41,6 @@ public class CheckBoxKeywords {
         + "Example:\n"
         + "| Uncheck Checkbox | _My Checkbox_ |\n")
     public void uncheckCheckBox(String identifier) {
-        contextVerifier.verifyContext();
         operatorFactory.createOperator(identifier).changeSelection(false);
     }
 
@@ -53,7 +48,6 @@ public class CheckBoxKeywords {
         + "Example:\n"
         + "| Check Box Should Be Checked | _My Checkbox_ |\n")
     public void checkBoxShouldBeChecked(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertTrue(operatorFactory.createOperator(identifier).isSelected());
     }
 
@@ -61,7 +55,6 @@ public class CheckBoxKeywords {
         + "Example:\n"
         + "| Check Box Should Be Unchecked | _My Checkbox_ |\n")
     public void checkBoxShouldBeUnchecked(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertFalse(operatorFactory.createOperator(identifier).isSelected());
     }
 

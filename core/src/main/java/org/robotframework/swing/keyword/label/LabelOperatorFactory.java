@@ -19,13 +19,13 @@ package org.robotframework.swing.keyword.label;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.operator.label.DefaultLabelOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class LabelOperatorFactory extends IdentifierParsingOperatorFactory<DefaultLabelOperator> {
+public class LabelOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultLabelOperator> {
     public DefaultLabelOperator createOperatorByIndex(int index) {
         return new DefaultLabelOperator((ContainerOperator) Context.getContext(), index);
     }

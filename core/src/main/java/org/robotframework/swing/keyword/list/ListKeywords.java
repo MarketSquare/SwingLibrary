@@ -21,8 +21,6 @@ import org.netbeans.jemmy.operators.JListOperator.ListItemChooser;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.arguments.VoidIdentifierHandler;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.operator.list.DefaultListOperator;
 import org.springframework.util.ObjectUtils;
@@ -33,13 +31,11 @@ import org.springframework.util.ObjectUtils;
 @RobotKeywords
 public class ListKeywords {
     private OperatorFactory<DefaultListOperator> operatorFactory = new ListOperatorFactory();
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Clears selection from list.\n\n"
         + "Example:\n"
         + "| Clear Selection From List | _myList_ |\n")
     public void clearSelectionFromList(String identifier) {
-        contextVerifier.verifyContext();
         operatorFactory.createOperator(identifier).clearSelection();
     }
 
@@ -48,7 +44,6 @@ public class ListKeywords {
         + "| Select From List | _myList_ | _myItem_ | # selects 'myItem'                   |\n"
         + "| Select From List | _myList_ | _0_      | # selects the first item in the list |\n")
     public void selectFromList(String identifier, String listItemIdentifier) {
-        contextVerifier.verifyContext();
         DefaultListOperator listOperator = operatorFactory.createOperator(identifier);
         new ListSelector(listOperator).parseArgument(listItemIdentifier);
     }
@@ -58,7 +53,6 @@ public class ListKeywords {
         + "| ${listItem}=    | Get Selected Value From List | _myList_      |\n"
         + "| Should Be Equal | _Expected Item_              | _${listItem}_ |\n")
     public Object getSelectedValueFromList(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier).getSelectedValue();
     }
 
@@ -67,7 +61,6 @@ public class ListKeywords {
         + "| ${listItemCount}=    | Get List Item Count | _myList_      |\n"
         + "| Should Be Equal As Integers | _2_ | _${listItemCount}_ |\n")
     public int getListItemCount(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier).getModel().getSize();
     }
 

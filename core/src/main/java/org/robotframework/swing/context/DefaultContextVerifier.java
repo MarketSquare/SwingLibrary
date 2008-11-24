@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.context;
 
+import java.awt.Component;
 import java.awt.Panel;
 import java.awt.Window;
 
@@ -33,7 +34,7 @@ public class DefaultContextVerifier extends ContextVerifier {
     }
 
     @Override
-    protected Class[] getExpectedClasses() {
+    protected Class<? extends Component>[] getExpectedClasses() {
         return new Class[] { Window.class, JPanel.class, Panel.class, JInternalFrame.class };
     }
 }

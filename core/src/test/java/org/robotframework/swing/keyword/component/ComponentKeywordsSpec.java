@@ -12,12 +12,12 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.keyword.KeywordSupportSpecification;
+import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 
 @RunWith(JDaveRunner.class)
-public class ComponentKeywordsSpec extends KeywordSupportSpecification<ComponentKeywords> {
+public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKeywords> {
     private String componentIdentifier = "someComponent";
 
     public class Any {
@@ -54,7 +54,7 @@ public class ComponentKeywordsSpec extends KeywordSupportSpecification<Component
         private ComponentOperator operator;
 
         public ComponentKeywords create() {
-            ComponentKeywords keywords = injectMockContextVerifier(new ComponentKeywords());
+            ComponentKeywords keywords = new ComponentKeywords();
             final OperatorFactory operatorFactory = injectMockTo(keywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
             operator = mock(ComponentOperator.class);
             checking(new Expectations() {{

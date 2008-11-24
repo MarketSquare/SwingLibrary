@@ -6,7 +6,6 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -27,10 +26,6 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
 
         public void hasOperatorFactory() throws Throwable {
             specify(checkboxKeywords, satisfies(new FieldIsNotNullContract("operatorFactory")));
-        }
-
-        public void hasContextVerifier() throws Throwable {
-            specify(checkboxKeywords, satisfies(new FieldIsNotNullContract("contextVerifier")));
         }
 
         public void hasCheckBoxShouldBeCheckedKeyword() {
@@ -59,7 +54,6 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
         private DefaultCheckBoxOperator operator;
 
         public CheckBoxKeywords create() {
-            injectMockContextVerifier();
             injectMockOperatorFactory();
             return checkboxKeywords;
         }
@@ -133,13 +127,6 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(with(equal(checkboxIdentifier)));
                 will(returnValue(operator));
-            }});
-        }
-
-        private void injectMockContextVerifier() {
-            final IContextVerifier contextVerifier = injectMockTo(checkboxKeywords, IContextVerifier.class);
-            checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
             }});
         }
     }

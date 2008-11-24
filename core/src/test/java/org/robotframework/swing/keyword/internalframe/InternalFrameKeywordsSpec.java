@@ -29,11 +29,11 @@ import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.internalframe.DefaultInternalFrameOperator;
-import org.robotframework.swing.keyword.KeywordSupportSpecification;
+import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RunWith(JDaveRunner.class)
-public class InternalFrameKeywordsSpec extends KeywordSupportSpecification<InternalFrameKeywords> {
+public class InternalFrameKeywordsSpec extends MockSupportSpecification<InternalFrameKeywords> {
     private String identifier = "someInternalFrame";
     
     public class Any {
@@ -69,23 +69,19 @@ public class InternalFrameKeywordsSpec extends KeywordSupportSpecification<Inter
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
         
-        public void hasContextVerifier() {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
-        }
-        
         public void hasExistenceResolver() {
             specify(context, satisfies(new FieldIsNotNullContract("existenceResolver")));
         }
     }
     
     public class Operating {
-        private OperatorFactory operatorFactory;
+        private OperatorFactory<DefaultInternalFrameOperator> operatorFactory;
         private DefaultInternalFrameOperator operator;
 
         public InternalFrameKeywords create() {
             InternalFrameKeywords internalFrameKeywords = new InternalFrameKeywords();
             injectMockOperatorFactory(internalFrameKeywords);
-            return injectMockContextVerifier(internalFrameKeywords);
+            return internalFrameKeywords;
         }
         
         public void closesInternalFrame() {
@@ -160,7 +156,7 @@ public class InternalFrameKeywordsSpec extends KeywordSupportSpecification<Inter
         public InternalFrameKeywords create() {
             InternalFrameKeywords internalFrameKeywords = new InternalFrameKeywords();
             existenceResolver = injectMockTo(internalFrameKeywords, "existenceResolver", IComponentConditionResolver.class);
-            return injectMockContextVerifier(internalFrameKeywords);
+            return internalFrameKeywords;
         }
         
         public void shouldExistPassesIfFrameExists() throws Throwable {

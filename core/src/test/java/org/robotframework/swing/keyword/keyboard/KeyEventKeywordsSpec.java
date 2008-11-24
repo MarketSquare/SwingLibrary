@@ -7,10 +7,10 @@ import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.KeywordSupportSpecification;
+import org.robotframework.swing.keyword.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)
-public class KeyEventKeywordsSpec extends KeywordSupportSpecification<KeyEventKeywords> {
+public class KeyEventKeywordsSpec extends MockSupportSpecification<KeyEventKeywords> {
     public class Any {
         public KeyEventKeywords create () {
             return new KeyEventKeywords();

@@ -17,22 +17,22 @@
 package org.robotframework.swing.keyword.textcomponent;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JTextComponentOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
+import org.robotframework.swing.textcomponent.TextComponentOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class TextComponentOperatorFactory extends IdentifierParsingOperatorFactory<JTextComponentOperator> {
+public class TextComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<TextComponentOperator> {
     @Override
-    public JTextComponentOperator createOperatorByIndex(int index) {
-        return new JTextComponentOperator((ContainerOperator) Context.getContext(), index);
+    public TextComponentOperator createOperatorByIndex(int index) {
+        return new TextComponentOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public JTextComponentOperator createOperatorByName(String name) {
-        return new JTextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+    public TextComponentOperator createOperatorByName(String name) {
+        return new TextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

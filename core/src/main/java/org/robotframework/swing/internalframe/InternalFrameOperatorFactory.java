@@ -20,12 +20,12 @@ package org.robotframework.swing.internalframe;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByTitleComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
-public class InternalFrameOperatorFactory extends IdentifierParsingOperatorFactory<DefaultInternalFrameOperator> {
+public class InternalFrameOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultInternalFrameOperator> {
     @Override
     public DefaultInternalFrameOperator createOperatorByIndex(int index) {
         return new DefaultInternalFrameOperator((ContainerOperator) Context.getContext(), index);

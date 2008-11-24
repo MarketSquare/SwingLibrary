@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.comparator.EqualsStringComparator;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -22,8 +21,7 @@ import org.robotframework.swing.table.TableOperator;
 @RunWith(JDaveRunner.class)
 public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
     private TableKeywords tableKeywords = new TableKeywords();
-    private OperatorFactory operatorFactory;
-    private IContextVerifier contextVerifier;
+    private OperatorFactory<?> operatorFactory;
     private TableOperator tableOperator;
     private String tableIdentifier = "someTable";
     private String columnIdentifier = "two";
@@ -96,13 +94,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         
         public TableKeywords create() {
             injectMockOperatorFactory();
-            injectMockContextVerifier();
             return tableKeywords;
         }
         
         public void getsSelectedTableCellValue() {
-            final int row = 5;
-            final int column = 2;
             checking(new Expectations() {{
                 one(tableOperator).getSelectedCellValue();
                 will(returnValue(cellValue));
@@ -124,7 +119,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
     public class OperatingOnTable {
         public TableKeywords create() {
             injectMockOperatorFactory();
-            injectMockContextVerifier();
             return tableKeywords;
         }
         
@@ -236,7 +230,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         
         public TableKeywords create() {
             injectMockOperatorFactory();
-            injectMockContextVerifier();
             return tableKeywords;
         }
         
@@ -256,14 +249,6 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             
             context.selectFromTableCellPopupMenu(tableIdentifier, row, columnIdentifier, menuPath);
         }
-    }
-
-    private void injectMockContextVerifier() {
-        contextVerifier = injectMockTo(tableKeywords, IContextVerifier.class);
-
-        checking(new Expectations() {{
-            one(contextVerifier).verifyContext();
-        }});
     }
 
     private void injectMockOperatorFactory() {

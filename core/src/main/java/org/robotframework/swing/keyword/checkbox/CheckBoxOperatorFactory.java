@@ -19,13 +19,13 @@ package org.robotframework.swing.keyword.checkbox;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByTextComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.operator.checkbox.DefaultCheckBoxOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class CheckBoxOperatorFactory extends IdentifierParsingOperatorFactory<DefaultCheckBoxOperator> {
+public class CheckBoxOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultCheckBoxOperator> {
     public DefaultCheckBoxOperator createOperatorByIndex(int index) {
         return new DefaultCheckBoxOperator((ContainerOperator) Context.getContext(), index);
     }

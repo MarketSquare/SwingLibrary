@@ -19,13 +19,13 @@ package org.robotframework.swing.keyword.combobox;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.operator.combobox.DefaultComboBoxOperator;
 
 /**
  * @author Heikki Hulkko
  */
-public class ComboBoxOperatorFactory extends IdentifierParsingOperatorFactory<DefaultComboBoxOperator> {
+public class ComboBoxOperatorFactory extends DefaultContextVerifyingOperatorFactory<DefaultComboBoxOperator> {
     public DefaultComboBoxOperator createOperatorByIndex(int index) {
         return new DefaultComboBoxOperator((ContainerOperator) Context.getContext(), index);
     }

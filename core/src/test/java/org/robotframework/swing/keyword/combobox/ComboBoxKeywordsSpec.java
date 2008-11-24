@@ -5,7 +5,6 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.comparator.EqualsStringComparator;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -29,10 +28,6 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
 
         public void hasOperatorFactory() throws Throwable {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
-        }
-
-        public void hasContextVerifier() throws Throwable {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
         }
 
         public void hasSelectFromComboBoxKeyword() {
@@ -60,13 +55,10 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
             operator = mock(DefaultComboBoxOperator.class);
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords();
             operatorFactory = injectMockTo(comboBoxKeywords, OperatorFactory.class);
-            final IContextVerifier contextVerifier = injectMockTo(comboBoxKeywords, "contextVerifier", IContextVerifier.class);
 
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(with(equal(comboBoxIdentifier)));
                 will(returnValue(operator));
-
-                one(contextVerifier).verifyContext();
             }});
 
             return comboBoxKeywords;

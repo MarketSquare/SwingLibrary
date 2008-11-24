@@ -6,7 +6,6 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -53,10 +52,6 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
 
-        public void createsContextVerifier() {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
-        }
-
         public void createsExistenceResolver() {
             specify(context, satisfies(new FieldIsNotNullContract("existenceResolver")));
         }
@@ -68,7 +63,6 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
 
         public SpinnerKeywords create() {
             spinnerKeywords = new SpinnerKeywords();
-            injectMockContextVerifier();
             injectMockOperatorFactory();
             return spinnerKeywords;
         }
@@ -114,7 +108,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
         }
 
         private void injectMockOperatorFactory() {
-            final IdentifierParsingOperatorFactory operatorFactory = injectMockTo(spinnerKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
+            final IdentifierParsingOperatorFactory<?> operatorFactory = injectMockTo(spinnerKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
             spinnerOperator = mock(SpinnerOperator.class);
 
             checking(new Expectations() {{
@@ -129,7 +123,6 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
 
         public SpinnerKeywords create() {
             spinnerKeywords = new SpinnerKeywords();
-            injectMockContextVerifier();
             injectMockExistenceResolver();
             return spinnerKeywords;
         }
@@ -185,12 +178,5 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
         private void injectMockExistenceResolver() {
             existenceResolver = injectMockTo(spinnerKeywords, "existenceResolver", IComponentConditionResolver.class);
         }
-    }
-
-    private void injectMockContextVerifier() {
-        final IContextVerifier contextVerifier = injectMockTo(spinnerKeywords, IContextVerifier.class);
-        checking(new Expectations() {{
-            one(contextVerifier).verifyContext();
-        }});
     }
 }

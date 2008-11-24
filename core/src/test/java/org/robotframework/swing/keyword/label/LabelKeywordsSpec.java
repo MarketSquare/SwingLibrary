@@ -6,7 +6,6 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -38,10 +37,6 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
 
-        public void hasContextVerifier() {
-            specify(context, satisfies(new FieldIsNotNullContract("contextVerifier")));
-        }
-
         public void hasGetLabelContentKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getLabelContent")));
         }
@@ -61,13 +56,10 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
         public LabelKeywords create() {
             LabelKeywords labelKeywords = new LabelKeywords();
             final OperatorFactory operatorFactory = injectMockTo(labelKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
-            final IContextVerifier contextVerifier = injectMockTo(labelKeywords, "contextVerifier", IContextVerifier.class);
 
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(with(equal(labelIdentifier)));
                 will(returnValue(labelOperator));
-
-                one(contextVerifier).verifyContext();
             }});
 
             return labelKeywords;
@@ -89,11 +81,6 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
         public LabelKeywords create() {
             LabelKeywords labelKeywords = new LabelKeywords();
             existenceResolver = injectMockTo(labelKeywords, "labelExistenceResolver", IComponentConditionResolver.class);
-            final IContextVerifier contextVerifier = injectMockTo(labelKeywords, "contextVerifier", IContextVerifier.class);
-            checking(new Expectations() {{
-                one(contextVerifier).verifyContext();
-            }});
-
             return labelKeywords;
         }
 

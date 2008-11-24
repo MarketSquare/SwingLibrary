@@ -20,8 +20,6 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.DefaultContextVerifier;
-import org.robotframework.swing.context.IContextVerifier;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.operator.label.DefaultLabelOperator;
 import org.robotframework.swing.util.ComponentExistenceResolver;
@@ -34,7 +32,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 public class LabelKeywords {
     private IdentifierParsingOperatorFactory<DefaultLabelOperator> operatorFactory = new LabelOperatorFactory();
     private IComponentConditionResolver labelExistenceResolver = new ComponentExistenceResolver(operatorFactory);
-    private IContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Returns the text displayed on a label.\n"
         + "Assumes that the label exists in the current context.\n\n"
@@ -42,7 +39,6 @@ public class LabelKeywords {
         + "| ${labelText}=   | Get Label Content | _addressLabel_    |\n"
         + "| Should Be Equal | _Address:_        | _${labelText}_ |\n")
     public String getLabelContent(String identifier) {
-        contextVerifier.verifyContext();
         return operatorFactory.createOperator(identifier).getText();
     }
 
@@ -50,7 +46,6 @@ public class LabelKeywords {
         + "Example:\n"
         + "| Label Should Exist | _myLabel_ |\n")
     public void labelShouldExist(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertTrue("Label '" + identifier + "' doesn't exist", labelExistenceResolver.satisfiesCondition(identifier));
     }
 
@@ -60,7 +55,6 @@ public class LabelKeywords {
         + "| Set Jemmy Timeouts     | _1_ |\n"
         + "| Label Should Not Exist | _myLabel_ |\n")
     public void labelShouldNotExist(String identifier) {
-        contextVerifier.verifyContext();
         Assert.assertFalse("Label '" + identifier + "' exists", labelExistenceResolver.satisfiesCondition(identifier));
     }
 }
