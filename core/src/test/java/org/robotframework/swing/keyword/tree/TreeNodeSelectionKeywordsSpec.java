@@ -1,7 +1,5 @@
 package org.robotframework.swing.keyword.tree;
 
-import javax.swing.tree.TreePath;
-
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
 import junit.framework.AssertionFailedError;
@@ -9,7 +7,6 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.keyword.tree.TreeNodeSelectionKeywords;
 
 
 @RunWith(JDaveRunner.class)
@@ -31,7 +28,6 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
     public class CheckingSelection {
         private String treeIdentifier = "someTree";
         private String nodeIdentifier = "some|node";
-        private TreePath treePath = dummy(TreePath.class);
 
         public TreeNodeSelectionKeywords create() {
             return populateWithMockOperatingFactoryAndContextVerifier(new TreeNodeSelectionKeywords());

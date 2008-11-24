@@ -17,7 +17,7 @@
 package org.robotframework.swing.context;
 
 import org.robotframework.swing.chooser.ByNameComponentChooser;
-import org.robotframework.swing.context.ContainerOperator;
+//import org.robotframework.swing.context.ContainerOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 

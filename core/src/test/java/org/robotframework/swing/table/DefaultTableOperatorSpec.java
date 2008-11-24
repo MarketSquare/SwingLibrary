@@ -76,8 +76,6 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
     }
     
     public class RetrievingCellValues {
-        private Point coordinates = new Point(2, 3);
-        
         public DefaultTableOperator create() {
             jTableOperator = mock(JTableOperator.class);
             return new DefaultTableOperator(jTableOperator);

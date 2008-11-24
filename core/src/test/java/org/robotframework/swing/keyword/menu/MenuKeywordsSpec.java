@@ -12,7 +12,6 @@ import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.IComponentConditionResolver;
@@ -22,7 +21,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
     private String menuPath = "some|path";
     private JMenuItemOperator menuItemOperator;
-    private OperatorFactory operatorFactory;
     private JMenuBarOperator menuBarOperator;
 
     public class Any {
