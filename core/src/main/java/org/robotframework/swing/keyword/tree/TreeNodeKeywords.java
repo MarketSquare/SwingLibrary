@@ -51,7 +51,8 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Sets a node as selected in a tree.\n"
-        + "Does not clear earlier selections.\n\n"
+        + "Does not clear earlier selections.\n"
+        + "If several nodes have the same path then *only the first* of those nodes is selected.\n\n"
         + "Example:\n"
         + "| Select Tree Node | _myTree_ | _Root|Folder_ |\n")
     public void selectTreeNode(String identifier, String nodeIdentifier) {
