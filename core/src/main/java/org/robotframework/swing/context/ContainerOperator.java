@@ -7,11 +7,11 @@ import org.robotframework.swing.operator.ComponentWrapper;
  * @author Heikki Hulkko
  */
 public class ContainerOperator extends org.netbeans.jemmy.operators.ContainerOperator implements ComponentWrapper {
-    public ContainerOperator(ContainerOperator container, int index) {
+    public ContainerOperator(org.netbeans.jemmy.operators.ContainerOperator container, int index) {
         super(container, index);
     }
 
-    public ContainerOperator(ContainerOperator container, ComponentChooser chooser) {
+    public ContainerOperator(org.netbeans.jemmy.operators.ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
 }
