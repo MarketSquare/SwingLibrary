@@ -31,8 +31,8 @@ public class FileChooserKeywords {
         + "Expects the file chooser to be open.\n\n"
         + "Example:\n"
         + "| Push Button | _Open File_    |\n"
-        + "| Choose File | _/tmp/elements.xml_ |\n")
-    public void chooseFile(String fileName) {
+        + "| Choose From File Chooser | _/tmp/elements.xml_ |\n")
+    public void chooseFromFileChooser(String fileName) {
         fileChooserOperator().chooseFile(fileName);
     }
     

@@ -54,7 +54,7 @@ public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChoose
                 one(fileChooserOperator).chooseFile(fileName);
             }});
             
-            context.chooseFile(fileName);
+            context.chooseFromFileChooser(fileName);
         }
         
         public void cancelsFileSelection() {

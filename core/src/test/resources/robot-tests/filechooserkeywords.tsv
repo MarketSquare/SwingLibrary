@@ -4,22 +4,20 @@ library	SwingLibrary
 suiteSetup	createTestFileToTempDirectory
 
 *Variable*	*Value*	*Value*
-${fileChooserButton}	saveButton
-${fileToChoose}	test_file.txt
-${pathToFile}	${TEMPDIR}${/}${fileToChoose}
+${fileChooserButton}	openFileChooser
+${fileToChoose}	${TEMPDIR}${/}${fileToChoose}${/}test_file.txt
 
 *Test Case*	*Action*	*Argument*
-Choose File Keyword Should Choose File From FileChooser	[tags]	development
+Choose From File Chooser Keyword Should Choose File From File Chooser
 	pushButton	${fileChooserButton}
-	chooseFile	${pathToFile}
-	selectedFileShouldBe	${pathToFile}
+	chooseFromFileChooser	${fileToChoose}
+	selectedFileShouldBe	${fileToChoose}
 
-Cancel File Chooser Keyword Should Cance File Choosing	[tags]	development
+Cancel File Chooser Keyword Should Cance File Choosing
 	pushButton	${fileChooserButton}
 	cancelFileChooser
 	fileChooserShouldHaveBeenCancelled
 
 *Keyword*	*Action*	*Argument*	*Argument*
 createTestFileToTempDirectory
-	touch	${pathToFile}
-	setJemmyTimeouts	10
+	touch	${fileToChoose}
