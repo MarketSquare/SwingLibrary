@@ -1,0 +1,25 @@
+*Setting*	*Value*	*Value*
+library	OperatingSystem
+library	SwingLibrary
+suiteSetup	createTestFileToTempDirectory
+
+*Variable*	*Value*	*Value*
+${fileChooserButton}	saveButton
+${fileToChoose}	test_file.txt
+${pathToFile}	${TEMPDIR}${/}${fileToChoose}
+
+*Test Case*	*Action*	*Argument*
+Choose File Keyword Should Choose File From FileChooser	[tags]	development
+	pushButton	${fileChooserButton}
+	chooseFile	${fileToChoose}
+	selectedFileShouldBe	${pathToFile}
+
+Cancel File Chooser Keyword Should Cance File Choosing	[tags]	development
+	pushButton	${fileChooserButton}
+	cancelFileChooser
+	fileChooserShouldHaveBeenCancelled
+
+*Keyword*	*Action*	*Argument*	*Argument*
+createTestFileToTempDirectory
+	touch	${pathToFile}
+	setJemmyTimeouts	10

@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -83,5 +86,13 @@ public class TestApplication {
         panel.add(new TestSpinnerButton());
         panel.add(new TestRadioButton());
         panel.add(new TestToggleButton());
+        panel.add(new JButton("Save") {{
+            setName("saveButton");
+            addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    new TestFileChooser().showSaveDialog(panel);
+                }
+            });
+        }});
     }
 }
