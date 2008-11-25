@@ -11,7 +11,7 @@ ${pathToFile}	${TEMPDIR}${/}${fileToChoose}
 *Test Case*	*Action*	*Argument*
 Choose File Keyword Should Choose File From FileChooser	[tags]	development
 	pushButton	${fileChooserButton}
-	chooseFile	${fileToChoose}
+	chooseFile	${pathToFile}
 	selectedFileShouldBe	${pathToFile}
 
 Cancel File Chooser Keyword Should Cance File Choosing	[tags]	development

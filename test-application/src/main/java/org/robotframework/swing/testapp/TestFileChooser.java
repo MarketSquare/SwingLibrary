@@ -9,7 +9,6 @@ public class TestFileChooser extends JFileChooser {
     public static boolean cancelled = false;
 
     public TestFileChooser() {
-        super(System.getProperty("java.io.tmpdir"));
         setName("testFileChooser");
     }
     
