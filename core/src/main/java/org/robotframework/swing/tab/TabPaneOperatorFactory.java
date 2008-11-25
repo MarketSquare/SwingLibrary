@@ -25,7 +25,6 @@ import org.robotframework.swing.context.ContextVerifier;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.factory.ContextBasedOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.tab.TabbedPaneOperator;
 
 /**
  * @author Heikki Hulkko

@@ -19,6 +19,7 @@ package org.robotframework.swing.keyword.development;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -30,7 +31,7 @@ import org.robotframework.swing.operator.ComponentWrapper;
  */
 @RobotKeywords
 public class DevelopmentKeywords {
-    private ArrayList resultComponentList = new ArrayList();
+    private List<String> resultComponentList = new ArrayList<String>();
 
     @RobotKeyword("Prints components (their types and their internal names) from the selected context.\n"
         + "See keywords, `Select Window`, `Select Dialog` and `Select Context` for details about context.\n\n"
@@ -41,19 +42,6 @@ public class DevelopmentKeywords {
         ComponentWrapper operator = Context.getContext();
         new ContainerIteratorForListing((Container) operator.getSource()).iterate();
         return resultComponentList.toString();
-    }
-
-    private class ContainerIteratorForListing extends ContainerIterator {
-        public ContainerIteratorForListing(Container container) {
-            super(container);
-        }
-
-        public void operateOnComponent(Component component, int level) {
-            printSpacesToFormatOutputAsTree(level);
-            String componentName = componentToString(component);
-            System.out.println(level + " " + componentName + ": " + component.getName());
-            resultComponentList.add(componentName);
-        }
     }
 
     private void printSpacesToFormatOutputAsTree(int level) {
@@ -71,30 +59,43 @@ public class DevelopmentKeywords {
             return componentString.substring(0, indexToStartOfDetails);
         }
     }
-}
-
-abstract class ContainerIterator {
-    public abstract void operateOnComponent(Component component, int level);
-    private int level;
-    private Container container;
-
-    public ContainerIterator(Container container) {
-        this.container = container;
+    
+    private class ContainerIteratorForListing extends ContainerIterator {
+        public ContainerIteratorForListing(Container container) {
+            super(container);
+        }
+        
+        public void operateOnComponent(Component component, int level) {
+            printSpacesToFormatOutputAsTree(level);
+            String componentName = componentToString(component);
+            System.out.println(level + " " + componentName + ": " + component.getName());
+            resultComponentList.add(componentName);
+        }
     }
-
-    public void iterate() {
-        processComponent(container);
-    }
-
-    private void processComponent(Component component) {
-        operateOnComponent(component, level);
-        level++;
-        if (component instanceof Container) {
-            Container container = (Container) component;
-            Component[] subComponents = container.getComponents();
-            for (int i = 0; i < subComponents.length; i++) {
-                processComponent(subComponents[i]);
-                level--;
+    
+    private static abstract class ContainerIterator {
+        private int level;
+        private Container container;
+        
+        public ContainerIterator(Container container) {
+            this.container = container;
+        }
+        
+        public void iterate() {
+            processComponent(container);
+        }
+        
+        public abstract void operateOnComponent(Component component, int level);
+        
+        private void processComponent(Component component) {
+            operateOnComponent(component, level);
+            level++;
+            if (component instanceof Container) {
+                Component[] subComponents = ((Container) component).getComponents();
+                for (int i = 0; i < subComponents.length; i++) {
+                    processComponent(subComponents[i]);
+                    level--;
+                }
             }
         }
     }

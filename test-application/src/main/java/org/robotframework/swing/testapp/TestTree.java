@@ -13,7 +13,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.robotframework.javalib.util.KeywordNameNormalizer;
@@ -94,7 +93,7 @@ public class TestTree extends JTree implements ActionListener {
     }
 
     private void refresh() {
-        ((DefaultTreeModel) getModel()).nodeStructureChanged((TreeNode) getLastPathComponent());
+        ((DefaultTreeModel) getModel()).nodeStructureChanged(getLastPathComponent());
     }
 
     private class MenuItemWithCommand extends JMenuItem {

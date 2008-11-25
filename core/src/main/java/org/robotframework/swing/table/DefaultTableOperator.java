@@ -101,8 +101,7 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
     private TableCellChooser createCellChooser(String row, String columnIdentifier) {
     	if (isIndex(columnIdentifier)) {
     		return new ColumnIndexTableCellChooser(row, columnIdentifier);
-    	} else {
-    		return new ColumnNameTableCellChooser(row, columnIdentifier);
-    	}
+    	} 
+    	return new ColumnNameTableCellChooser(row, columnIdentifier);
     }
 }

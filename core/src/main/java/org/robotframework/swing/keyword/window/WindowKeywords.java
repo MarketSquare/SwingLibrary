@@ -23,8 +23,8 @@ import javax.swing.JFrame;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.AbstractContextVerifier;
+import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.window.FrameOperator;
 import org.robotframework.swing.window.FrameOperatorFactory;
@@ -72,6 +72,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         return frameOperator().getTitle();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Class<? extends Component>[] getExpectedClasses() {
         return new Class[] { Window.class };

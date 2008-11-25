@@ -80,8 +80,8 @@ public class ListKeywords {
         @Override
         protected void handleNameArgument(final String name) {
             ListItemChooser itemChooser = new JListOperator.ListItemChooser() {
-                public boolean checkItem(JListOperator listOperator, int index) {
-                    String item = listOperator.getModel().getElementAt(index).toString();
+                public boolean checkItem(JListOperator operator, int index) {
+                    String item = operator.getModel().getElementAt(index).toString();
                     return ObjectUtils.nullSafeEquals(name, item);
                 }
 
