@@ -15,23 +15,38 @@
  */
 package org.robotframework.swing.keyword.filechooser;
 
-import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.filechooser.FileChooserOperator;
+import org.robotframework.swing.filechooser.FileChooserOperatorFactory;
 
 /**
  * @author Heikki Hulkko
  */
 @RobotKeywords
 public class FileChooserKeywords {
-//    private StringComparator comparator = new EqualsStringComparator();
+    private FileChooserOperatorFactory fileChooserOperatorFactory = new FileChooserOperatorFactory();
     
-    @RobotKeyword
+    @RobotKeyword("Selects the specified file.\n"
+        + "Expects the file chooser to be open.\n\n"
+        + "Example:\n"
+        + "| Push Button | _Open File_    |\n"
+        + "| Choose File | _elements.xml_ |\n")
     public void chooseFile(String fileName) {
-        System.out.println("Choosing file '" + fileName + "'");
-        JFileChooserOperator fileChooserOperator = new JFileChooserOperator();
-        fileChooserOperator.chooseFile(fileName);
-//        Assert.assertEquals(fileName, fileChooserOperator.getSelectedFile());
-//        fileChooserOperator.clickOnFile(fileName, new EqualsStringComparator(), 2);
+        fileChooserOperator().chooseFile(fileName);
+    }
+    
+    @RobotKeyword("Cancels and closes file chooser.\n"
+        + "Expects the file chooser to be open.\n\n"
+        + "Example:\n"
+        + "| Push Button         | _Open File_ |\n"
+        + "| Cancel File Chooser |             |\n")
+    public void cancelFileChooser() {
+        fileChooserOperator().cancelSelection();
+    }
+
+    private FileChooserOperator fileChooserOperator() {
+        return fileChooserOperatorFactory.createFileChooserOperator();
     }
 }
+

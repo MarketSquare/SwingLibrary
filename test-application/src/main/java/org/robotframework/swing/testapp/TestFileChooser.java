@@ -13,13 +13,6 @@ public class TestFileChooser extends JFileChooser {
         setName("testFileChooser");
     }
     
-//    @Override
-//    public File getSelectedFile() {
-//        File selected = super.getSelectedFile();
-//        selectedFilePath = selected.getAbsolutePath();
-//        return selected;
-//    }
-    
     @Override
     public void approveSelection() {
         super.approveSelection();
