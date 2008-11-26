@@ -11,6 +11,8 @@ ${childNode2}	Books for Java Programmers
 ${leafNode}	The Java Tutorial: A Short Course on the Basics
 ${anotherNodePath}	${rootNode}|${childNode2}
 ${leafNodePath}	${anotherNodePath}|${leafNode}
+${insertChildMenuEntry}	Insert a child
+${childrenCount}	6
 
 *Test Case*	*Action*	*Argument*	*Argument*
 Expand Node by Index
@@ -86,10 +88,10 @@ Tree Node Should Be Selected AND Tree Node Should Not Be Selected
 	treeNodeShouldBeSelected	${treeName}	${rootNode}
 
 Select From Tree Node Popup Menu
-	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Insert a child
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	${insertChildMenuEntry}
 	expandTreeNode	${treeName}	${rootNode}
 	treeNodeShouldBeVisible	${treeName}	${rootNode}|child0
-	selectFromTreeNodePopupMenu	${treeName}	${rootNode}|child0	Remove this node
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}|child0	Remove
 
 Select From Tree Node Popup Menu Should Accept Only Exact Matches For Menupaths
 	runKeywordAndExpectError	*	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Submenu|Enabled
@@ -146,7 +148,8 @@ Test Selecting Multiple Nodes
 	clearTreeSelection	${treeName}
 
 Tree Node Popup Menu Item Should Be Enabled
-	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Insert a child
+	[setup]	resetChildCounterToZero
+	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	${insertChildMenuEntry}
 	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Submenu|Enabled menuitem
 	popupMenuShouldNotBeDisplayed
 
@@ -156,7 +159,7 @@ Tree Node Popup Menu Item Should Be Disabled
 	popupMenuShouldNotBeDisplayed
 
 Tree Node Popup Menu Item Should Be Disabled Should Fail If Menu Item Is Enabled
-	runKeywordAndExpectError	*Menu item 'Insert a child' was enabled*	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	Insert a child
+	runKeywordAndExpectError	*Menu item '${insertChildMenuEntry}' was enabled*	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	${insertChildMenuEntry}
 
 Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
 	runKeywordAndExpectError	*Menu item 'Disabled menuitem' was disabled*	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Disabled menuitem
@@ -175,6 +178,14 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	2	${visibleNodes}
 
+Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected Nodes	[tags]	development
+	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
+
+Select From Popup Menu On Selected Tree Nodes Keyword Also Works With Invisible Root	[tags]	development
+	[setup]	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
+	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
+	[teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
+
 Keywords Also Work With Invisible Root
 	[setup]	resetNodes
 	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
@@ -188,7 +199,7 @@ Keywords Also Work With Invisible Root
 	collapseTreeNode	${treeName}	${childNode2}
 	[teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 
-Tree Keywords Fail If Context Is Not Correct
+Tree Keywords Fail If Context Is Not Correct	[tags]	development
 	selectEmptyContext
 	keywordShouldFailBecauseContextIsIllegal	clearTreeSelection	${treeName}
 	keywordShouldFailBecauseContextIsIllegal	expandTreeNode	${treeName}	Path|To|Tree|Node
@@ -209,6 +220,7 @@ Tree Keywords Fail If Context Is Not Correct
 	keywordShouldFailBecauseContextIsIllegal	treeNodeShouldNotExist	${treeName}	Path|To|Tree|Node
 	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	${treeName}	Path|To|Tree|Node	SomethingInMenu
 	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	${treeName}	Path|To|Tree|Node	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	selectFromPopupMenuOnSelectedTreeNodes	${treeName}	SomethingInMenu
 	[teardown]	selectMainWindow
 
 *Keyword*	*Action*	*Argument*	*Argument*
@@ -223,3 +235,24 @@ resetNodes
 	expandTreeNode	${treeName}	${rootNode}
 	collapseTreeNode	${treeName}	${rootNode}|${childNode2}
 	collapseTreeNode	${treeName}	${rootNode}|${childNode1}
+
+selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
+	addChildren
+	selectChildren
+	selectFromPopupMenuOnSelectedTreeNodes	${treeName}	Remove
+	childrenShouldNoLongerExist
+
+addChildren
+	resetChildCounterToZero
+	6x	addChildToRoot
+
+addChildToRoot
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	${insertChildMenuEntry}
+	
+selectChildren
+	: FOR	${i}	IN RANGE	${childrenCount}
+		selectTreeNode	${treeName}	${rootNode}|child${i}
+	
+childrenShouldNoLongerExist
+	: FOR	${i}	IN RANGE	${childrenCount}
+		treeNodeShouldNotExist	${treeName}	${rootNode}|child${i}
