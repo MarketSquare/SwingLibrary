@@ -5,7 +5,7 @@ suiteSetup	createTestFileToTempDirectory
 
 *Variable*	*Value*	*Value*
 ${fileChooserButton}	openFileChooser
-${fileToChoose}	${TEMPDIR}${/}${fileToChoose}${/}test_file.txt
+${fileToChoose}	${TEMPDIR}${/}test_file.txt
 
 *Test Case*	*Action*	*Argument*
 Choose From File Chooser Keyword Should Choose File From File Chooser
