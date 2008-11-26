@@ -29,12 +29,13 @@ import org.robotframework.swing.factory.OperatorFactory;
 public class ComboBoxKeywords {
     private OperatorFactory<ComboBoxOperator> operatorFactory = new ComboBoxOperatorFactory();
 
-    @RobotKeyword("Selects an item from a combobox.\n\n"
+    @RobotKeyword("Selects an item from a combobox.\n"
+    	+ "NB. If the _comboItemIdentifier_ is a numerical value it vill be interpreted as index.\n"
         + "Example:\n"
         + "| Select From Combo Box | _myComboBox_ | _myItem_ | # Selects _'myItem'_ from combobox |\n"
         + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n")
-    public void selectFromComboBox(String comboBoxIdentifier, String comboItemIdentifier) {
-        ComboBoxOperator comboBoxOperator = operatorFactory.createOperator(comboBoxIdentifier);
+    public void selectFromComboBox(String identifier, String comboItemIdentifier) {
+        ComboBoxOperator comboBoxOperator = operatorFactory.createOperator(identifier);
         comboBoxOperator.selectItem(comboItemIdentifier);
     }
 

@@ -7,11 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class TestApplication {
     private JPanel panel;
@@ -86,8 +82,8 @@ public class TestApplication {
         panel.add(new TestSpinnerButton());
         panel.add(new TestRadioButton());
         panel.add(new TestToggleButton());
-        panel.add(new JButton("Save") {{
-            setName("saveButton");
+        panel.add(new JButton("Open File Chooser") {{
+            setName("openFileChooser");
             addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     new TestFileChooser().showSaveDialog(panel);

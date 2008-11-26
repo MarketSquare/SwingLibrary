@@ -39,6 +39,15 @@ public class DefaultComboBoxOperatorSpec extends Specification<DefaultComboBoxOp
             context.selectItem(comboItemIdentifier);
         }
         
+        public void selectsItemWithIndex() {
+            checking(new Expectations() {{
+                one(jComboboxOperator).pushComboButton();
+                one(jComboboxOperator).selectItem(1);
+            }});
+            
+            context.selectItem("1");
+        }
+        
         public void getsSelectedItem() {
             final Object selectedItem = new Object();
             checking(new Expectations() {{
