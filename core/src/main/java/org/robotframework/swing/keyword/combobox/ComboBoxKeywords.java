@@ -20,7 +20,6 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.combobox.ComboBoxOperator;
 import org.robotframework.swing.combobox.ComboBoxOperatorFactory;
-import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
 
 /**
@@ -36,8 +35,7 @@ public class ComboBoxKeywords {
         + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n")
     public void selectFromComboBox(String comboBoxIdentifier, String comboItemIdentifier) {
         ComboBoxOperator comboBoxOperator = operatorFactory.createOperator(comboBoxIdentifier);
-        comboBoxOperator.pushComboButton();
-        comboBoxOperator.selectItem(comboItemIdentifier, new EqualsStringComparator());
+        comboBoxOperator.selectItem(comboItemIdentifier);
     }
 
     @RobotKeyword("Alias for `Select From Combobox` keyword.\n")

@@ -22,8 +22,8 @@ public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChoose
             specify(context, satisfies(new RobotKeywordsContract()));
         }
         
-        public void hasChooseFileKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("chooseFile")));
+        public void hasChooseFromFileChooserKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("chooseFromFileChooser")));
         }
         
         public void hasCancelFileChooserKeyword() {

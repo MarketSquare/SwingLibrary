@@ -5,13 +5,12 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.combobox.ComboBoxOperator;
-import org.robotframework.swing.comparator.EqualsStringComparator;
+import org.robotframework.swing.combobox.DefaultComboBoxOperator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.combobox.ComboBoxKeywords;
 
 
 @RunWith(JDaveRunner.class)
@@ -49,11 +48,11 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
     }
 
     public class WhenOperating {
-        private OperatorFactory<ComboBoxOperator> operatorFactory;
+        private OperatorFactory<?> operatorFactory;
         private ComboBoxOperator operator;
 
         public ComboBoxKeywords create() {
-            operator = mock(ComboBoxOperator.class);
+            operator = mock(DefaultComboBoxOperator.class);
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords();
             operatorFactory = injectMockTo(comboBoxKeywords, OperatorFactory.class);
 
@@ -69,8 +68,7 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
             final String comboItemIdentifier = "someComboItem";
 
             checking(new Expectations() {{
-                one(operator).pushComboButton();
-                one(operator).selectItem(with(equal(comboItemIdentifier)), with(any(EqualsStringComparator.class)));
+                one(operator).selectItem(comboItemIdentifier);
             }});
 
             context.selectFromComboBox(comboBoxIdentifier, comboItemIdentifier);

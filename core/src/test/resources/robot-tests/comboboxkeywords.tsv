@@ -27,19 +27,27 @@ Get Selected Item From Dropdown Menu By Name
 
 Select From Combobox By Index
 	selectFromCombobox	${comboboxIndex}	${comboboxItem2}
-	dropdownMenuSelectionShouldBe	${comboboxIndex}	${comboboxItem2}
+	comboboxSelectionShouldBe	${comboboxIndex}	${comboboxItem2}
 
 Select From Combobox By Name
 	selectFromCombobox	${comboboxName}	${comboboxItem2}
-	dropdownMenuSelectionShouldBe	${comboboxName}	${comboboxItem2}
+	comboboxSelectionShouldBe	${comboboxName}	${comboboxItem2}
+
+Select From Combobbox Keyword Should Work With Indexes	[tags]	development
+	selectFromCombobox	${comboboxName}	0
+	comboboxSelectionShouldBe	${comboboxName}	${comboboxItem1}
+	selectFromCombobox	${comboboxName}	1
+	comboboxSelectionShouldBe	${comboboxName}	${comboboxItem2}
+	selectFromCombobox	${comboboxName}	2
+	comboboxSelectionShouldBe	${comboboxName}	three
 
 Select From Dropdown Menu By Index
 	selectFromDropdownMenu	${comboboxIndex}	${comboboxItem2}
-	dropdownMenuSelectionShouldBe	${comboboxIndex}	${comboboxItem2}
+	comboboxSelectionShouldBe	${comboboxIndex}	${comboboxItem2}
 
 Select From Dropdown Menu By Name
 	selectFromDropdownMenu	${comboboxName}	${comboboxItem2}
-	dropdownMenuSelectionShouldBe	${comboboxName}	${comboboxItem2}
+	comboboxSelectionShouldBe	${comboboxName}	${comboboxItem2}
 
 Select From Combobox Works Only With Exact Match
 	runKeywordAndExpectError	*	selectFromCombobox	${comboboxName}	wo
@@ -56,6 +64,6 @@ Dropdown Keywords Should Fail If Context Is Not A Window
 resetDropdownMenu
 	selectFromDropdownMenu	${comboboxIndex}	${comboboxItem1}
 
-dropdownMenuSelectionShouldBe	[arguments]	${identifier}	${expectedSelection}
+comboboxSelectionShouldBe	[arguments]	${identifier}	${expectedSelection}
 	${actualSelection}=	getSelectedItemFromCombobox	${identifier}
 	shouldBeEqual	${expectedSelection}	${actualSelection}

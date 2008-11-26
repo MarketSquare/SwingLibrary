@@ -17,8 +17,8 @@
 package org.robotframework.swing.combobox;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
-import org.robotframework.swing.combobox.ComboBoxOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
@@ -27,10 +27,12 @@ import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
  */
 public class ComboBoxOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComboBoxOperator> {
     public ComboBoxOperator createOperatorByIndex(int index) {
-        return new ComboBoxOperator((ContainerOperator) Context.getContext(), index);
+        JComboBoxOperator jComboboxOperator = new JComboBoxOperator((ContainerOperator) Context.getContext(), index);
+        return new DefaultComboBoxOperator(jComboboxOperator);
     }
 
     public ComboBoxOperator createOperatorByName(String name) {
-        return new ComboBoxOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+        JComboBoxOperator jComboboxOperator = new JComboBoxOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+        return new DefaultComboBoxOperator(jComboboxOperator);
     }
 }
