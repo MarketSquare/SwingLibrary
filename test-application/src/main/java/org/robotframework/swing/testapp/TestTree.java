@@ -5,12 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -18,11 +13,11 @@ import javax.swing.tree.TreePath;
 import org.robotframework.javalib.util.KeywordNameNormalizer;
 
 public class TestTree extends JTree implements ActionListener {
-    private int insertedChildrenCounter = 0;
+    public static int insertedChildrenCounter = 0;
     
     private JPopupMenu popup = new JPopupMenu() {{
         add(new MenuItemWithCommand("Insert a child", "insert"));
-        add(new MenuItemWithCommand("Remove this node", "remove"));
+        add(new MenuItemWithCommand("Remove", "remove"));
         add(new MenuItemWithCommand("Show dialog", "showdialog"));
         add(new MenuItemWithCommand("Hide root node", "hideroot"));
         add(new MenuItemWithCommand("Show root node", "showroot"));
@@ -73,7 +68,7 @@ public class TestTree extends JTree implements ActionListener {
         if (ae.getActionCommand().equals("insert")) {
             getLastPathComponent().add(new DefaultMutableTreeNode("child" + (insertedChildrenCounter++)));
         } else if (ae.getActionCommand().equals("remove")) {
-            getLastPathComponent().removeFromParent();
+            removeSelected();
         } else if (ae.getActionCommand().equals("showdialog")) {
             JOptionPane.showMessageDialog(this, "This is an example message");
         } else if (ae.getActionCommand().equals("hideroot")) {
@@ -82,6 +77,19 @@ public class TestTree extends JTree implements ActionListener {
             setRootVisible(true);
         }
         refresh();
+    }
+    
+    @Override
+    public TreePath[] getSelectionPaths() {
+        TreePath[] selectionPaths = super.getSelectionPaths();
+        return (selectionPaths == null) ? new TreePath[0] : selectionPaths;
+    }
+    
+    private void removeSelected() {
+        TreePath[] selectionPaths = getSelectionPaths();
+        for (TreePath treePath : selectionPaths) {
+            ((DefaultMutableTreeNode)treePath.getLastPathComponent()).removeFromParent();
+        }
     }
 
     private DefaultMutableTreeNode getLastPathComponent() {
