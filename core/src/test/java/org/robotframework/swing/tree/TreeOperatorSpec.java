@@ -128,6 +128,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
     
     public class CreatingPopupOperator {
         private TreePopupMenuOperatorFactory popupFactory;
+        private JPopupMenuOperator popupMenuOperator = dummy(JPopupMenuOperator.class);
 
         public TreeOperator create() {
             popupFactory = mock(TreePopupMenuOperatorFactory.class);
@@ -139,13 +140,21 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         }
         
         public void createsPopupOperator() {
-            final JPopupMenuOperator popupMenuOperator = dummy(JPopupMenuOperator.class);
             checking(new Expectations() {{
                 one(popupFactory).createOperator(nodeIdentifier);
                 will(returnValue(popupMenuOperator));
             }});
             
-            specify(context.createPopupOperator(nodeIdentifier), must.equal(popupMenuOperator));
+            specify(context.createPopupOperator(nodeIdentifier), popupMenuOperator);
+        }
+        
+        public void createsPopupOperatorOnSelectedNodes() {
+            checking(new Expectations() {{
+                one(popupFactory).createOperatorBySelection();
+                will(returnValue(popupMenuOperator));
+            }});
+            
+            specify(context.createOperatorOnSelectedNodes(), popupMenuOperator);
         }
     }
     

@@ -46,7 +46,12 @@ public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFacto
         JPopupMenu popupMenu = treeOperator.callPopupOnPath(treePath);
         return createPopupOperator(popupMenu);
     }
-
+    
+    public JPopupMenuOperator createOperatorBySelection() {
+        JPopupMenu popupMenu = treeOperator.callPopupOnPaths(treeOperator.getSelectionPaths());
+        return createPopupOperator(popupMenu);
+    }
+    
     JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {
         JPopupMenuOperator popupMenuOperator = new JPopupMenuOperator(popupMenu);
         popupMenuOperator.grabFocus();

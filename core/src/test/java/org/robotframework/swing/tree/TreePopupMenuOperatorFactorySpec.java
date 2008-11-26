@@ -54,5 +54,16 @@ public class TreePopupMenuOperatorFactorySpec extends Specification<TreePopupMen
 
             specify(context.createOperator(nodePath), must.equal(popupMenuOperator));
         }
+        
+        public void createsOperatorBySelection() {
+            final TreePath[] selectionPaths = new TreePath[0];
+            
+            checking(new Expectations() {{
+                one(treeOperator).getSelectionPaths(); will(returnValue(selectionPaths));
+                one(treeOperator).callPopupOnPaths(selectionPaths); will(returnValue(dummyPopupMenu));
+            }});
+            
+            specify(context.createOperatorBySelection(), must.equal(popupMenuOperator));
+        }
     }
 }
