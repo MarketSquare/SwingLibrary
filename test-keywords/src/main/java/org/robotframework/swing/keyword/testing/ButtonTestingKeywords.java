@@ -6,7 +6,7 @@ import org.robotframework.swing.button.ButtonOperatorFactory;
 
 
 @RobotKeywords
-public class ButtonTestKeywords {
+public class ButtonTestingKeywords {
     private ButtonOperatorFactory operatorFactory = new ButtonOperatorFactory();
 
     @RobotKeyword

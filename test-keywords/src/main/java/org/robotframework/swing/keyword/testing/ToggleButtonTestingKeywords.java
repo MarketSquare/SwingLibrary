@@ -8,7 +8,7 @@ import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 
 @RobotKeywords
-public class ToggleButtonTestKeywords {
+public class ToggleButtonTestingKeywords {
     @RobotKeyword
     public void selectToggleButton(String identifier) {
         createToggleButtonOperator(identifier).changeSelection(true);

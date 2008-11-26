@@ -25,7 +25,7 @@ import org.robotframework.swing.testapp.TestFileChooser;
  * @author Heikki Hulkko
  */
 @RobotKeywords
-public class FileChooserTestKeywords {
+public class FileChooserTestingKeywords {
     @RobotKeyword
     public void fileChooserShouldHaveBeenCancelled() {
         Assert.assertTrue(TestFileChooser.cancelled);
