@@ -33,7 +33,7 @@ Select From Combobox By Name
 	selectFromCombobox	${comboboxName}	${comboboxItem2}
 	comboboxSelectionShouldBe	${comboboxName}	${comboboxItem2}
 
-Select From Combobbox Keyword Should Work With Indexes	[tags]	development
+Select From Combobbox Keyword Should Work With Indexes
 	selectFromCombobox	${comboboxName}	0
 	comboboxSelectionShouldBe	${comboboxName}	${comboboxItem1}
 	selectFromCombobox	${comboboxName}	1
