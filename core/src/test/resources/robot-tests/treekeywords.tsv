@@ -178,7 +178,8 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	2	${visibleNodes}
 
-Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected Nodes	[tags]	development
+Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected Nodes
+	[setup]	resetNodes
 	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
 
 Keywords Also Work With Invisible Root
@@ -192,6 +193,7 @@ Keywords Also Work With Invisible Root
 	expandTreeNode	${treeName}	${childNode2}
 	treeNodeShouldBeVisible	${treeName}	${childNode2}|${leafNode}
 	collapseTreeNode	${treeName}	${childNode2}
+	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes	${EMPTY}
 	[teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 
 Tree Keywords Fail If Context Is Not Correct	[tags]	development
@@ -232,6 +234,7 @@ resetNodes
 	collapseTreeNode	${treeName}	${rootNode}|${childNode1}
 
 selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes	[arguments]	${root}=${rootNode}|
+	clearSavedNodes
 	selectNodes	${root}
 	selectFromPopupMenuOnSelectedTreeNodes	${treeName}	Save node paths
 	nodesShouldBeSaved
@@ -241,10 +244,4 @@ selectNodes	[arguments]	${root}=${rootNode}|
 	selectTreeNode	${treeName}	${root}${childNode2}
 
 nodesShouldBeSaved
-	${expectedNodes}=	getExpectedNodes
-	${savedNodes}=	getSavedNodes
-	listsShouldBeEqual	${expectedNodes}	${savedNodes}
-
-getExpectedNodes
-	${expectedNodes}=	createList	${childNode1}	${childNode2}
-	[return]	${expectedNodes}
+	savedNodesShouldBe	${childNode1}	${childNode2}
