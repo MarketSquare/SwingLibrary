@@ -20,6 +20,7 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreeSupport;
 
 /**
@@ -86,7 +87,7 @@ public class TreeNodeKeywords extends TreeSupport {
         + "Assumes current context is a tree.\n"
         + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Leaf | _myTree_ | _Root|Folder_ |")
+        + "| Tree Node Should Be Leaf | _myTree_ | _Root|Folder_ |\n")
     public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier) {
         boolean isLeaf = createTreeOperator(identifier).isLeaf(nodeIdentifier);
         Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", isLeaf);
@@ -95,7 +96,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Fails if the node doesn't have child nodes.\n"
         + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
         + "Example:\n"
-        + "| Tree Node Should Not Be Leaf | _myTree_ | _Root|Folder_ |")
+        + "| Tree Node Should Not Be Leaf | _myTree_ | _Root|Folder_ |\n")
     public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier) {
         boolean isLeaf = createTreeOperator(identifier).isLeaf(nodeIdentifier);
         Assert.assertFalse("Tree node '" + nodeIdentifier + "' is leaf.", isLeaf);
@@ -103,9 +104,19 @@ public class TreeNodeKeywords extends TreeSupport {
     
     @RobotKeyword("Returns the count of all visible nodes.\n\n"
         + "Example:\n"
-        + "| ${nodeCount} | Get Tree Node Count | _myTree_ |"
-        + "| Should Be Equal As Integers | _3_ | _${nodeCount}_ |")
+        + "| ${nodeCount}= | Get Tree Node Count | _myTree_ |\n"
+        + "| Should Be Equal As Integers | _3_ | _${nodeCount}_ |\n")
     public int getTreeNodeCount(String identifier) {
         return createTreeOperator(identifier).getRowCount();
+    }
+    
+    @RobotKeyword("Returns the node name.\n"
+    	+ "NodeIndex must be a number and it is counted from visible nodes (index starts from 0).\n\n"
+        + "Example:\n"
+        + "| ${nodeLabel}= | Get Tree Node Label | _3_ |\n"
+        + "| Should Be Equal | _Element1_ | _${nodeLabel}_ |\n")
+    public String getTreeNodeLabel(String identifier, String nodeIndex) {
+        TreeOperator treeOperator = createTreeOperator(identifier);
+        return treeOperator.getTreeNodeLabel(asIndex(nodeIndex));
     }
 }

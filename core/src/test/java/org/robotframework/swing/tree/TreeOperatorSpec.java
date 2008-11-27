@@ -20,6 +20,8 @@ import org.robotframework.swing.popup.IPopupCaller;
 
 @RunWith(JDaveRunner.class)
 public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
+    private JTree tree;
+    private TreePath treePath;
     private String nodeIdentifier = "some|node";
     
     public class Any {
@@ -30,8 +32,6 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
     }
 
     public class Operating {
-        private JTree tree;
-        private TreePath treePath;
         private TreeOperator enhancedTreeOperator;
         
         public TreeOperator create() {
@@ -123,6 +123,24 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
                 one(pathFactory).createTreePath(nodeIdentifier);
                 will(returnValue(treePath));
             }});
+        }
+    }
+
+    public class GettingLabel {
+        public TreeOperator create() {
+            treePath = mock(TreePath.class);
+            tree = createMockJTree();
+            return new TreeOperator(tree);
+        }
+        
+        public void getTreeNodeLabel() {
+            final String label = "someNode";
+            checking(new Expectations() {{
+                one(tree).getPathForRow(2); will(returnValue(treePath));
+                one(treePath).getLastPathComponent(); will(returnValue(label));
+            }});
+            
+            specify(context.getTreeNodeLabel(2), label);
         }
     }
     

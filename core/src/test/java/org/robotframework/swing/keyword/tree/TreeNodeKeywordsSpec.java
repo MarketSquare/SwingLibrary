@@ -56,13 +56,26 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         public void hasClearTreeSelectionKeyword() {
             specify(context, satisfies(new RobotKeywordContract("clearTreeSelection")));
         }
+
+        public void hasGetTreeNodeLabelKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTreeNodeLabel")));
+        }
     }
 
     public class OperatingOnTree {
         private String nodeIdentifier = "path|to|node";
-        
+
         public TreeNodeKeywords create() {
             return populateWithMockOperatorFactory(new TreeNodeKeywords());
+        }
+
+        public void getsTreeLabel() {
+            final String nodeLabel = "node";
+            checking(new Expectations() {{
+                one(treeOperator).getTreeNodeLabel(2); will(returnValue(nodeLabel));
+            }});
+            
+            specify(context.getTreeNodeLabel(treeIdentifier, "2"), nodeLabel);
         }
         
         public void clearsTreeSelection() {

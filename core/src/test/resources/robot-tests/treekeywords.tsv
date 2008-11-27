@@ -7,10 +7,11 @@ suiteSetup	setJemmyTimeouts	1
 ${treeName}	testTree
 ${nodeIndex}	2
 ${rootNode}	The Java Series
-${childNode1}	Books for Java Implementers
-${childNode2}	Books for Java Programmers
+${childNode1}	Books for Java Programmers
+${childNode2}	Books for Java Implementers
 ${leafNode}	The Java Tutorial: A Short Course on the Basics
-${anotherNodePath}	${rootNode}|${childNode2}
+${leafNode2}	The Java Tutorial Continued: The Rest of the JDK
+${anotherNodePath}	${rootNode}|${childNode1}
 ${leafNodePath}	${anotherNodePath}|${leafNode}
 ${insertChildMenuEntry}	Insert a child
 ${childCount}	6
@@ -168,10 +169,10 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
 	[setup]	resetNodes
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	3	${visibleNodes}
-	expandTreeNode	${treeName}	${rootNode}|${childNode2}
+	expandTreeNode	${treeName}	${rootNode}|${childNode1}
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	6	${visibleNodes}
-	collapseTreeNode	${treeName}	${rootNode}|${childNode2}
+	collapseTreeNode	${treeName}	${rootNode}|${childNode1}
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	3	${visibleNodes}
 	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
@@ -182,21 +183,27 @@ Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected N
 	[setup]	resetNodes
 	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
 
+Get Tree Node Label Keyword Returns The Last Nodes Name	[tags]	development
+	[setup]	resetNodes
+	expandTreeNode	${treeName}	${rootNode}|${childNode1}
+	${treeNodeLabel}=	getTreeNodeLabel	${treeName}	3
+	shouldBeEqual	${leafNode2}	${treeNodeLabel}
+
 Keywords Also Work With Invisible Root
 	[setup]	resetNodes
 	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
-	treeNodeShouldBeVisible	${treeName}	${childNode1}
 	treeNodeShouldBeVisible	${treeName}	${childNode2}
-	treeNodeShouldExist	${treeName}	${childNode1}
+	treeNodeShouldBeVisible	${treeName}	${childNode1}
 	treeNodeShouldExist	${treeName}	${childNode2}
-	treeNodeShouldExist	${treeName}	${childNode2}|${leafNode}
-	expandTreeNode	${treeName}	${childNode2}
-	treeNodeShouldBeVisible	${treeName}	${childNode2}|${leafNode}
-	collapseTreeNode	${treeName}	${childNode2}
+	treeNodeShouldExist	${treeName}	${childNode1}
+	treeNodeShouldExist	${treeName}	${childNode1}|${leafNode}
+	expandTreeNode	${treeName}	${childNode1}
+	treeNodeShouldBeVisible	${treeName}	${childNode1}|${leafNode}
+	collapseTreeNode	${treeName}	${childNode1}
 	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes	${EMPTY}
 	[teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 
-Tree Keywords Fail If Context Is Not Correct	[tags]	development
+Tree Keywords Fail If Context Is Not Correct
 	selectEmptyContext
 	keywordShouldFailBecauseContextIsIllegal	clearTreeSelection	${treeName}
 	keywordShouldFailBecauseContextIsIllegal	expandTreeNode	${treeName}	Path|To|Tree|Node
@@ -218,6 +225,7 @@ Tree Keywords Fail If Context Is Not Correct	[tags]	development
 	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	${treeName}	Path|To|Tree|Node	SomethingInMenu
 	keywordShouldFailBecauseContextIsIllegal	treeNodePopupMenuItemShouldBeDisabled	${treeName}	Path|To|Tree|Node	SomethingInMenu
 	keywordShouldFailBecauseContextIsIllegal	selectFromPopupMenuOnSelectedTreeNodes	${treeName}	SomethingInMenu
+	keywordShouldFailBecauseContextIsIllegal	getTreeNodeLabel	${treeName}	0
 	[teardown]	selectMainWindow
 
 *Keyword*	*Action*	*Argument*	*Argument*
@@ -230,8 +238,8 @@ popupMenuShouldNotBeDisplayed
 resetNodes
 	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 	expandTreeNode	${treeName}	${rootNode}
-	collapseTreeNode	${treeName}	${rootNode}|${childNode2}
 	collapseTreeNode	${treeName}	${rootNode}|${childNode1}
+	collapseTreeNode	${treeName}	${rootNode}|${childNode2}
 
 selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes	[arguments]	${root}=${rootNode}|
 	clearSavedNodes
@@ -240,8 +248,8 @@ selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes	[argumen
 	nodesShouldBeSaved
 
 selectNodes	[arguments]	${root}=${rootNode}|
-	selectTreeNode	${treeName}	${root}${childNode1}
 	selectTreeNode	${treeName}	${root}${childNode2}
+	selectTreeNode	${treeName}	${root}${childNode1}
 
 nodesShouldBeSaved
-	savedNodesShouldBe	${childNode1}	${childNode2}
+	savedNodesShouldBe	${childNode2}	${childNode1}
