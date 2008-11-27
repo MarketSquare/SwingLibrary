@@ -154,7 +154,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
                 will(returnValue(popupMenuOperator));
             }});
             
-            specify(context.createOperatorOnSelectedNodes(), popupMenuOperator);
+            specify(context.createPopupOperatorOnSelectedNodes(), popupMenuOperator);
         }
     }
     

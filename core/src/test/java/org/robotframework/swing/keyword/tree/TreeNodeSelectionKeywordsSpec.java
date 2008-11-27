@@ -26,11 +26,10 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
     }
 
     public class CheckingSelection {
-        private String treeIdentifier = "someTree";
         private String nodeIdentifier = "some|node";
 
         public TreeNodeSelectionKeywords create() {
-            return populateWithMockOperatingFactoryAndContextVerifier(new TreeNodeSelectionKeywords());
+            return populateWithMockOperatorFactory(new TreeNodeSelectionKeywords());
         }
 
         public void treeNodeShouldBeSelectedPassesIfTreeNodeIsSelected() throws Throwable {

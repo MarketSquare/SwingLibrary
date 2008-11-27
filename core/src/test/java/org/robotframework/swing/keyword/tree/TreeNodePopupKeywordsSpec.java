@@ -16,15 +16,14 @@ import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.tree.TreeNodePopupKeywords;
 import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
 
 
 @RunWith(JDaveRunner.class)
 public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKeywords> {
-    private String treeIdentifier = "someTree";
     private String nodeIdentifier = "some|path";
     private String menuPath = "some|menu";
+    private JPopupMenuOperator popupMenuOperator;
 
     public class Any {
         public TreeNodePopupKeywords create() {
@@ -50,25 +49,24 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
         public void hasTreeNodePopupMenuItemShouldBeDisabledKeyword() {
             specify(context, satisfies(new RobotKeywordContract("treeNodePopupMenuItemShouldBeDisabled")));
         }
-
+        
+        public void hasSelectFromPopupMenuOnSelectedTreeNodesKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("selectFromPopupMenuOnSelectedTreeNodes")));
+        }
+        
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
     }
 
-    public class Operating {
-        private JPopupMenuOperator popupMenuOperator;
-
+    public class InvokingPopupMenuActions {
         public TreeNodePopupKeywords create() {
-            TreeNodePopupKeywords treePopupKeywords = populateWithMockOperatingFactoryAndContextVerifier(new TreeNodePopupKeywords());
-
+            TreeNodePopupKeywords treePopupKeywords = populateWithMockOperatorFactory(new TreeNodePopupKeywords());
             popupMenuOperator = mock(JPopupMenuOperator.class);
-
             checking(new Expectations() {{
                 one(treeOperator).createPopupOperator(nodeIdentifier);
                 will(returnValue(popupMenuOperator));
             }});
-
             return treePopupKeywords;
         }
 
@@ -88,13 +86,43 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
             context.selectFromTreeNodePopupMenuInSeparateThread(treeIdentifier, nodeIdentifier, menuPath);
         }
     }
+    
+    public class InvokingPopupMenuActionsOnSelectedNodes {
+        private boolean waitToAvoidInstabilityWasCalled;
+        
+        public TreeNodePopupKeywords create() {
+            waitToAvoidInstabilityWasCalled = false;
+            TreeNodePopupKeywords treeKeywords = new TreeNodePopupKeywords() {
+                void waitToAvoidInstability() {
+                    waitToAvoidInstabilityWasCalled = true;
+                }
+            };
+            
+            TreeNodePopupKeywords treePopupKeywords = populateWithMockOperatorFactory(treeKeywords);
+            popupMenuOperator = mock(JPopupMenuOperator.class);
+            checking(new Expectations() {{
+                one(treeOperator).createPopupOperatorOnSelectedNodes();
+                will(returnValue(popupMenuOperator));
+            }});
+            return treePopupKeywords;
+        }
+        
+        public void selectsFromPopupMenuOnSelectedTreeNodes() {
+            checking(new Expectations() {{
+                one(popupMenuOperator).pushMenuNoBlock(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
+            }});
+            
+            context.selectFromPopupMenuOnSelectedTreeNodes(treeIdentifier, menuPath);
+            specify(waitToAvoidInstabilityWasCalled);
+        }
+    }
 
     public class CheckingConditions {
         private JMenuItem menuItem;
 
         public TreeNodePopupKeywords create() {
             final ITreePopupMenuItemFinder menuFinder = createMockMenuFinder();
-            TreeNodePopupKeywords treeKeywords = populateWithMockOperatingFactoryAndContextVerifier(new TreeNodePopupKeywords() {
+            TreeNodePopupKeywords treeKeywords = populateWithMockOperatorFactory(new TreeNodePopupKeywords() {
                 ITreePopupMenuItemFinder createPopupMenuItemFinder(Component source) {
                     return menuFinder;
                 }

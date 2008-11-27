@@ -8,7 +8,6 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.tree.TreeNodeKeywords;
 
 
 @RunWith(JDaveRunner.class)
@@ -63,7 +62,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         private String nodeIdentifier = "path|to|node";
         
         public TreeNodeKeywords create() {
-            return populateWithMockOperatingFactoryAndContextVerifier(new TreeNodeKeywords());
+            return populateWithMockOperatorFactory(new TreeNodeKeywords());
         }
         
         public void clearsTreeSelection() {

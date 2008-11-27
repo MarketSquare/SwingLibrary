@@ -111,7 +111,7 @@ public class TreeOperator extends JTreeOperator implements ComponentWrapper {
         return createPopupFactory().createOperator(nodeIdentifier);
     }
     
-    public JPopupMenuOperator createOperatorOnSelectedNodes() {
+    public JPopupMenuOperator createPopupOperatorOnSelectedNodes() {
         return createPopupFactory().createOperatorBySelection();
     }    
     

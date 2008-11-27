@@ -1,6 +1,7 @@
 *Setting*	*Value*
+library	Collections
 library	SwingLibrary
-suiteSetup	selectMainWindow
+suiteSetup	setJemmyTimeouts	1
 
 *Variable*	*Value*	*Value*
 ${treeName}	testTree
@@ -12,7 +13,7 @@ ${leafNode}	The Java Tutorial: A Short Course on the Basics
 ${anotherNodePath}	${rootNode}|${childNode2}
 ${leafNodePath}	${anotherNodePath}|${leafNode}
 ${insertChildMenuEntry}	Insert a child
-${childrenCount}	6
+${childCount}	6
 
 *Test Case*	*Action*	*Argument*	*Argument*
 Expand Node by Index
@@ -90,8 +91,8 @@ Tree Node Should Be Selected AND Tree Node Should Not Be Selected
 Select From Tree Node Popup Menu
 	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	${insertChildMenuEntry}
 	expandTreeNode	${treeName}	${rootNode}
-	treeNodeShouldBeVisible	${treeName}	${rootNode}|child0
-	selectFromTreeNodePopupMenu	${treeName}	${rootNode}|child0	Remove
+	treeNodeShouldBeVisible	${treeName}	${rootNode}|child
+	selectFromTreeNodePopupMenu	${treeName}	${rootNode}|child	Remove
 
 Select From Tree Node Popup Menu Should Accept Only Exact Matches For Menupaths
 	runKeywordAndExpectError	*	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Submenu|Enabled
@@ -148,7 +149,6 @@ Test Selecting Multiple Nodes
 	clearTreeSelection	${treeName}
 
 Tree Node Popup Menu Item Should Be Enabled
-	[setup]	resetChildCounterToZero
 	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	${insertChildMenuEntry}
 	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Submenu|Enabled menuitem
 	popupMenuShouldNotBeDisplayed
@@ -180,11 +180,6 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
 
 Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected Nodes	[tags]	development
 	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
-
-Select From Popup Menu On Selected Tree Nodes Keyword Also Works With Invisible Root	[tags]	development
-	[setup]	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
-	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
-	[teardown]	selectFromTreeNodePopupMenu	${treeName}	0	Show root node
 
 Keywords Also Work With Invisible Root
 	[setup]	resetNodes
@@ -236,23 +231,20 @@ resetNodes
 	collapseTreeNode	${treeName}	${rootNode}|${childNode2}
 	collapseTreeNode	${treeName}	${rootNode}|${childNode1}
 
-selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
-	addChildren
-	selectChildren
-	selectFromPopupMenuOnSelectedTreeNodes	${treeName}	Remove
-	childrenShouldNoLongerExist
+selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes	[arguments]	${root}=${rootNode}|
+	selectNodes	${root}
+	selectFromPopupMenuOnSelectedTreeNodes	${treeName}	Save node paths
+	nodesShouldBeSaved
 
-addChildren
-	resetChildCounterToZero
-	6x	addChildToRoot
+selectNodes	[arguments]	${root}=${rootNode}|
+	selectTreeNode	${treeName}	${root}${childNode1}
+	selectTreeNode	${treeName}	${root}${childNode2}
 
-addChildToRoot
-	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	${insertChildMenuEntry}
-	
-selectChildren
-	: FOR	${i}	IN RANGE	${childrenCount}
-		selectTreeNode	${treeName}	${rootNode}|child${i}
-	
-childrenShouldNoLongerExist
-	: FOR	${i}	IN RANGE	${childrenCount}
-		treeNodeShouldNotExist	${treeName}	${rootNode}|child${i}
+nodesShouldBeSaved
+	${expectedNodes}=	getExpectedNodes
+	${savedNodes}=	getSavedNodes
+	listsShouldBeEqual	${expectedNodes}	${savedNodes}
+
+getExpectedNodes
+	${expectedNodes}=	createList	${childNode1}	${childNode2}
+	[return]	${expectedNodes}

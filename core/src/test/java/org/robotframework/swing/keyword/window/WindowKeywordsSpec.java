@@ -13,7 +13,6 @@ import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.window.WindowKeywords;
 import org.robotframework.swing.window.FrameOperator;
 
 
@@ -49,7 +48,7 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
         }
 
         public void selectMainWindowSetsMainWindowAsContext() {
-            final IdentifierParsingOperatorFactory operatorFactory = injectMockToContext("operatorFactory", IdentifierParsingOperatorFactory.class);
+            final IdentifierParsingOperatorFactory<?> operatorFactory = injectMockToContext("operatorFactory", IdentifierParsingOperatorFactory.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperatorByIndex(0);
                 will(returnValue(frameOperator));
@@ -61,7 +60,7 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
     }
 
     public class OperatingOnWindows {
-        private IdentifierParsingOperatorFactory<FrameOperator> operatorFactory;
+        private IdentifierParsingOperatorFactory<?> operatorFactory;
         private String windowIdentifier = "title";
 
         public WindowKeywords create() {
@@ -127,7 +126,7 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
         }
 
         public void verifiesWindowContext() {
-            specify(context.getExpectedClasses(), containsExactly(new Class[] { Window.class }));
+            specify(context.getExpectedClasses(), containsExactly(Window.class));
         }
     }
 }

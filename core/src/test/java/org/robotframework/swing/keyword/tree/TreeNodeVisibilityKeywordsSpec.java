@@ -8,12 +8,9 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.tree.TreeNodeVisibilityKeywords;
 
 @RunWith(JDaveRunner.class)
 public class TreeNodeVisibilityKeywordsSpec extends TreeSpecification<TreeNodeVisibilityKeywords> {
-    private String treeIdentifier = "someTree";
-    
     public class Any {
         public TreeNodeVisibilityKeywords create() {
             return new TreeNodeVisibilityKeywords();
@@ -58,7 +55,7 @@ public class TreeNodeVisibilityKeywordsSpec extends TreeSpecification<TreeNodeVi
         private String nodeIdentifier = "some|node";
 
         public TreeNodeVisibilityKeywords create() {
-            return populateWithMockOperatingFactoryAndContextVerifier(new TreeNodeVisibilityKeywords());
+            return populateWithMockOperatorFactory(new TreeNodeVisibilityKeywords());
         }
 
         public void treeNodeShouldBeVisibleWithNodePathPassesIfTreeNodeIsVisible() throws Throwable {

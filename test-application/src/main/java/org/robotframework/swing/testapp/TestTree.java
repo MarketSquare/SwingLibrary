@@ -13,11 +13,10 @@ import javax.swing.tree.TreePath;
 import org.robotframework.javalib.util.KeywordNameNormalizer;
 
 public class TestTree extends JTree implements ActionListener {
-    public static int insertedChildrenCounter = 0;
-    
     private JPopupMenu popup = new JPopupMenu() {{
         add(new MenuItemWithCommand("Insert a child", "insert"));
         add(new MenuItemWithCommand("Remove", "remove"));
+        add(new MenuItemWithCommand("Save node paths", "savenodes"));
         add(new MenuItemWithCommand("Show dialog", "showdialog"));
         add(new MenuItemWithCommand("Hide root node", "hideroot"));
         add(new MenuItemWithCommand("Show root node", "showroot"));
@@ -66,7 +65,7 @@ public class TestTree extends JTree implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getActionCommand().equals("insert")) {
-            getLastPathComponent().add(new DefaultMutableTreeNode("child" + (insertedChildrenCounter++)));
+            getLastPathComponent().add(new DefaultMutableTreeNode("child"));
         } else if (ae.getActionCommand().equals("remove")) {
             removeSelected();
         } else if (ae.getActionCommand().equals("showdialog")) {
@@ -75,7 +74,9 @@ public class TestTree extends JTree implements ActionListener {
             setRootVisible(false);
         } else if (ae.getActionCommand().equals("showroot")) {
             setRootVisible(true);
-        }
+        } else if (ae.getActionCommand().equals("savenodes")) {
+            TestTreeResults.saveNodes(getSelectionPaths());
+        }        
         refresh();
     }
     

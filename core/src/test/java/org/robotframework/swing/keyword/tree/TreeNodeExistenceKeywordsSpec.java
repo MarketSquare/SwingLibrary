@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.tree.TreeNodeExistenceKeywords;
 import org.robotframework.swing.tree.TreeNodeExistenceResolver;
 
 
@@ -42,7 +41,7 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
             nodeExistenceResolver = mock(TreeNodeExistenceResolver.class);
             
             return new TreeNodeExistenceKeywords() {
-                TreeNodeExistenceResolver createExistenceResolver(String treeIdentifier) {
+                TreeNodeExistenceResolver createExistenceResolver(String identifier) {
                     return nodeExistenceResolver;
                 }
             };
