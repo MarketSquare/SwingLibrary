@@ -175,7 +175,7 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
 	collapseTreeNode	${treeName}	${rootNode}|${childNode1}
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	3	${visibleNodes}
-	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
+	hideRootNode
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	2	${visibleNodes}
 
@@ -183,15 +183,22 @@ Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected N
 	[setup]	resetNodes
 	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
 
-Get Tree Node Label Keyword Returns The Last Nodes Name	[tags]	development
+Get Tree Node Label Keyword Returns The Last Nodes Name
 	[setup]	resetNodes
 	expandTreeNode	${treeName}	${rootNode}|${childNode1}
 	${treeNodeLabel}=	getTreeNodeLabel	${treeName}	3
 	shouldBeEqual	${leafNode2}	${treeNodeLabel}
 
+Get Tree Node Label Keyword Works With Hidden Root
+	[setup]	resetNodes
+	expandTreeNode	${treeName}	${rootNode}|${childNode1}
+	hideRootNode
+	${treeNodeLabel}=	getTreeNodeLabel	${treeName}	2
+	shouldBeEqual	${leafNode2}	${treeNodeLabel}
+
 Keywords Also Work With Invisible Root
 	[setup]	resetNodes
-	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Hide root node
+	hideRootNode
 	treeNodeShouldBeVisible	${treeName}	${childNode2}
 	treeNodeShouldBeVisible	${treeName}	${childNode1}
 	treeNodeShouldExist	${treeName}	${childNode2}
@@ -253,3 +260,6 @@ selectNodes	[arguments]	${root}=${rootNode}|
 
 nodesShouldBeSaved
 	savedNodesShouldBe	${childNode2}	${childNode1}
+
+hideRootNode	[arguments]	${root}=${rootNode}
+	selectFromTreeNodePopupMenu	${treeName}	${root}	Hide root node
