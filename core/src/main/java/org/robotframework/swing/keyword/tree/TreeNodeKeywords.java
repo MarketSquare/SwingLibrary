@@ -120,7 +120,11 @@ public class TreeNodeKeywords extends TreeSupport {
         return treeOperator.getTreeNodeLabel(asIndex(nodeIndex));
     }
     
-    @RobotKeyword
+    @RobotKeyword("Returns the node index.\n"
+        + "NodePath must be a string of form _path|to|node_.\n\n"
+        + "Example:\n"
+        + "| ${nodeIndex}= | Get Tree Node Index | _Root|Folder|ElementX_ |\n"
+        + "| Should Be Equal As Integers | _4_ | _${nodeIndex}_ |\n")
     public int getTreeNodeIndex(String identifier, String nodePath) {
         return createTreeOperator(identifier).getTreeNodeIndex(nodePath);
     }

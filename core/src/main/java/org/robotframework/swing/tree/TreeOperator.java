@@ -121,7 +121,7 @@ public class TreeOperator extends JTreeOperator implements ComponentWrapper {
     }
 
     public int getTreeNodeIndex(String nodePath) {
-        throw new UnsupportedOperationException("Not implemented.");
+        return getRowForPath(findPath(nodePath));
     }
     
     TreePopupMenuOperatorFactory createPopupFactory() {

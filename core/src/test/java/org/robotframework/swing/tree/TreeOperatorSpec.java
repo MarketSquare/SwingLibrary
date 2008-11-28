@@ -126,14 +126,18 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         }
     }
 
-    public class GettingLabel {
+    public class WorkingOnNodeIndexes {
         public TreeOperator create() {
             treePath = mock(TreePath.class);
             tree = createMockJTree();
-            return new TreeOperator(tree);
+            return new TreeOperator(tree) {
+                public TreePath findPath(String path) {
+                    return TreeOperatorSpec.this.treePath;
+                }
+            };
         }
         
-        public void getTreeNodeLabel() {
+        public void getsTreeNodeLabel() {
             final String label = "someNode";
             checking(new Expectations() {{
                 one(tree).getPathForRow(2); will(returnValue(treePath));
@@ -141,6 +145,14 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
             }});
             
             specify(context.getTreeNodeLabel(2), label);
+        }
+        
+        public void getsTreeNodeIndex() {
+            checking(new Expectations() {{
+                one(tree).getRowForPath(treePath); will(returnValue(3)); 
+            }});
+            
+            specify(context.getTreeNodeIndex(nodeIdentifier), 3);
         }
     }
     
