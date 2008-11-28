@@ -196,6 +196,19 @@ Get Tree Node Label Keyword Works With Hidden Root
 	${treeNodeLabel}=	getTreeNodeLabel	${treeName}	2
 	shouldBeEqual	${leafNode2}	${treeNodeLabel}
 
+Get Tree Node Index Keyword Returns The Node Index	[tags]	development
+	[setup]	resetNodes
+	expandTreeNode	${treeName}	${rootNode}|${childNode1}
+	${nodeIndex}=	getTreeNodeIndex	${treeName}	${rootNode}|${childNode1}|{leafNode2}
+	shouldBeEqualAsIntegers	3	${nodeIndex}
+
+Get Tree Node Index Keyword Works With Hidden Root	[tags]	development
+	[setup]	resetNodes
+	expandTreeNode	${treeName}	${rootNode}|${childNode1}
+	hideRootNode
+	${nodeIndex}=	getTreeNodeIndex	${treeName}	${childNode1}|{leafNode2}
+	shouldBeEqualAsIntegers	2	${nodeIndex}
+
 Keywords Also Work With Invisible Root
 	[setup]	resetNodes
 	hideRootNode

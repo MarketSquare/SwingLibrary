@@ -60,16 +60,28 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         public void hasGetTreeNodeLabelKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getTreeNodeLabel")));
         }
+
+        public void hasGetTreeNodeIndexKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTreeNodeIndex")));
+        }
     }
 
     public class OperatingOnTree {
-        private String nodeIdentifier = "path|to|node";
+        private String nodePath = "path|to|node";
 
         public TreeNodeKeywords create() {
             return populateWithMockOperatorFactory(new TreeNodeKeywords());
         }
+        
+        public void getsTreeNodeIndex() {
+            checking(new Expectations() {{
+                one(treeOperator).getTreeNodeIndex(nodePath); will(returnValue(3));
+            }});
+            
+            specify(context.getTreeNodeIndex(treeIdentifier, nodePath), 3);
+        }
 
-        public void getsTreeLabel() {
+        public void getsTreeNodeLabel() {
             final String nodeLabel = "node";
             checking(new Expectations() {{
                 one(treeOperator).getTreeNodeLabel(2); will(returnValue(nodeLabel));
@@ -88,130 +100,130 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         
         public void collapsesTreeNode() {
             checking(new Expectations() {{
-                one(treeOperator).collapse(nodeIdentifier);
+                one(treeOperator).collapse(nodePath);
             }});
             
-            context.collapseTreeNode(treeIdentifier, nodeIdentifier);
+            context.collapseTreeNode(treeIdentifier, nodePath);
         }
         
         public void expandsTreeNode() {
             checking(new Expectations() {{
-                one(treeOperator).expand(nodeIdentifier);
+                one(treeOperator).expand(nodePath);
             }});
             
-            context.expandTreeNode(treeIdentifier, nodeIdentifier);
+            context.expandTreeNode(treeIdentifier, nodePath);
         }
         
         public void selectsTreeNode() {
             checking(new Expectations() {{
-                one(treeOperator).addSelection(nodeIdentifier);
+                one(treeOperator).addSelection(nodePath);
             }});
             
-            context.selectTreeNode(treeIdentifier, nodeIdentifier);
+            context.selectTreeNode(treeIdentifier, nodePath);
         }
         
         public void unselectsTreeNode() {
             checking(new Expectations() {{
-                one(treeOperator).removeSelection(nodeIdentifier);
+                one(treeOperator).removeSelection(nodePath);
             }});
             
-            context.unselectTreeNode(treeIdentifier, nodeIdentifier);
+            context.unselectTreeNode(treeIdentifier, nodePath);
         }
         
         public void treeNodeShouldBeExpandedPassesIfTreeNodeIsExpanded() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isExpanded(nodeIdentifier); will(returnValue(true));
+                one(treeOperator).isExpanded(nodePath); will(returnValue(true));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeExpanded(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeExpanded(treeIdentifier, nodePath);
                 }
             }, must.not().raise(Exception.class));
         }
         
         public void treeNodeShouldBeExpandedFailsIfTreeNodeIsNotExpanded() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isExpanded(nodeIdentifier); will(returnValue(false));
+                one(treeOperator).isExpanded(nodePath); will(returnValue(false));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeExpanded(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeExpanded(treeIdentifier, nodePath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is not expanded."));
+            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodePath + "' is not expanded."));
         }
         
         public void treeNodeShouldBeCollapsedPassesIfTreeNodeIsCollapsed() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isCollapsed(nodeIdentifier); will(returnValue(true));
+                one(treeOperator).isCollapsed(nodePath); will(returnValue(true));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeCollapsed(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeCollapsed(treeIdentifier, nodePath);
                 }
             }, must.not().raise(Exception.class));
         }
         
         public void treeNodeShouldBeCollapsedFailsIfTreeNodeIsNotCollapsed() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isCollapsed(nodeIdentifier); will(returnValue(false));
+                one(treeOperator).isCollapsed(nodePath); will(returnValue(false));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeCollapsed(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeCollapsed(treeIdentifier, nodePath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is not collapsed."));
+            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodePath + "' is not collapsed."));
         }
         
         public void treeNodeShouldBeLeafPassesIfNodeIsLeaf() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isLeaf(nodeIdentifier); will(returnValue(true));
+                one(treeOperator).isLeaf(nodePath); will(returnValue(true));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeLeaf(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeLeaf(treeIdentifier, nodePath);
                 }
             }, must.not().raise(Exception.class));
         }
         
         public void treeNodeShouldBeLeafFailsIfNodeIsNotLeaf() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isLeaf(nodeIdentifier); will(returnValue(false));
+                one(treeOperator).isLeaf(nodePath); will(returnValue(false));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeLeaf(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeLeaf(treeIdentifier, nodePath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is not leaf."));
+            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodePath + "' is not leaf."));
         }
         
         public void treeNodeShouldNotBeLeafPassesIfNodeIsNotLeaf() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isLeaf(nodeIdentifier); will(returnValue(false));
+                one(treeOperator).isLeaf(nodePath); will(returnValue(false));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldNotBeLeaf(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldNotBeLeaf(treeIdentifier, nodePath);
                 }
             }, must.not().raise(Exception.class));
         }
         
         public void treeNodeShouldNotBeLeafFailsIfNodeIsLeaf() throws Throwable {
             checking(new Expectations() {{
-                one(treeOperator).isLeaf(nodeIdentifier); will(returnValue(true));
+                one(treeOperator).isLeaf(nodePath); will(returnValue(true));
             }});
             
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldNotBeLeaf(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldNotBeLeaf(treeIdentifier, nodePath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is leaf."));
+            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodePath + "' is leaf."));
         }
         
         public void getsTreeNodeCount() {

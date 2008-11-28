@@ -119,4 +119,9 @@ public class TreeNodeKeywords extends TreeSupport {
         TreeOperator treeOperator = createTreeOperator(identifier);
         return treeOperator.getTreeNodeLabel(asIndex(nodeIndex));
     }
+    
+    @RobotKeyword
+    public int getTreeNodeIndex(String identifier, String nodePath) {
+        return createTreeOperator(identifier).getTreeNodeIndex(nodePath);
+    }
 }
