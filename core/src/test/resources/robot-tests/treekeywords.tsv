@@ -199,14 +199,14 @@ Get Tree Node Label Keyword Works With Hidden Root
 Get Tree Node Index Keyword Returns The Node Index
 	[setup]	resetNodes
 	expandTreeNode	${treeName}	${rootNode}|${childNode1}
-	${nodeIndex}=	getTreeNodeIndex	${treeName}	${rootNode}|${childNode1}|{leafNode2}
+	${nodeIndex}=	getTreeNodeIndex	${treeName}	${rootNode}|${childNode1}|${leafNode2}
 	shouldBeEqualAsIntegers	3	${nodeIndex}
 
 Get Tree Node Index Keyword Works With Hidden Root
 	[setup]	resetNodes
 	expandTreeNode	${treeName}	${rootNode}|${childNode1}
 	hideRootNode
-	${nodeIndex}=	getTreeNodeIndex	${treeName}	${childNode1}|{leafNode2}
+	${nodeIndex}=	getTreeNodeIndex	${treeName}	${childNode1}|${leafNode2}
 	shouldBeEqualAsIntegers	2	${nodeIndex}
 
 Keywords Also Work With Invisible Root
