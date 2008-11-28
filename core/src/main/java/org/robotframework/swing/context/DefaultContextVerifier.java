@@ -33,6 +33,7 @@ public class DefaultContextVerifier extends AbstractContextVerifier {
         super(ERROR_MESSAGE);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Class<? extends Component>[] getExpectedClasses() {
         return new Class[] { Window.class, JPanel.class, Panel.class, JInternalFrame.class };
