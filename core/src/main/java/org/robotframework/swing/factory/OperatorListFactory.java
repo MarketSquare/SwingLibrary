@@ -49,4 +49,9 @@ public class OperatorListFactory<T extends Operator> {
     Component findComponent(Container context, int index) {
         return ComponentOperator.findComponent(context, chooser, index);
     }
+    
+    public interface ComponentBasedOperatorFactory<T extends Operator> {
+        T createOperator(Component component);
+    }
 }
+

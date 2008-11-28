@@ -12,8 +12,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ComponentOperator;
-import org.robotframework.swing.factory.ComponentBasedOperatorFactory;
-import org.robotframework.swing.factory.OperatorListFactory;
+import org.robotframework.swing.factory.OperatorListFactory.ComponentBasedOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class OperatorListFactorySpec extends Specification<OperatorListFactory> {

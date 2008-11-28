@@ -21,8 +21,6 @@ import java.awt.Component;
 import javax.swing.JCheckBox;
 
 import org.netbeans.jemmy.operators.Operator.Finder;
-import org.robotframework.swing.checkbox.CheckBoxOperator;
-import org.robotframework.swing.factory.ComponentBasedOperatorFactory;
 import org.robotframework.swing.factory.OperatorListFactory;
 
 /**
