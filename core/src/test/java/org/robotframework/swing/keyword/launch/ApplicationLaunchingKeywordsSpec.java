@@ -37,7 +37,7 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
             context.launchApplication("org.robotframework.swing.keyword.testapp.SomeApplication", args);
             SomeApplication testApp = new SomeApplication();
             testApp.assertApplicationWasCalled();
-            specify(testApp.getReceivedArguments(), containsInOrder(args));
+            specify(testApp.getReceivedArguments(), containsInOrder("arg1", "arg2", "arg3"));
         }
     }
 
