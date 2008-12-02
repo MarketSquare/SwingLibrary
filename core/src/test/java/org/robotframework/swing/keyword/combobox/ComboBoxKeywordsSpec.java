@@ -5,7 +5,6 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.combobox.ComboBoxOperator;
-import org.robotframework.swing.combobox.DefaultComboBoxOperator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -47,12 +46,12 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         }
     }
 
-    public class WhenOperating {
+    public class Operating {
         private OperatorFactory<?> operatorFactory;
         private ComboBoxOperator operator;
 
         public ComboBoxKeywords create() {
-            operator = mock(DefaultComboBoxOperator.class);
+            operator = mock(ComboBoxOperator.class);
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords();
             operatorFactory = injectMockTo(comboBoxKeywords, OperatorFactory.class);
 
@@ -85,7 +84,7 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
             specify(context.getSelectedItemFromComboBox(comboBoxIdentifier), must.equal(selectedItem));
         }
     }
-
+    
     public class HandlingAliases {
         private boolean isAnAlias = false;
         public void checkBoxShouldNotBeCheckedIsAnAliasForCheckBoxShouldBeUnchecked() {
