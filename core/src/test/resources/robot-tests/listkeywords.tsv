@@ -30,6 +30,12 @@ Select From List By Name
 Selecting Item By A Substring Of The Name Should Fail
 	runKeywordAndExpectError	*	selectFromList	${listIndex}	hre
 
+Selecting From List With Click Count
+	selectFromList	${listName}	three	2
+	listSelectionShouldBe	${listName}	three
+	${clickCount}=	getSelectionClickCount
+	shouldBeEqualAsIntegers	2	${clickCount}
+
 Clear Selection From List
 	selectFromList	${listIndex}	three
 	listSelectionShouldBe	${listIndex}	three

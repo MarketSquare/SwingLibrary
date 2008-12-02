@@ -49,7 +49,7 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
 
     public class WhenOperating {
         private String listIdentifier = "someList";
-        private OperatorFactory<ListOperator> operatorFactory;
+        private OperatorFactory<?> operatorFactory;
         private ListOperator listOperator;
 
         public ListKeywords create() {
@@ -83,12 +83,20 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
                 one(listOperator).findItemIndex(with(any(ListItemChooser.class)));
                 will(returnValue(2));
 
-                one(listOperator).selectItem(2);
-                one(listOperator).selectItem(Integer.parseInt(numericIdentifier));
+                one(listOperator).clickOnItem(2, 1);
+                one(listOperator).clickOnItem(Integer.parseInt(numericIdentifier), 1);
             }});
 
-            context.selectFromList(listIdentifier, "someListItem");
-            context.selectFromList(listIdentifier, numericIdentifier);
+            context.selectFromList(listIdentifier, "someListItem", new String[0]);
+            context.selectFromList(listIdentifier, numericIdentifier, new String[0]);
+        }
+        
+        public void selectsFromListWithAlternativeClickCount() {
+            checking(new Expectations() {{
+                one(listOperator).clickOnItem(3, 2);
+            }});
+            
+            context.selectFromList(listIdentifier, "3", new String[] { "2" });
         }
 
         public void getsSelectedValueFromList() {

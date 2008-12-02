@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.list;
 
 import org.netbeans.jemmy.operators.JListOperator;
 import org.netbeans.jemmy.operators.JListOperator.ListItemChooser;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.arguments.VoidIdentifierHandler;
@@ -43,10 +44,14 @@ public class ListKeywords {
     @RobotKeyword("Selects an item from the list.\n\n"
         + "Examples:\n"
         + "| Select From List | _myList_ | _myItem_ | # selects 'myItem'                   |\n"
-        + "| Select From List | _myList_ | _0_      | # selects the first item in the list |\n")
-    public void selectFromList(String identifier, String listItemIdentifier) {
+        + "| Select From List | _myList_ | _0_      | # selects the first item in the list |\n\n"
+        + "An optional _click count_ parameter can be provided for example if a double click is required.\n"
+        + "Default click count is one:\n"
+        + "| Select From List | _myList_ | _myItem_ | _2_ | # doubleclicks on item |\n")
+    @ArgumentNames({"identifier", "listItemIdentifier", "clickCount=1"})
+    public void selectFromList(String identifier, String listItemIdentifier, String[] clickCount) {
         ListOperator listOperator = operatorFactory.createOperator(identifier);
-        new ListSelector(listOperator).parseArgument(listItemIdentifier);
+        new ListSelector(listOperator, clickCount).parseArgument(listItemIdentifier);
     }
 
     @RobotKeyword("Returns the item that's currently selected in the list.\n\n"
@@ -67,14 +72,16 @@ public class ListKeywords {
 
     private static class ListSelector extends VoidIdentifierHandler {
         private final ListOperator listOperator;
+        private int clickCount;
 
-        public ListSelector(ListOperator listOperator) {
+        public ListSelector(ListOperator listOperator, String[] clickCountAsArray) {
             this.listOperator = listOperator;
+            this.clickCount = extractClickCount(clickCountAsArray);
         }
 
         @Override
         protected void handleIndexArgument(int index) {
-            listOperator.selectItem(index);
+            listOperator.clickOnItem(index, clickCount);
         }
 
         @Override
@@ -91,7 +98,15 @@ public class ListKeywords {
             };
 
             int itemIndex = listOperator.findItemIndex(itemChooser);
-            listOperator.selectItem(itemIndex);
+            listOperator.clickOnItem(itemIndex, clickCount);
+        }
+
+        private int extractClickCount(String[] clickCountAsArray) {
+            if (clickCountAsArray.length == 0) {
+                return 1;
+            } else {
+                return Integer.parseInt(clickCountAsArray[0]);
+            }
         }
     }
 }
