@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.keyword.combobox;
 
+import junit.framework.Assert;
+
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.combobox.ComboBoxOperator;
@@ -35,8 +37,7 @@ public class ComboBoxKeywords {
         + "| Select From Combo Box | _myComboBox_ | _myItem_ | # Selects _'myItem'_ from combobox |\n"
         + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n")
     public void selectFromComboBox(String identifier, String comboItemIdentifier) {
-        ComboBoxOperator comboBoxOperator = operatorFactory.createOperator(identifier);
-        comboBoxOperator.selectItem(comboItemIdentifier);
+        createOperator(identifier).selectItem(comboItemIdentifier);
     }
 
     @RobotKeyword("Alias for `Select From Combobox` keyword.\n")
@@ -49,11 +50,29 @@ public class ComboBoxKeywords {
         + "| ${selectedItem}= | Get Selected Item From Combobox | _myComboBox_      |\n"
         + "| Should Be Equal  | _item three_                    | _${selectedItem}_ |\n")
     public Object getSelectedItemFromComboBox(String identifier) {
-        return operatorFactory.createOperator(identifier).getSelectedItem();
+        return createOperator(identifier).getSelectedItem();
     }
 
     @RobotKeyword("Alias for `Get Selected Item From Combobox` keyword.\n")
     public Object getSelectedItemFromDropdownMenu(String identifier) {
         return getSelectedItemFromComboBox(identifier);
+    }
+    
+    @RobotKeyword("Fails if combobox is disabled\n\n"
+        + "Example:\n"
+        + "| Combobox Should Be Enabled | _OK_ |\n")
+    public void comboBoxShouldBeEnabled(String identifier) {
+        Assert.assertTrue("Combobox '" + identifier + "' was disabled.", createOperator(identifier).isEnabled());
+    }
+    
+    @RobotKeyword("Fails if combobox is enabled\n\n"
+        + "Example:\n"
+        + "| Combobox Should Be Disabled | _OK_ |\n")
+    public void comboBoxShouldBeDisabled(String identifier) {
+        Assert.assertFalse("Combobox '" + identifier + "' was enabled.", createOperator(identifier).isEnabled());
+    }
+    
+    private ComboBoxOperator createOperator(String identifier) {
+        return operatorFactory.createOperator(identifier);
     }
 }

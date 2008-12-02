@@ -56,5 +56,13 @@ public class DefaultComboBoxOperatorSpec extends Specification<DefaultComboBoxOp
             
             specify(context.getSelectedItem(), selectedItem);
         }
+        
+        public void getItemEnabledState() {
+            checking(new Expectations() {{
+                one(jComboboxOperator).isEnabled(); will(returnValue(false));
+            }});
+            
+            specify(context.isEnabled(), false);
+        }
     }
 }

@@ -23,4 +23,5 @@ import org.robotframework.swing.operator.ComponentWrapper;
 public interface ComboBoxOperator extends ComponentWrapper {
     void selectItem(String comboItemIdentifier);
     Object getSelectedItem();
+    boolean isEnabled();
 }

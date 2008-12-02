@@ -52,6 +52,19 @@ Select From Dropdown Menu By Name
 Select From Combobox Works Only With Exact Match
 	runKeywordAndExpectError	*	selectFromCombobox	${comboboxName}	wo
 
+Combobox Should Be Enabled
+	comboboxShouldBeEnabled	${comboboxName}
+	disableCombobox	${comboboxName}
+	runKeywordAndExpectError	Combobox '${ComboboxName}' was disabled.	comboboxShouldBeEnabled	${comboboxName}
+	[teardown]	enableCombobox	${comboboxName}
+
+Combobox Should Be Disabled	
+	disableCombobox	${comboboxName}
+	comboboxShouldBeDisabled	${comboboxName}
+	enableCombobox	${comboboxName}
+	runKeywordAndExpectError	Combobox '${comboboxName}' was enabled.	comboboxShouldBeDisabled	${comboboxName}
+	[teardown]	enableCombobox	${comboboxName}
+
 Dropdown Keywords Should Fail If Context Is Not A Window
 	selectEmptyContext
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectFromCombobox	${comboboxName}	${comboboxItem2}

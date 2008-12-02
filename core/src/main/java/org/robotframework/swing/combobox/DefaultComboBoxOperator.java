@@ -32,4 +32,8 @@ public class DefaultComboBoxOperator extends IdentifierSupport implements ComboB
     public Object getSelectedItem() {
         return comboboxOperator.getSelectedItem();
     }
+
+    public boolean isEnabled() {
+        return comboboxOperator.isEnabled();
+    }
 }

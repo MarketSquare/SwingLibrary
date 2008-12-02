@@ -1,6 +1,8 @@
 package org.robotframework.swing.keyword.combobox;
 
+import jdave.Block;
 import jdave.junit4.JDaveRunner;
+import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -44,6 +46,14 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         public void hasGetSelectedItemFromDropDownMenuKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getSelectedItemFromDropdownMenu")));
         }
+        
+        public void hasComboBoxShouldBeEnabledKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("comboBoxShouldBeEnabled")));
+        }
+        
+        public void hasComboBoxShouldBeDisabledKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("comboBoxShouldBeDisabled")));
+        }
     }
 
     public class Operating {
@@ -82,6 +92,54 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
             }});
 
             specify(context.getSelectedItemFromComboBox(comboBoxIdentifier), must.equal(selectedItem));
+        }
+        
+        public void comboboxShouldBeEnabledPassesWhenComboboxIsEnabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(true));
+            }});
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.comboBoxShouldBeEnabled(comboBoxIdentifier);
+                }
+            }, must.not().raiseAnyException());
+        }
+        
+        public void comboboxShouldBeDisabledPassesWhenComboboxIsDisabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(false));
+            }});
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.comboBoxShouldBeDisabled(comboBoxIdentifier);
+                }
+            }, must.not().raiseAnyException());
+        }
+        
+        public void comboboxShouldBeEnabledFailsWhenComboboxIsDisabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(false));
+            }});
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.comboBoxShouldBeEnabled(comboBoxIdentifier);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, "Combobox '" + comboBoxIdentifier + "' was disabled."));
+        }
+        
+        public void comboboxShouldBeDisabledFailsWhenComboboxIsEnabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(true));
+            }});
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.comboBoxShouldBeDisabled(comboBoxIdentifier);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, "Combobox '" + comboBoxIdentifier + "' was enabled."));
         }
     }
     
