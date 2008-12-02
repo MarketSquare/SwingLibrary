@@ -32,7 +32,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         public void hasSelectTreeNodeKeyword() {
             specify(context, satisfies(new RobotKeywordContract("selectTreeNode")));
         }
-
+        
         public void hasTreeNodeShouldBeExpandedKeyword() {
             specify(context, satisfies(new RobotKeywordContract("treeNodeShouldBeExpanded")));
         }
@@ -119,7 +119,17 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 one(treeOperator).addSelection(nodePath);
             }});
             
-            context.selectTreeNode(treeIdentifier, nodePath);
+            context.selectTreeNode(treeIdentifier, nodePath, new String[0]);
+        }
+        
+        public void selectsMultipleTreeNodes() {
+            final String otherNode = "other|node";
+            checking(new Expectations() {{
+                one(treeOperator).addSelection(nodePath);
+                one(treeOperator).addSelection(otherNode);
+            }});
+            
+            context.selectTreeNode(treeIdentifier, nodePath, new String[] { otherNode });
         }
         
         public void unselectsTreeNode() {

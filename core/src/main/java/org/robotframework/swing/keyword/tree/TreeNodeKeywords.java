@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.tree;
 
 import junit.framework.Assert;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeOperator;
@@ -55,9 +56,16 @@ public class TreeNodeKeywords extends TreeSupport {
         + "Does not clear earlier selections.\n"
         + "If several nodes have the same path then *only the first* of those nodes is selected.\n\n"
         + "Example:\n"
-        + "| Select Tree Node | _myTree_ | _Root|Folder_ |\n")
-    public void selectTreeNode(String identifier, String nodeIdentifier) {
-        createTreeOperator(identifier).addSelection(nodeIdentifier);
+        + "| Select Tree Node | _myTree_ | _Root|Folder_ |\n"
+        + "Any number of node identifiers can be provided to select multiple nodes at once:\n"
+        + "| Select Tree Node | _myTree_ | _Root|Folder_ | _Root|Folder2_ | _Root|Folder3_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "*additionalNodeIdentifiers"})
+    public void selectTreeNode(String identifier, String nodeIdentifier, String[] additionalNodeIdentifiers) {
+        TreeOperator treeOperator = createTreeOperator(identifier);
+        treeOperator.addSelection(nodeIdentifier);
+        for (String node : additionalNodeIdentifiers) {
+            treeOperator.addSelection(node);
+        }
     }
 
     @RobotKeyword("Fails if the tree node is collapsed.\n\n"

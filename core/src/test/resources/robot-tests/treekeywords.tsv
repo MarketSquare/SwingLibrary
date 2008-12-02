@@ -69,6 +69,12 @@ Select Tree Node By Name
 	treeNodeShouldBeSelected	${treeName}	${rootNode}
 	[teardown]	unselectTreeNode	${treeName}	${rootNode}
 
+Select Tree Node Keyword Selects Multiple Nodes
+	clearTreeSelection	${treeName}
+	selectTreeNode	${treeName}	${rootNode}|${childNode1}	${rootNode}|${childNode2}
+	treeNodeShouldBeSelected	${treeName}	${rootNode}|${childNode1}
+	treeNodeShouldBeSelected	${treeName}	${rootNode}|${childNode2}
+
 Unselect Tree Node By Index
 	clearTreeSelection	${treeName}
 	selectTreeNode	${treeName}	0
