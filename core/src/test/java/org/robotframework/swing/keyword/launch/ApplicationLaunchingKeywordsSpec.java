@@ -1,5 +1,7 @@
 package org.robotframework.swing.keyword.launch;
 
+import java.util.concurrent.CountDownLatch;
+
 import jdave.Block;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
@@ -88,24 +90,23 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
     public class HandlingExceptions {
         private boolean exceptionWasThrown = false;
         private String errorMessage = "error";
+        private CountDownLatch doneSignal;
 
         public ApplicationLaunchingKeywords create() {
+            doneSignal = new CountDownLatch(1);
+            
             return new ApplicationLaunchingKeywords() {
-                @Override
                 public void launchApplication(String className, String[] args) throws Exception {
                     throw new Exception(errorMessage);
                 }
 
-                @Override
                 Thread createThread(Runnable runnable) {
                     return new Thread(new ThreadGroup("test") {
                         public void uncaughtException(Thread t, Throwable e) {
-                            synchronized (HandlingExceptions.class) {
-                                if (e.getCause().getMessage().equals(errorMessage)) {
-                                    exceptionWasThrown = true;
-                                }
-                                HandlingExceptions.class.notify();
+                            if (e.getCause().getMessage().equals(errorMessage)) {
+                                exceptionWasThrown = true;
                             }
+                            doneSignal.countDown();
                         }
                     }, runnable);
                 }
@@ -114,10 +115,7 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
 
         public void rethrowsCaughtExceptionsAsRuntimeExceptions() throws Exception {
             context.startApplicationInSeparateThread("someClass", null);
-            synchronized (HandlingExceptions.class) {
-                HandlingExceptions.class.wait(10);
-            }
-
+            doneSignal.await();
             specify(exceptionWasThrown);
         }
     }
@@ -144,7 +142,7 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
     private static class TestApplication {
         public static boolean wasCalled = false;
         public static void main(String[] args) throws InterruptedException {
-            Thread.sleep(150);
+            Thread.sleep(350);
 
             wasCalled = true;
 
