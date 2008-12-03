@@ -33,14 +33,6 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
         public void hasStartApplicationInSeparateThreadKeyword() {
             specify(context, satisfies(new RobotKeywordContract("startApplicationInSeparateThread")));
         }
-
-        public void launchesApplications() throws Exception {
-            String[] args = new String[] { "arg1", "arg2", "arg3" };
-            context.launchApplication("org.robotframework.swing.keyword.testapp.SomeApplication", args);
-            SomeApplication testApp = new SomeApplication();
-            testApp.assertApplicationWasCalled();
-            specify(testApp.getReceivedArguments(), containsInOrder("arg1", "arg2", "arg3"));
-        }
     }
 
     public class Aliases {
@@ -50,7 +42,6 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
             final String applicationClass = "someClass";
 
             new ApplicationLaunchingKeywords() {
-                @Override
                 public void launchApplication(String className, String[] args) throws Exception {
                     if (className.equals(applicationClass)) {
                         wasCalled = true;
@@ -61,29 +52,39 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
             specify(wasCalled);
         }
     }
+    public class StartingApplications {
+        public ApplicationLaunchingKeywords create() {
+            return new ApplicationLaunchingKeywords();
+        }
 
+        public void launchesApplication() throws Exception {
+            String[] args = new String[] { "arg1", "arg2", "arg3" };
+            context.launchApplication("org.robotframework.swing.keyword.testapp.SomeApplication", args);
+            SomeApplication testApp = new SomeApplication();
+            testApp.assertApplicationWasCalled();
+            specify(testApp.getReceivedArguments(), containsInOrder("arg1", "arg2", "arg3"));
+        }
+    }
+    
     public class StartingApplicationsInAnotherThread {
         public ApplicationLaunchingKeywords create() {
             return new ApplicationLaunchingKeywords();
         }
 
         public void startsApplicationInAnotherThread() throws Exception {
+            TestApplication.startSignal = new CountDownLatch(1);
+            TestApplication.doneSignal = new CountDownLatch(1);
+            
             context.startApplicationInSeparateThread("org.robotframework.swing.keyword.launch.ApplicationLaunchingKeywordsSpec$TestApplication", null);
-            specifyTestApplicationWasCalledInAnotherThread();
+            
+            specify(!TestApplication.wasCalled);
+            unleashThreadAndWaitForFinish();
+            specify(TestApplication.wasCalled);
         }
 
-        private void specifyTestApplicationWasCalledInAnotherThread() throws InterruptedException {
-            Thread.sleep(10);
-
-            specify(!TestApplication.wasCalled);
-
-            while(!TestApplication.wasCalled) {
-                synchronized (TestApplication.class) {
-                    TestApplication.class.wait();
-                }
-            }
-
-            specify(TestApplication.wasCalled);
+        private void unleashThreadAndWaitForFinish() throws InterruptedException {
+            TestApplication.startSignal.countDown();
+            TestApplication.doneSignal.await();
         }
     }
 
@@ -101,14 +102,16 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
                 }
 
                 Thread createThread(Runnable runnable) {
-                    return new Thread(new ThreadGroup("test") {
+                    ThreadGroup exceptionCheckingGroup = new ThreadGroup("test") {
                         public void uncaughtException(Thread t, Throwable e) {
                             if (e.getCause().getMessage().equals(errorMessage)) {
                                 exceptionWasThrown = true;
                             }
                             doneSignal.countDown();
                         }
-                    }, runnable);
+                    };
+                    
+                    return new Thread(exceptionCheckingGroup, runnable);
                 }
             };
         }
@@ -140,15 +143,13 @@ public class ApplicationLaunchingKeywordsSpec extends Specification<ApplicationL
     }
     
     private static class TestApplication {
-        public static boolean wasCalled = false;
+        static CountDownLatch startSignal;
+        static CountDownLatch doneSignal;
+        static boolean wasCalled = false;
         public static void main(String[] args) throws InterruptedException {
-            Thread.sleep(350);
-
+            startSignal.await();
             wasCalled = true;
-
-            synchronized (TestApplication.class) {
-                TestApplication.class.notifyAll();
-            }
+            doneSignal.countDown();
         }
     }
 }
