@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.arguments.IdentifierHandler;
-import org.robotframework.swing.util.ComponentExistenceResolver;
 
 
 @RunWith(JDaveRunner.class)

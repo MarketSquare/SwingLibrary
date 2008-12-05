@@ -5,7 +5,7 @@ require 'lib/dependencies'
 
 PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
-VERSION_NUMBER = '0.8-SNAPSHOT'
+VERSION_NUMBER = '0.9-SNAPSHOT'
 
 repositories.remote << 'http://www.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
