@@ -10,7 +10,7 @@ VERSION_NUMBER = '0.9-SNAPSHOT'
 repositories.remote << 'http://www.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
 repositories.remote << 'http://repository.codehaus.org'
-repositories.remote << "file://#{File.dirname(__FILE__)}/lib"
+repositories.remote << 'lib' #"file://#{File.dirname(__FILE__)}/lib"
 
 Java.classpath << artifacts(PARANAMER_GENERATOR)
 Java.classpath << File.expand_path('lib/swing-library-paranamer.jar')
