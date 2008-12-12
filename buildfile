@@ -10,7 +10,6 @@ VERSION_NUMBER = '0.9-SNAPSHOT'
 repositories.remote << 'http://www.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
 repositories.remote << 'http://repository.codehaus.org'
-repositories.remote << 'lib' #"file://#{File.dirname(__FILE__)}/lib"
 
 Java.classpath << artifacts(PARANAMER_GENERATOR)
 Java.classpath << File.expand_path('lib/swing-library-paranamer.jar')
@@ -21,7 +20,7 @@ define PROJECT_NAME do
   project.version = VERSION_NUMBER
 
   define "core" do
-    compile.with DEPENDENCIES, ABBOT
+    compile.with DEPENDENCIES
     compile.options.source = "1.5"
     compile.options.target = "1.5"
 
@@ -33,9 +32,7 @@ define PROJECT_NAME do
     end
 
     package(:sources, :id => PROJECT_NAME)
-    package(:jar, :id => PROJECT_NAME).enhance do
-      include_abbot
-    end
+    package(:jar, :id => PROJECT_NAME)
   end
 
   desc "Test application"

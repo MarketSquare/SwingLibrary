@@ -87,13 +87,6 @@ module HelperMethods
     tmp_dir
   end
 
-  def include_abbot
-    mkdir_p _('target/classes')
-    artifacts(ABBOT).each do |jar|
-      sh "unzip -qo #{jar} -d #{_('target/classes')}", :verbose => false
-    end
-  end
-
   def java14_home 
     get_directory_from_settings('java14_home')
   end
