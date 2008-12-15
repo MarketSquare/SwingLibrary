@@ -63,8 +63,7 @@ module HelperMethods
   end
 
   def set_env(name, values)
-    new_value = values.flatten.inject {|memo,obj| "#{memo}:#{obj}" }
-    ENV[name] = "#{new_value}:#{ENV[name]}"
+    ENV[name] = "#{values.flatten.join(File::PATH_SEPARATOR)}#{File::PATH_SEPARATOR}#{ENV[name]}"
   end
 
   def sources
