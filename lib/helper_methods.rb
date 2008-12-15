@@ -72,7 +72,7 @@ module HelperMethods
   end
 
   def temp_dir
-    tmp_dir = "/tmp/#{File.basename(__FILE__)}_#{$$}"
+    tmp_dir = "#{tmp}/#{File.basename(__FILE__)}_#{$$}"
     if block_given?
       mkdir_p tmp_dir unless File.directory? tmp_dir
       back = pwd
@@ -85,6 +85,11 @@ module HelperMethods
       end
     end
     tmp_dir
+  end
+
+  def tmp
+    if ENV['TMP']; ENV['TMP'];
+    else; '/tmp'; end
   end
 
   def java14_home 

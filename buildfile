@@ -53,9 +53,9 @@ task :dist => :package do
     mkdir_p File.dirname(dist_jar)
     temp_dir do |tmpdir|
       artifacts(dist_dependencies).each do |jar|
-        sh "unzip -qo #{jar}", :verbose => false
+        sh "unzip -qo \"#{jar}\"", :verbose => false
       end
-      sh "zip -qr #{dist_jar} * -x \*.SF", :verbose => false
+      sh "zip -qr \"#{dist_jar}\" #{Dir['*'].join(' ')} -x '*.SF'", :verbose => false
     end
 
     if !Buildr.environment.nil? && Buildr.environment == 'legacy'
