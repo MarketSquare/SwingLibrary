@@ -49,4 +49,4 @@ Internal Frame Keywords Should Fail Context Is Not Correct
 
 *Keyword*	*Action*	*Argument*	*Argument*
 openInternalFrame
-	selectFromMainMenu	${internalFrameMenu}
+	selectFromMainMenuAndWait	${internalFrameMenu}
