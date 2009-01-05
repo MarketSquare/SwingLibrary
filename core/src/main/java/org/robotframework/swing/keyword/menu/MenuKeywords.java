@@ -18,7 +18,6 @@ package org.robotframework.swing.keyword.menu;
 
 import junit.framework.Assert;
 
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -32,8 +31,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
  */
 @RobotKeywords
 public class MenuKeywords extends MenuSupport {
-    private EventTool eventTool = new EventTool();
-
     @RobotKeyword("Selects an item from the menu of the currently selected window.\n\n"
         + "Example:\n"
         + "| Select Window    | _My Application_           |\n"
@@ -93,14 +90,6 @@ public class MenuKeywords extends MenuSupport {
 
     private void closeMenu() {
         menubarOperator().pressMouse();
-    }
-
-    JMenuItemOperator showMenuItem(final String path) {
-        JMenuItemOperator menuItemOperator = menubarOperator().showMenuItem(path);
-        eventTool.waitNoEvent(200);
-        menuItemOperator.grabFocus();
-        eventTool.waitNoEvent(200);
-        return menuItemOperator;
     }
 
     IComponentConditionResolver createMenuItemExistenceResolver() {

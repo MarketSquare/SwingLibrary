@@ -30,7 +30,7 @@ Get Main Menu Item Name
 	mainMenuItemNameShouldBe	0	${menuText}
 
 Main Menu Item Should Be Selected	[tags]	development
-	runKeywordAndExpectError	Menu item '${checkboxMenu}' is not selected.	mainMenuItemShouldBeChecked	${menuText}|${checkboxMenu}
+	runKeywordAndExpectError	Menu item '${menuText}|${checkboxMenu}' is not selected.	mainMenuItemShouldBeChecked	${menuText}|${checkboxMenu}
 	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
 	mainMenuItemShouldBeChecked	${menuText}|${checkboxMenu}
 	[teardown]	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
@@ -38,7 +38,7 @@ Main Menu Item Should Be Selected	[tags]	development
 Main Menu Item Should Not Be Selected	[tags]	development
 	mainMenuItemShouldNotBeChecked	${menuText}|${checkboxMenu}
 	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
-	runKeywordAndExpectError	Menu item '${checkboxMenu}' is selected.	mainMenuItemShouldNotBeChecked	${menuText}|${checkboxMenu}
+	runKeywordAndExpectError	Menu item '${menuText}|${checkboxMenu}' is selected.	mainMenuItemShouldNotBeChecked	${menuText}|${checkboxMenu}
 	[teardown]	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
 
 *Keyword*	*Action*

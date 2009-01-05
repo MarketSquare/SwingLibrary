@@ -16,8 +16,10 @@
 
 package org.robotframework.swing.menu;
 
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
 
@@ -25,7 +27,17 @@ import org.robotframework.swing.context.Context;
  * @author Heikki Hulkko
  */
 public class MenuSupport extends IdentifierSupport {
+    private EventTool eventTool = new EventTool();
+
     protected JMenuBarOperator menubarOperator() {
         return new JMenuBarOperator((ContainerOperator) Context.getContext());
+    }
+
+    protected JMenuItemOperator showMenuItem(final String path) {
+        JMenuItemOperator menuItemOperator = menubarOperator().showMenuItem(path);
+        eventTool.waitNoEvent(200);
+        menuItemOperator.grabFocus();
+        eventTool.waitNoEvent(200);
+        return menuItemOperator;
     }
 }
