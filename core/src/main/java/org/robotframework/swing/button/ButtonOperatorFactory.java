@@ -21,9 +21,6 @@ import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class ButtonOperatorFactory extends DefaultContextVerifyingOperatorFactory<ButtonOperator> {
     @Override
     public ButtonOperator createOperatorByIndex(int index) {

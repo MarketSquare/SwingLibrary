@@ -26,9 +26,6 @@ import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.factory.ContextBasedOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class TabPaneOperatorFactory extends IdentifierParsingOperatorFactory<TabbedPaneOperator> implements
     ContextBasedOperatorFactory<TabbedPaneOperator> {
     private ContextVerifier contextVerifier = new DefaultContextVerifier();

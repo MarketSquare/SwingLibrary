@@ -25,9 +25,6 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.Operator;
 
-/**
- * @author Heikki Hulkko
- */
 public class OperatorListFactory<T extends Operator> {
     private final ComponentBasedOperatorFactory<T> operatorFactory;
     private final ComponentChooser chooser;

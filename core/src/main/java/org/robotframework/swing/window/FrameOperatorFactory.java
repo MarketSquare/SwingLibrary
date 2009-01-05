@@ -18,9 +18,6 @@ package org.robotframework.swing.window;
 
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class FrameOperatorFactory extends IdentifierParsingOperatorFactory<FrameOperator> {
     public FrameOperator createOperatorByIndex(int index) {
         return new FrameOperator(index);

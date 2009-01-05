@@ -18,9 +18,6 @@ package org.robotframework.swing.factory;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.context.ContextVerifier;
 
-/**
- * @author Heikki Hulkko
- */
 public abstract class DefaultContextVerifyingOperatorFactory<T> extends IdentifierParsingOperatorFactory<T> {
     private ContextVerifier contextVerifier = new DefaultContextVerifier();
     

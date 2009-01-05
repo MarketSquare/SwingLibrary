@@ -26,9 +26,6 @@ import org.robotframework.swing.label.LabelOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class LabelKeywords {
     private IdentifierParsingOperatorFactory<LabelOperator> operatorFactory = new LabelOperatorFactory();

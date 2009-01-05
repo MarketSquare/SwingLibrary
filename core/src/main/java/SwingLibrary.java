@@ -19,9 +19,6 @@ import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
-/**
- * @author Heikki Hulkko
- */
 public class SwingLibrary extends AnnotationLibrary {
     public SwingLibrary() {
         super("org/robotframework/swing/keyword/**/*.class");

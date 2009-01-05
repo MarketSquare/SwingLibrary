@@ -21,9 +21,6 @@ import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class TreeOperatorFactory extends DefaultContextVerifyingOperatorFactory<TreeOperator> {
     public TreeOperator createOperatorByIndex(int index) {
         return new TreeOperator((ContainerOperator) Context.getContext(), index);

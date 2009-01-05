@@ -5,9 +5,6 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public class LabelOperator extends JLabelOperator implements ComponentWrapper {
     public LabelOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);

@@ -22,9 +22,6 @@ import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class ComboBoxOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComboBoxOperator> {
     public ComboBoxOperator createOperatorByIndex(int index) {
         JComboBoxOperator jComboboxOperator = new JComboBoxOperator((ContainerOperator) Context.getContext(), index);

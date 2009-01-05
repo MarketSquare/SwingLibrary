@@ -22,9 +22,6 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeSupport;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TreeNodeVisibilityKeywords extends TreeSupport {
     @RobotKeyword("Fails if the tree node is not visible.\n\n"

@@ -21,9 +21,6 @@ import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.keyboard.KeyEventSender;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class KeyEventKeywords {
     private KeyEventSender keyEventSender = new KeyEventSender();

@@ -24,9 +24,6 @@ import org.robotframework.swing.button.AbstractButtonOperator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.togglebutton.ToggleButtonOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class ToggleButtonKeywords {
     private OperatorFactory<AbstractButtonOperator> operatorFactory = new ToggleButtonOperatorFactory();

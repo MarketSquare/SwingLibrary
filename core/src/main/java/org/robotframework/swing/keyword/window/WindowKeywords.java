@@ -29,9 +29,6 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.window.FrameOperator;
 import org.robotframework.swing.window.FrameOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class WindowKeywords extends AbstractContextVerifier {
     private IdentifierParsingOperatorFactory<FrameOperator> operatorFactory = new FrameOperatorFactory();

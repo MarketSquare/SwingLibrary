@@ -22,9 +22,6 @@ import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.label.LabelOperator;
 
-/**
- * @author Heikki Hulkko
- */
 public class LabelOperatorFactory extends DefaultContextVerifyingOperatorFactory<LabelOperator> {
     public LabelOperator createOperatorByIndex(int index) {
         return new LabelOperator((ContainerOperator) Context.getContext(), index);

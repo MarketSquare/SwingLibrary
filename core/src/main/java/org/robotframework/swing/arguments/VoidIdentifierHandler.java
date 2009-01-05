@@ -16,9 +16,6 @@
 
 package org.robotframework.swing.arguments;
 
-/**
- * @author Heikki Hulkko
- */
 public abstract class VoidIdentifierHandler extends IdentifierHandler<Boolean> {
     @Override
     public Boolean indexArgument(int index) {

@@ -11,9 +11,6 @@ import org.robotframework.swing.spinner.SpinnerOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class SpinnerKeywords {
     private IdentifierParsingOperatorFactory<SpinnerOperator> operatorFactory = new SpinnerOperatorFactory();

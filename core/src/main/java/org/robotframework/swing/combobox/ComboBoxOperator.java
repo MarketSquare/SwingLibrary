@@ -17,9 +17,6 @@ package org.robotframework.swing.combobox;
 
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public interface ComboBoxOperator extends ComponentWrapper {
     void selectItem(String comboItemIdentifier);
     Object getSelectedItem();

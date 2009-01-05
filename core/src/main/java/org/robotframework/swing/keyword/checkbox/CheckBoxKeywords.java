@@ -24,9 +24,6 @@ import org.robotframework.swing.checkbox.CheckBoxOperator;
 import org.robotframework.swing.checkbox.CheckBoxOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class CheckBoxKeywords {
     private OperatorFactory<CheckBoxOperator> operatorFactory = new CheckBoxOperatorFactory();

@@ -6,9 +6,6 @@ import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 
-/**
- * @author Heikki Hulkko
- */
 public class DefaultComboBoxOperator extends IdentifierSupport implements ComboBoxOperator {
     private final JComboBoxOperator comboboxOperator;
 

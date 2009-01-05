@@ -17,9 +17,6 @@
 package org.robotframework.swing.factory;
 
 
-/**
- * @author Heikki Hulkko
- */
 public interface OperatorFactory<T> {
     T createOperator(String identifier);
 }

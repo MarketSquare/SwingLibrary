@@ -20,9 +20,6 @@ import org.netbeans.jemmy.JemmyProperties;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TimeoutKeywords {
     public final static String[] JEMMY_TIMEOUTS = new String[] { "DialogWaiter.WaitDialogTimeout",

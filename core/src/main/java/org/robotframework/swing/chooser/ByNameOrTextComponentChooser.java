@@ -20,9 +20,6 @@ import java.awt.Component;
 
 import org.netbeans.jemmy.ComponentChooser;
 
-/**
- * @author Heikki Hulkko
- */
 public class ByNameOrTextComponentChooser implements ComponentChooser {
     private ComponentChooser byNameComponentChooser;
     private ComponentChooser byTextComponentChooser;

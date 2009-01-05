@@ -18,9 +18,6 @@ package org.robotframework.swing.window;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public class FrameOperator extends JFrameOperator implements ComponentWrapper {
     public FrameOperator(int index) {
         super(index);

@@ -19,9 +19,6 @@ package org.robotframework.swing.tree;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.factory.OperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class TreeSupport extends IdentifierSupport {
     protected OperatorFactory<TreeOperator> operatorFactory = new TreeOperatorFactory();
     

@@ -18,10 +18,6 @@ package org.robotframework.swing.context;
 
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Sami Honkonen
- * @author Heikki Hulkko
- */
 public class Context {
     private static ComponentWrapper context;
 

@@ -21,9 +21,6 @@ import java.awt.event.KeyEvent;
 
 import abbot.tester.ComponentTester;
 
-/**
- * @author Heikki Hulkko
- */
 public class KeyEventSender {
     private ComponentTester componentTester = new ComponentTester();
 

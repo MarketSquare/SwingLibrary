@@ -24,10 +24,6 @@ import javax.swing.tree.TreePath;
 import org.netbeans.jemmy.operators.JTreeOperator;
 import org.springframework.util.ObjectUtils;
 
-/**
- * @author Sami Honkonen
- * @author Heikki Hulkko
- */
 public class TreePathFinder {
     private final JTreeOperator treeOperator;
 

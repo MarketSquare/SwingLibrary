@@ -21,9 +21,6 @@ import java.awt.Component;
 import org.netbeans.jemmy.ComponentChooser;
 import org.springframework.util.ObjectUtils;
 
-/**
- * @author Heikki Hulkko
- */
 public class ByNameComponentChooser implements ComponentChooser {
     private final String componentName;
 

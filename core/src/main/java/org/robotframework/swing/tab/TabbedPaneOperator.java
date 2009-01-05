@@ -7,9 +7,6 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public class TabbedPaneOperator extends JTabbedPaneOperator implements ComponentWrapper {
     public TabbedPaneOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);

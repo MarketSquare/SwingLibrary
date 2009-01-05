@@ -23,9 +23,6 @@ import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
 
-/**
- * @author Heikki Hulkko
- */
 public class MenuSupport extends IdentifierSupport {
     private EventTool eventTool = new EventTool();
 

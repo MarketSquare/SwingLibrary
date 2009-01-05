@@ -7,9 +7,6 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public class CheckBoxOperator extends JCheckBoxOperator implements ComponentWrapper {
     public CheckBoxOperator(ContainerOperator container, int index) {
         super(container, index);

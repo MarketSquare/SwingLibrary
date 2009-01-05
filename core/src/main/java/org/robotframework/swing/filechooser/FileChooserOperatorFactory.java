@@ -18,9 +18,6 @@ package org.robotframework.swing.filechooser;
 import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
-/**
- * @author Heikki Hulkko
- */
 public class FileChooserOperatorFactory {
     public FileChooserOperator createFileChooserOperator() {
         return coerceFileChooserOperator(new JFileChooserOperator());

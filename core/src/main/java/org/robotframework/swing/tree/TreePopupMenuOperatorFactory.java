@@ -23,10 +23,6 @@ import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
-/**
- * @author Sami Honkonen
- * @author Heikki Hulkko
- */
 public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFactory<JPopupMenuOperator> {
     private final TreeOperator treeOperator;
 

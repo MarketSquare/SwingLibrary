@@ -22,9 +22,6 @@ import javax.swing.JPopupMenu;
 
 import org.netbeans.jemmy.operators.ComponentOperator;
 
-/**
- * @author Heikki Hulkko
- */
 public interface IPopupCaller {
     JPopupMenu callPopupOnComponent(ComponentOperator componentOperator, Point pointToClick);
 }

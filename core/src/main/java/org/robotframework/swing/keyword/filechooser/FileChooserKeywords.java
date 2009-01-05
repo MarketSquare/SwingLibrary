@@ -20,9 +20,6 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.filechooser.FileChooserOperator;
 import org.robotframework.swing.filechooser.FileChooserOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class FileChooserKeywords {
     private FileChooserOperatorFactory fileChooserOperatorFactory = new FileChooserOperatorFactory();

@@ -21,9 +21,6 @@ import javax.swing.tree.TreePath;
 import org.netbeans.jemmy.TimeoutExpiredException;
 import org.robotframework.swing.arguments.IdentifierHandler;
 
-/**
- * @author Heikki Hulkko
- */
 public class TreePathFactory extends IdentifierHandler<TreePath> {
     private final TreeOperator treeOperator;
 

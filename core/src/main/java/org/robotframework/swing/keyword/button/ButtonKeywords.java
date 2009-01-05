@@ -26,9 +26,6 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class ButtonKeywords {
     private IdentifierParsingOperatorFactory<ButtonOperator> operatorFactory = new ButtonOperatorFactory();

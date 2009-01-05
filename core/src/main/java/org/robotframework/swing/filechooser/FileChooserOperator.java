@@ -17,9 +17,6 @@ package org.robotframework.swing.filechooser;
 
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public interface FileChooserOperator extends ComponentWrapper {
     void chooseFile(String fileName);
     void cancelSelection();

@@ -34,9 +34,6 @@ import org.robotframework.swing.tree.TreeSupport;
 
 import abbot.tester.ComponentTester;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TreeNodePopupKeywords extends TreeSupport {
     @RobotKeyword("Selects an item from the tree node's popup menu.\n\n"

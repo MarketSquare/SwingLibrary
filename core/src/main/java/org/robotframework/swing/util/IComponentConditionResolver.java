@@ -16,9 +16,6 @@
 
 package org.robotframework.swing.util;
 
-/**
- * @author Heikki Hulkko
- */
 public interface IComponentConditionResolver {
     boolean satisfiesCondition(String componentIdentifier);
 }

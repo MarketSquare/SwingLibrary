@@ -28,9 +28,6 @@ import abbot.tester.ComponentTester;
 import abbot.tester.JComponentTester;
 import abbot.tester.JTreeLocation;
 
-/**
- * @author Heikki Hulkko
- */
 public class TreePopupMenuItemFinder implements ITreePopupMenuItemFinder {
     private BasicFinder basicFinder = new BasicFinder();
     private ComponentTester componentTester = new JComponentTester();

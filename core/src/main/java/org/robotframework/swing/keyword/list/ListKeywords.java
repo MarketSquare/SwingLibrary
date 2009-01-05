@@ -27,9 +27,6 @@ import org.robotframework.swing.list.ListOperator;
 import org.robotframework.swing.list.ListOperatorFactory;
 import org.springframework.util.ObjectUtils;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class ListKeywords {
     private OperatorFactory<ListOperator> operatorFactory = new ListOperatorFactory();

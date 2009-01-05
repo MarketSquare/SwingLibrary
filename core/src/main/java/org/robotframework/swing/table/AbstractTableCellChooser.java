@@ -19,9 +19,6 @@ package org.robotframework.swing.table;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 
-/**
- * @author Heikki Hulkko
- */
 public abstract class AbstractTableCellChooser implements TableCellChooser {
     private final int expectedRow;
 

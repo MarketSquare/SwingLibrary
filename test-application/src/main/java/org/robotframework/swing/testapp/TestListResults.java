@@ -16,9 +16,6 @@
 package org.robotframework.swing.testapp;
 
 
-/**
- * @author Heikki Hulkko
- */
 public class TestListResults {
     public static Object selectedElement;
     public static int clickCount;

@@ -22,9 +22,6 @@ import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class ComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComponentOperator> {
     @Override
     public ComponentOperator createOperatorByIndex(int index) {

@@ -16,9 +16,6 @@
 
 package org.robotframework.swing.chooser;
 
-/**
- * @author Heikki Hulkko
- */
 public interface WithText {
     String getText();
 }

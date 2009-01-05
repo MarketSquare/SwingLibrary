@@ -24,9 +24,6 @@ import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 import org.robotframework.swing.common.IdentifierSupport;
 
-/**
- * @author Heikki Hulkko
- */
 public class DefaultTableOperator extends IdentifierSupport implements TableOperator {
     private final JTableOperator jTableOperator;
 

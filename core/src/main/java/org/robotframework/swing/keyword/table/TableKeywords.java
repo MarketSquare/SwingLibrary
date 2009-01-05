@@ -28,9 +28,6 @@ import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.table.TableOperator;
 import org.robotframework.swing.table.TableOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TableKeywords extends IdentifierSupport {
     private OperatorFactory<TableOperator> operatorFactory = new TableOperatorFactory();

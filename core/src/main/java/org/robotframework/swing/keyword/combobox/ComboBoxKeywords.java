@@ -24,9 +24,6 @@ import org.robotframework.swing.combobox.ComboBoxOperator;
 import org.robotframework.swing.combobox.ComboBoxOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class ComboBoxKeywords {
     private OperatorFactory<ComboBoxOperator> operatorFactory = new ComboBoxOperatorFactory();

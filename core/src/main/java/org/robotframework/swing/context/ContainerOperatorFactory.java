@@ -19,9 +19,6 @@ package org.robotframework.swing.context;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class ContainerOperatorFactory extends IdentifierParsingOperatorFactory<ContainerOperator> {
     @Override
     public ContainerOperator createOperatorByIndex(int index) {

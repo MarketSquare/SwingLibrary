@@ -6,9 +6,6 @@ import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class SpinnerOperatorFactory extends DefaultContextVerifyingOperatorFactory<SpinnerOperator> {
     @Override
     public SpinnerOperator createOperatorByIndex(int index) {

@@ -16,9 +16,6 @@
 
 package org.robotframework.swing.context;
 
-/**
- * @author Heikki Hulkko
- */
 public interface ContextVerifier {
     void verifyContext();
 }

@@ -16,9 +16,6 @@
 
 package org.robotframework.swing.arguments;
 
-/**
- * @author Heikki Hulkko
- */
 public interface ArgumentHandler<T> {
     T indexArgument(int index);
     T nameArgument(String name);

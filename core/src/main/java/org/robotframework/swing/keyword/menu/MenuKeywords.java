@@ -26,9 +26,6 @@ import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class MenuKeywords extends MenuSupport {
     @RobotKeyword("Selects an item from the menu of the currently selected window.\n\n"

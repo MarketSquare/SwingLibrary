@@ -22,9 +22,6 @@ import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.list.ListOperator;
 
-/**
- * @author Heikki Hulkko
- */
 public class ListOperatorFactory extends DefaultContextVerifyingOperatorFactory<ListOperator> {
     @Override
     public ListOperator createOperatorByIndex(int index) {

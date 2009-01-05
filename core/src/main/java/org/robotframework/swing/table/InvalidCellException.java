@@ -1,8 +1,5 @@
 package org.robotframework.swing.table;
 
-/**
- * @author Heikki Hulkko
- */
 public class InvalidCellException extends RuntimeException {
     private final String rowIdentifier;
     private final String columnIdentifier;

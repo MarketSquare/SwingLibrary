@@ -18,9 +18,6 @@ package org.robotframework.swing.dialog;
 
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class DialogOperatorFactory extends IdentifierParsingOperatorFactory<DialogOperator> {
     public DialogOperator createOperatorByIndex(int index) {
         return new DialogOperator(index);

@@ -34,10 +34,6 @@ import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.popup.DefaultPopupCaller;
 import org.robotframework.swing.popup.IPopupCaller;
 
-/**
- * @author Sami Honkonen
- * @author Heikki Hulkko
- */
 public class TreeOperator extends JTreeOperator implements ComponentWrapper {
     private IPopupCaller popupCaller = new DefaultPopupCaller();
     private TreePathFactory treePathFactory = new TreePathFactory(this);

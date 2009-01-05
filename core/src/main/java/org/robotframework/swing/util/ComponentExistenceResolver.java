@@ -19,9 +19,6 @@ package org.robotframework.swing.util;
 import org.netbeans.jemmy.TimeoutExpiredException;
 import org.robotframework.swing.arguments.ArgumentParser;
 
-/**
- * @author Heikki Hulkko
- */
 public class ComponentExistenceResolver implements IComponentConditionResolver {
     private ArgumentParser<?> identifierParser;
 

@@ -24,9 +24,6 @@ import org.robotframework.swing.tree.TreeNodeExistenceResolver;
 import org.robotframework.swing.tree.TreeSupport;
 
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TreeNodeExistenceKeywords extends TreeSupport {
     @RobotKeyword("Fails if the tree node does not exist.\n\n"

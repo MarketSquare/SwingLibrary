@@ -22,9 +22,6 @@ import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class ApplicationLaunchingKeywords {
     @RobotKeyword("Launches application with the given arguments.\n\n"

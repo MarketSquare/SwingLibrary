@@ -31,9 +31,6 @@ import org.robotframework.swing.context.ContextVerifier;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.factory.OperatorListFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class CheckBoxListKeywords {
     private ContextVerifier contextVerifier = new DefaultContextVerifier();

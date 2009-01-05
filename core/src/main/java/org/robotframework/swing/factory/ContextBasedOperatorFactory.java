@@ -18,9 +18,6 @@ package org.robotframework.swing.factory;
 
 import org.netbeans.jemmy.operators.Operator;
 
-/**
- * @author Heikki Hulkko
- */
 public interface ContextBasedOperatorFactory<T extends Operator> {
     T createOperatorFromContext();
 }

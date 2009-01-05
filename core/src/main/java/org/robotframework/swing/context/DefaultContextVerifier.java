@@ -23,9 +23,6 @@ import java.awt.Window;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
-/**
- * @author Heikki Hulkko
- */
 public class DefaultContextVerifier extends AbstractContextVerifier {
     static final String ERROR_MESSAGE = "To use this keyword you must first select a correct context. Please see e.g. \"Select Dialog\" -keyword.";
 

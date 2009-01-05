@@ -22,9 +22,6 @@ import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class TableOperatorFactory extends DefaultContextVerifyingOperatorFactory<TableOperator> {
     public TableOperator createOperatorByIndex(int index) {
         return new DefaultTableOperator(new JTableOperator((ContainerOperator) Context.getContext(), index));

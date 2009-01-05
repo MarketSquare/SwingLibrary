@@ -27,9 +27,6 @@ import org.robotframework.swing.internalframe.InternalFrameOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class InternalFrameKeywords {
     private IdentifierParsingOperatorFactory<InternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();

@@ -22,9 +22,6 @@ import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.textcomponent.TextComponentOperator;
 import org.robotframework.swing.textcomponent.TextComponentOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TextComponentKeywords {
     private OperatorFactory<TextComponentOperator> operatorFactory = new TextComponentOperatorFactory();

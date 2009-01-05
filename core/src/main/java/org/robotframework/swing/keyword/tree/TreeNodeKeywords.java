@@ -24,9 +24,6 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreeSupport;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Clears selections from a tree.\n\n"

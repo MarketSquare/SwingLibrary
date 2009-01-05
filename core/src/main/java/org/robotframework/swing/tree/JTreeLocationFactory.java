@@ -22,9 +22,6 @@ import org.robotframework.swing.arguments.IdentifierHandler;
 
 import abbot.tester.JTreeLocation;
 
-/**
- * @author Heikki Hulkko
- */
 public class JTreeLocationFactory extends IdentifierHandler<JTreeLocation> {
     @Override
     public JTreeLocation indexArgument(int rowIndex) {

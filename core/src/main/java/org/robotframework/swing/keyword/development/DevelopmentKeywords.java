@@ -26,9 +26,6 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class DevelopmentKeywords {
     private List<String> resultComponentList = new ArrayList<String>();

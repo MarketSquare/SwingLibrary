@@ -16,9 +16,6 @@
 
 package org.robotframework.swing.arguments;
 
-/**
- * @author Heikki Hulkko
- */
 public abstract class IdentifierHandler<T> extends ArgumentParser<T> implements ArgumentHandler<T> {
     public IdentifierHandler() {
         setArgumentHandler(this);

@@ -20,9 +20,6 @@ import java.awt.Component;
 
 import junit.framework.Assert;
 
-/**
- * @author Heikki Hulkko
- */
 public abstract class AbstractContextVerifier implements ContextVerifier {
     private final String errorMessage;
 

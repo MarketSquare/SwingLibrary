@@ -23,9 +23,6 @@ import org.robotframework.swing.context.ContainerOperatorFactory;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.OperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class ContextKeywords {
     private OperatorFactory<ContainerOperator> operatorFactory = new ContainerOperatorFactory();

@@ -22,9 +22,6 @@ import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 import org.robotframework.swing.textcomponent.TextComponentOperator;
 
-/**
- * @author Heikki Hulkko
- */
 public class TextComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<TextComponentOperator> {
     @Override
     public TextComponentOperator createOperatorByIndex(int index) {

@@ -18,9 +18,6 @@ package org.robotframework.swing.dialog;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public class DialogOperator extends JDialogOperator implements ComponentWrapper {
     public DialogOperator(int index) {
         super(index);

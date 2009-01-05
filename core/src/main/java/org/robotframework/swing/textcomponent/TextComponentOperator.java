@@ -20,9 +20,6 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JTextComponentOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 public class TextComponentOperator extends JTextComponentOperator implements ComponentWrapper {
     public TextComponentOperator(ContainerOperator container, int index) {
         super(container, index);

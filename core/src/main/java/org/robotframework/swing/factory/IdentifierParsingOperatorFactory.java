@@ -18,9 +18,6 @@ package org.robotframework.swing.factory;
 
 import org.robotframework.swing.arguments.IdentifierHandler;
 
-/**
- * @author Heikki Hulkko
- */
 public abstract class IdentifierParsingOperatorFactory<T>
     extends IdentifierHandler<T> implements OperatorFactory<T> {
 

@@ -16,9 +16,6 @@
 
 package org.robotframework.swing.arguments;
 
-/**
- * @author Heikki Hulkko
- */
 public class ArgumentParser<T> {
     private ArgumentHandler<T> argumentHandler;
 

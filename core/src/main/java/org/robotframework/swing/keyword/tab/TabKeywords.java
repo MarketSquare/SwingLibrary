@@ -23,9 +23,6 @@ import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.tab.TabPaneOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class TabKeywords extends IdentifierSupport {
     private TabPaneOperatorFactory operatorFactory = new TabPaneOperatorFactory();

@@ -18,9 +18,6 @@ package org.robotframework.swing.tree;
 
 import javax.swing.JMenuItem;
 
-/**
- * @author Heikki Hulkko
- */
 public interface ITreePopupMenuItemFinder {
     JMenuItem findMenu(String nodeIdentifier, String menuPath);
 }

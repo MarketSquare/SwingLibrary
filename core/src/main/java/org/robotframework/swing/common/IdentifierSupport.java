@@ -17,9 +17,6 @@
 package org.robotframework.swing.common;
 
 
-/**
- * @author Heikki Hulkko
- */
 public class IdentifierSupport {
     public int asIndex(String identifier) {
         return Integer.parseInt(identifier);

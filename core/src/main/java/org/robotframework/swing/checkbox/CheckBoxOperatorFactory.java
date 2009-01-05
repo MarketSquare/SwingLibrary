@@ -22,9 +22,6 @@ import org.robotframework.swing.chooser.ByTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-/**
- * @author Heikki Hulkko
- */
 public class CheckBoxOperatorFactory extends DefaultContextVerifyingOperatorFactory<CheckBoxOperator> {
     public CheckBoxOperator createOperatorByIndex(int index) {
         return new CheckBoxOperator((ContainerOperator) Context.getContext(), index);

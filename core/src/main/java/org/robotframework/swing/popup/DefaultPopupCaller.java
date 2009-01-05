@@ -24,9 +24,6 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.Operator;
 
-/**
- * @author Heikki Hulkko
- */
 public class DefaultPopupCaller implements IPopupCaller {
     public JPopupMenu callPopupOnComponent(ComponentOperator componentOperator, Point pointToClick) {
         return JPopupMenuOperator.callPopup(componentOperator, pointToClick.x, pointToClick.y, Operator

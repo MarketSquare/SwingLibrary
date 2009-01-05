@@ -21,9 +21,6 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.keyword.window.WindowKeywords;
 import org.robotframework.swing.menu.MenuSupport;
 
-/**
- * @author Heikki Hulkko
- */
 @RobotKeywords
 public class MainMenuKeywords extends MenuSupport {
     private WindowKeywords windowKeywords = new WindowKeywords();

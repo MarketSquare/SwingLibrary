@@ -27,9 +27,6 @@ import org.robotframework.swing.context.Context;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-/**
- * @author Heikki Hulkko
- */
 @RunWith(JDaveRunner.class)
 public class DefaultContextVerifyingOperatorFactorySpec extends MockSupportSpecification<DefaultContextVerifyingOperatorFactory<Object>> {
     public class Any {
