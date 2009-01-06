@@ -5,7 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.*;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -38,14 +43,38 @@ public class TestTree extends JTree implements ActionListener {
     public TestTree() {
         this(new DefaultMutableTreeNode("The Java Series") {{
                 add(new DefaultMutableTreeNode("Books for Java Programmers") {{
-                        add(new DefaultMutableTreeNode("The Java Tutorial: A Short Course on the Basics"));
-                        add(new DefaultMutableTreeNode("The Java Tutorial Continued: The Rest of the JDK"));
-                        add(new DefaultMutableTreeNode("The JFC Swing Tutorial: A Guide to Constructing GUIs"));
+                        add(new DefaultMutableTreeNode(new Object() {
+                            public String toString() {
+                                return "The Java Tutorial: A Short Course on the Basics"; 
+                            }
+                        }));
+                        add(new DefaultMutableTreeNode(new Object() {
+                            public String toString() {
+                                return "The Java Tutorial Continued: The Rest of the JDK";
+                            }   
+                        }));
+                        add(new DefaultMutableTreeNode(new Object() {
+                            public String toString() {
+                                return "The JFC Swing Tutorial: A Guide to Constructing GUIs";       
+                            }
+                        }));
                 }});
 
-                add(new DefaultMutableTreeNode("Books for Java Implementers") {{
-                        add(new DefaultMutableTreeNode("The Java Virtual Machine Specification"));
-                        add(new DefaultMutableTreeNode("The Java Language Specification"));
+                add(new DefaultMutableTreeNode(new Object() {
+                    public String toString() {
+                        return "Books for Java Implementers"; 
+                    }
+                }) {{
+                        add(new DefaultMutableTreeNode(new Object() {
+                            public String toString() {
+                                return "The Java Virtual Machine Specification";       
+                            }
+                        }));
+                        add(new DefaultMutableTreeNode(new Object() {
+                            public String toString() {
+                                return "The Java Language Specification"; 
+                            }
+                        }));
                 }});
         }});
     }
