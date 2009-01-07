@@ -16,10 +16,10 @@
 
 package org.robotframework.swing.tree;
 
+import java.awt.Component;
 import java.awt.Point;
 
 import javax.swing.JPopupMenu;
-import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -27,37 +27,38 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
+import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.popup.DefaultPopupCaller;
-import org.robotframework.swing.popup.IPopupCaller;
+import org.robotframework.swing.popup.PopupCaller;
 
-public class TreeOperator extends JTreeOperator implements ComponentWrapper {
-    private IPopupCaller popupCaller = new DefaultPopupCaller();
+public class TreeOperator implements ComponentWrapper {
+    private PopupCaller<ComponentOperator> popupCaller = new DefaultPopupCaller();
     private TreePathFactory treePathFactory = new TreePathFactory(this);
+    private JTreeOperator jTreeOperator;
 
     public TreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {
-        super(containerOperator, componentChooser);
+        jTreeOperator = new JTreeOperator(containerOperator, componentChooser);
     }
 
     public TreeOperator(ContainerOperator containerOperator, int index) {
-        super(containerOperator, index);
+        jTreeOperator = new JTreeOperator(containerOperator, index);
     }
 
-    public TreeOperator(JTree tree) {
-        super(tree);
+    public TreeOperator(JTreeOperator treeOperator) {
+        this.jTreeOperator = treeOperator;
     }
 
     public JPopupMenu callPopupOnRow(int row) {
-        selectRow(row);
-        scrollToRow(row);
-        Point pointToClick = getPointToClick(row);
-        return popupCaller.callPopupOnComponent(this, pointToClick);
+        jTreeOperator.selectRow(row);
+        jTreeOperator.scrollToRow(row);
+        Point pointToClick = jTreeOperator.getPointToClick(row);
+        return popupCaller.callPopupOnComponent(jTreeOperator, pointToClick);
     }
 
-    @Override
     public TreePath findPath(final String treePath) {
         try {
             return (TreePath) createTreeWaiter(treePath).waitAction(null);
@@ -67,27 +68,27 @@ public class TreeOperator extends JTreeOperator implements ComponentWrapper {
     }
     
     public void expand(String nodeIdentifier) {
-        expandPath(createTreePath(nodeIdentifier));
+        jTreeOperator.expandPath(createTreePath(nodeIdentifier));
     }
     
     public void collapse(String nodeIdentifier) {
-        collapsePath(createTreePath(nodeIdentifier));
+        jTreeOperator.collapsePath(createTreePath(nodeIdentifier));
     }
     
     public void addSelection(String nodeIdentifier) {
-        addSelectionPath(createTreePath(nodeIdentifier));
+        jTreeOperator.addSelectionPath(createTreePath(nodeIdentifier));
     }
     
     public void removeSelection(String nodeIdentifier) {
-        removeSelectionPath(createTreePath(nodeIdentifier));
+        jTreeOperator.removeSelectionPath(createTreePath(nodeIdentifier));
     }
     
     public boolean isExpanded(String nodeIdentifier) {
-        return isExpanded(createTreePath(nodeIdentifier));
+        return jTreeOperator.isExpanded(createTreePath(nodeIdentifier));
     }
     
     public boolean isCollapsed(String nodeIdentifier) {
-        return isCollapsed(createTreePath(nodeIdentifier));
+        return jTreeOperator.isCollapsed(createTreePath(nodeIdentifier));
     }
     
     public boolean isLeaf(String nodeIdentifier) {
@@ -96,11 +97,11 @@ public class TreeOperator extends JTreeOperator implements ComponentWrapper {
     }
     
     public boolean isPathSelected(String nodeIdentifier) {
-        return isPathSelected(createTreePath(nodeIdentifier));
+        return jTreeOperator.isPathSelected(createTreePath(nodeIdentifier));
     }
     
     public boolean isVisible(String nodeIdentifier) {
-        return isVisible(createTreePath(nodeIdentifier));
+        return jTreeOperator.isVisible(createTreePath(nodeIdentifier));
     }
     
     public JPopupMenuOperator createPopupOperator(String nodeIdentifier) {
@@ -112,12 +113,40 @@ public class TreeOperator extends JTreeOperator implements ComponentWrapper {
     }
     
     public String getTreeNodeLabel(int index) {
-        TreePath pathForRow = getPathForRow(index);
+        TreePath pathForRow = jTreeOperator.getPathForRow(index);
         return pathForRow.getLastPathComponent().toString();
     }
 
     public int getTreeNodeIndex(String nodePath) {
-        return getRowForPath(findPath(nodePath));
+        return jTreeOperator.getRowForPath(findPath(nodePath));
+    }
+
+    public Component getSource() {
+        return jTreeOperator.getSource();
+    }
+    
+    public TreePath getPathForRow(int i) {
+        return jTreeOperator.getPathForRow(i);
+    }
+    
+    public int getRowCount() {
+        return jTreeOperator.getRowCount();
+    }
+    
+    public void clearSelection() {
+        jTreeOperator.clearSelection();
+    }
+    
+    public JPopupMenu callPopupOnPath(TreePath treePath) {
+        return jTreeOperator.callPopupOnPath(treePath);
+    }
+    
+    public JPopupMenu callPopupOnPaths(TreePath[] treePaths) {
+        return jTreeOperator.callPopupOnPaths(treePaths);
+    }
+    
+    public TreePath[] getSelectionPaths() {
+        return jTreeOperator.getSelectionPaths();
     }
     
     TreePopupMenuOperatorFactory createPopupFactory() {
@@ -136,8 +165,8 @@ public class TreeOperator extends JTreeOperator implements ComponentWrapper {
     }
 
     private Timeouts copyTimeout(String timeout) {
-        Timeouts times = getTimeouts().cloneThis();
-        times.setTimeout("Waiter.WaitingTime", getTimeouts().getTimeout(timeout));
+        Timeouts times = jTreeOperator.getTimeouts().cloneThis();
+        times.setTimeout("Waiter.WaitingTime", jTreeOperator.getTimeouts().getTimeout(timeout));
         return times;
     }
 
@@ -149,7 +178,7 @@ public class TreeOperator extends JTreeOperator implements ComponentWrapper {
         }
 
         public Object actionProduced(Object arg0) {
-            return new TreePathFinder(TreeOperator.this).findPath(path);
+            return new TreePathFinder(jTreeOperator).findPath(path);
         }
 
         public String getDescription() {

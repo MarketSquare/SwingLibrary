@@ -3,30 +3,29 @@ package org.robotframework.swing.tree;
 import java.awt.Point;
 
 import javax.swing.JPopupMenu;
-import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import jdave.ExpectationFailedException;
 import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.popup.IPopupCaller;
+import org.robotframework.swing.popup.PopupCaller;
 
 
 @RunWith(JDaveRunner.class)
 public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
-    private JTree tree;
+    private JTreeOperator jTreeOperator;
     private TreePath treePath;
     private String nodeIdentifier = "some|node";
     
     public class Any {
         public void hasPopupCaller() {
-            TreeOperator enhancedTreeOperator = new TreeOperator(dummy(JTree.class));
+            TreeOperator enhancedTreeOperator = new TreeOperator(dummy(JTreeOperator.class));
             specify(enhancedTreeOperator, satisfies(new FieldIsNotNullContract("popupCaller")));
         }
     }
@@ -36,15 +35,15 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         
         public TreeOperator create() {
             treePath = mock(TreePath.class);
-            tree = createMockJTree();
-            enhancedTreeOperator = new TreeOperator(tree);
+            jTreeOperator = mock(JTreeOperator.class);
+            enhancedTreeOperator = new TreeOperator(jTreeOperator);
             injectMockPathFactory();
             return enhancedTreeOperator;
         }
 
         public void expandsPath() {
             checking(new Expectations() {{
-                one(tree).expandPath(treePath);
+                one(jTreeOperator).expandPath(treePath);
             }});
             
             context.expand(nodeIdentifier);
@@ -52,7 +51,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         
         public void collapsesPath() {
             checking(new Expectations() {{
-                one(tree).collapsePath(treePath);
+                one(jTreeOperator).collapsePath(treePath);
             }});
             
             context.collapse(nodeIdentifier);
@@ -60,7 +59,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         
         public void addsSelection() {
             checking(new Expectations() {{
-                one(tree).addSelectionPath(treePath);
+                one(jTreeOperator).addSelectionPath(treePath);
             }});
             
             context.addSelection(nodeIdentifier);
@@ -68,7 +67,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         
         public void removesSelection() {
             checking(new Expectations() {{
-                one(tree).removeSelectionPath(treePath);
+                one(jTreeOperator).removeSelectionPath(treePath);
             }});
             
             context.removeSelection(nodeIdentifier);
@@ -77,7 +76,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
 
         public void checksExpanded() {
             checking(new Expectations() {{
-                one(tree).isExpanded(treePath); will(returnValue(true));
+                one(jTreeOperator).isExpanded(treePath); will(returnValue(true));
             }});
             
             specify(context.isExpanded(nodeIdentifier));
@@ -85,7 +84,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         
         public void checksCollapsed() {
             checking(new Expectations() {{
-                one(tree).isCollapsed(treePath); will(returnValue(true));
+                one(jTreeOperator).isCollapsed(treePath); will(returnValue(true));
             }});
             
             specify(context.isCollapsed(nodeIdentifier));
@@ -103,7 +102,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         
         public void checksIsSelected() {
             checking(new Expectations() {{
-                one(tree).isPathSelected(treePath); will(returnValue(true));
+                one(jTreeOperator).isPathSelected(treePath); will(returnValue(true));
             }});
             
             specify(context.isPathSelected(nodeIdentifier));
@@ -111,7 +110,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
 
         public void checksIsVisible() {
             checking(new Expectations() {{
-                one(tree).isVisible(treePath); will(returnValue(true));
+                one(jTreeOperator).isVisible(treePath); will(returnValue(true));
             }});
             
             specify(context.isVisible(nodeIdentifier));
@@ -129,8 +128,8 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
     public class WorkingOnNodeIndexes {
         public TreeOperator create() {
             treePath = mock(TreePath.class);
-            tree = createMockJTree();
-            return new TreeOperator(tree) {
+            jTreeOperator = mock(JTreeOperator.class);
+            return new TreeOperator(jTreeOperator) {
                 public TreePath findPath(String path) {
                     return TreeOperatorSpec.this.treePath;
                 }
@@ -140,7 +139,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         public void getsTreeNodeLabel() {
             final String label = "someNode";
             checking(new Expectations() {{
-                one(tree).getPathForRow(2); will(returnValue(treePath));
+                one(jTreeOperator).getPathForRow(2); will(returnValue(treePath));
                 one(treePath).getLastPathComponent(); will(returnValue(label));
             }});
             
@@ -149,7 +148,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         
         public void getsTreeNodeIndex() {
             checking(new Expectations() {{
-                one(tree).getRowForPath(treePath); will(returnValue(3)); 
+                one(jTreeOperator).getRowForPath(treePath); will(returnValue(3)); 
             }});
             
             specify(context.getTreeNodeIndex(nodeIdentifier), 3);
@@ -162,7 +161,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
 
         public TreeOperator create() {
             popupFactory = mock(TreePopupMenuOperatorFactory.class);
-            return new TreeOperator(dummy(JTree.class)) {
+            return new TreeOperator(dummy(JTreeOperator.class)) {
                 TreePopupMenuOperatorFactory createPopupFactory() {
                     return popupFactory;
                 }
@@ -189,63 +188,27 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
     }
     
     public class CallingPopup {
-        private int selectRowCallCount = 0;
-        private int scrollToRowCallCount = 0;
-        private Point pointToClick = new Point(1, 1);
+        private int row = 2;
+        private JTreeOperator jTreeOperator;
+        private Point pointToClick = new Point(1, 2);
 
-        public void callsPopupOnRow() {
-            int expectedRow = 2;
-            TreeOperator treeOperator = createTreeOperatorWithExpectedRow(expectedRow);
-            JPopupMenu popupMenu = injectPopupCallerTo(treeOperator);
-
-            specify(treeOperator.callPopupOnRow(expectedRow), must.equal(popupMenu));
-            specify(selectRowCallCount, must.equal(1));
-            specify(scrollToRowCallCount, must.equal(1));
+        public TreeOperator create() {
+            jTreeOperator = mock(JTreeOperator.class);
+            return new TreeOperator(jTreeOperator);
         }
-
-        private JPopupMenu injectPopupCallerTo(final TreeOperator treeOperator) {
-            final IPopupCaller popupCaller = injectMockTo(treeOperator, IPopupCaller.class);
+        
+        public void callsPopuOnRow() {
+            final PopupCaller<JTreeOperator> popupCaller = injectMockToContext(PopupCaller.class);
             final JPopupMenu popupMenu = dummy(JPopupMenu.class);
+            
             checking(new Expectations() {{
-                one(popupCaller).callPopupOnComponent(treeOperator, pointToClick);
-                will(returnValue(popupMenu));
+                one(jTreeOperator).selectRow(row);
+                one(jTreeOperator).scrollToRow(row);
+                one(jTreeOperator).getPointToClick(row); will(returnValue(pointToClick));
+                one(popupCaller).callPopupOnComponent(jTreeOperator, pointToClick); will(returnValue(popupMenu));
             }});
-            return popupMenu;
+            
+            specify(context.callPopupOnRow(row), must.equal(popupMenu));
         }
-
-        private TreeOperator createTreeOperatorWithExpectedRow(final int expectedRow) {
-            return new TreeOperator(dummy(JTree.class)) {
-                public void selectRow(int row) {
-                    if (expectedRow == row) {
-                        selectRowCallCount++;
-                    } else {
-                        throw new ExpectationFailedException("Expected " + expectedRow + ", but got: " + row);
-                    }
-                }
-                
-                public void scrollToRow(int row) {
-                    if (expectedRow == row) {
-                        scrollToRowCallCount++;
-                    } else {
-                        throw new ExpectationFailedException("Expected " + expectedRow + ", but got: " + row);
-                    }
-                }
-                
-                public Point getPointToClick(int row) {
-                    if (expectedRow == row) {
-                        return pointToClick;
-                    }
-                    throw new ExpectationFailedException("Expected " + expectedRow + ", but got: " + row);
-                }
-            };
-        }
-    }
-
-    private JTree createMockJTree() {
-        final JTree tree = mock(JTree.class);
-        checking(new Expectations() {{
-            allowing(tree).isShowing(); will(returnValue(true));
-        }});
-        return tree;
     }
 }

@@ -89,6 +89,11 @@ public class TestTree extends JTree implements ActionListener {
                     popup.show((JComponent) e.getSource(), e.getX(), e.getY());
                 }
             }
+            
+            public void mouseClicked(MouseEvent e) {
+                TestTreeResults.saveNodes(getSelectionPaths());
+                TestTreeResults.clickCount = e.getClickCount();
+            }
         });
     }
 

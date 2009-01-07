@@ -64,6 +64,10 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         public void hasGetTreeNodeIndexKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getTreeNodeIndex")));
         }
+        
+        public void hasClickOnTreeNodeKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("clickOnTreeNode")));
+        }
     }
 
     public class OperatingOnTree {

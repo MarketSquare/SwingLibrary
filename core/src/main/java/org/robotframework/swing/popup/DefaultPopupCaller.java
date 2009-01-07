@@ -24,7 +24,7 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.Operator;
 
-public class DefaultPopupCaller implements IPopupCaller {
+public class DefaultPopupCaller implements PopupCaller<ComponentOperator> {
     public JPopupMenu callPopupOnComponent(ComponentOperator componentOperator, Point pointToClick) {
         return JPopupMenuOperator.callPopup(componentOperator, pointToClick.x, pointToClick.y, Operator
             .getPopupMouseButton());

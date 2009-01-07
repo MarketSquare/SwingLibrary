@@ -64,7 +64,19 @@ public class TreeNodeKeywords extends TreeSupport {
             treeOperator.addSelection(node);
         }
     }
-
+    
+    @RobotKeyword("Clicks on a tree nodet.\n\n"
+        + "Examples:\n"
+        + "| Click On Tree Node | _myTree_ | _Root|Folder_ |\n"
+        + "| Click On Tree Node | _myTree_ | _0_      | \n\n"
+        + "An optional _click count_ parameter can be provided for example if a double click is required.\n"
+        + "Default click count is one:\n"
+        + "| Click On Tree Node | _myTree_ | Root|Folder_ | _2_ | # doubleclicks on node |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "*clickCount"})
+    public void clickOnTreeNode(String identifier, String nodeIdentifier, String[] clickCount) {
+        
+    }
+    
     @RobotKeyword("Fails if the tree node is collapsed.\n\n"
         + "Example:\n"
         + "| Tree Node Should Be Expanded | _myTree_ | _Root|Folder_ |\n")

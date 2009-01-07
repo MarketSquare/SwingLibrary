@@ -1,5 +1,7 @@
 package org.robotframework.swing.keyword.testing;
 
+import junit.framework.Assert;
+
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.javalib.util.ArrayUtil;
@@ -15,5 +17,15 @@ public class TreeTestingKeywords {
     @RobotKeyword
     public void savedNodesShouldBe(String[] expectedNodes) {
         ArrayUtil.assertArraysContainSame(expectedNodes, TestTreeResults.nodes.toArray(new String[0]));
+    }
+    
+    @RobotKeyword
+    public void clickedNodesShouldBe(String[] expectedNodes) {
+        savedNodesShouldBe(expectedNodes);
+    }
+    
+    @RobotKeyword
+    public void clickCountShouldBe(int expectedCount) {
+        Assert.assertEquals(expectedCount, TestTreeResults.clickCount);
     }
 }
