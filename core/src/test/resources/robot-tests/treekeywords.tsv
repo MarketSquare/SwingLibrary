@@ -215,9 +215,10 @@ Get Tree Node Index Keyword Works With Hidden Root
 	${nodeIndex}=	getTreeNodeIndex	${treeName}	${childNode1}|${leafNode2}
 	shouldBeEqualAsIntegers	2	${nodeIndex}
 
-Click On Tree Node	[tags]	development
+Click On Tree Node
+	[setup]	clearSavedNodes
 	clickOnTreeNode	${treeName}	${childNode1}|${leafNode2}	3
-	clickedNodesShouldBe	${childNode1}|${leafNode2}
+	clickedNodesShouldBe	${leafNode2}
 	clickCountShouldBe	3
 
 Keywords Also Work With Invisible Root

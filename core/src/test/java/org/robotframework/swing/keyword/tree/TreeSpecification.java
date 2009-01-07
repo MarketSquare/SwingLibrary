@@ -9,10 +9,11 @@ import org.robotframework.swing.tree.TreeSupport;
 public abstract class TreeSpecification<T extends TreeSupport> extends MockSupportSpecification<T> {
     protected TreeOperator treeOperator;
     protected String treeIdentifier = "someTree";
+    protected OperatorFactory<?> operatorFactory;
 
     protected T populateWithMockOperatorFactory(T treeKeywords) {
         treeOperator = mock(TreeOperator.class);
-        final OperatorFactory<?> operatorFactory = injectMockTo(treeKeywords, OperatorFactory.class);
+        operatorFactory = injectMockTo(treeKeywords, OperatorFactory.class);
         checking(new Expectations() {{
             one(operatorFactory).createOperator(treeIdentifier);
             will(returnValue(treeOperator));

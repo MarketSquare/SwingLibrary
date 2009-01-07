@@ -25,7 +25,7 @@ public class TreeTestingKeywords {
     }
     
     @RobotKeyword
-    public void clickCountShouldBe(int expectedCount) {
-        Assert.assertEquals(expectedCount, TestTreeResults.clickCount);
+    public void clickCountShouldBe(String expectedCount) {
+        Assert.assertEquals(Integer.parseInt(expectedCount), TestTreeResults.clickCount);
     }
 }

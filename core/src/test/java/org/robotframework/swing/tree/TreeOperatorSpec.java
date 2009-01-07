@@ -40,6 +40,15 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
             injectMockPathFactory();
             return enhancedTreeOperator;
         }
+        
+        public void clicksOnNode() {
+            final int clickCount = 2;
+            checking(new Expectations() {{
+                one(jTreeOperator).clickOnPath(treePath, clickCount);
+            }});
+            
+            context.clickOnNode(nodeIdentifier, clickCount);
+        }
 
         public void expandsPath() {
             checking(new Expectations() {{

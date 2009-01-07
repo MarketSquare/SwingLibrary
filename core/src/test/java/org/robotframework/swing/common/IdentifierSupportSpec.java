@@ -40,4 +40,16 @@ public class IdentifierSupportSpec extends Specification<IdentifierSupport> {
             specify(identifierSupport.asIndex("1"), must.equal(1));
         }
     }
+    
+    public class ExtractingArguments {
+        public void extractsOptionalArgument() {
+            specify(identifierSupport.extractIntArgument(new String[] {"2"}), must.equal(2));
+            specify(identifierSupport.extractIntArgument(new String[] {"2"}, 123), must.equal(2));
+        }
+        
+        public void extractsDefaultArgumentWhenNoArgumentProvided() {
+            specify(identifierSupport.extractIntArgument(new String[0]), must.equal(1));
+            specify(identifierSupport.extractIntArgument(new String[0], 123), must.equal(123));
+        }
+    }
 }

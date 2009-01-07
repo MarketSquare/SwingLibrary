@@ -30,4 +30,16 @@ public class IdentifierSupport {
         }
         return true;
     }
+
+    public int extractIntArgument(String[] args) {
+        return extractIntArgument(args, 1);
+    }
+    
+    public int extractIntArgument(String[] args, int defaultValue) {
+        if (args.length == 0) {
+            return defaultValue;
+        } else {
+            return Integer.parseInt(args[0]);
+        }
+    }
 }

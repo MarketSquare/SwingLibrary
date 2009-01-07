@@ -77,6 +77,17 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
             return populateWithMockOperatorFactory(new TreeNodeKeywords());
         }
         
+        public void clicksOnTreeNode() {
+            checking(new Expectations() {{
+                one(treeOperator).clickOnNode(nodePath, 2);
+                one(operatorFactory).createOperator(treeIdentifier); will(returnValue(treeOperator));
+                one(treeOperator).clickOnNode(nodePath, 1);
+            }});
+            
+            context.clickOnTreeNode(treeIdentifier, nodePath, new String[] { "2" });
+            context.clickOnTreeNode(treeIdentifier, nodePath, new String[0]);
+        }
+        
         public void getsTreeNodeIndex() {
             checking(new Expectations() {{
                 one(treeOperator).getTreeNodeIndex(nodePath); will(returnValue(3));

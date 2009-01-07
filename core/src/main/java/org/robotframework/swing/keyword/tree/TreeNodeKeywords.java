@@ -74,7 +74,7 @@ public class TreeNodeKeywords extends TreeSupport {
         + "| Click On Tree Node | _myTree_ | Root|Folder_ | _2_ | # doubleclicks on node |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "*clickCount"})
     public void clickOnTreeNode(String identifier, String nodeIdentifier, String[] clickCount) {
-        
+        createTreeOperator(identifier).clickOnNode(nodeIdentifier, extractIntArgument(clickCount));
     }
     
     @RobotKeyword("Fails if the tree node is collapsed.\n\n"

@@ -22,13 +22,14 @@ import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.arguments.VoidIdentifierHandler;
+import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.list.ListOperator;
 import org.robotframework.swing.list.ListOperatorFactory;
 import org.springframework.util.ObjectUtils;
 
 @RobotKeywords
-public class ListKeywords {
+public class ListKeywords extends IdentifierSupport {
     private OperatorFactory<ListOperator> operatorFactory = new ListOperatorFactory();
 
     @RobotKeyword("Clears selection from list.\n\n"
@@ -67,13 +68,13 @@ public class ListKeywords {
         return operatorFactory.createOperator(identifier).getModel().getSize();
     }
 
-    private static class ListSelector extends VoidIdentifierHandler {
+    private class ListSelector extends VoidIdentifierHandler {
         private final ListOperator listOperator;
         private int clickCount;
 
         public ListSelector(ListOperator listOperator, String[] clickCountAsArray) {
             this.listOperator = listOperator;
-            this.clickCount = extractClickCount(clickCountAsArray);
+            this.clickCount = extractIntArgument(clickCountAsArray);
         }
 
         @Override
@@ -96,14 +97,6 @@ public class ListKeywords {
 
             int itemIndex = listOperator.findItemIndex(itemChooser);
             listOperator.clickOnItem(itemIndex, clickCount);
-        }
-
-        private int extractClickCount(String[] clickCountAsArray) {
-            if (clickCountAsArray.length == 0) {
-                return 1;
-            } else {
-                return Integer.parseInt(clickCountAsArray[0]);
-            }
         }
     }
 }
