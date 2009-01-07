@@ -77,12 +77,26 @@ Get Text Field Value Works With TextAreas
 	${textAreaContents}=	getTextFieldValue	${textAreaName}
 	shouldBeEqual	${testText}	${textAreaContents}
 
+Text Field Should Be Enabled
+	textFieldShouldBeEnabled	${textFieldName}
+	disableTextField	${textFieldName}
+	runKeywordAndExpectError	Textfield '${textFieldName}' is disabled.	textFieldShouldBeEnabled	${textFieldName}	
+	[teardown]	enableTextField	${textFieldName}
+
+Text Field Should Be Disabled
+	runKeywordAndExpectError	Textfield '${textFieldName}' is enabled.	textFieldShouldBeDisabled	${textFieldName}	
+	disableTextField	${textFieldName}
+	textFieldShouldBeDisabled	${textFieldName}
+	[teardown]	enableTextField	${textFieldName}
+
 Textfield Keywords Should Fail Context Is Not Correct
 	[setup]	selectEmptyContext
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	insertIntoTextField	${textFieldName}	Something
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getTextFieldValue	${textFieldName}
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	clearTextField	${textFieldName}
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	typeIntoTextField	${textFieldName}	Something
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	textFieldShouldBeEnabled	${textFieldName}
+	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	textFieldShouldBeDisabled	${textFieldName}
 	[teardown]	selectMainWindow
 
 *Keyword*	*Action*	*Argument*

@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.keyword.textcomponent;
 
+import junit.framework.Assert;
+
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.factory.OperatorFactory;
@@ -55,6 +57,20 @@ public class TextComponentKeywords {
         + "| Clear Textfield | _nameTextField_ |\n")
     public void clearTextField(String identifier) {
         createOperator(identifier).clearText();
+    }
+
+    @RobotKeyword("Fails if text component is disabled.\n\n"
+        + "Example:\n"
+        + "| Textfield Should Be Enabled | _nameTextField_ |\n")
+    public void textFieldShouldBeEnabled(String identifier) {
+        Assert.assertTrue("Textfield '" + identifier + "' is disabled.", createOperator(identifier).isEnabled());
+    }
+    
+    @RobotKeyword("Fails if text component is enabled.\n\n"
+        + "Example:\n"
+        + "| Textfield Should Be Disabled | _nameTextField_ |\n")
+    public void textFieldShouldBeDisabled(String identifier) {
+        Assert.assertFalse("Textfield '" + identifier + "' is enabled.", createOperator(identifier).isEnabled());
     }
     
     private TextComponentOperator createOperator(String identifier) {
