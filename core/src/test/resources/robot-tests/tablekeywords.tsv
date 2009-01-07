@@ -86,6 +86,12 @@ Select From Table Cell Popup Menu
 	${newCellValue}=	getTableCellValue	${tableName}	2	1
 	shouldBeEqual	newValue	${newCellValue}
 
+Select From Table Cell Popup Menu Accepts Integer Arguments
+	${rowAsInteger}=	convertToInteger	3
+	selectFromTableCellPopupMenu	${tableName}	${rowAsInteger}	1	Replace text
+	${newCellValue}=	getTableCellValue	${tableName}	${rowAsInteger}	1
+	shouldBeEqual	newValue	${newCellValue}
+
 Table Keywords Fail If Context Is Not a Table
 	selectEmptyContext
 	tableKeywordShouldFail	getTableCellValue	someTable	0	0

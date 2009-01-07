@@ -20,10 +20,28 @@ import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 public class SwingLibrary extends AnnotationLibrary {
+    private AnnotationLibrary annotationLibrary;
+    
     public SwingLibrary() {
-        super("org/robotframework/swing/keyword/**/*.class");
+        annotationLibrary = new AnnotationLibrary("org/robotframework/swing/keyword/**/*.class");
         disableOutput();
         setDefaultTimeouts();
+    }
+    
+    public Object runKeyword(String keywordName, Object[] args) {
+        return annotationLibrary.runKeyword(keywordName, toStrings(args));
+    }
+
+    public String[] getKeywordArguments(String keywordName) {
+        return annotationLibrary.getKeywordArguments(keywordName);
+    }
+
+    public String getKeywordDocumentation(String keywordName) {
+        return annotationLibrary.getKeywordDocumentation(keywordName);
+    }
+
+    public String[] getKeywordNames() {
+        return annotationLibrary.getKeywordNames();
     }
 
     private void setDefaultTimeouts() {
@@ -32,5 +50,17 @@ public class SwingLibrary extends AnnotationLibrary {
 
     private void disableOutput() {
         JemmyProperties.setCurrentOutput(TestOut.getNullOutput());
+    }
+    
+    private Object[] toStrings(Object[] args) {
+        Object[] newArgs = new Object[args.length];
+        for (int i = 0; i < newArgs.length; i++) {
+            if (args[i].getClass().isArray()) {
+                newArgs[i] = args[i];
+            } else {
+                newArgs[i] = args[i].toString();
+            }
+        }
+        return newArgs;
     }
 }
