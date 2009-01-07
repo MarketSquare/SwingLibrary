@@ -29,13 +29,13 @@ Menu Item Should Be Disabled
 Get Main Menu Item Name
 	mainMenuItemNameShouldBe	0	${menuText}
 
-Main Menu Item Should Be Selected	[tags]	development
+Main Menu Item Should Be Selected
 	runKeywordAndExpectError	Menu item '${menuText}|${checkboxMenu}' is not selected.	mainMenuItemShouldBeChecked	${menuText}|${checkboxMenu}
 	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
 	mainMenuItemShouldBeChecked	${menuText}|${checkboxMenu}
 	[teardown]	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
 
-Main Menu Item Should Not Be Selected	[tags]	development
+Main Menu Item Should Not Be Selected
 	mainMenuItemShouldNotBeChecked	${menuText}|${checkboxMenu}
 	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
 	runKeywordAndExpectError	Menu item '${menuText}|${checkboxMenu}' is selected.	mainMenuItemShouldNotBeChecked	${menuText}|${checkboxMenu}
