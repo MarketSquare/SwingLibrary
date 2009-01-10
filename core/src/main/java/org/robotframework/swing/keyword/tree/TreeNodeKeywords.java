@@ -71,7 +71,7 @@ public class TreeNodeKeywords extends TreeSupport {
         + "| Click On Tree Node | _myTree_ | _0_      | \n\n"
         + "An optional _click count_ parameter can be provided for example if a double click is required.\n"
         + "Default click count is one:\n"
-        + "| Click On Tree Node | _myTree_ | Root|Folder_ | _2_ | # doubleclicks on node |\n")
+        + "| Click On Tree Node | _myTree_ | _Root|Folder_ | _2_ | # doubleclicks on node |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "*clickCount"})
     public void clickOnTreeNode(String identifier, String nodeIdentifier, String[] clickCount) {
         createTreeOperator(identifier).clickOnNode(nodeIdentifier, extractIntArgument(clickCount));

@@ -25,11 +25,11 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.Operator;
 
-public class OperatorListFactory<T extends Operator> {
+public class OperatorsFactory<T extends Operator> {
     private final ComponentBasedOperatorFactory<T> operatorFactory;
     private final ComponentChooser chooser;
 
-    public OperatorListFactory(ComponentChooser chooser, ComponentBasedOperatorFactory<T> operatorFactory) {
+    public OperatorsFactory(ComponentChooser chooser, ComponentBasedOperatorFactory<T> operatorFactory) {
         this.chooser = chooser;
         this.operatorFactory = operatorFactory;
     }

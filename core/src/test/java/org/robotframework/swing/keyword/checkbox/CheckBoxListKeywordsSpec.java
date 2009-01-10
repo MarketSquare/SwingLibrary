@@ -16,9 +16,8 @@ import org.robotframework.swing.context.ContextVerifier;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.factory.OperatorListFactory;
+import org.robotframework.swing.factory.OperatorsFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.checkbox.CheckBoxListKeywords;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 
@@ -48,7 +47,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
         }
 
         public void hasOperatorListFactory() {
-            specify(checkboxListKeywords, satisfies(new FieldIsNotNullContract("operatorListFactory")));
+            specify(checkboxListKeywords, satisfies(new FieldIsNotNullContract("operatorsFactory")));
         }
 
         public void hasContextVerifier() {
@@ -145,7 +144,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
         }
 
         private void injectMockOperatorFactory() {
-            final OperatorListFactory<?> operatorListFactory = injectMockTo(checkboxListKeywords, OperatorListFactory.class);
+            final OperatorsFactory<?> operatorListFactory = injectMockTo(checkboxListKeywords, OperatorsFactory.class);
             checking(new Expectations() {{
                 one(operatorListFactory).createOperators(containerContext);
                 will(returnValue(new ArrayList<JCheckBoxOperator>() {{ add(operator); add(operator); }}));

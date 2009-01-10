@@ -1,12 +1,11 @@
 package org.robotframework.swing.keyword.list;
 
-import javax.swing.ListModel;
+import java.util.ArrayList;
 
 import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.JListOperator.ListItemChooser;
 import org.robotframework.swing.contract.FieldIsNotNullContract;
 import org.robotframework.swing.contract.RobotKeywordContract;
 import org.robotframework.swing.contract.RobotKeywordsContract;
@@ -45,9 +44,17 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
         public void hasGetListItemCountKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getListItemCount")));
         }
+        
+        public void hasSelectAllListItemsKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("selectAllListItems")));
+        }
+        
+        public void hasClickOnListItemKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("clickOnListItem")));
+        }
     }
 
-    public class WhenOperating {
+    public class Operating {
         private String listIdentifier = "someList";
         private OperatorFactory<?> operatorFactory;
         private ListOperator listOperator;
@@ -58,8 +65,7 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
             listOperator = mock(ListOperator.class);
 
             checking(new Expectations() {{
-                one(operatorFactory).createOperator(with(equal(listIdentifier)));
-                will(returnValue(listOperator));
+                one(operatorFactory).createOperator(listIdentifier); will(returnValue(listOperator));
             }});
 
             return listKeywords;
@@ -73,30 +79,36 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
             context.clearSelectionFromList(listIdentifier);
         }
 
-        public void selectsFromList() {
-            final String numericIdentifier = "2";
-
+        public void clicksOnItem() {
             checking(new Expectations() {{
-                one(operatorFactory).createOperator(listIdentifier);
-                will(returnValue(listOperator));
-
-                one(listOperator).findItemIndex(with(any(ListItemChooser.class)));
-                will(returnValue(2));
-
-                one(listOperator).clickOnItem(2, 1);
-                one(listOperator).clickOnItem(Integer.parseInt(numericIdentifier), 1);
+                one(listOperator).clickOnItem("someListItem", 1);
             }});
 
-            context.selectFromList(listIdentifier, "someListItem", new String[0]);
-            context.selectFromList(listIdentifier, numericIdentifier, new String[0]);
+            context.clickOnListItem(listIdentifier, "someListItem", new String[0]);
         }
-        
-        public void selectsFromListWithAlternativeClickCount() {
+                
+        public void clicksWithAlternativeClickCount() {
             checking(new Expectations() {{
-                one(listOperator).clickOnItem(3, 2);
+                one(listOperator).clickOnItem("3", 2);
             }});
             
-            context.selectFromList(listIdentifier, "3", new String[] { "2" });
+            context.clickOnListItem(listIdentifier, "3", new String[] { "2" });
+        }
+        
+        public void selectsSingleItem() {
+            checking(new Expectations() {{
+                one(listOperator).selectItems(new ArrayList<String>() {{add("2");}});
+            }});
+            
+            context.selectFromList(listIdentifier, "2", new String[0]);
+        }
+        
+        public void selectsItems() {
+            checking(new Expectations() {{
+                one(listOperator).selectItems(new ArrayList<String>() {{add("one"); add("two"); add("three");}});
+            }});
+            
+            context.selectFromList(listIdentifier, "one", new String[] {"two", "three"});
         }
 
         public void getsSelectedValueFromList() {
@@ -111,13 +123,19 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
         }
 
         public void getsListItemCount() {
-            final ListModel listModel = mock(ListModel.class);
             checking(new Expectations() {{
-                one(listOperator).getModel(); will(returnValue(listModel));
-                one(listModel).getSize(); will(returnValue(4));
+                one(listOperator).getSize(); will(returnValue(4));
             }});
 
             specify(context.getListItemCount(listIdentifier), must.equal(4));
+        }
+        
+        public void selectsAllItems() {
+            checking(new Expectations() {{
+                one(listOperator).selectAll();
+            }});
+            
+            context.selectAllListItems(listIdentifier);
         }
     }
 }

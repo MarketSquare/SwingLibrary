@@ -1,10 +1,12 @@
 *Setting*	*Value*
 library	SwingLibrary
+library	Collections
 testSetup	clearSelectionFromList	${listIndex}
 
 *Variable*	*Value*
 ${listName}	testList
 ${listIndex}	0
+${listValues}	one	two	three	
 
 *Test Case*	*Action*	*Argument*
 Get Selected List Value From List By Index
@@ -27,14 +29,22 @@ Select From List By Name
 	selectFromList	${listName}	0
 	listSelectionShouldBe	${listName}	one
 
+Select Multiple Items From List
+	selectFromList	${listName}	one	two	three
+	allListItemsShouldBeSelected
+
 Selecting Item By A Substring Of The Name Should Fail
 	runKeywordAndExpectError	*	selectFromList	${listIndex}	hre
 
-Selecting From List With Click Count
-	selectFromList	${listName}	three	2
+Click On List Item
+	clickOnListItem	${listName}	three	2
 	listSelectionShouldBe	${listName}	three
 	${clickCount}=	getSelectionClickCount
 	shouldBeEqualAsIntegers	2	${clickCount}
+	
+Select All List Items
+	selectAllListItems	${listName}
+	allListItemsShouldBeSelected
 
 Clear Selection From List
 	selectFromList	${listIndex}	three
@@ -66,3 +76,7 @@ listSelectionShouldBe	[arguments]	${listIndex}	${expectedValue}
 listSelectionShouldNotBe	[arguments]	${listIndex}	${expectedValue}
 	${selectedValue}=	getSelectedValueFromList	${listIndex}
 	shouldNotBeEqual	${expectedValue}	${selectedValue}
+
+allListItemsShouldBeSelected
+	${selectedValues}=	getSelectedValues	0
+	listsShouldBeEqual	${listValues}	${selectedValues}

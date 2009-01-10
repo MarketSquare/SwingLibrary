@@ -12,15 +12,15 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ComponentOperator;
-import org.robotframework.swing.factory.OperatorListFactory.ComponentBasedOperatorFactory;
+import org.robotframework.swing.factory.OperatorsFactory.ComponentBasedOperatorFactory;
 
 @RunWith(JDaveRunner.class)
-public class OperatorListFactorySpec extends Specification<OperatorListFactory> {
+public class OperatorsFactorySpec extends Specification<OperatorsFactory> {
     private Container containerContext = dummy(Container.class);
 
     public class NoMatchingComponent {
-        public OperatorListFactory create() {
-            return new OperatorListFactory(dummy(ComponentChooser.class), dummy(ComponentBasedOperatorFactory.class));
+        public OperatorsFactory create() {
+            return new OperatorsFactory(dummy(ComponentChooser.class), dummy(ComponentBasedOperatorFactory.class));
         }
 
         public void createsEmptyOperatorListIfNoneOfTheComponentsMatch() {
@@ -32,11 +32,11 @@ public class OperatorListFactorySpec extends Specification<OperatorListFactory> 
         private Component component = dummy(Component.class);
         private ComponentBasedOperatorFactory operatorFactory;
 
-        public OperatorListFactory create() {
+        public OperatorsFactory create() {
             ComponentChooser chooser = mock(ComponentChooser.class);
             operatorFactory = mock(ComponentBasedOperatorFactory.class);
 
-            return new OperatorListFactory(chooser, operatorFactory) {
+            return new OperatorsFactory(chooser, operatorFactory) {
                 Component findComponent(Container context, int index) {
                     if (index < 2) {
                         return component;
