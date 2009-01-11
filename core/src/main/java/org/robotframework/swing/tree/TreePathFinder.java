@@ -22,6 +22,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.operators.JTreeOperator;
+import org.robotframework.javalib.util.ArrayUtil;
 import org.springframework.util.ObjectUtils;
 
 public class TreePathFinder {
@@ -49,7 +50,7 @@ public class TreePathFinder {
 
     private TreePath buildTreePath(TreeNode rootNode, String[] nodeNames) {
         TreePath treePathToNode = new TreePath(rootNode);
-        Enumeration currentLevelChildren = rootNode.children();
+        Enumeration<?> currentLevelChildren = rootNode.children();
         for (int i = 0; i < nodeNames.length; i++) {
             String nodeName = nodeNames[i];
 
@@ -71,10 +72,6 @@ public class TreePathFinder {
     }
 
     private String[] removeRoot(String[] nodeNames) {
-        String[] newArray = new String[nodeNames.length - 1];
-        for (int i = 1; i < nodeNames.length; i++) {
-            newArray[i - 1] = nodeNames[i];
-        }
-        return newArray;
+        return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
     }
 }
