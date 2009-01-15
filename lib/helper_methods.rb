@@ -108,7 +108,11 @@ module HelperMethods
   end
 end
 
-# Add dependencies to project.pom
+# Buildr tweakings and fixes
+module URI
+  RW_CHUNK_SIZE = 2 ** 13
+end
+
 module Buildr
   module ActsAsArtifact
     def pom_xml
