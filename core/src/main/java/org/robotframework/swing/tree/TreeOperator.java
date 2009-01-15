@@ -182,7 +182,8 @@ public class TreeOperator implements ComponentWrapper {
         }
 
         public Object actionProduced(Object arg0) {
-            return new TreePathFinder(jTreeOperator).findPath(path);
+            TreeNodes treeNodes = new TreeNodes((TreeNode) jTreeOperator.getRoot(), jTreeOperator.isRootVisible());
+            return treeNodes.extractTreePath(path);
         }
 
         public String getDescription() {

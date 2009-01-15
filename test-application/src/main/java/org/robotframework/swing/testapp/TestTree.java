@@ -18,6 +18,8 @@ import javax.swing.tree.TreePath;
 import org.robotframework.javalib.util.KeywordNameNormalizer;
 
 public class TestTree extends JTree implements ActionListener {
+    private static final String ROOT_NAME = "The Java Series";
+    
     private JPopupMenu popup = new JPopupMenu() {{
         add(new MenuItemWithCommand("Insert a child", "insert"));
         add(new MenuItemWithCommand("Remove", "remove"));
@@ -25,6 +27,8 @@ public class TestTree extends JTree implements ActionListener {
         add(new MenuItemWithCommand("Show dialog", "showdialog"));
         add(new MenuItemWithCommand("Hide root node", "hideroot"));
         add(new MenuItemWithCommand("Show root node", "showroot"));
+        add(new MenuItemWithCommand("Remove root name", "removerootname"));
+        add(new MenuItemWithCommand("Restore root name", "restorerootname"));
         add(new JMenuItem("Disabled menuitem") {{
             setEnabled(false);
         }});
@@ -41,7 +45,7 @@ public class TestTree extends JTree implements ActionListener {
     }};
     
     public TestTree() {
-        this(new DefaultMutableTreeNode("The Java Series") {{
+        this(new DefaultMutableTreeNode(ROOT_NAME) {{
                 add(new DefaultMutableTreeNode("Books for Java Programmers") {{
                         add(new DefaultMutableTreeNode(new Object() {
                             public String toString() {
@@ -110,8 +114,13 @@ public class TestTree extends JTree implements ActionListener {
             setRootVisible(true);
         } else if (ae.getActionCommand().equals("savenodes")) {
             TestTreeResults.saveNodes(getSelectionPaths());
-        }        
+        } else if (ae.getActionCommand().equals("removerootname")) {
+            ((DefaultMutableTreeNode)getModel().getRoot()).setUserObject("");
+        } else if (ae.getActionCommand().equals("restorerootname")) {
+            ((DefaultMutableTreeNode)getModel().getRoot()).setUserObject(ROOT_NAME);
+        }
         refresh();
+        updateUI();
     }
     
     @Override

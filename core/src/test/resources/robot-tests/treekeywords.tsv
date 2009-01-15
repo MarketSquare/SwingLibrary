@@ -221,6 +221,11 @@ Click On Tree Node
 	clickedNodesShouldBe	${leafNode2}
 	clickCountShouldBe	3
 
+Keywords Also Work With Unnamed Root
+	[setup]	resetNodes
+	selectFromTreeNodePopupMenu	0	${rootNode}	Remove root name
+	selectFromTreeNodePopupMenu	0		Restore root name
+
 Keywords Also Work With Invisible Root
 	[setup]	resetNodes
 	hideRootNode

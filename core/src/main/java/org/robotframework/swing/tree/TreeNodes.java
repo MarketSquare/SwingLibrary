@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,42 +21,43 @@ import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.javalib.util.ArrayUtil;
 import org.springframework.util.ObjectUtils;
 
-public class TreePathFinder {
-    private final JTreeOperator treeOperator;
+public class TreeNodes {
+    private final TreeNode root;
+    private final boolean rootIsVisible;
 
-    public TreePathFinder(JTreeOperator treeOperator) {
-        this.treeOperator = treeOperator;
+    public TreeNodes(TreeNode root, boolean rootIsVisible) {
+        this.root = root;
+        this.rootIsVisible = rootIsVisible;
     }
-
-    public TreePath findPath(String path) {
-        String[] nodeNames = treeOperator.parseString(path);
-        TreeNode rootNode = (TreeNode) treeOperator.getRoot();
-
-        nodeNames = getStartingPoint(nodeNames, rootNode);
-        TreePath treePath = buildTreePath(rootNode, nodeNames);
-        return treePath;
+    
+    public TreePath extractTreePath(String path) {
+        return buildTreePath(parse(path));
     }
-
-    private String[] getStartingPoint(String[] nodeNames, TreeNode rootNode) {
-        if (treeOperator.isRootVisible() && nodeNames[0].equals(rootNode.toString())) {
-            return removeRoot(nodeNames);
+    
+    private String[] parse(String path) {
+        return removeRootIfNecessary(path.split("\\|"));
+    }
+    
+    private String[] removeRootIfNecessary(String[] nodeNames) {
+        if (rootIsVisible && nodeNames.length > 0 && nodeNames[0].equals(root.toString())) {
+            return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
+        } else {
+            return nodeNames;
         }
-        return nodeNames;
     }
-
-    private TreePath buildTreePath(TreeNode rootNode, String[] nodeNames) {
-        TreePath treePathToNode = new TreePath(rootNode);
-        Enumeration<?> currentLevelChildren = rootNode.children();
-        for (int i = 0; i < nodeNames.length; i++) {
-            String nodeName = nodeNames[i];
-
+    
+    @SuppressWarnings("unchecked")
+    private TreePath buildTreePath(String[] nodeNames) {
+        TreePath treePathToNode = new TreePath(root);
+        Enumeration<TreeNode> currentLevelChildren = root.children();
+        for (String nodeName : nodeNames) {
             boolean foundMatch = false;
+            
             while (currentLevelChildren.hasMoreElements()) {
-                TreeNode currentNode = (TreeNode) currentLevelChildren.nextElement();
+                TreeNode currentNode = currentLevelChildren.nextElement();
                 if (ObjectUtils.nullSafeEquals(currentNode.toString(), nodeName)) {
                     currentLevelChildren = currentNode.children();
                     treePathToNode = treePathToNode.pathByAddingChild(currentNode);
@@ -64,14 +65,10 @@ public class TreePathFinder {
                     break;
                 }
             }
-
+            
             if (!foundMatch)
                 return null;
         }
         return treePathToNode;
-    }
-
-    private String[] removeRoot(String[] nodeNames) {
-        return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
     }
 }
