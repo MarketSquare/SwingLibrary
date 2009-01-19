@@ -68,3 +68,4 @@ repositories:
 
 See http://incubator.apache.org/buildr/settings_profiles.html#personal_settings
 for more details.
+
