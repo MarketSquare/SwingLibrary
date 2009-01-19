@@ -65,7 +65,7 @@ public class TreeNodeKeywords extends TreeSupport {
         }
     }
     
-    @RobotKeyword("Clicks on a tree nodet.\n\n"
+    @RobotKeyword("Clicks on a tree node.\n\n"
         + "Examples:\n"
         + "| Click On Tree Node | _myTree_ | _Root|Folder_ |\n"
         + "| Click On Tree Node | _myTree_ | _0_      | \n\n"
