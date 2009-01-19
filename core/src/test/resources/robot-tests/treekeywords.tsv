@@ -215,15 +215,20 @@ Get Tree Node Index Keyword Works With Hidden Root
 	${nodeIndex}=	getTreeNodeIndex	${treeName}	${childNode1}|${leafNode2}
 	shouldBeEqualAsIntegers	2	${nodeIndex}
 
-Click On Tree Node
-	[setup]	clearSavedNodes
-	clickOnTreeNode	${treeName}	${childNode1}|${leafNode2}	3
+Click On Tree Node	[tags]	heikki
+	resetNodes
+	clearSavedNodes
+	clickOnTreeNode	${treeName}	${rootNode}|${childNode1}|${leafNode2}	3
 	clickedNodesShouldBe	${leafNode2}
 	clickCountShouldBe	3
 
-Keywords Also Work With Unnamed Root
-	[setup]	resetNodes
+Keywords Also Work With Unnamed Root	[tags]	heikki
+	resetNodes
 	selectFromTreeNodePopupMenu	0	${rootNode}	Remove root name
+	clearSavedNodes
+	clickOnTreeNode	${treeName}	|${childNode1}|${leafNode2}	3
+	clickedNodesShouldBe	${leafNode2}
+	clickCountShouldBe	3
 	selectFromTreeNodePopupMenu	0		Restore root name
 
 Keywords Also Work With Invisible Root
