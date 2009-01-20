@@ -41,7 +41,8 @@ define PROJECT_NAME do
   end
 
   define "test-keywords" do
-    compile.with [project("core"), project("test-application"), JEMMY, JDOM, JAVALIB_CORE, JAVALIB_CORE_DEPENDENCIES] 
+    compile.with [project("core"), project("test-application"), DEPENDENCIES, TEST_DEPENDENCIES] 
+    compile.from __("src/test")
     package :jar
   end
 end
