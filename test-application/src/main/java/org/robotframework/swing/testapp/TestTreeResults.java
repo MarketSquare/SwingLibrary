@@ -10,7 +10,7 @@ public class TestTreeResults {
     public static int clickCount;
     public static void saveNodes(TreePath[] selectionPaths) {
         for (TreePath treePath : selectionPaths) {
-            nodes.add(treePath.getLastPathComponent().toString());
+            nodes.add(treePath.getLastPathComponent().toString().toLowerCase());
         }
     }
 }

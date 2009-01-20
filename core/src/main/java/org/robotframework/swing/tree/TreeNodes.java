@@ -25,12 +25,10 @@ import org.robotframework.javalib.util.ArrayUtil;
 import org.springframework.util.ObjectUtils;
 
 public class TreeNodes {
-    private final TreeNode root;
-    private final boolean rootIsVisible;
+    private TreeInfo treeInfo;
 
-    public TreeNodes(TreeNode root, boolean rootIsVisible) {
-        this.root = root;
-        this.rootIsVisible = rootIsVisible;
+    public TreeNodes(TreeInfo treeInfo) {
+        this.treeInfo = treeInfo;
     }
     
     public TreePath extractTreePath(String path) {
@@ -42,7 +40,8 @@ public class TreeNodes {
     }
     
     private String[] removeRootIfNecessary(String[] nodeNames) {
-        if (rootIsVisible && nodeNames.length > 0 && nodeNames[0].equals(root.toString())) {
+        String rootAsString = treeInfo.getNodeText(treeInfo.getRoot());
+        if (treeInfo.rootIsVisible() && nodeNames.length > 0 && nodeNames[0].equals(rootAsString)) {
             return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
         } else {
             return nodeNames;
@@ -51,6 +50,7 @@ public class TreeNodes {
     
     @SuppressWarnings("unchecked")
     private TreePath buildTreePath(String[] nodeNames) {
+        TreeNode root = treeInfo.getRoot();
         TreePath treePathToNode = new TreePath(root);
         Enumeration<TreeNode> currentLevelChildren = root.children();
         for (String nodeName : nodeNames) {
@@ -58,7 +58,7 @@ public class TreeNodes {
             
             while (currentLevelChildren.hasMoreElements()) {
                 TreeNode currentNode = currentLevelChildren.nextElement();
-                if (ObjectUtils.nullSafeEquals(currentNode.toString(), nodeName)) {
+                if (ObjectUtils.nullSafeEquals(treeInfo.getNodeText(currentNode), nodeName)) {
                     currentLevelChildren = currentNode.children();
                     treePathToNode = treePathToNode.pathByAddingChild(currentNode);
                     foundMatch = true;

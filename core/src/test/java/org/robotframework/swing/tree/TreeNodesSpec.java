@@ -19,6 +19,7 @@ public class TreeNodesSpec extends MockSupportSpecification<Void> {
         private TreeNode node1;
         private TreeNode node2;
         private TreeNode node3;
+        private TreeInfo treeInfo;
 
         public void create() {
             root = mock(TreeNode.class, "root");
@@ -27,17 +28,35 @@ public class TreeNodesSpec extends MockSupportSpecification<Void> {
             node3 = mock(TreeNode.class, "node");
             
             createTree(node1, node2, node3);
+            
+            treeInfo = mock(TreeInfo.class);
+            
+            checking(new Expectations() {{
+                allowing(treeInfo).getRoot(); will(returnValue(root));
+                allowing(treeInfo).getNodeText(root); will(returnValue(root.toString()));
+                allowing(treeInfo).getNodeText(node1); will(returnValue(node1.toString()));
+                allowing(treeInfo).getNodeText(node2); will(returnValue(node2.toString()));
+                allowing(treeInfo).getNodeText(node3); will(returnValue(node3.toString()));
+            }});
         }
 
         public void extractsTreePath() {
-            TreeNodes treeNodes = new TreeNodes(root, true); 
+            checking(new Expectations() {{                
+                one(treeInfo).rootIsVisible(); will(returnValue(true));
+            }});
+            
+            TreeNodes treeNodes = new TreeNodes(treeInfo); 
             
             specify(treeNodes.extractTreePath("root|some|tree|node"), must.equal(expectedTreePath()));
         }
 
         
         public void extractsTreePathWithInvisibleRoot() {
-            TreeNodes treeNodes = new TreeNodes(root, false);
+            checking(new Expectations() {{                
+                one(treeInfo).rootIsVisible(); will(returnValue(true));
+            }});
+            
+            TreeNodes treeNodes = new TreeNodes(treeInfo);
             
             specify(treeNodes.extractTreePath("some|tree|node"), must.equal(expectedTreePath()));   
         }

@@ -6,11 +6,11 @@ suiteSetup	setJemmyTimeouts	1
 *Variable*	*Value*	*Value*
 ${treeName}	testTree
 ${nodeIndex}	2
-${rootNode}	The Java Series
-${childNode1}	Books for Java Programmers
-${childNode2}	Books for Java Implementers
-${leafNode}	The Java Tutorial: A Short Course on the Basics
-${leafNode2}	The Java Tutorial Continued: The Rest of the JDK
+${rootNode}	the java series
+${childNode1}	books for java programmers
+${childNode2}	books for java implementers
+${leafNode}	the java tutorial: a short course on the basics
+${leafNode2}	the java tutorial continued: the rest of the jdk
 ${anotherNodePath}	${rootNode}|${childNode1}
 ${leafNodePath}	${anotherNodePath}|${leafNode}
 ${insertChildMenuEntry}	Insert a child
@@ -193,14 +193,14 @@ Get Tree Node Label Keyword Returns The Last Nodes Name
 	[setup]	resetNodes
 	expandTreeNode	${treeName}	${rootNode}|${childNode1}
 	${treeNodeLabel}=	getTreeNodeLabel	${treeName}	3
-	shouldBeEqual	${leafNode2}	${treeNodeLabel}
+	shouldBeEqual	The Java Tutorial Continued: The Rest of the JDK	${treeNodeLabel}
 
 Get Tree Node Label Keyword Works With Hidden Root
 	[setup]	resetNodes
 	expandTreeNode	${treeName}	${rootNode}|${childNode1}
 	hideRootNode
 	${treeNodeLabel}=	getTreeNodeLabel	${treeName}	2
-	shouldBeEqual	${leafNode2}	${treeNodeLabel}
+	shouldBeEqual	The Java Tutorial Continued: The Rest of the JDK	${treeNodeLabel}
 
 Get Tree Node Index Keyword Returns The Node Index
 	[setup]	resetNodes
@@ -215,14 +215,14 @@ Get Tree Node Index Keyword Works With Hidden Root
 	${nodeIndex}=	getTreeNodeIndex	${treeName}	${childNode1}|${leafNode2}
 	shouldBeEqualAsIntegers	2	${nodeIndex}
 
-Click On Tree Node	[tags]	heikki
+Click On Tree Node
 	resetNodes
 	clearSavedNodes
 	clickOnTreeNode	${treeName}	${rootNode}|${childNode1}|${leafNode2}	3
 	clickedNodesShouldBe	${leafNode2}
 	clickCountShouldBe	3
 
-Keywords Also Work With Unnamed Root	[tags]	heikki
+Keywords Also Work With Unnamed Root
 	resetNodes
 	selectFromTreeNodePopupMenu	0	${rootNode}	Remove root name
 	clearSavedNodes

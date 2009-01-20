@@ -20,10 +20,13 @@ import java.awt.Component;
 import java.awt.Point;
 
 import javax.swing.JPopupMenu;
+import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.ComponentChooser;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
@@ -31,6 +34,7 @@ import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
+import org.robotframework.swing.chooser.WithText;
 import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.popup.DefaultPopupCaller;
 import org.robotframework.swing.popup.PopupCaller;
@@ -182,7 +186,38 @@ public class TreeOperator implements ComponentWrapper {
         }
 
         public Object actionProduced(Object arg0) {
-            TreeNodes treeNodes = new TreeNodes((TreeNode) jTreeOperator.getRoot(), jTreeOperator.isRootVisible());
+            TreeNodes treeNodes = new TreeNodes(new TreeInfo() {
+                public String getNodeText(final Object node) {
+                    Object split = path.split("\\|");
+                    final TreePath path = new TreePath(split);
+                    
+                    return (String) new QueueTool().invokeSmoothly(new QueueTool.QueueAction(null) {
+                        public Object launch() throws Exception {
+                            try {
+                                JTree tree = (JTree) jTreeOperator.getSource();
+                                int row = tree.getRowForPath(path);
+                                boolean isLeaf = tree.getModel().isLeaf(node);
+                                boolean hasFocus = tree.getLeadSelectionRow() == row;
+                                boolean isSelected = tree.isRowSelected(row);
+                                boolean isExpanded = tree.isExpanded(row);
+                                Component component = tree.getCellRenderer().getTreeCellRendererComponent(tree, node, isSelected, isExpanded, isLeaf, row, hasFocus);
+                                WithText withText = (WithText) Retrofit.partial(component, WithText.class);
+                                return withText.getText();
+                            } catch (Exception e) {
+                                return node.toString();
+                            }
+                        }
+                    });
+                }
+
+                public TreeNode getRoot() {
+                    return (TreeNode) jTreeOperator.getRoot();
+                }
+
+                public boolean rootIsVisible() {
+                    return jTreeOperator.isRootVisible();
+                }
+            });
             return treeNodes.extractTreePath(path);
         }
 

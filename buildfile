@@ -24,7 +24,7 @@ define PROJECT_NAME do
     compile.options.source = "1.5"
     compile.options.target = "1.5"
 
-    test.with [TEST_DEPENDENCIES, project("test-application").package]
+    test.with [TEST_DEPENDENCIES]
     test.include '*Spec'
     
     build do
@@ -35,9 +35,8 @@ define PROJECT_NAME do
     package(:jar, :id => PROJECT_NAME)
   end
 
-  desc "Test application"
   define "test-application" do
-    compile.with [TEST_DEPENDENCIES, JAVALIB_CORE, JEMMY]
+    compile.with [project("core"), TEST_DEPENDENCIES, JRETROFIT, JAVALIB_CORE, JEMMY]
     package :jar
   end
 

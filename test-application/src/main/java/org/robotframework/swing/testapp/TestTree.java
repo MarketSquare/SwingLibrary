@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
@@ -19,6 +20,7 @@ import org.robotframework.javalib.util.KeywordNameNormalizer;
 
 public class TestTree extends JTree implements ActionListener {
     private static final String ROOT_NAME = "The Java Series";
+    private String rootName = ROOT_NAME;
     
     private JPopupMenu popup = new JPopupMenu() {{
         add(new MenuItemWithCommand("Insert a child", "insert"));
@@ -43,6 +45,7 @@ public class TestTree extends JTree implements ActionListener {
         setLightWeightPopupEnabled(true);
         setName("popupMenu");
     }};
+
     
     public TestTree() {
         this(new DefaultMutableTreeNode(ROOT_NAME) {{
@@ -99,6 +102,17 @@ public class TestTree extends JTree implements ActionListener {
                 TestTreeResults.clickCount = e.getClickCount();
             }
         });
+        
+        setCellRenderer(new DefaultTreeCellRenderer() {
+            public String getText() {
+                String nodeText = super.getText();
+                if (nodeText.equals(ROOT_NAME)) {
+                    return rootName.toLowerCase();
+                } else {
+                    return nodeText.toLowerCase();
+                }
+            }
+        });
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -115,9 +129,9 @@ public class TestTree extends JTree implements ActionListener {
         } else if (ae.getActionCommand().equals("savenodes")) {
             TestTreeResults.saveNodes(getSelectionPaths());
         } else if (ae.getActionCommand().equals("removerootname")) {
-            ((DefaultMutableTreeNode)getModel().getRoot()).setUserObject("");
+            rootName = "";
         } else if (ae.getActionCommand().equals("restorerootname")) {
-            ((DefaultMutableTreeNode)getModel().getRoot()).setUserObject(ROOT_NAME);
+            rootName = ROOT_NAME;
         }
         refresh();
         updateUI();
