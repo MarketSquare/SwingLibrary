@@ -69,7 +69,7 @@ task :at => :acceptance_tests
 task :acceptance_tests => :dist do
   test_app = project("#{PROJECT_NAME}:test-application").package
   test_keywords = project("#{PROJECT_NAME}:test-keywords").package
-  set_env('CLASSPATH', [test_keywords, test_app, dist_jar])
+  set_env('CLASSPATH', [test_keywords, test_app, dist_jar, artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
 
   if !Buildr.environment.nil? && Buildr.environment == 'legacy'
     retro_translate(test_app.to_s)
