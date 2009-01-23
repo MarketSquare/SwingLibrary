@@ -8,5 +8,6 @@ public class TestComboBox extends JComboBox {
     public TestComboBox() {
         super(ENTRIES);
         setName("testComboBox");
+        setEditable(true);
     }
 }

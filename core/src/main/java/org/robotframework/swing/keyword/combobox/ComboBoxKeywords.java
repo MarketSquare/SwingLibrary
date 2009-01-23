@@ -69,6 +69,13 @@ public class ComboBoxKeywords {
         Assert.assertFalse("Combobox '" + identifier + "' was enabled.", createOperator(identifier).isEnabled());
     }
     
+    @RobotKeyword("Types text into a combobox.\n"
+        + "Example:\n"
+        + "| Type Into Combobox | _myCombobox_ | _someValue_ |\n")
+    public void typeIntoCombobox(String identifier, String text) {
+        createOperator(identifier).typeText(text);
+    }
+    
     private ComboBoxOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }

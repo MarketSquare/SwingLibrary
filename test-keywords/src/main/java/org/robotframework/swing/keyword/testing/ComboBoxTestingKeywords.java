@@ -18,6 +18,11 @@ public class ComboBoxTestingKeywords {
     public void enableCombobox(String identifier) {
         createOperator(identifier).setEnabled(true);
     }
+    
+    @RobotKeyword
+    public String getComboboxText(String identifier) {
+        return createOperator(identifier).getTextField().getText();
+    }
 
     private JComboBoxOperator createOperator(String identifier) {
         return new JComboBoxOperator((ContainerOperator) Context.getContext(), new ByNameOrTextComponentChooser(identifier));

@@ -21,4 +21,5 @@ public interface ComboBoxOperator extends ComponentWrapper {
     void selectItem(String comboItemIdentifier);
     Object getSelectedItem();
     boolean isEnabled();
+    void typeText(String text);
 }

@@ -33,4 +33,9 @@ public class DefaultComboBoxOperator extends IdentifierSupport implements ComboB
     public boolean isEnabled() {
         return comboboxOperator.isEnabled();
     }
+    
+    public void typeText(String text) {
+        comboboxOperator.clearText();
+        comboboxOperator.typeText(text);
+    }
 }

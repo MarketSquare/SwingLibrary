@@ -65,6 +65,11 @@ Combobox Should Be Disabled
 	runKeywordAndExpectError	Combobox '${comboboxName}' was enabled.	comboboxShouldBeDisabled	${comboboxName}
 	[teardown]	enableCombobox	${comboboxName}
 
+Type Into Combobox	[tags]	development
+	typeIntoCombobox	${comboboxName}	someText
+	${comboboxText}=	getComboboxText	${comboboxName}
+	shouldBeEqual	someText	${comboboxText}
+
 Dropdown Keywords Should Fail If Context Is Not A Window
 	selectEmptyContext
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	selectFromCombobox	${comboboxName}	${comboboxItem2}

@@ -54,6 +54,10 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         public void hasComboBoxShouldBeDisabledKeyword() {
             specify(context, satisfies(new RobotKeywordContract("comboBoxShouldBeDisabled")));
         }
+        
+        public void hasTypeIntoComboboxKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("typeIntoCombobox")));
+        }
     }
 
     public class Operating {
@@ -140,6 +144,14 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
                     context.comboBoxShouldBeDisabled(comboBoxIdentifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Combobox '" + comboBoxIdentifier + "' was enabled."));
+        }
+        
+        public void typesIntoCombobox() {
+            checking(new Expectations() {{
+                one(operator).typeText("someText");
+            }});
+            
+            context.typeIntoCombobox(comboBoxIdentifier, "someText");
         }
     }
     

@@ -64,5 +64,14 @@ public class DefaultComboBoxOperatorSpec extends Specification<DefaultComboBoxOp
             
             specify(context.isEnabled(), false);
         }
+        
+        public void typesText() {
+            checking(new Expectations() {{
+                one(jComboboxOperator).clearText();
+                one(jComboboxOperator).typeText("someText");
+            }});
+            
+            context.typeText("someText");
+        }
     }
 }
