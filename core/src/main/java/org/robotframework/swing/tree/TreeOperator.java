@@ -24,6 +24,8 @@ import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.QueueTool;
@@ -40,11 +42,14 @@ import org.robotframework.swing.popup.DefaultPopupCaller;
 import org.robotframework.swing.popup.PopupCaller;
 
 public class TreeOperator implements ComponentWrapper {
+    private static final Log logger = LogFactory.getLog(TreeOperator.class);
+    
     private PopupCaller<ComponentOperator> popupCaller = new DefaultPopupCaller();
     private TreePathFactory treePathFactory = new TreePathFactory(this);
     private JTreeOperator jTreeOperator;
 
     public TreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {
+        logger.debug("creating TreeOperator");
         jTreeOperator = new JTreeOperator(containerOperator, componentChooser);
     }
 
@@ -191,7 +196,7 @@ public class TreeOperator implements ComponentWrapper {
                     Object split = path.split("\\|");
                     final TreePath path = new TreePath(split);
                     
-                    return (String) new QueueTool().invokeSmoothly(new QueueTool.QueueAction(null) {
+                    return (String) new QueueTool().invokeSmoothly(new QueueTool.QueueAction("getNodeText") {
                         public Object launch() throws Exception {
                             try {
                                 JTree tree = (JTree) jTreeOperator.getSource();
@@ -211,7 +216,12 @@ public class TreeOperator implements ComponentWrapper {
                 }
 
                 public TreeNode getRoot() {
-                    return (TreeNode) jTreeOperator.getRoot();
+                    return (TreeNode) new QueueTool().invokeSmoothly(new QueueTool.QueueAction("getRoot") {
+                        public Object launch() throws Exception {
+                            JTree tree = (JTree) jTreeOperator.getSource();
+                            return tree.getModel().getRoot();
+                        }
+                    });
                 }
 
                 public boolean rootIsVisible() {
