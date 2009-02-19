@@ -20,8 +20,8 @@ import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.button.ButtonOperatorFactory;
 import org.robotframework.swing.button.ButtonOperator;
+import org.robotframework.swing.button.ButtonOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;

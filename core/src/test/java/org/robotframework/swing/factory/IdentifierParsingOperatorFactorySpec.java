@@ -5,7 +5,6 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.Operator;
-import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 
 @RunWith(JDaveRunner.class)

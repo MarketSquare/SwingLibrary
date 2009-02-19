@@ -17,7 +17,6 @@
 package org.robotframework.swing.checkbox;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.robotframework.swing.checkbox.CheckBoxOperator;
 import org.robotframework.swing.chooser.ByTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;

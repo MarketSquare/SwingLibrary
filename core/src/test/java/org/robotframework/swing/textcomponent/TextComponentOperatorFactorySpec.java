@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 import org.robotframework.swing.operator.ComponentWrapper;
-import org.robotframework.swing.textcomponent.TextComponentOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class TextComponentOperatorFactorySpec extends OperatorFactorySpecification<TextComponentOperatorFactory> {

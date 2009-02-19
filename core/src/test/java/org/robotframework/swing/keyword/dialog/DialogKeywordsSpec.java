@@ -7,15 +7,14 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.laughingpanda.beaninject.Inject;
+import org.robotframework.jdave.contract.FieldIsNotNullContract;
+import org.robotframework.jdave.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.contract.FieldIsNotNullContract;
-import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.dialog.DialogOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.dialog.DialogKeywords;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 

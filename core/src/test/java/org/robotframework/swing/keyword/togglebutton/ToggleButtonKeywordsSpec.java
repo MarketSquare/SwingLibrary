@@ -6,12 +6,11 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.jdave.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.button.AbstractButtonOperator;
-import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.togglebutton.ToggleButtonKeywords;
 
 @RunWith(JDaveRunner.class)
 public class ToggleButtonKeywordsSpec extends MockSupportSpecification<ToggleButtonKeywords> {

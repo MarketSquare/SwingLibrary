@@ -7,8 +7,6 @@ import javax.swing.JCheckBox;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.checkbox.CheckBoxOperator;
-import org.robotframework.swing.checkbox.CheckBoxOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 

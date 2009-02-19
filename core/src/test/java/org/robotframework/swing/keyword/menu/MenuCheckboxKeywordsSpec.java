@@ -7,9 +7,9 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JCheckBoxMenuItemOperator;
-import org.robotframework.swing.contract.FieldIsNotNullContract;
-import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.contract.RobotKeywordsContract;
+import org.robotframework.jdave.contract.FieldIsNotNullContract;
+import org.robotframework.jdave.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.keyword.window.WindowKeywords;
 

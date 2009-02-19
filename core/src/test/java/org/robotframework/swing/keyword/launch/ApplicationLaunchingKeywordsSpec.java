@@ -7,8 +7,8 @@ import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.contract.RobotKeywordsContract;
+import org.robotframework.jdave.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyword.testapp.SomeApplication;
 
 @RunWith(JDaveRunner.class)

@@ -6,14 +6,13 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.robotframework.jdave.contract.FieldIsNotNullContract;
+import org.robotframework.jdave.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.button.ButtonOperator;
-import org.robotframework.swing.contract.FieldIsNotNullContract;
-import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.keyword.button.ButtonKeywords;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 

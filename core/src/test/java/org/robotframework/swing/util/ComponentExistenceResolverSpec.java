@@ -1,6 +1,5 @@
 package org.robotframework.swing.util;
 
-import static org.hamcrest.Matchers.is;
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -9,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.swing.arguments.IdentifierHandler;
+
+import static org.hamcrest.Matchers.is;
 
 
 @RunWith(JDaveRunner.class)

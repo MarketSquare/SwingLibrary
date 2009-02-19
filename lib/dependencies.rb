@@ -1,7 +1,7 @@
 JRETROFIT = 'jretrofit:jretrofit:jar:1.0rc1'
 JEMMY = 'org.netbeans:jemmy:jar:2.2.7.5'
 PARANAMER = 'com.thoughtworks.paranamer:paranamer:jar:1.1.2'
-JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.7.2'
+JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.7.3-SNAPSHOT'
 JDOM = 'jdom:jdom:jar:1.0'
 HAMCREST = 'org.hamcrest:hamcrest-core:jar:1.1'
 
@@ -42,6 +42,7 @@ TEST_DEPENDENCIES =
   'org.jmock:jmock:jar:2.4.0',
   'cglib:cglib-nodep:jar:2.1_3',
   'org.objenesis:objenesis:jar:1.0',
+  'org.robotframework:javatools-test:jar:0.1-SNAPSHOT',
   PARANAMER]
 
 TRANSLATOR =

@@ -32,32 +32,36 @@ public class CheckBoxKeywords {
         + "Example:\n"
         + "| Check Checkbox | _My Checkbox_ |\n")
     public void checkCheckBox(String identifier) {
-        operatorFactory.createOperator(identifier).changeSelection(true);
+        createOperator(identifier).changeSelection(true);
     }
 
     @RobotKeyword("Uses current context to search for a checkbox and when found, unchecks it.\n\n"
         + "Example:\n"
         + "| Uncheck Checkbox | _My Checkbox_ |\n")
     public void uncheckCheckBox(String identifier) {
-        operatorFactory.createOperator(identifier).changeSelection(false);
+        createOperator(identifier).changeSelection(false);
     }
 
     @RobotKeyword("Fails if checkbox is not checked.\n\n"
         + "Example:\n"
         + "| Check Box Should Be Checked | _My Checkbox_ |\n")
     public void checkBoxShouldBeChecked(String identifier) {
-        Assert.assertTrue(operatorFactory.createOperator(identifier).isSelected());
+        Assert.assertTrue(createOperator(identifier).isSelected());
     }
 
     @RobotKeyword("Fails if checkbox is checked.\n\n"
         + "Example:\n"
         + "| Check Box Should Be Unchecked | _My Checkbox_ |\n")
     public void checkBoxShouldBeUnchecked(String identifier) {
-        Assert.assertFalse(operatorFactory.createOperator(identifier).isSelected());
+        Assert.assertFalse(createOperator(identifier).isSelected());
     }
 
     @RobotKeyword("Alias for `Check Box Should Be Unchecked` keyword.\n")
     public void checkBoxShouldNotBeChecked(String identifier) {
         checkBoxShouldBeUnchecked(identifier);
+    }
+    
+    private CheckBoxOperator createOperator(String identifier) {
+        return operatorFactory.createOperator(identifier);
     }
 }

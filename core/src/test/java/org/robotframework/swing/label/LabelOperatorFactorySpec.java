@@ -9,8 +9,6 @@ import jdave.junit4.JDaveRunner;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
-import org.robotframework.swing.label.LabelOperator;
-import org.robotframework.swing.label.LabelOperatorFactory;
 
 
 @RunWith(JDaveRunner.class)

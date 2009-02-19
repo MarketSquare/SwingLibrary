@@ -5,8 +5,6 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.arguments.ArgumentHandler;
-import org.robotframework.swing.arguments.ArgumentParser;
 
 
 @RunWith(JDaveRunner.class)

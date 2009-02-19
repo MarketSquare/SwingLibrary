@@ -5,9 +5,8 @@ import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.JemmyProperties;
-import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
+import org.robotframework.jdave.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordsContract;
 
 
 @RunWith(JDaveRunner.class)

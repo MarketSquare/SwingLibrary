@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.button.ButtonOperator;
-import org.robotframework.swing.button.ButtonOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 

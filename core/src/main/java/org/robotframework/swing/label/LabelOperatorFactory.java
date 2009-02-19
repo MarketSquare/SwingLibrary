@@ -20,7 +20,6 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
-import org.robotframework.swing.label.LabelOperator;
 
 public class LabelOperatorFactory extends DefaultContextVerifyingOperatorFactory<LabelOperator> {
     public LabelOperator createOperatorByIndex(int index) {

@@ -12,10 +12,10 @@ import junit.framework.AssertionFailedError;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.robotframework.jdave.contract.FieldIsNotNullContract;
+import org.robotframework.jdave.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.comparator.EqualsStringComparator;
-import org.robotframework.swing.contract.FieldIsNotNullContract;
-import org.robotframework.swing.contract.RobotKeywordContract;
-import org.robotframework.swing.contract.RobotKeywordsContract;
 import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
 
 

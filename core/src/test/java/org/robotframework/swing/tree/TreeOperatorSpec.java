@@ -12,7 +12,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
-import org.robotframework.swing.contract.FieldIsNotNullContract;
+import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.popup.PopupCaller;
 

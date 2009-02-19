@@ -1,10 +1,10 @@
 package org.robotframework.swing.table;
 
-import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.JTableOperator;
-
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
+
+import org.junit.runner.RunWith;
+import org.netbeans.jemmy.operators.JTableOperator;
 
 @RunWith(JDaveRunner.class)
 public class AbstractTableCellChooserSpec extends Specification<AbstractTableCellChooser> {

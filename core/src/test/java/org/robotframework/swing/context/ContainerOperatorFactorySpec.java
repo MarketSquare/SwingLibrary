@@ -6,8 +6,6 @@ import java.awt.Container;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.context.ContainerOperator;
-import org.robotframework.swing.context.ContainerOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 

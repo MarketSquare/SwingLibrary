@@ -6,8 +6,6 @@ import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
 import org.junit.runner.RunWith;
-import org.robotframework.swing.tree.JTreeLocationFactory;
-
 
 import abbot.tester.JTreeLocation;
 

@@ -6,7 +6,7 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.contract.RobotKeywordContract;
+import org.robotframework.jdave.contract.RobotKeywordContract;
 
 
 @RunWith(JDaveRunner.class)

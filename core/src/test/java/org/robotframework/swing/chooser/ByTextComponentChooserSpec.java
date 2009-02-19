@@ -7,7 +7,6 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.robotframework.swing.chooser.ByTextComponentChooser;
 
 @RunWith(JDaveRunner.class)
 public class ByTextComponentChooserSpec extends Specification<ByTextComponentChooser> {
