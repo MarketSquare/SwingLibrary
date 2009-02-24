@@ -55,6 +55,20 @@ public class CheckBoxKeywords {
     public void checkBoxShouldBeUnchecked(String identifier) {
         Assert.assertFalse(createOperator(identifier).isSelected());
     }
+    
+    @RobotKeyword("Fails if checkbox is disabled.\n\n"
+        + "Example:\n"
+        + "| Check Box Should Be Enabled | _My Checkbox_ |\n")
+    public void checkBoxShouldBeEnabled(String identifier) {
+        Assert.assertTrue("Checkbox '" + identifier + "' is disabled.", createOperator(identifier).isEnabled());
+    }
+
+    @RobotKeyword("Fails if checkbox is enabled.\n\n"
+        + "Example:\n"
+        + "| Check Box Should Be Disabled | _My Checkbox_ |\n")
+    public void checkBoxShouldBeDisabled(String identifier) {
+        Assert.assertFalse("Checkbox '" + identifier + "' is enabled.", createOperator(identifier).isEnabled());
+    }
 
     @RobotKeyword("Alias for `Check Box Should Be Unchecked` keyword.\n")
     public void checkBoxShouldNotBeChecked(String identifier) {

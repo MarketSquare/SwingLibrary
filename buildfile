@@ -1,5 +1,4 @@
 require 'buildr/cobertura'
-require 'yaml'
 require 'lib/helper_methods'
 require 'lib/dependencies'
 
@@ -42,7 +41,6 @@ define PROJECT_NAME do
 
   define "test-keywords" do
     compile.with [project("core"), project("test-application"), DEPENDENCIES, TEST_DEPENDENCIES] 
-    compile.from __("src/test")
     package :jar
   end
 end

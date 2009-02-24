@@ -47,6 +47,14 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
         public void hasUncheckCheckBoxKeyword() {
             specify(checkboxKeywords, satisfies(new RobotKeywordContract("uncheckCheckBox")));
         }
+        
+        public void hasCheckBoxShouldBeEnabledKeyword() {
+            specify(checkboxKeywords, satisfies(new RobotKeywordContract("checkBoxShouldBeEnabled")));
+        }
+        
+        public void hasCheckBoxShouldBeDisabledKeyword() {
+            specify(checkboxKeywords, satisfies(new RobotKeywordContract("checkBoxShouldBeDisabled")));
+        }
     }
 
     public class Operating {
@@ -114,12 +122,60 @@ public class CheckBoxKeywordsSpec extends MockSupportSpecification<CheckBoxKeywo
             }, must.raise(AssertionFailedError.class));
         }
 
+        public void checkBoxShouldBeEnabledPassesIfCheckBoxIsEnabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(true));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.checkBoxShouldBeEnabled(checkboxIdentifier);
+                }
+            }, must.not().raise(AssertionFailedError.class));
+        }
+        
+        public void checkBoxShouldBeEnabledFailsIfCheckBoxIsDisabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(false));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.checkBoxShouldBeEnabled(checkboxIdentifier);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, "Checkbox '" + checkboxIdentifier + "' is disabled."));
+        }
+        
+        public void checkBoxShouldBeDisabledPassesIfCheckBoxIsDisabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(false));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.checkBoxShouldBeDisabled(checkboxIdentifier);
+                }
+            }, must.not().raise(AssertionFailedError.class));
+        }
+        
+        public void checkBoxShouldBeDisabledFailsIfCheckBoxIsEnabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(true));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.checkBoxShouldBeDisabled(checkboxIdentifier);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, "Checkbox '" + checkboxIdentifier + "' is enabled."));
+        }
+        
         private void setIsSelected(final boolean b) {
             checking(new Expectations() {{
                 one(operator).isSelected(); will(returnValue(b));
             }});
         }
-
+        
         private void injectMockOperatorFactory() {
             operator = mock(CheckBoxOperator.class);
             operatorFactory = injectMockTo(checkboxKeywords, OperatorFactory.class);

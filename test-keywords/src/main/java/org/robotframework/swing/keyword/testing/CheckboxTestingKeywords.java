@@ -22,7 +22,7 @@ import org.robotframework.swing.checkbox.CheckBoxOperator;
 import org.robotframework.swing.checkbox.CheckBoxOperatorFactory;
 
 @RobotKeywords
-public class CheckboxKeywords {
+public class CheckboxTestingKeywords {
     @RobotKeyword
     public void disableCheckbox(String identifier) {
         createOperator(identifier).setEnabled(false);

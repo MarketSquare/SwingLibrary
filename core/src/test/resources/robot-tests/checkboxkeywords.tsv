@@ -7,6 +7,19 @@ ${checkBoxIndex}	0
 ${checkBoxText}	Test Checkbox
 
 *Test Case*	*Action*	*Argument*
+Checkbox Should Be Enabled
+	checkBoxShouldBeEnabled	${checkBoxIndex}
+	checkBoxShouldBeEnabled	${checkBoxText}
+	disableCheckBox	${checkBoxText}
+	runKeywordAndExpectError	Checkbox '${checkBoxText}' is disabled.	checkBoxShouldBeEnabled	${checkBoxText}
+
+Checkbox Should Be Disabled
+	disableCheckBox	${checkBoxText}
+	checkBoxShouldBeDisabled	${checkBoxIndex}
+	checkBoxShouldBeDisabled	${checkBoxText}
+	enableCheckBox	${checkBoxText}
+	runKeywordAndExpectError	Checkbox '${checkBoxText}' is enabled.	checkBoxShouldBeDisabled	${checkBoxText}
+
 Check Checkbox By Index
 	checkCheckBox	${checkBoxIndex}
 	checkBoxShouldBeChecked	${checkBoxIndex}
