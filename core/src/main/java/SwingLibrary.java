@@ -14,16 +14,30 @@
  * limitations under the License.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
+
+
 public class SwingLibrary extends AnnotationLibrary {
-    private AnnotationLibrary annotationLibrary;
-    
+	private AnnotationLibrary annotationLibrary;
+
+	public String ROBOT_LIBRARY_SCOPE = "GLOBAL";
+	
     public SwingLibrary() {
-        annotationLibrary = new AnnotationLibrary("org/robotframework/swing/keyword/**/*.class");
+        this(new ArrayList<String>());
+    }
+
+    public SwingLibrary(List<String> keywordPatterns) {
+    	List<String> patterns = new ArrayList<String>()
+    			{{ add("org/robotframework/swing/keyword/**/*.class");}};
+    	patterns.addAll(keywordPatterns);
+        annotationLibrary = new AnnotationLibrary(patterns);
         disableOutput();
         setDefaultTimeouts();
     }

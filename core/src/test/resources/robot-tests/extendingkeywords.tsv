@@ -1,0 +1,12 @@
+*Setting*	*Value*	*Value*
+Variables	variables.py
+library	SwingLibrary	${KEYWORD PATTERNS}
+								
+*Variable*	*Value*	*Value*
+
+*Test Case*	*Action*	*Argument*	*Argument*
+Test Extended Keyword Is Available
+	${value} =	Keyword In Other Package	Hello World!
+	Should Be Equal	${value}	Hello World!
+
+*Keyword*	*Action*	*Argument*	*Argument*
