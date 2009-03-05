@@ -7,8 +7,8 @@ import org.robotframework.javalib.library.RobotJavaLibrary;
 public abstract class RunnerKeyword implements Keyword {
     private Object[] arguments;
     private RobotJavaLibrary library = new AnnotationLibrary() {{
-        setKeywordPattern("org/robotframework/**/keyword/**/*.class");
-    }};
+        addKeywordPattern("org/robotframework/**/keyword/**/*.class");
+	}};
 
     public Object execute(Object[] arguments) {
         this.arguments = arguments;
