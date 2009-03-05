@@ -41,6 +41,11 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
             specify(context, satisfies(new RobotKeywordContract("getLabelContent")));
         }
 
+        
+        public void labelShouldBeEqualKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("labelTextShouldBe")));
+        }
+
         public void hasLabelShouldExistKeyword() {
             specify(context, satisfies(new RobotKeywordContract("labelShouldExist")));
         }
@@ -74,7 +79,53 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
             specify(context.getLabelContent(labelIdentifier), must.equal(labelText));
         }
     }
+    
+    public class CheckingLabel {
+        private LabelOperator labelOperator = mock(LabelOperator.class);
+        
+        public LabelKeywords create() {
+            LabelKeywords labelKeywords = new LabelKeywords();
+            final OperatorFactory operatorFactory = injectMockTo(labelKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
 
+            checking(new Expectations() {{
+                one(operatorFactory).createOperator(labelIdentifier);
+                will(returnValue(labelOperator));
+            }});
+
+            return labelKeywords;
+        }
+    	
+    	public void labelShouldBePassesWhenLabelIsEqual() throws Throwable {
+            checking(new Expectations() {{
+                one(labelOperator).getText();
+                will(returnValue("My label!"));
+            }});
+    		
+    		specify(new Block() {
+				public void run() throws Throwable {
+					context.labelTextShouldBe(labelIdentifier, "My label!");
+				}
+    		}, must.not().raiseAnyException());
+    				
+    	}
+
+    	public void labelShouldBeFailsWhenLabelIsUnEqual() {
+            checking(new Expectations() {{
+                one(labelOperator).getText();
+                will(returnValue("My label!"));
+            }});
+    		
+    		specify(new Block() {
+				public void run() throws Throwable {
+					context.labelTextShouldBe(labelIdentifier, "Something else");
+				}
+    		}, must.raise(AssertionError.class, 
+    				"Expected label 'someLabel' value to be 'Something else', but was 'My label!'"));
+    	}    	
+    }
+
+    
+    
     public class CheckingConditions {
         private IComponentConditionResolver existenceResolver;
 
