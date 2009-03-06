@@ -15,7 +15,6 @@
  */
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.netbeans.jemmy.JemmyProperties;
@@ -32,7 +31,7 @@ public class SwingLibrary extends AnnotationLibrary {
     private AnnotationLibrary annotationLibrary;
 
     public SwingLibrary() {
-        this(Collections.<String>emptyList());
+        this(new ArrayList<String>());
     }
 
     public SwingLibrary(final List<String> keywordPatterns) {

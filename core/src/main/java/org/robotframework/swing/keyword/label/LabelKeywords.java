@@ -37,7 +37,7 @@ public class LabelKeywords {
         + "| ${labelText}=   | Get Label Content | _addressLabel_    |\n"
         + "| Should Be Equal | _Address:_        | _${labelText}_ |\n")
     public String getLabelContent(String identifier) {
-        return operatorFactory.createOperator(identifier).getText();
+        return createOperator(identifier).getText();
     }
 
     @RobotKeyword("Fails if label does not exist within current context.\n\n"
@@ -61,8 +61,11 @@ public class LabelKeywords {
         + "Example:\n"
         + "| Label Text Should Be | _addressLabel_ | _Address:_ |\n")
     public void labelTextShouldBe(String identifier, String expected) {
-        String actual = operatorFactory.createOperator(identifier).getText();
-        String message = "Expected label '" + identifier + "' value to be '" + expected + "', but was '" + actual + "'";
-        Assert.assertTrue(message, actual.equals(expected));
+        String actual = createOperator(identifier).getText();
+        Assert.assertTrue("Expected label '" + identifier + "' value to be '" + expected + "', but was '" + actual + "'", expected.equals(actual));
+    }
+    
+    private LabelOperator createOperator(String identifier) {
+        return operatorFactory.createOperator(identifier);
     }
 }
