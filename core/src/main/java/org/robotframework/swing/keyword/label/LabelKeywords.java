@@ -57,14 +57,12 @@ public class LabelKeywords {
     }
 
     @RobotKeyword("Checks the equality of given text and the text displayed on a label.\n"
-            + "Assumes that the label exists in the current context.\n\n"
-            + "Example:\n"
-            + "| Label Text Should Be | _addressLabel_ | _Address:_ |\n")
-        public void labelTextShouldBe(String identifier, String expected) {
-    		String actual = operatorFactory.createOperator(identifier).getText();
-    		String message = "Expected label '" + identifier  + "' value to be '" 
-			+ expected + "', but was '" + actual + "'";
-    		Assert.assertTrue(message, actual.equals(expected));
-        }
-    
+        + "Assumes that the label exists in the current context.\n\n"
+        + "Example:\n"
+        + "| Label Text Should Be | _addressLabel_ | _Address:_ |\n")
+    public void labelTextShouldBe(String identifier, String expected) {
+        String actual = operatorFactory.createOperator(identifier).getText();
+        String message = "Expected label '" + identifier + "' value to be '" + expected + "', but was '" + actual + "'";
+        Assert.assertTrue(message, actual.equals(expected));
+    }
 }
