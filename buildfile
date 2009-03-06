@@ -50,10 +50,11 @@ task :dist => :package do
     puts "Creating #{dist_jar}"
     mkdir_p File.dirname(dist_jar)
     temp_dir do |tmpdir|
-      artifacts(dist_dependencies).each do |jar|
+      artifacts(dist_contents).each do |jar|
+        puts "unzipping #{jar}"
         sh "unzip -qo \"#{jar}\"", :verbose => false
       end
-      sh "zip -qr \"#{dist_jar}\" #{Dir['*'].join(' ')} -x '*.SF'", :verbose => false
+      sh "zip -qr \"#{dist_jar}\" * -x '*.SF'", :verbose => false
     end
 
     if !Buildr.environment.nil? && Buildr.environment == 'legacy'
@@ -67,7 +68,8 @@ task :at => :acceptance_tests
 task :acceptance_tests => :dist do
   test_app = project("#{PROJECT_NAME}:test-application").package
   test_keywords = project("#{PROJECT_NAME}:test-keywords").package
-  set_env('CLASSPATH', [test_keywords, test_app, dist_jar, artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
+  set_env('CLASSPATH', [test_keywords, test_app, dist_jar, artifacts(TEST_DEPENDENCIES)])
+  puts ENV['CLASSPATH']
 
   if !Buildr.environment.nil? && Buildr.environment == 'legacy'
     retro_translate(test_app.to_s)
@@ -81,7 +83,7 @@ task :acceptance_tests => :dist do
     ENV['ROBOT_OUTPUTDIR']
   end
   
-  sh "jybot --outputdir #{output_dir} --critical regression " + __('src/test/resources/robot-tests')
+  sh "jybot --loglevel TRACE --outputdir #{output_dir} --debugfile debug.txt --critical regression " + __('src/test/resources/robot-tests')
 end
 
 task :doc => :compile do

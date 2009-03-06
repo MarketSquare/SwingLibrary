@@ -21,7 +21,7 @@ module HelperMethods
     "#{swinglib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}#{classifier}.jar"
   end
 
-  def dist_dependencies
+  def dist_contents
     [DEPENDENCIES, main_project.package(:id => PROJECT_NAME)].flatten
   end
 
@@ -63,7 +63,7 @@ module HelperMethods
   end
 
   def set_env(name, values)
-    ENV[name] = "#{values.flatten.join(File::PATH_SEPARATOR)}#{File::PATH_SEPARATOR}#{ENV[name]}"
+    ENV[name] = "#{values.flatten.join(File::PATH_SEPARATOR)}"
   end
 
   def sources
