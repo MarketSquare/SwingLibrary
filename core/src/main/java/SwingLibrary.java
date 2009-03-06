@@ -25,7 +25,10 @@ import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 public class SwingLibrary extends AnnotationLibrary {
     public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
-    private static final String DEFAULT_PATTERN = "org/robotframework/swing/keyword/**/*.class";
+    private static final List<String> KEYWORD_PATTERNS = new ArrayList<String>() {{ 
+       add("org/robotframework/swing/keyword/**/*.class");
+    }};
+    
     private AnnotationLibrary annotationLibrary;
 
     public SwingLibrary() {
@@ -39,10 +42,8 @@ public class SwingLibrary extends AnnotationLibrary {
     }
 
     private void createLibrary(final List<String> keywordPatterns) {
-        annotationLibrary = new AnnotationLibrary(new ArrayList<String>() {{
-            add(DEFAULT_PATTERN);
-            addAll(keywordPatterns);
-        }});
+        KEYWORD_PATTERNS.addAll(keywordPatterns);
+        annotationLibrary = new AnnotationLibrary(KEYWORD_PATTERNS);
     }
 
     public Object runKeyword(String keywordName, Object[] args) {
