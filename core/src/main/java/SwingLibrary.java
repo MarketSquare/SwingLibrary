@@ -15,6 +15,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.netbeans.jemmy.JemmyProperties;
@@ -22,26 +23,28 @@ import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
-
-
 public class SwingLibrary extends AnnotationLibrary {
-	private AnnotationLibrary annotationLibrary;
+    public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
+    private static final String DEFAULT_PATTERN = "org/robotframework/swing/keyword/**/*.class";
+    private AnnotationLibrary annotationLibrary;
 
-	public String ROBOT_LIBRARY_SCOPE = "GLOBAL";
-	
     public SwingLibrary() {
-        this(new ArrayList<String>());
+        this(Collections.<String>emptyList());
     }
 
-    public SwingLibrary(List<String> keywordPatterns) {
-    	List<String> patterns = new ArrayList<String>()
-    			{{ add("org/robotframework/swing/keyword/**/*.class");}};
-    	patterns.addAll(keywordPatterns);
-        annotationLibrary = new AnnotationLibrary(patterns);
+    public SwingLibrary(final List<String> keywordPatterns) {
+        createLibrary(keywordPatterns);
         disableOutput();
         setDefaultTimeouts();
     }
-    
+
+    private void createLibrary(final List<String> keywordPatterns) {
+        annotationLibrary = new AnnotationLibrary(new ArrayList<String>() {{
+            add(DEFAULT_PATTERN);
+            addAll(keywordPatterns);
+        }});
+    }
+
     public Object runKeyword(String keywordName, Object[] args) {
         return annotationLibrary.runKeyword(keywordName, toStrings(args));
     }
@@ -65,7 +68,7 @@ public class SwingLibrary extends AnnotationLibrary {
     private void disableOutput() {
         JemmyProperties.setCurrentOutput(TestOut.getNullOutput());
     }
-    
+
     private Object[] toStrings(Object[] args) {
         Object[] newArgs = new Object[args.length];
         for (int i = 0; i < newArgs.length; i++) {
