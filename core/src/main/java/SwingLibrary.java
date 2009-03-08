@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
@@ -24,25 +24,22 @@ import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 public class SwingLibrary extends AnnotationLibrary {
     public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
-    private static final List<String> KEYWORD_PATTERNS = new ArrayList<String>() {{ 
-       add("org/robotframework/swing/keyword/**/*.class");
-    }};
-    
-    private AnnotationLibrary annotationLibrary;
+    private final AnnotationLibrary annotationLibrary = new AnnotationLibrary("org/robotframework/swing/keyword/**/*.class");
 
     public SwingLibrary() {
-        this(new ArrayList<String>());
+        this(Collections.<String>emptyList());
     }
 
-    public SwingLibrary(final List<String> keywordPatterns) {
-        createLibrary(keywordPatterns);
+    public SwingLibrary(Collection<String>  keywordPatterns) {
+        addKeywordPatterns(keywordPatterns);
         disableOutput();
         setDefaultTimeouts();
     }
 
-    private void createLibrary(final List<String> keywordPatterns) {
-        KEYWORD_PATTERNS.addAll(keywordPatterns);
-        annotationLibrary = new AnnotationLibrary(KEYWORD_PATTERNS);
+    private void addKeywordPatterns(Collection<String> keywordPatterns) {
+        for (String pattern : keywordPatterns) {
+            annotationLibrary.addKeywordPattern(pattern);
+        }
     }
 
     public Object runKeyword(String keywordName, Object[] args) {
