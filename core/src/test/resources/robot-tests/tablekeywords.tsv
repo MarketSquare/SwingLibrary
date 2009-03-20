@@ -5,6 +5,8 @@ testSetup	clearTable
 *Variable*	*Value*	*Value*
 ${tableName}	testTable
 ${columnHeaderOne}	column one
+${enabledMenuItem}	Replace text
+${disabledMenuItem}	Disabled menuitem
 
 *Test Case*	*Action*	*Argument*	*Argument*
 Table Cell Should Not Be Selected By Index
@@ -92,7 +94,15 @@ Select From Table Cell Popup Menu Accepts Integer Arguments
 	${newCellValue}=	getTableCellValue	${tableName}	${rowAsInteger}	1
 	shouldBeEqual	newValue	${newCellValue}
 
-Table Keywords Fail If Context Is Not a Table
+Table Cell Popup Menu Should Be Disabled
+	tableCellPopupMenuShouldBeDisabled	${tableName}	2	column one	${disabledMenuItem}
+	runKeywordAndExpectError	Menuitem '${enabledMenuItem}' at '2, column one' is enabled.	tableCellPopupMenuShouldBeDisabled	${tableName}	2	column one	${enabledMenuItem}
+
+Table Cell Popup Menu Should Be Enabled
+	tableCellPopupMenuShouldBeEnabled	${tableName}	2	column one	${enabledMenuItem}
+	runKeywordAndExpectError	Menuitem '${disabledMenuItem}' at '2, column one' is disabled.	tableCellPopupMenuShouldBeEnabled	${tableName}	2	column one	${disabledMenuItem}
+
+Table Keywords Fail If Context Is Not Set
 	selectEmptyContext
 	tableKeywordShouldFail	getTableCellValue	someTable	0	0
 	tableKeywordShouldFail	getSelectedTableCellValue	someTable

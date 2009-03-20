@@ -80,6 +80,14 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context, satisfies(new RobotKeywordContract("selectFromTableCellPopupMenu")));
         }
         
+        public void hasTableCellPopupMenuShouldBeEnabledKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("tableCellPopupMenuShouldBeEnabled")));
+        }
+        
+        public void hasTableCellPopupMenuShouldBeDisabledKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("tableCellPopupMenuShouldBeDisabled")));
+        }
+        
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
@@ -227,27 +235,85 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
     
     public class CallingPopupOnTableCell {
         private String menuPath = "some|menu";
+        private JPopupMenuOperator popupMenuOperator;
+        private JMenuItemOperator menuItemOperator;
         
         public TableKeywords create() {
             injectMockOperatorFactory();
-            return tableKeywords;
-        }
-        
-        public void selectsFromTableCellPopupMenu() {
-            final JPopupMenuOperator popupMenuOperator = mock(JPopupMenuOperator.class);
-            final JMenuItemOperator menuItemOperator = mock(JMenuItemOperator.class);
+            
+            popupMenuOperator = mock(JPopupMenuOperator.class);
+            menuItemOperator = mock(JMenuItemOperator.class);
             
             checking(new Expectations() {{
                 one(tableOperator).callPopupOnCell(row, columnIdentifier);
                 will(returnValue(popupMenuOperator));
                 
                 one(popupMenuOperator).showMenuItem(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
-                will(returnValue(menuItemOperator));
                 
+                will(returnValue(menuItemOperator));
+            }});
+            
+            return tableKeywords;
+        }
+        
+        public void selectsFromTableCellPopupMenu() {
+            checking(new Expectations() {{    
                 one(menuItemOperator).push();
             }});
             
             context.selectFromTableCellPopupMenu(tableIdentifier, row, columnIdentifier, menuPath);
+        }
+        
+        public void tableCellPopupMenuShouldBeEnabledPassesWhenMenuItemIsEnabled() throws Throwable {
+            checking(new Expectations() {{    
+                one(menuItemOperator).isEnabled(); will(returnValue(true));
+            }});
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.tableCellPopupMenuShouldBeEnabled(tableIdentifier, row, columnIdentifier, menuPath);
+                }
+            }, must.not().raiseAnyException());
+        }
+        
+        public void tableCellPopupMenuShouldBeEnabledFailsWhenMenuItemIsDisabled() throws Throwable {
+            checking(new Expectations() {{    
+                one(menuItemOperator).isEnabled(); will(returnValue(false));
+            }});
+            
+            String expectedMessage = "Menuitem '" + menuPath + "' at '" + row + ", " +  columnIdentifier + "' is disabled.";
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.tableCellPopupMenuShouldBeEnabled(tableIdentifier, row, columnIdentifier, menuPath);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, expectedMessage));
+        }
+        
+        public void tableCellPopupMenuShouldBeDisabledPassesWhenMenuItemIsDisabled() throws Throwable {
+            checking(new Expectations() {{    
+                one(menuItemOperator).isEnabled(); will(returnValue(false));
+            }});
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.tableCellPopupMenuShouldBeDisabled(tableIdentifier, row, columnIdentifier, menuPath);
+                }
+            }, must.not().raiseAnyException());
+        }
+        
+        public void tableCellPopupMenuShouldBeDisabledFailsWhenMenuItemIsEnabled() throws Throwable {
+            checking(new Expectations() {{    
+                one(menuItemOperator).isEnabled(); will(returnValue(true));
+            }});
+            
+            String expectedMessage = "Menuitem '" + menuPath + "' at '" + row + ", " +  columnIdentifier + "' is enabled.";
+            
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.tableCellPopupMenuShouldBeDisabled(tableIdentifier, row, columnIdentifier, menuPath);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, expectedMessage));
         }
     }
 

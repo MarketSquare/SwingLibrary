@@ -117,13 +117,37 @@ public class TableKeywords extends IdentifierSupport {
         + "Examples:\n"
         + "| Select From Table Cell Popup Menu | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ | ")
     public void selectFromTableCellPopupMenu(String identifier, String row, String columnIdentifier, String menuPath) {
-        TableOperator tableOperator = createTableOperator(identifier);
-        JPopupMenuOperator popupMenuOperator = tableOperator.callPopupOnCell(row, columnIdentifier);
-        JMenuItemOperator menuItem = popupMenuOperator.showMenuItem(menuPath, new EqualsStringComparator());
+        JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
         menuItem.push();
     }
     
+    @RobotKeyword("Fails if the given table cell popup menu is disabled.\n"
+        + "Separator for items is '|'.\n\n"
+        + "Examples:\n"
+        + "| Table Cell Popup Menu Should Be Enabled | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ |\n")
+    public void tableCellPopupMenuShouldBeEnabled(String identifier, String row, String columnIdentifier, String menuPath) {
+        JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
+        String errorMessage = "Menuitem '" + menuPath + "' at '" + row + ", " +  columnIdentifier + "' is disabled.";
+        Assert.assertTrue(errorMessage, menuItem.isEnabled());
+    }
+
+    @RobotKeyword("Fails if the given table cell popup menu is enabled.\n"
+        + "Separator for items is '|'.\n\n"
+        + "Examples:\n"
+        + "| Table Cell Popup Menu Should Be Disabled | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ |\n")
+    public void tableCellPopupMenuShouldBeDisabled(String identifier, String row, String columnIdentifier, String menuPath) {
+        JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
+        String errorMessage = "Menuitem '" + menuPath + "' at '" + row + ", " +  columnIdentifier + "' is enabled.";
+        Assert.assertFalse(errorMessage, menuItem.isEnabled());
+    }
+
     private TableOperator createTableOperator(String identifier) {
-        return operatorFactory.createOperator(identifier);   
+        return operatorFactory.createOperator(identifier);
+    }
+    
+    private JMenuItemOperator getPopupMenuItem(String identifier, String row, String columnIdentifier, String menuPath) {
+        TableOperator tableOperator = createTableOperator(identifier);
+        JPopupMenuOperator popupMenuOperator = tableOperator.callPopupOnCell(row, columnIdentifier);
+        return popupMenuOperator.showMenuItem(menuPath, new EqualsStringComparator());
     }
 }
