@@ -1,0 +1,17 @@
+*Setting*	*Value*
+Variables	variables.py
+library	SwingLibrary	${KEYWORD PATTERNS}
+
+*Test Case*	*Action*	*Argument*
+Runs Keyword In Separate Thread
+	runKeywordInSeparateThread	shouldBeRunInSeparateThread
+	keywordShouldHaveBeenRun
+	runKeywordInSeparateThread	keywordInOtherPackage	arg
+	keywordShouldHaveBeenRun
+	runKeywordAndExpectError	*	shouldBeRunInSeparateThread
+	keywordShouldHaveBeenRun
+
+*Keyword*	*Action*	*Argument*	*Argument*
+keywordShouldHaveBeenRun
+	keywordWasRun
+	resetKeywordWasRunCheck
