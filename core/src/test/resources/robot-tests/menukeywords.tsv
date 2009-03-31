@@ -11,14 +11,32 @@ ${checkboxMenu}	Test menu checkbox
 *Test Case*	*Action*	*Argument*
 Select From Main Menu
 	selectFromMainMenu	${showDialog}
-	# Sleep is necessary because the preceding keyword doesn't wait for the tool to open
-	sleep	1
 	dialogShouldBeOpen	Message
 	[teardown]	closeDialog	Message
 
 Select From Main Menu And Wait
 	selectFromMainMenuAndWait	${mutableMenu}
 	mainMenuItemShouldExist	${menuText}|Menu Item Was Pushed	
+
+Menu Item Should Exist
+	menuItemShouldExist	${mutableMenu}
+	runKeywordAndExpectError	Menu item 'unexisting|menu' does not exist.	menuItemShouldExist	unexisting|menu
+
+Menu Item Should Not Exist
+	menuItemShouldNotExist	unexisting|menu
+	runKeywordAndExpectError	Menu item '${mutableMenu}' exists.	menuItemShouldNotExist	${mutableMenu}
+
+Main Menu Item Should Exist
+	selectEmptyContext
+	mainMenuItemShouldExist	${mutableMenu}
+	runKeywordAndExpectError	Menu item 'unexisting|menu' does not exist.	mainMenuItemShouldExist	unexisting|menu
+	[teardown]	selectMainWindow
+
+Main Menu Item Should Not Exist
+	selectEmptyContext
+	mainMenuItemShouldNotExist	unexisting|menu
+	runKeywordAndExpectError	Menu item '${mutableMenu}' exists.	mainMenuItemShouldNotExist	${mutableMenu}
+	[teardown]	selectMainWindow
 
 Menu Item Should Be Enabled
 	menuItemShouldBeEnabled	${showDialog}

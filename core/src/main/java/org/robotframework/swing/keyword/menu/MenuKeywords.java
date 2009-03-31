@@ -46,14 +46,6 @@ public class MenuKeywords extends MenuSupport {
         showMenuItem(menuPath).push();
     }
 
-    @RobotKeyword("Fails if menu item doesn't exist in the first opened window.\n\n"
-        + "Example:\n"
-        + "| Main Menu Item Should Exist | _Tools|Testing|Test Tool_ |\n")
-    public void mainMenuItemShouldExist(String menuPath) {
-        IComponentConditionResolver existenceResolver = createMenuItemExistenceResolver();
-        Assert.assertTrue("Menu item '" + menuPath + "' does not exist.", existenceResolver.satisfiesCondition(menuPath));
-    }
-
     @RobotKeyword("Searches for an menu item from the menu of the currently selected window "
         + "and fails if it is disabled.\n\n"
         + "Example:\n"
@@ -77,6 +69,24 @@ public class MenuKeywords extends MenuSupport {
         menuItemShouldNotBeEnabled(menuPath);
     }
 
+
+    @RobotKeyword("Fails if menu item doesn't exist.\n\n"
+        + "Example:\n"
+        + "| Menu Item Should Exist | _Tools|Testing|Test Tool_ |\n")
+    public void menuItemShouldExist(String menuPath) {
+        IComponentConditionResolver existenceResolver = createMenuItemExistenceResolver();
+        Assert.assertTrue("Menu item '" + menuPath + "' does not exist.", existenceResolver.satisfiesCondition(menuPath));
+    }
+    
+    @RobotKeyword("Fails if menu item exists.\n\n"
+        + "Example:\n"
+        + "| Menu Item Should Not Exist | _Tools|Testing|Test Tool_ |\n")
+    public void menuItemShouldNotExist(String menuPath) {
+        IComponentConditionResolver existenceResolver = createMenuItemExistenceResolver();
+        Assert.assertFalse("Menu item '" + menuPath + "' exists.", existenceResolver.satisfiesCondition(menuPath));
+    }
+    
+    
     private boolean menuItemIsEnabled(String menuPath) {
         try {
             return showMenuItem(menuPath).isEnabled();
@@ -92,7 +102,7 @@ public class MenuKeywords extends MenuSupport {
     IComponentConditionResolver createMenuItemExistenceResolver() {
         ArgumentParser<JMenuItemOperator> menuItemOperatorFactory = new ArgumentParser<JMenuItemOperator>() {
             public JMenuItemOperator parseArgument(String menuPath) {
-                return menubarOperator().showMenuItem(menuPath);
+                return showMenuItem(menuPath);
             }
         };
 

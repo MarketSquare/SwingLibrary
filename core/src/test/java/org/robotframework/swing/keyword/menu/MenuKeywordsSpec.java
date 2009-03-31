@@ -52,8 +52,12 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
             specify(context, satisfies(new RobotKeywordContract("menuItemShouldNotBeEnabled")));
         }
 
-        public void hasMainMenuItemShouldExistKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("mainMenuItemShouldExist")));
+        public void hasMenuItemShouldExistKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("menuItemShouldExist")));
+        }
+        
+        public void hasMenuItemShouldNotExistKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("menuItemShouldNotExist")));
         }
     }
 
@@ -102,7 +106,7 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.mainMenuItemShouldExist(menuPath);
+                    context.menuItemShouldExist(menuPath);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
@@ -115,9 +119,35 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.mainMenuItemShouldExist(menuPath);
+                    context.menuItemShouldExist(menuPath);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' does not exist."));
+        }
+        
+        public void menuItemShouldNotExistPassesIfMenuItemDoesntExist() throws Throwable {
+            checking(new Expectations() {{
+                one(menuExistenceResolver).satisfiesCondition(menuPath);
+                will(returnValue(false));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.menuItemShouldNotExist(menuPath);
+                }
+            }, must.not().raise(AssertionFailedError.class));
+        }
+
+        public void menuItemShouldNotExistFailsIfMenuItemExists() {
+            checking(new Expectations() {{
+                one(menuExistenceResolver).satisfiesCondition(menuPath);
+                will(returnValue(true));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.menuItemShouldNotExist(menuPath);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' exists."));
         }
     }
 

@@ -47,26 +47,37 @@ public class MainMenuKeywordsSpec extends MockSupportSpecification<MainMenuKeywo
         public void hasGetMenuItemNameKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getMainMenuItemName")));
         }
+        
+        public void hasMainMenuItemShouldExistKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("mainMenuItemShouldExist")));
+        }
+        
+        public void hasMainMenuItemShouldNotExistKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("mainMenuItemShouldNotExist")));
+        }
 
         public void hasMenuKeywords() {
             specify(context, satisfies(new FieldIsNotNullContract("menuKeywords")));
         }
     }
 
-    public class SelectingFromMainMenu {
-        public MainMenuKeywords create() {
-            MainMenuKeywords menuKeywords = new MainMenuKeywords();
+    public class OperatingOnMainMenu {
+        private MenuKeywords menuKeywords;
+        private WindowKeywords windowKeywords;
 
-            final WindowKeywords windowKeywords = injectMockTo(menuKeywords, WindowKeywords.class);
+        public MainMenuKeywords create() {
+            MainMenuKeywords mainMenuKeywords = new MainMenuKeywords();
+
+            windowKeywords = injectMockTo(mainMenuKeywords, WindowKeywords.class);
             checking(new Expectations() {{
                 one(windowKeywords).selectMainWindow();
             }});
-
-            return menuKeywords;
+            
+            menuKeywords = injectMockTo(mainMenuKeywords, MenuKeywords.class);
+            return mainMenuKeywords;
         }
 
         public void selectsFromMainMenuBySelectingMainWindowAndCallingSelectFromMenuKeyword() {
-            final MenuKeywords menuKeywords = injectMockToContext(MenuKeywords.class);
             checking(new Expectations() {{
                 one(menuKeywords).selectFromMenu(menuPath);
             }});
@@ -75,12 +86,22 @@ public class MainMenuKeywordsSpec extends MockSupportSpecification<MainMenuKeywo
         }
 
         public void selectsFromMainMenuBlockBySelectingMainWindowAndCallingSelectFromMenuBlockKeywords() {
-            final MenuKeywords menuKeywords = injectMockToContext(MenuKeywords.class);
             checking(new Expectations() {{
                 one(menuKeywords).selectFromMenuAndWait(menuPath);
             }});
 
             context.selectFromMainMenuAndWait(menuPath);
+        }
+        
+        public void checksItemExistence() {
+            checking(new Expectations() {{
+                one(windowKeywords).selectMainWindow();
+                one(menuKeywords).menuItemShouldExist(menuPath);
+                one(menuKeywords).menuItemShouldNotExist(menuPath);
+            }});
+
+            context.mainMenuItemShouldExist(menuPath);
+            context.mainMenuItemShouldNotExist(menuPath);
         }
     }
 

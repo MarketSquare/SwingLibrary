@@ -62,4 +62,26 @@ public class MainMenuKeywords extends MenuSupport {
 
         return menubarOperator().getMenu(asIndex(index)).getText();
     }
+    
+    @RobotKeyword("Fails if menu item doesn't exist in the window that was opened first.\n"
+        + "Shortcut for:\n"
+        + "| Select Window    | _0_ |\n"
+        + "| Menu Item Should Exist | _Tools|Testing|MyTestTool_ |\n\n"
+        + "Example:\n"
+        + "| Main Menu Item Should Exist | _Tools|Testing|Test Tool_ |\n")
+    public void mainMenuItemShouldExist(String menuPath) {
+        windowKeywords.selectMainWindow();
+        menuKeywords.menuItemShouldExist(menuPath);
+    }
+    
+    @RobotKeyword("Fails if menu item exists in the window that was opened first.\n"
+        + "Shortcut for:\n"
+        + "| Select Window    | _0_ |\n"
+        + "| Menu Item Should Not Exist | _Tools|Testing|MyTestTool_ |\n\n"
+        + "Example:\n"
+        + "| Main Menu Item Should Not Exist | _Tools|Testing|Test Tool_ |\n")
+    public void mainMenuItemShouldNotExist(String menuPath) {
+        windowKeywords.selectMainWindow();
+        menuKeywords.menuItemShouldNotExist(menuPath);
+    }
 }
