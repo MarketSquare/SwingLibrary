@@ -24,7 +24,7 @@ public class TreePopupMenuOperatorFactorySpec extends Specification<TreePopupMen
             treeOperator = mock(TreeOperator.class);
             
             return new TreePopupMenuOperatorFactory(treeOperator) {
-                JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {
+                protected JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {
                     if (!popupMenu.equals(dummyPopupMenu)) {
                         throw new ExpectationFailedException("Didn't receive the expected argument.");
                     }

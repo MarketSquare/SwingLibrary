@@ -24,7 +24,7 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFactory<JPopupMenuOperator> {
-    private final TreeOperator treeOperator;
+    protected final TreeOperator treeOperator;
 
     public TreePopupMenuOperatorFactory(TreeOperator treeOperator) {
         this.treeOperator = treeOperator;
@@ -48,14 +48,14 @@ public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFacto
         return createPopupOperator(popupMenu);
     }
     
-    JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {
+    protected JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {
         JPopupMenuOperator popupMenuOperator = new JPopupMenuOperator(popupMenu);
         popupMenuOperator.grabFocus();
         waitToAvoidInstability();
         return popupMenuOperator;
     }
 
-    private void waitToAvoidInstability() {
+    protected void waitToAvoidInstability() {
         new EventTool().waitNoEvent(500);
     }
 }

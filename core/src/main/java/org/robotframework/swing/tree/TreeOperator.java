@@ -24,8 +24,6 @@ import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.ComponentOperator;
@@ -38,14 +36,11 @@ import org.robotframework.swing.popup.DefaultPopupCaller;
 import org.robotframework.swing.popup.PopupCaller;
 
 public class TreeOperator implements ComponentWrapper {
-    private static final Log logger = LogFactory.getLog(TreeOperator.class);
-    
-    private PopupCaller<ComponentOperator> popupCaller = new DefaultPopupCaller();
-    private TreePathFactory treePathFactory = new TreePathFactory(this);
-    private JTreeOperator jTreeOperator;
+    protected PopupCaller<ComponentOperator> popupCaller = new DefaultPopupCaller();
+    protected TreePathFactory treePathFactory = new TreePathFactory(this);
+    protected JTreeOperator jTreeOperator;
 
     public TreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {
-        logger.debug("creating TreeOperator");
         jTreeOperator = new JTreeOperator(containerOperator, componentChooser);
     }
 
@@ -158,28 +153,28 @@ public class TreeOperator implements ComponentWrapper {
         return jTreeOperator.getSelectionPaths();
     }
     
-    TreePopupMenuOperatorFactory createPopupFactory() {
+    protected TreePopupMenuOperatorFactory createPopupFactory() {
         return new TreePopupMenuOperatorFactory(this);
     }
     
-    private TreePath createTreePath(String nodeIdentifier) {
+    protected TreePath createTreePath(String nodeIdentifier) {
         return treePathFactory.createTreePath(nodeIdentifier);
     }
     
-    private Waiter createTreeWaiter(String treePath) {
+    protected Waiter createTreeWaiter(String treePath) {
         Waiter waiter = new Waiter(new TreePathWaitable(treePath));
         Timeouts nextNodeTimeout = copyTimeout("JTreeOperator.WaitNextNodeTimeout");
         waiter.setTimeouts(nextNodeTimeout);
         return waiter;
     }
 
-    private Timeouts copyTimeout(String timeout) {
+    protected Timeouts copyTimeout(String timeout) {
         Timeouts times = jTreeOperator.getTimeouts().cloneThis();
         times.setTimeout("Waiter.WaitingTime", jTreeOperator.getTimeouts().getTimeout(timeout));
         return times;
     }
 
-    private class TreePathWaitable implements Waitable {
+    public class TreePathWaitable implements Waitable {
         private final String path;
 
         private TreePathWaitable(String path) {

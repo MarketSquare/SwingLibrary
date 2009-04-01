@@ -83,7 +83,7 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         return jTableOperator.getSource();
     }
     
-    private Point findCell(String row, String columnIdentifier) {
+    protected Point findCell(String row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
         Point cell = jTableOperator.findCell(cellChooser);
         if (cellIsInvalid(cell))
@@ -91,11 +91,11 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         return cell;
     }
     
-    private boolean cellIsInvalid(Point cell) {
+    protected boolean cellIsInvalid(Point cell) {
         return cell.x < 0 || cell.y < 0;
     }
 
-    private TableCellChooser createCellChooser(String row, String columnIdentifier) {
+    protected TableCellChooser createCellChooser(String row, String columnIdentifier) {
     	if (isIndex(columnIdentifier)) {
     		return new ColumnIndexTableCellChooser(row, columnIdentifier);
     	} 

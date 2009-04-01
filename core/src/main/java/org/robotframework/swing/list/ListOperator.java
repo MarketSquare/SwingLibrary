@@ -54,7 +54,7 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
         jListOperator.selectItems(indices);
     }
 
-    private int[] findIndices(List<String> itemIdentifiers) {
+    protected int[] findIndices(List<String> itemIdentifiers) {
         int[] indices = new int[itemIdentifiers.size()];
         for (int i = 0; i < indices.length; i++) {
             indices[i] = findIndex(itemIdentifiers.get(i));
@@ -62,7 +62,7 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
         return indices;
     }
     
-    private int findIndex(String itemIdentifier) {
+    protected int findIndex(String itemIdentifier) {
         if (isIndex(itemIdentifier)) {
             return asIndex(itemIdentifier);
         } else {

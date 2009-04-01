@@ -171,7 +171,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         public TreeOperator create() {
             popupFactory = mock(TreePopupMenuOperatorFactory.class);
             return new TreeOperator(dummy(JTreeOperator.class)) {
-                TreePopupMenuOperatorFactory createPopupFactory() {
+                protected TreePopupMenuOperatorFactory createPopupFactory() {
                     return popupFactory;
                 }
             };
