@@ -11,18 +11,15 @@ public class ThreadTestingKeywords {
     private static boolean keywordWasRun = false;
     
     @RobotKeyword
-    public void shouldBeRunInSeparateThread() {
+    public Boolean shouldBeRunInSeparateThread() {
         keywordWasRun = true;
         Assert.assertNotSame(originalThread, Thread.currentThread());
+        return Boolean.TRUE;
     }
     
     @RobotKeyword
     public void keywordWasRun() {
         Assert.assertTrue("Keyword was not run", keywordWasRun);
-    }
-    
-    @RobotKeyword
-    public void resetKeywordWasRunCheck() {
         keywordWasRun = false;
     }
 }

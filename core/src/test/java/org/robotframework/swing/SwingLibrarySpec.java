@@ -1,9 +1,12 @@
+package org.robotframework.swing;
+
 import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.JemmyProperties;
 import org.robotframework.javalib.library.AnnotationLibrary;
+import org.robotframework.swing.SwingLibrary;
 import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 

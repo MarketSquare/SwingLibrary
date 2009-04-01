@@ -4,14 +4,28 @@ library	SwingLibrary	${KEYWORD PATTERNS}
 
 *Test Case*	*Action*	*Argument*
 Runs Keyword In Separate Thread
-	runKeywordInSeparateThread	shouldBeRunInSeparateThread
-	keywordShouldHaveBeenRun
-	runKeywordInSeparateThread	keywordInOtherPackage	arg
-	keywordShouldHaveBeenRun
 	runKeywordAndExpectError	*	shouldBeRunInSeparateThread
-	keywordShouldHaveBeenRun
-
-*Keyword*	*Action*	*Argument*	*Argument*
-keywordShouldHaveBeenRun
+	runKeywordInSeparateThread	shouldBeRunInSeparateThread
 	keywordWasRun
-	resetKeywordWasRunCheck
+	runKeywordInSeparateThread	shouldberuninseparatethread
+	keywordWasRun
+	runKeywordInSeparateThread	Should Be Run In Separate Thread
+	keywordWasRun
+
+Runs Keywords From Other Packages
+	runKeywordInSeparateThread	keywordInOtherPackage	arg
+
+Checks Arguments If ArgumentNames Are Available
+	runKeywordAndExpectError	Expected 1 but got 2 arguments.*	runKeywordInSeparateThread	keywordInOtherPackage	foo	bar
+
+Doesn't Fail When Argument Names Are Not Available
+	runKeywordInSeparateThread	keywordWithoutArgumentNames	arg
+	runKeywordInSeparateThread	keywordWithoutArgumentNames	foo	bar	#even when it should
+
+Fails If Keyword Doesn't Exist
+	runKeywordAndExpectError	No keyword with name 'unexistingKeyword' found.	unexistingKeyword
+
+Works With Real Keywords
+	runKeywordInSeparateThread	selectFromMainMenuAndWait	Test Menu|Show Test Dialog
+	dialogShouldBeOpen	Message
+	[teardown]	closeDialog	Message
