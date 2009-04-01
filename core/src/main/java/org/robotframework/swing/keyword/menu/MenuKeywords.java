@@ -52,7 +52,7 @@ public class MenuKeywords extends MenuSupport {
         + "| Select Window               | _My Application_           |\n"
         + "| Menu Item Should Be Enabled | _Tools|Testing|MyTestTool_ |\n")
     public void menuItemShouldBeEnabled(String menuPath) {
-        Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", menuItemIsEnabled(menuPath));
+        Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", menuIsEnabled(menuPath));
     }
 
     @RobotKeyword("Searches for an menu item from the menu of the currently selected window "
@@ -61,7 +61,7 @@ public class MenuKeywords extends MenuSupport {
         + "| Select Window                   | _My Application_           |\n"
         + "| Menu Item Should Not Be Enabled | _Tools|Testing|MyTestTool_ |\n")
     public void menuItemShouldNotBeEnabled(String menuPath) {
-        Assert.assertFalse("Menu item '" + menuPath + "' is enabled.", menuItemIsEnabled(menuPath));
+        Assert.assertFalse("Menu item '" + menuPath + "' is enabled.", menuIsEnabled(menuPath));
     }
 
     @RobotKeyword("Alias for `Menu Item Should Not Be Enabled`\n")
@@ -69,32 +69,49 @@ public class MenuKeywords extends MenuSupport {
         menuItemShouldNotBeEnabled(menuPath);
     }
 
-
     @RobotKeyword("Fails if menu item doesn't exist.\n\n"
         + "Example:\n"
         + "| Menu Item Should Exist | _Tools|Testing|Test Tool_ |\n")
     public void menuItemShouldExist(String menuPath) {
-        IComponentConditionResolver existenceResolver = createMenuItemExistenceResolver();
-        Assert.assertTrue("Menu item '" + menuPath + "' does not exist.", existenceResolver.satisfiesCondition(menuPath));
+        Assert.assertTrue("Menu item '" + menuPath + "' does not exist.", menuExists(menuPath));
     }
     
     @RobotKeyword("Fails if menu item exists.\n\n"
         + "Example:\n"
         + "| Menu Item Should Not Exist | _Tools|Testing|Test Tool_ |\n")
     public void menuItemShouldNotExist(String menuPath) {
-        IComponentConditionResolver existenceResolver = createMenuItemExistenceResolver();
-        Assert.assertFalse("Menu item '" + menuPath + "' exists.", existenceResolver.satisfiesCondition(menuPath));
+        Assert.assertFalse("Menu item '" + menuPath + "' exists.", menuExists(menuPath));
     }
     
+    private interface MenuAction<T> {
+        T doWithMenuItem();
+    }
+
+    private Boolean menuExists(final String menuPath) {
+        return getFromMenuItem(new MenuAction<Boolean>() {
+            public Boolean doWithMenuItem() {
+                IComponentConditionResolver existenceResolver = createMenuItemExistenceResolver();
+                return existenceResolver.satisfiesCondition(menuPath);
+            }
+        });
+    }
     
-    private boolean menuItemIsEnabled(String menuPath) {
+    private Boolean menuIsEnabled(final String menuPath) {
+        return getFromMenuItem(new MenuAction<Boolean>() {
+            public Boolean doWithMenuItem() {
+                return showMenuItem(menuPath).isEnabled();
+            }
+        });
+    }
+    
+    private <T> T getFromMenuItem(MenuAction<T> action) {
         try {
-            return showMenuItem(menuPath).isEnabled();
+            return action.doWithMenuItem();
         } finally {
             closeMenu();
         }
     }
-
+    
     private void closeMenu() {
         menubarOperator().pressMouse();
     }

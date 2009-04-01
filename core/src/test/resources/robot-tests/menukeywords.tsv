@@ -1,5 +1,6 @@
 *Setting*	*Value*
 library	SwingLibrary
+testTeardown	selectMainWindow
 
 *Variable*	*Value*
 ${menuText}	Test Menu
@@ -10,33 +11,33 @@ ${checkboxMenu}	Test menu checkbox
 
 *Test Case*	*Action*	*Argument*
 Select From Main Menu
+	selectEmptyContext
 	selectFromMainMenu	${showDialog}
 	dialogShouldBeOpen	Message
-	[teardown]	closeDialog	Message
+	closeDialog	Message
 
 Select From Main Menu And Wait
+	selectEmptyContext
 	selectFromMainMenuAndWait	${mutableMenu}
 	mainMenuItemShouldExist	${menuText}|Menu Item Was Pushed	
 
 Menu Item Should Exist
-	menuItemShouldExist	${mutableMenu}
+	menuItemShouldExist	${showDialog}
 	runKeywordAndExpectError	Menu item 'unexisting|menu' does not exist.	menuItemShouldExist	unexisting|menu
 
 Menu Item Should Not Exist
 	menuItemShouldNotExist	unexisting|menu
-	runKeywordAndExpectError	Menu item '${mutableMenu}' exists.	menuItemShouldNotExist	${mutableMenu}
+	runKeywordAndExpectError	Menu item '${showDialog}' exists.	menuItemShouldNotExist	${showDialog}
 
 Main Menu Item Should Exist
 	selectEmptyContext
-	mainMenuItemShouldExist	${mutableMenu}
+	mainMenuItemShouldExist	${showDialog}
 	runKeywordAndExpectError	Menu item 'unexisting|menu' does not exist.	mainMenuItemShouldExist	unexisting|menu
-	[teardown]	selectMainWindow
 
 Main Menu Item Should Not Exist
 	selectEmptyContext
 	mainMenuItemShouldNotExist	unexisting|menu
-	runKeywordAndExpectError	Menu item '${mutableMenu}' exists.	mainMenuItemShouldNotExist	${mutableMenu}
-	[teardown]	selectMainWindow
+	runKeywordAndExpectError	Menu item '${showDialog}' exists.	mainMenuItemShouldNotExist	${showDialog}
 
 Menu Item Should Be Enabled
 	menuItemShouldBeEnabled	${showDialog}
