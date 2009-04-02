@@ -94,3 +94,11 @@ task :doc => :compile do
   set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
   sh "jython -Dpython.path=#{python_path} lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
 end
+
+task :runjython do
+  dependencies = [DEPENDENCIES, TEST_DEPENDENCIES].flatten
+  ENV['CLASSPATH'] = Buildr.artifacts([project(PROJECT_NAME).projects, dependencies]).map(&:name).join(File::PATH_SEPARATOR)
+  puts ENV['CLASSPATH']
+  sh "jython -Dpython.path=#{python_path}"
+end
+
