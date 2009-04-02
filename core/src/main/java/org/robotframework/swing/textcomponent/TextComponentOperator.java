@@ -28,4 +28,12 @@ public class TextComponentOperator extends JTextComponentOperator implements Com
     public TextComponentOperator(ContainerOperator container, ComponentChooser chooser) {
         super(container, chooser);
     }
+    
+    /*
+     * We want to let the application do whatever it wants with the inputs the textfield receives. 
+     */
+    @Override
+    public boolean getVerification() {
+        return false;
+    }
 }

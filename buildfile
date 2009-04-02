@@ -101,4 +101,3 @@ task :runjython do
   puts ENV['CLASSPATH']
   sh "jython -Dpython.path=#{python_path}"
 end
-
