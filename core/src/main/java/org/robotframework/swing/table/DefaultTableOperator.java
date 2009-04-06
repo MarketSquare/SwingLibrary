@@ -23,12 +23,14 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 
 public class DefaultTableOperator extends IdentifierSupport implements TableOperator {
     private final JTableOperator jTableOperator;
 
     public DefaultTableOperator(JTableOperator jTableOperator) {
         this.jTableOperator = jTableOperator;
+        this.jTableOperator.setComparator(new EqualsStringComparator());
     }
     
     public Object getCellValue(String row, String columnIdentifier) {
@@ -73,6 +75,10 @@ public class DefaultTableOperator extends IdentifierSupport implements TableOper
         return jTableOperator.getRowCount();
     }
 
+    public int findCellRow(String text) {
+        return jTableOperator.findCellRow(text);
+    }
+    
     public Object getSelectedCellValue() {
       int selectedRow = jTableOperator.getSelectedRow();
       int selectedColumn = jTableOperator.getSelectedColumn();

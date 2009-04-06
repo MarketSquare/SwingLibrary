@@ -28,6 +28,7 @@ public interface TableOperator extends ComponentWrapper {
     boolean isCellSelected(String row, String column);
     int getColumnCount();
     int getRowCount();
+    int findCellRow(String text);
     Object getCellValue(String row, String column);
     Object getSelectedCellValue();
     JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier);

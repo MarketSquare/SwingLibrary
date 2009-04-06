@@ -121,6 +121,15 @@ public class TableKeywords extends IdentifierSupport {
         createTableOperator(identifier).clearCell(row, columnIdentifier);
     }
     
+    @RobotKeyword("Finds the first row index that has a cell  that contains the given _text_.\n"
+        + "This is useful when we want to operate on cells which location can change.\n\n"
+        + "Example:\n"
+        + "| ${row}= | Find Table Row | _myTable_ | _Some Value_ |\n"
+        + "| Select From Table Cell Popup Menu | _myTable_ | _${row}_ | _2_ | _Activate_ |\n")
+    public int findTableRow(String identifier, String text) {
+        return createTableOperator(identifier).findCellRow(text);
+    }
+    
     @RobotKeyword("Selects an item from a table cell popup.\n"
         + "Separator for items is '|'.\n\n"
         + "Examples:\n"

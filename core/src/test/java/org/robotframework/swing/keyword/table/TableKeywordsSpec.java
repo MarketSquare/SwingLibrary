@@ -92,6 +92,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context, satisfies(new RobotKeywordContract("typeIntoTableCell")));
         }
         
+        public void hasFindTableRowKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("findTableRow")));
+        }
+        
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
@@ -148,6 +152,14 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
 
             specify(context.getTableRowCount(tableIdentifier), must.equal(7));
+        }
+        
+        public void findsRow() {
+            checking(new Expectations() {{
+                one(tableOperator).findCellRow("someValue"); will(returnValue(7));
+            }});
+
+            specify(context.findTableRow(tableIdentifier, "someValue"), must.equal(7));
         }
 
         public void setsTableCellValue() {

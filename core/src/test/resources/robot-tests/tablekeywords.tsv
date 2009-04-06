@@ -83,6 +83,12 @@ Get Table Row Count By Name
 	${rowCount}=	getTableRowCount	${tableName}
 	shouldBeEqualAsIntegers	4	${rowCount}
 
+Find Table Row
+	${row}=	findTableRow	${tableName}	one/one	
+	shouldBeEqualAsIntegers	0	${row}
+	${row}=	findTableRow	${tableName}	three/two
+	shouldBeEqualAsIntegers	2	${row}
+
 Get Table Row Count By Index
 	${rowCount}=	getTableRowCount	0
 	shouldBeEqualAsIntegers	4	${rowCount}

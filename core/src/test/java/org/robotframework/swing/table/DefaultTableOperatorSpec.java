@@ -15,6 +15,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 
 @RunWith(JDaveRunner.class)
 public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator> {
@@ -23,9 +24,24 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
     private Object cellValue = new Object();
     private Point coordinates = new Point(2, 3);
     
+    public class Any {
+        public void requiresExactMatchWhenComparesValues() {
+            jTableOperator = mock(JTableOperator.class);
+            
+            checking(new Expectations() {{
+                one(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
+            }});
+            
+            new DefaultTableOperator(jTableOperator);
+        }
+    }
+    
     public class OperatingOnCellValues {
         public DefaultTableOperator create() {
             jTableOperator = mock(JTableOperator.class);
+            checking(new Expectations() {{
+                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
+            }});
             return new DefaultTableOperator(jTableOperator);
         }
         
@@ -35,6 +51,14 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
             }});
             
             context.clearSelection();
+        }
+        
+        public void findsCellRow() {
+            checking(new Expectations() {{
+                one(jTableOperator).findCellRow("someValue"); will(returnValue(3)); 
+            }});
+            
+            specify(context.findCellRow("someValue"), 3);
         }
         
         public void getsRowCount() {
@@ -78,6 +102,9 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
     public class RetrievingCellValues {
         public DefaultTableOperator create() {
             jTableOperator = mock(JTableOperator.class);
+            checking(new Expectations() {{
+                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
+            }});
             return new DefaultTableOperator(jTableOperator);
         }
 
@@ -98,6 +125,7 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
             jTableOperator = mock(JTableOperator.class);
             checking(new Expectations() {{
                 one(jTableOperator).findCell(with(instanceOf(ColumnIndexTableCellChooser.class))); will(returnValue(coordinates));
+                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
             }});
             
             return jTableOperator;
@@ -110,6 +138,7 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
             jTableOperator = mock(JTableOperator.class);
             checking(new Expectations() {{
                 one(jTableOperator).findCell(with(instanceOf(ColumnNameTableCellChooser.class))); will(returnValue(coordinates));
+                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
             }});
             
             return jTableOperator;
