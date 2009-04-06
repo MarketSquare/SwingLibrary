@@ -88,6 +88,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context, satisfies(new RobotKeywordContract("tableCellPopupMenuShouldBeDisabled")));
         }
         
+        public void hasTypeIntoTableCellKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("typeIntoTableCell")));
+        }
+        
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
@@ -156,6 +160,17 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             context.setTableCellValue(tableIdentifier, row, columnIdentifier, newValue);
         }
 
+        public void typesIntoTableCell() {
+            final String newValue = "newValue";
+
+            checking(new Expectations() {{
+                one(tableOperator).typeIntoCell(newValue, row, columnIdentifier);
+            }});
+
+            context.typeIntoTableCell(tableIdentifier, row, columnIdentifier, newValue);
+        }
+
+        
         public void selectsTableCell() {
             checking(new Expectations() {{
                 one(tableOperator).selectCell(row, columnIdentifier);

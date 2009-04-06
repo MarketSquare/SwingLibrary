@@ -88,6 +88,15 @@ public class TableKeywords extends IdentifierSupport {
         TableOperator tableOperator = createTableOperator(identifier);
         tableOperator.setCellValue(newValue, row, columnIdentifier);
     }
+    
+    @RobotKeyword("Types a string into a table cell.\n"
+    	+ "Uses real keyboard events, this is useful when processing need to be triggered by input events.\n\n"
+    	+ "Example:\n"
+        + "| Type Into Table Cell | _1_ | _2_ | _New value_ |\n")
+    public void typeIntoTableCell(String identifier, String row, String columnIdentifier, String newValue) {
+        TableOperator tableOperator = createTableOperator(identifier);
+        tableOperator.typeIntoCell(newValue, row, columnIdentifier);
+    }
 
     @RobotKeyword("Returns the number of columns from a table.\n\n"
         + "Example:\n"

@@ -61,10 +61,15 @@ Get Table Cell Value By Column Header
 	${cellValue}=	getTableCellValue	${tableName}	1	column two
 	shouldBeEqual	two/two	${cellValue}
 
-Set Table Cell Value
-	setTableCellValue	${tableName}	2	1	newValue
+Type Into Table Cell
+	typeIntoTableCell	${tableName}	2	1	newValue
 	${cellValue}=	getTableCellValue	${tableName}	2	1
 	shouldBeEqual	newValue	${cellValue}
+
+Set Table Cell Value
+	setTableCellValue	${tableName}	1	0	four/one
+	${cellValue}=	getTableCellValue	${tableName}	1	0
+	shouldBeEqual	four/one	${cellValue}
 
 Get Table Column Count By Name
 	${columnCount}=	getTableColumnCount	${tableName}

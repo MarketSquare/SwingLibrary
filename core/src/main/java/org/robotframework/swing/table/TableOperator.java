@@ -22,6 +22,7 @@ import org.robotframework.swing.operator.ComponentWrapper;
 public interface TableOperator extends ComponentWrapper {
     void selectCell(String row, String column);
     void setCellValue(Object newValue, String row, String column);
+    void typeIntoCell(Object newValue, String row, String column);
     void clearSelection();
     void clearCell(String row, String columnIdentifier);
     boolean isCellSelected(String row, String column);

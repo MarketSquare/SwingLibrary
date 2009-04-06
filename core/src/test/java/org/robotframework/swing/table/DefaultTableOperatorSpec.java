@@ -156,10 +156,19 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
         public void setsCellValue() {
             final Object newValue = new Object();
             checking(new Expectations() {{
-                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
+                one(jTableOperator).setValueAt(newValue, coordinates.y, coordinates.x);
             }});
             
             context.setCellValue(newValue, row, column);
+        }
+        
+        public void typesIntoCell() {
+            final Object newValue = new Object();
+            checking(new Expectations() {{
+                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
+            }});
+            
+            context.typeIntoCell(newValue, row, column);
         }
         
         public void clearsCell() {

@@ -1,16 +1,16 @@
 package org.robotframework.swing.testapp;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class TestTable extends JScrollPane {
     private static Object[] COLUMN_HEADERS = new Object[] { "column one", "column two", "column three", "column four" };
@@ -32,7 +32,7 @@ public class TestTable extends JScrollPane {
     }
 
     private static JTable createTable(String name) {
-        JTable table = new JTable(TABLE_MODEL, COLUMN_HEADERS);
+        JTable table = new JTable();
         table.addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
@@ -40,11 +40,41 @@ public class TestTable extends JScrollPane {
                 }
             }
         });
+        
         table.setName(name);
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        model.addColumn("column one", new Object[]{"one/one", "two/one", "three/one", "four/one"});
+        model.addColumn("column two", new Object[]{"one/two", "two/two", "three/two", "four/two"});
+        model.addColumn("column three", new Object[]{"one/three", "two/three", "three/three", "four/three"});
+        model.addColumn("column four", new Object[]{"one/four", "four/four", "three/four", "four/four"});
+        TableColumn col = table.getColumnModel().getColumn(0);
+        String[] comboBoxValues = new String[] { "one/one", "two/one", "three/one", "four/one"};
+        
+        col.setCellEditor(new MyComboBoxEditor(comboBoxValues));
+        col.setCellRenderer(new MyComboBoxRenderer(comboBoxValues));
+        
         return table;
     }
     
+    public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
+        public MyComboBoxRenderer(String[] items) {
+            super(items);
+        }
+        
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
+            setSelectedIndex(row);
+            return this;
+        }
+    }
     
+    public static class MyComboBoxEditor extends DefaultCellEditor {
+        public MyComboBoxEditor(String[] items) {
+            super(new JComboBox(items));
+        }
+    }
+    
+
     private static class TablePopupMenu extends JPopupMenu {
         private final JTable invoker;
 
