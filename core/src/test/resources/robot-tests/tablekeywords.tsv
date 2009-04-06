@@ -86,8 +86,8 @@ Get Table Row Count By Name
 Find Table Row
 	${row}=	findTableRow	${tableName}	one/one	
 	shouldBeEqualAsIntegers	0	${row}
-	${row}=	findTableRow	${tableName}	three/two
-	shouldBeEqualAsIntegers	2	${row}
+	${row}=	findTableRow	${tableName}	four/four
+	shouldBeEqualAsIntegers	3	${row}
 
 Get Table Row Count By Index
 	${rowCount}=	getTableRowCount	0

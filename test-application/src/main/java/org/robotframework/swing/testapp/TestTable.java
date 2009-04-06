@@ -13,15 +13,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class TestTable extends JScrollPane {
-    private static Object[] COLUMN_HEADERS = new Object[] { "column one", "column two", "column three", "column four" };
-
-    private static Object[][] TABLE_MODEL = new Object[][] {
-        new Object[] { "one/one", "one/two", "one/three", "one/four" },
-        new Object[] { "two/one", "two/two", "two/three", "two/four" },
-        new Object[] { "three/one", "three/two", "three/three", "three/four" },
-        new Object[] { "four/one", "four/two", "four/three", "four/four" }
-    };
-
     public TestTable(String name) {
         super(createTable(name));
     }
@@ -33,6 +24,7 @@ public class TestTable extends JScrollPane {
 
     private static JTable createTable(String name) {
         JTable table = new JTable();
+        table.setName(name);
         table.addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
@@ -41,12 +33,11 @@ public class TestTable extends JScrollPane {
             }
         });
         
-        table.setName(name);
         DefaultTableModel model = (DefaultTableModel)table.getModel();
         model.addColumn("column one", new Object[]{"one/one", "two/one", "three/one", "four/one"});
         model.addColumn("column two", new Object[]{"one/two", "two/two", "three/two", "four/two"});
         model.addColumn("column three", new Object[]{"one/three", "two/three", "three/three", "four/three"});
-        model.addColumn("column four", new Object[]{"one/four", "four/four", "three/four", "four/four"});
+        model.addColumn("column four", new Object[]{"one/four", "two/four", "three/four", "four/four"});
         TableColumn col = table.getColumnModel().getColumn(0);
         String[] comboBoxValues = new String[] { "one/one", "two/one", "three/one", "four/one"};
         
