@@ -150,9 +150,9 @@ public class TreeNodeKeywords extends TreeSupport {
     
     @RobotKeyword("Returns a list with all the child node names of the specified node.\n\n"
         + "Example:\n"
-        + "| ${expectedElements}= | Create List | _someElement_ | _otherElement_ |\n"
-        + "| ${actualElements}=   | Get Tree Node Child Names | _myTree_ | _Element Folder_ |\n"
-        + "| Lists Should Be Equal | _${expectedElements}_ | _${actualElements}_ | # This keyword comes from Collections library\n")
+        + "| ${expectedElements}= | Create List | _someElement_ | _otherElement_ | |\n"
+        + "| ${actualElements}=   | Get Tree Node Child Names | _myTree_ | _Element Folder_ | |\n"
+        + "| Lists Should Be Equal | _${expectedElements}_ | _${actualElements}_ | # This keyword comes from Collections library |\n")
     public Collection<String> getTreeNodeChildNames(String identifier, String nodeIdentifier) {
         return createTreeOperator(identifier).getTreeNodeChildNames(nodeIdentifier);
     }

@@ -24,6 +24,7 @@ import junit.framework.Assert;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.javalib.util.KeywordNameNormalizer;
@@ -39,6 +40,7 @@ public class ThreadKeywords {
         + "- The return value of the keyword being run is ignored.\n"
         + "- Exceptions thrown by the keyword are ignored, which implies that this keyword should not be used\n"
         + "  in conjunction with keywords such `Label Text Should Be` or `Menu Item Should Be Enabled`.\n\n")
+    @ArgumentNames({"keywordName", "arguments"})
     public void runKeywordInSeparateThread(final String keywordName, final Object[] arguments) {
         assertKeywordExists(keywordName);
         assertArgumentCountIsCorrect(keywordName, arguments);
