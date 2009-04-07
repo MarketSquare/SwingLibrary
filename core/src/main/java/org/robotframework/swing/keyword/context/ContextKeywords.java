@@ -28,7 +28,7 @@ public class ContextKeywords {
     private OperatorFactory<ContainerOperator> operatorFactory = new ContainerOperatorFactory();
 
     @RobotKeyword("Selects a container as current context.\n"
-        + "Requires that a parent context has been selected beforehand\n\n"
+        + "Requires that a parent context has been selected beforehand using `Select Window` or `Select Dialog`.\n\n"
         + "Example:\n"
         + "| Select Window  | _Main Window_ | # Selects the 'parent context' |\n"
         + "| Select Context | _myPanel_     | # Sets _'myPanel'_ as current context |\n")
