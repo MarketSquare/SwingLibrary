@@ -27,9 +27,11 @@ import org.robotframework.swing.factory.OperatorFactory;
 public class ContextKeywords {
     private OperatorFactory<ContainerOperator> operatorFactory = new ContainerOperatorFactory();
 
-    @RobotKeyword("Selects a container as current context.\n\n"
+    @RobotKeyword("Selects a container as current context.\n"
+        + "Requires that a parent context has been selected beforehand\n\n"
         + "Example:\n"
-        + "| Select Context | _myPanel_ | # Sets _'myPanel'_ as current context |\n")
+        + "| Select Window  | _Main Window_ | # Selects the 'parent context' |\n"
+        + "| Select Context | _myPanel_     | # Sets _'myPanel'_ as current context |\n")
     public void selectContext(String identifier) {
         Context.setContext(operatorFactory.createOperator(identifier));
     }
