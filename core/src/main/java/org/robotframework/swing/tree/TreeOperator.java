@@ -18,19 +18,24 @@ package org.robotframework.swing.tree;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
-import org.laughingpanda.jretrofit.Retrofit;
-import org.netbeans.jemmy.*;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+import org.netbeans.jemmy.ComponentChooser;
+import org.netbeans.jemmy.Timeouts;
+import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
-import org.robotframework.swing.chooser.WithText;
 import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.popup.DefaultPopupCaller;
 import org.robotframework.swing.popup.PopupCaller;
@@ -152,6 +157,21 @@ public class TreeOperator implements ComponentWrapper {
     public TreePath[] getSelectionPaths() {
         return jTreeOperator.getSelectionPaths();
     }
+
+    @SuppressWarnings("unchecked")
+    public Collection<String> getTreeNodeChildNames(String nodeIdentifier) {
+        final TreePath treePath = createTreePath(nodeIdentifier);
+        return CollectionUtils.collect(getChildPaths(treePath), new Transformer() {
+            public Object transform(Object input) {
+                Object node = ((TreePath) input).getLastPathComponent();
+                return new NodeTextExtractor((JTree) getSource()).getText(node, treePath);
+            }
+        });
+    }
+
+    private List<TreePath> getChildPaths(TreePath treePath) {
+        return Arrays.asList(jTreeOperator.getChildPaths(treePath));
+    }
     
     protected TreePopupMenuOperatorFactory createPopupFactory() {
         return new TreePopupMenuOperatorFactory(this);
@@ -162,7 +182,7 @@ public class TreeOperator implements ComponentWrapper {
     }
     
     protected Waiter createTreeWaiter(String treePath) {
-        Waiter waiter = new Waiter(new TreePathWaitable(treePath));
+        Waiter waiter = new Waiter(new TreePathWaitable((JTree) getSource(), treePath));
         Timeouts nextNodeTimeout = copyTimeout("JTreeOperator.WaitNextNodeTimeout");
         waiter.setTimeouts(nextNodeTimeout);
         return waiter;
@@ -172,58 +192,5 @@ public class TreeOperator implements ComponentWrapper {
         Timeouts times = jTreeOperator.getTimeouts().cloneThis();
         times.setTimeout("Waiter.WaitingTime", jTreeOperator.getTimeouts().getTimeout(timeout));
         return times;
-    }
-
-    public class TreePathWaitable implements Waitable {
-        private final String path;
-
-        private TreePathWaitable(String path) {
-            this.path = path;
-        }
-
-        public Object actionProduced(Object arg0) {
-            TreeNodes treeNodes = new TreeNodes(new TreeInfo() {
-                public String getNodeText(final Object node) {
-                    Object split = path.split("\\|");
-                    final TreePath path = new TreePath(split);
-                    
-                    return (String) new QueueTool().invokeSmoothly(new QueueTool.QueueAction("getNodeText") {
-                        public Object launch() throws Exception {
-                            try {
-                                JTree tree = (JTree) jTreeOperator.getSource();
-                                int row = tree.getRowForPath(path);
-                                boolean isLeaf = tree.getModel().isLeaf(node);
-                                boolean hasFocus = tree.getLeadSelectionRow() == row;
-                                boolean isSelected = tree.isRowSelected(row);
-                                boolean isExpanded = tree.isExpanded(row);
-                                Component component = tree.getCellRenderer().getTreeCellRendererComponent(tree, node, isSelected, isExpanded, isLeaf, row, hasFocus);
-                                WithText withText = (WithText) Retrofit.partial(component, WithText.class);
-                                return withText.getText();
-                            } catch (Exception e) {
-                                return node.toString();
-                            }
-                        }
-                    });
-                }
-
-                public TreeNode getRoot() {
-                    return (TreeNode) new QueueTool().invokeSmoothly(new QueueTool.QueueAction("getRoot") {
-                        public Object launch() throws Exception {
-                            JTree tree = (JTree) jTreeOperator.getSource();
-                            return tree.getModel().getRoot();
-                        }
-                    });
-                }
-
-                public boolean rootIsVisible() {
-                    return jTreeOperator.isRootVisible();
-                }
-            });
-            return treeNodes.extractTreePath(path);
-        }
-
-        public String getDescription() {
-            return "Tree path";
-        }
     }
 }

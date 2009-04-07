@@ -99,6 +99,24 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
             specify(context.isCollapsed(nodeIdentifier));
         }
         
+        public void getsChildNames() {
+            final TreePath[] expectedPaths = new TreePath[3];
+            for (int i = 0; i < expectedPaths.length; i++) {
+                final String childName = "child" + i; 
+                final TreePath path = mock(TreePath.class, childName);
+                checking(new Expectations() {{
+                    one(path).getLastPathComponent(); will(returnValue(childName));
+                }});
+                expectedPaths[i] = path; 
+            }
+            
+            checking(new Expectations() {{
+                one(jTreeOperator).getChildPaths(treePath); will(returnValue(expectedPaths));
+            }});
+            
+            specify(context.getTreeNodeChildNames(nodeIdentifier), containAll("child0", "child1", "child2"));
+        }
+        
         public void checksIsLeaf() {
             final TreeNode treeNode = mock(TreeNode.class);
             checking(new Expectations() {{

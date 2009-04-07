@@ -185,6 +185,16 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
 	${visibleNodes}=	getTreeNodeCount	${treeName}
 	shouldBeEqualAsIntegers	2	${visibleNodes}
 
+Get Tree Node Child Names
+	[setup]	resetNodes
+	${expectedChildnames}=	createList	${childNode1}	${childNode2}
+	${childNames}=	getTreeNodeChildNames	${treeName}	${rootNode}
+	listsShouldBeEqual	${expectedChildnames}	${childNames}
+
+Lol
+	${childNames}=	getTreeNodeChildNames	${treeName}	${rootNode}|${childNode1}
+	log	${childNames}
+
 Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected Nodes
 	[setup]	resetNodes
 	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes

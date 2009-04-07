@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.keyword.tree;
 
+import java.util.Collection;
+
 import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.ArgumentNames;
@@ -130,7 +132,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Returns the node name.\n"
     	+ "NodeIndex must be a number and it is counted from visible nodes (index starts from 0).\n\n"
         + "Example:\n"
-        + "| ${nodeLabel}= | Get Tree Node Label | _3_ |\n"
+        + "| ${nodeLabel}= | Get Tree Node Label | _myTree_ | _3_ |\n"
         + "| Should Be Equal | _Element1_ | _${nodeLabel}_ |\n")
     public String getTreeNodeLabel(String identifier, String nodeIndex) {
         TreeOperator treeOperator = createTreeOperator(identifier);
@@ -140,9 +142,18 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Returns the node index.\n"
         + "NodePath must be a string of form _path|to|node_.\n\n"
         + "Example:\n"
-        + "| ${nodeIndex}= | Get Tree Node Index | _Root|Folder|ElementX_ |\n"
+        + "| ${nodeIndex}= | Get Tree Node Index | _myTree_ | _Root|Folder|ElementX_ |\n"
         + "| Should Be Equal As Integers | _4_ | _${nodeIndex}_ |\n")
     public int getTreeNodeIndex(String identifier, String nodePath) {
         return createTreeOperator(identifier).getTreeNodeIndex(nodePath);
+    }
+    
+    @RobotKeyword("Returns a list with all the child node names of the specified node.\n\n"
+        + "Example:\n"
+        + "| ${expectedElements}= | Create List | _someElement_ | _otherElement_ |\n"
+        + "| ${actualElements}=   | Get Tree Node Child Names | _myTree_ | _Element Folder_ |\n"
+        + "| Lists Should Be Equal | _${expectedElements}_ | _${actualElements}_ | # This keyword comes from Collections library\n")
+    public Collection<String> getTreeNodeChildNames(String identifier, String nodeIdentifier) {
+        return createTreeOperator(identifier).getTreeNodeChildNames(nodeIdentifier);
     }
 }
