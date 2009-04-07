@@ -22,7 +22,7 @@ public class SwingLibrary extends org.robotframework.swing.SwingLibrary {
         this(Collections.<String>emptyList());
     }
 
-    public SwingLibrary(Collection<String> keywordPatterns) {
+    protected SwingLibrary(Collection<String> keywordPatterns) {
         super(keywordPatterns);
     }
 }

@@ -32,7 +32,7 @@ public class SwingLibrary extends AnnotationLibrary {
         this(Collections.<String>emptyList());
     }
 
-    public SwingLibrary(Collection<String>  keywordPatterns) {
+    protected SwingLibrary(Collection<String>  keywordPatterns) {
         addKeywordPatterns(keywordPatterns);
         disableOutput();
         setDefaultTimeouts();
