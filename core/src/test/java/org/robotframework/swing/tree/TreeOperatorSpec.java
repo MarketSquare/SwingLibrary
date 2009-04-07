@@ -3,6 +3,7 @@ package org.robotframework.swing.tree;
 import java.awt.Point;
 
 import javax.swing.JPopupMenu;
+import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -105,12 +106,13 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
                 final String childName = "child" + i; 
                 final TreePath path = mock(TreePath.class, childName);
                 checking(new Expectations() {{
-                    one(path).getLastPathComponent(); will(returnValue(childName));
+                    allowing(path).getLastPathComponent(); will(returnValue(childName));
                 }});
                 expectedPaths[i] = path; 
             }
             
             checking(new Expectations() {{
+                allowing(jTreeOperator).getSource(); will(returnValue(dummy(JTree.class)));
                 one(jTreeOperator).getChildPaths(treePath); will(returnValue(expectedPaths));
             }});
             
