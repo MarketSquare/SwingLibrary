@@ -1,6 +1,5 @@
 *Setting*	*Value*	*Value*
-Variables	variables.py
-library	SwingLibrary	${KEYWORD PATTERNS}
+library	org.robotframework.swing.extension.ExtendedSwingLibrary
 								
 *Variable*	*Value*	*Value*
 

@@ -1,6 +1,5 @@
 *Setting*	*Value*
-Variables	variables.py
-library	SwingLibrary	${KEYWORD PATTERNS}
+library	org.robotframework.swing.extension.ExtendedSwingLibrary
 
 *Test Case*	*Action*	*Argument*
 Runs Keyword In Separate Thread
