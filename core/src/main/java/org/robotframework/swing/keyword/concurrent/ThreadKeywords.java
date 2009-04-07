@@ -39,9 +39,9 @@ public class ThreadKeywords {
         + "Known limitations:\n"
         + "- The return value of the keyword being run is ignored.\n"
         + "- Exceptions thrown by the keyword are ignored, which implies that this keyword should not be used\n"
-        + "  in conjunction with keywords such `Label Text Should Be` or `Menu Item Should Be Enabled`.\n\n")
-    @ArgumentNames({"keywordName", "arguments"})
-    public void runKeywordInSeparateThread(final String keywordName, final Object[] arguments) {
+        + "  in conjunction with keywords such `Label Text Should Be` or `Menu Item Should Be Enabled`.\n")
+    @ArgumentNames({"keywordName", "*arguments"})
+    public void runKeywordInSeparateThread(final String keywordName, final Object... arguments) {
         assertKeywordExists(keywordName);
         assertArgumentCountIsCorrect(keywordName, arguments);
         new Thread() {
