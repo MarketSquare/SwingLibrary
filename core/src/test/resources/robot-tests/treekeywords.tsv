@@ -191,10 +191,6 @@ Get Tree Node Child Names
 	${childNames}=	getTreeNodeChildNames	${treeName}	${rootNode}
 	listsShouldBeEqual	${expectedChildnames}	${childNames}
 
-Lol
-	${childNames}=	getTreeNodeChildNames	${treeName}	${rootNode}|${childNode1}
-	log	${childNames}
-
 Select From Popup Menu On Selected Tree Nodes Keyword Operates On All Selected Nodes
 	[setup]	resetNodes
 	selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes
