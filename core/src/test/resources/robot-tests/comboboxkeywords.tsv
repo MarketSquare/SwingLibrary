@@ -65,7 +65,7 @@ Combobox Should Be Disabled
 	runKeywordAndExpectError	Combobox '${comboboxName}' was enabled.	comboboxShouldBeDisabled	${comboboxName}
 	[teardown]	enableCombobox	${comboboxName}
 
-Type Into Combobox	[tags]	development
+Type Into Combobox
 	typeIntoCombobox	${comboboxName}	someText
 	${comboboxText}=	getComboboxText	${comboboxName}
 	shouldBeEqual	someText	${comboboxText}
