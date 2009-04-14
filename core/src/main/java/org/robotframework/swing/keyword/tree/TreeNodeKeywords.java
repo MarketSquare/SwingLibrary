@@ -16,7 +16,9 @@
 
 package org.robotframework.swing.keyword.tree;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -153,7 +155,8 @@ public class TreeNodeKeywords extends TreeSupport {
         + "| ${expectedElements}= | Create List | _someElement_ | _otherElement_ | |\n"
         + "| ${actualElements}=   | Get Tree Node Child Names | _myTree_ | _Element Folder_ | |\n"
         + "| Lists Should Be Equal | _${expectedElements}_ | _${actualElements}_ | # This keyword comes from Collections library |\n")
-    public Collection<String> getTreeNodeChildNames(String identifier, String nodeIdentifier) {
-        return createTreeOperator(identifier).getTreeNodeChildNames(nodeIdentifier);
+    public List<String> getTreeNodeChildNames(String identifier, String nodeIdentifier) {
+        Collection<String> childNames = createTreeOperator(identifier).getTreeNodeChildNames(nodeIdentifier);
+        return new ArrayList<String>(childNames);
     }
 }
