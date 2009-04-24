@@ -21,4 +21,5 @@ import org.robotframework.swing.operator.ComponentWrapper;
 public interface AbstractButtonOperator extends ComponentWrapper {
     void push();
     boolean isSelected();
+    boolean isEnabled();
 }

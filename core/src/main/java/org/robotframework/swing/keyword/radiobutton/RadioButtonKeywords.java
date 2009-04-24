@@ -32,7 +32,7 @@ public class RadioButtonKeywords {
         + "Example:\n"
         + "| Select Radio Button | _My Radio Button_ |\n")
     public void pushRadioButton(String identifier) {
-        operatorFactory.createOperator(identifier).push();
+        createOperator(identifier).push();
     }
     
     @RobotKeyword("*DEPRECATED* Use keyword `Push Radio Button` instead.\n")
@@ -44,7 +44,7 @@ public class RadioButtonKeywords {
         + "Example:\n"
         + "| Radio Button Should Be Selected | _My Radio Button_ |\n")
     public void radioButtonShouldBeSelected(String identifier) {
-        boolean isSelected = operatorFactory.createOperator(identifier).isSelected();
+        boolean isSelected = createOperator(identifier).isSelected();
         Assert.assertTrue("Radio Button '" + identifier + "' is not selected.", isSelected);
     }
     
@@ -52,7 +52,27 @@ public class RadioButtonKeywords {
         + "Example:\n"
         + "| Radio Button Should Not Be Selected | _My Radio Button_ |\n")
     public void radioButtonShouldNotBeSelected(String identifier) {
-        boolean isSelected = operatorFactory.createOperator(identifier).isSelected();
+        boolean isSelected = createOperator(identifier).isSelected();
         Assert.assertFalse("Radio Button '" + identifier + "' is selected.", isSelected);
+    }
+    
+    @RobotKeyword("Fails if radiobutton is disabled.\n\n"
+        + "Example:\n"
+        + "| Radio Button Should Be Enabled | _My Radio Button_ |\n")
+    public void radioButtonShouldBeEnabled(String identifier) {
+        boolean isEnabled = createOperator(identifier).isEnabled();
+        Assert.assertTrue("Radio Button '" + identifier + "' is disabled.", isEnabled);
+    }
+    
+    @RobotKeyword("Fails if radiobutton is enabled.\n\n"
+        + "Example:\n"
+        + "| Radio Button Should Be Disabled | _My Radio Button_ |\n")
+    public void radioButtonShouldBeDisabled(String identifier) {
+        boolean isEnabled = createOperator(identifier).isEnabled();
+        Assert.assertFalse("Radio Button '" + identifier + "' is enabled.", isEnabled);
+    }
+    
+    private AbstractButtonOperator createOperator(String identifier) {
+        return operatorFactory.createOperator(identifier);
     }
 }

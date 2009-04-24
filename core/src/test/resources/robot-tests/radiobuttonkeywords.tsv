@@ -1,6 +1,9 @@
 *Setting*	*Value*
 library	SwingLibrary
 
+*Variable*	*Value*
+${buttonName}	one
+
 *Test Case*	*Action*	*Argument*
 Select Radio Button Selects Radio Button
 	radioButtonShouldBeSelectableWithIndex
@@ -16,6 +19,18 @@ Radio Button Should Not Be Selected Passes If Button Is Not Selected
 	radioButtonShouldNotBeSelectedShouldWorkWithIndexes
 	radioButtonShouldNotBeSelectedShouldWorkWithNames
 	radioButtonShouldNotBeSelectedShouldWorkWithText
+
+Radio Button Should Be Enabled
+	radioButtonShouldBeEnabled	${buttonName}
+	disableRadioButton	${buttonName}
+	runKeywordAndExpectError	Radio Button '${buttonName}' is disabled.	radioButtonShouldBeEnabled	${buttonName}
+	[teardown]	enableRadioButton	${buttonName}
+
+Radio Button Should Be Disabled
+	disableRadioButton	${buttonName}
+	radioButtonShouldBeDisabled	${buttonName}
+	enableRadioButton	${buttonName}
+	runKeywordAndExpectError	Radio Button '${buttonName}' is enabled.	radioButtonShouldBeDisabled	${buttonName}
 
 Radio Button Keywords Should Fail If Context Is Not A Window
 	selectEmptyContext

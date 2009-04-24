@@ -38,6 +38,14 @@ public class RadioButtonKeywordsSpec extends MockSupportSpecification<RadioButto
         public void hasRadioButtonShouldNotBeSelectedKeyword() {
             specify(context, satisfies(new RobotKeywordContract("radioButtonShouldNotBeSelected")));
         }
+        
+        public void hasRadioButtonShouldBeEnabledKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("radioButtonShouldBeEnabled")));
+        }
+        
+        public void hasRadioButtonShouldBeDisabledKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("radioButtonShouldBeDisabled")));
+        }
     }
     
     public class OperatingOnRadioButtons {
@@ -112,6 +120,55 @@ public class RadioButtonKeywordsSpec extends MockSupportSpecification<RadioButto
                     context.radioButtonShouldNotBeSelected(identifier);
                 }
             }, must.raiseExactly(AssertionFailedError.class, "Radio Button '" + identifier + "' is selected."));
+        }
+        
+        //----------------------
+        public void radioButtonShouldBeEnabedPassesWhenEnabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(true));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.radioButtonShouldBeEnabled(identifier);
+                }
+            }, must.not().raise(Exception.class));
+        }
+
+        public void radioButtonShouldBeDisabledPassesWhenDisabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(false));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.radioButtonShouldBeDisabled(identifier);
+                }
+            }, must.not().raise(Exception.class));
+        }
+        
+        public void radioButtonShouldBeEnabledFailsWhenDisabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(false));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.radioButtonShouldBeEnabled(identifier);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, "Radio Button '" + identifier + "' is disabled."));
+        }
+        
+        public void radioButtonShouldBeDisabledFailsWhenEnabled() throws Throwable {
+            checking(new Expectations() {{
+                one(operator).isEnabled(); will(returnValue(true));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.radioButtonShouldBeDisabled(identifier);
+                }
+            }, must.raiseExactly(AssertionFailedError.class, "Radio Button '" + identifier + "' is enabled."));
         }
 
         private void injectMockOperatingFactory(RadioButtonKeywords radioButtonKeywords) {
