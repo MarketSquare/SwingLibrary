@@ -122,7 +122,6 @@ public class RadioButtonKeywordsSpec extends MockSupportSpecification<RadioButto
             }, must.raiseExactly(AssertionFailedError.class, "Radio Button '" + identifier + "' is selected."));
         }
         
-        //----------------------
         public void radioButtonShouldBeEnabedPassesWhenEnabled() throws Throwable {
             checking(new Expectations() {{
                 one(operator).isEnabled(); will(returnValue(true));
