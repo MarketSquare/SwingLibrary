@@ -6,7 +6,7 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.ComponentOperator;
+import org.netbeans.jemmy.operators.JComponentOperator;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
@@ -48,15 +48,19 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
         public void hasClickOnComponentKeyword() {
             specify(context, satisfies(new RobotKeywordContract("clickOnComponent")));
         }
+        
+        public void hasGetTooltipTextKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTooltipText")));
+        }
     }
 
     public class Operating {
-        private ComponentOperator operator;
+        private JComponentOperator operator;
 
         public ComponentKeywords create() {
             ComponentKeywords keywords = new ComponentKeywords();
             final OperatorFactory operatorFactory = injectMockTo(keywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
-            operator = mock(ComponentOperator.class);
+            operator = mock(JComponentOperator.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(componentIdentifier); will(returnValue(operator));
             }});
@@ -77,6 +81,15 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
             }});
             
             context.clickOnComponent(componentIdentifier, new String[] { "2" });
+        }
+        
+        
+        public void getsTooltipText() {
+            checking(new Expectations() {{
+                one(operator).getToolTipText(); will(returnValue("tooltip"));
+            }});
+            
+            specify(context.getTooltipText(componentIdentifier), "tooltip");
         }
     }
     

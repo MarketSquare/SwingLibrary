@@ -18,7 +18,7 @@ package org.robotframework.swing.keyword.component;
 
 import junit.framework.Assert;
 
-import org.netbeans.jemmy.operators.ComponentOperator;
+import org.netbeans.jemmy.operators.JComponentOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -29,7 +29,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RobotKeywords
 public class ComponentKeywords {
-    private IdentifierParsingOperatorFactory<ComponentOperator> operatorFactory = new ComponentOperatorFactory();
+    private IdentifierParsingOperatorFactory<JComponentOperator> operatorFactory = new ComponentOperatorFactory();
     private IComponentConditionResolver componentExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
     @RobotKeyword("Fails if component exists within current context.\n"
@@ -57,8 +57,16 @@ public class ComponentKeywords {
     public void clickOnComponent(String identifier, String[] times) {
         createOperator(identifier).clickMouse(getTimes(times));
     }
+    
+    @RobotKeyword("Returns the component's tooltip text.\n\n"
+        + "Example:\n"
+        + "| ${tooltip}= | Get Tooltip Text | _saveButton_ |\n"
+        + "| Should Be Equal    | _Save_ | _${tooltip}_ |\n")
+    public String getTooltipText(String identifier) {
+        return createOperator(identifier).getToolTipText();
+    }
 
-    private ComponentOperator createOperator(String identifier) {
+    private JComponentOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }
 

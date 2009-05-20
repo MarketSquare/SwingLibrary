@@ -38,6 +38,10 @@ Doubleclick On Component
 	${text}=	getButtonText	${buttonName}
 	shouldBeEqual	Button Was Pushed2	${text}
 
+Get Tooltip Text
+	${tooltip}=	getToolTipText	testLabel
+	shouldBeEqual	TEST LABEL	${tooltip}
+
 *Keyword*	*Action*	*Argument*
 resetButton
 	setButtonText	${buttonName}	Test Button
