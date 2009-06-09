@@ -132,7 +132,7 @@ public class TableKeywords extends IdentifierSupport {
     
     @RobotKeyword("Selects an item from a table cell popup.\n"
         + "Separator for items is '|'.\n\n"
-        + "Examples:\n"
+        + "Example:\n"
         + "| Select From Table Cell Popup Menu | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ | ")
     public void selectFromTableCellPopupMenu(String identifier, String row, String columnIdentifier, String menuPath) {
         JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
@@ -141,7 +141,7 @@ public class TableKeywords extends IdentifierSupport {
     
     @RobotKeyword("Fails if the given table cell popup menu is disabled.\n"
         + "Separator for items is '|'.\n\n"
-        + "Examples:\n"
+        + "Example:\n"
         + "| Table Cell Popup Menu Should Be Enabled | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ |\n")
     public void tableCellPopupMenuShouldBeEnabled(String identifier, String row, String columnIdentifier, String menuPath) {
         JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
@@ -151,7 +151,7 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Fails if the given table cell popup menu is enabled.\n"
         + "Separator for items is '|'.\n\n"
-        + "Examples:\n"
+        + "Example:\n"
         + "| Table Cell Popup Menu Should Be Disabled | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ |\n")
     public void tableCellPopupMenuShouldBeDisabled(String identifier, String row, String columnIdentifier, String menuPath) {
         JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
@@ -159,6 +159,13 @@ public class TableKeywords extends IdentifierSupport {
         Assert.assertFalse(errorMessage, menuItem.isEnabled());
     }
 
+    @RobotKeyword("Returns table's header names.\n"
+        + "Example:\n"
+        + "| @{headers}= | Get Table Headers | _myTable_ |\n")
+    public String[] getTableHeaders(String identifier) {
+        return createTableOperator(identifier).getTableHeaders();
+    }
+    
     private TableOperator createTableOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }

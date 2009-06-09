@@ -24,10 +24,10 @@ import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
 public class TableOperatorFactory extends DefaultContextVerifyingOperatorFactory<TableOperator> {
     public TableOperator createOperatorByIndex(int index) {
-        return new DefaultTableOperator(new JTableOperator((ContainerOperator) Context.getContext(), index));
+        return new TableOperator(new JTableOperator((ContainerOperator) Context.getContext(), index));
     }
 
     public TableOperator createOperatorByName(String name) {
-        return new DefaultTableOperator(new JTableOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
+        return new TableOperator(new JTableOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
     }
 }

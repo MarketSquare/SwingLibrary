@@ -16,20 +16,116 @@
 
 package org.robotframework.swing.table;
 
+import java.awt.Component;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.swing.table.TableColumn;
+
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.netbeans.jemmy.operators.JTableOperator;
+import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
+import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-public interface TableOperator extends ComponentWrapper {
-    void selectCell(String row, String column);
-    void setCellValue(Object newValue, String row, String column);
-    void typeIntoCell(Object newValue, String row, String column);
-    void clearSelection();
-    void clearCell(String row, String columnIdentifier);
-    boolean isCellSelected(String row, String column);
-    int getColumnCount();
-    int getRowCount();
-    int findCellRow(String text);
-    Object getCellValue(String row, String column);
-    Object getSelectedCellValue();
-    JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier);
+public class TableOperator extends IdentifierSupport implements ComponentWrapper {
+    private final JTableOperator jTableOperator;
+
+    public TableOperator(JTableOperator jTableOperator) {
+        this.jTableOperator = jTableOperator;
+        this.jTableOperator.setComparator(new EqualsStringComparator());
+    }
+    
+    public Object getCellValue(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        return jTableOperator.getValueAt(coordinates.y, coordinates.x);
+    }
+
+    public boolean isCellSelected(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        return jTableOperator.isCellSelected(coordinates.y, coordinates.x);
+    }
+
+    public void selectCell(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        jTableOperator.selectCell(coordinates.y, coordinates.x);
+    }
+
+    public void setCellValue(Object newValue, String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        jTableOperator.setValueAt(newValue, coordinates.y, coordinates.x);
+    }
+    
+    public void typeIntoCell(Object newValue, String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        jTableOperator.changeCellObject(coordinates.y, coordinates.x, newValue);
+    }
+    
+    public void clearCell(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        jTableOperator.changeCellObject(coordinates.y, coordinates.x, "");
+    }
+    
+    public void clearSelection() {
+        jTableOperator.clearSelection();
+    }
+
+    public int getColumnCount() {
+        return jTableOperator.getColumnCount();
+    }
+
+    public int getRowCount() {
+        return jTableOperator.getRowCount();
+    }
+
+    public int findCellRow(String text) {
+        return jTableOperator.findCellRow(text);
+    }
+    
+    public Object getSelectedCellValue() {
+      int selectedRow = jTableOperator.getSelectedRow();
+      int selectedColumn = jTableOperator.getSelectedColumn();
+      return jTableOperator.getValueAt(selectedRow, selectedColumn);
+    }
+
+    public JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        return new JPopupMenuOperator(jTableOperator.callPopupOnCell(coordinates.y, coordinates.x));
+    }
+    
+    public Component getSource() {
+        return jTableOperator.getSource();
+    }
+    
+    protected Point findCell(String row, String columnIdentifier) {
+        TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
+        Point cell = jTableOperator.findCell(cellChooser);
+        if (cellIsInvalid(cell))
+            throw new InvalidCellException(row, columnIdentifier);
+        return cell;
+    }
+    
+    protected boolean cellIsInvalid(Point cell) {
+        return cell.x < 0 || cell.y < 0;
+    }
+
+    protected TableCellChooser createCellChooser(String row, String columnIdentifier) {
+    	if (isIndex(columnIdentifier)) {
+    		return new ColumnIndexTableCellChooser(row, columnIdentifier);
+    	} 
+    	return new ColumnNameTableCellChooser(row, columnIdentifier);
+    }
+
+    public String[] getTableHeaders() {
+        Enumeration<TableColumn> columns = jTableOperator.getTableHeader().getColumnModel().getColumns();
+        List<String> results = new ArrayList<String>();
+        while (columns.hasMoreElements()) {
+            TableColumn tableColumn = (TableColumn) columns.nextElement();
+            results.add(tableColumn.getHeaderValue().toString());
+        }
+        return results.toArray(new String[0]);
+    }
 }

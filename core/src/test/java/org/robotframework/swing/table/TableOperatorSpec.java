@@ -2,8 +2,13 @@ package org.robotframework.swing.table;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.util.Enumeration;
+import java.util.Vector;
 
 import javax.swing.JPopupMenu;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import jdave.Block;
 import jdave.Specification;
@@ -18,7 +23,7 @@ import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 
 @RunWith(JDaveRunner.class)
-public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator> {
+public class TableOperatorSpec extends Specification<TableOperator> {
     private String row = "2";
     private JTableOperator jTableOperator;
     private Object cellValue = new Object();
@@ -32,17 +37,17 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
                 one(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
             }});
             
-            new DefaultTableOperator(jTableOperator);
+            new TableOperator(jTableOperator);
         }
     }
     
-    public class OperatingOnCellValues {
-        public DefaultTableOperator create() {
+    public class OperatingOnRowsAndColumn {
+        public TableOperator create() {
             jTableOperator = mock(JTableOperator.class);
             checking(new Expectations() {{
                 ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
             }});
-            return new DefaultTableOperator(jTableOperator);
+            return new TableOperator(jTableOperator);
         }
         
         public void clearsSelection() {
@@ -97,15 +102,43 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
                 }
             }, should.raise(InvalidCellException.class));
         }
+        
+        
+        public void getsTableHeaders() {
+            final JTableHeader tableHeader = mock(JTableHeader.class);
+            final TableColumnModel columnModel = mock(TableColumnModel.class);
+            
+            Vector<TableColumn> columnVector = new Vector<TableColumn>();
+            for (int i = 0; i < 3; ++i) {
+                final String header = "column" + i;
+                final TableColumn col = mock(TableColumn.class, header);
+
+                checking(new Expectations() {{
+                    one(col).getHeaderValue(); will(returnValue(header));
+                }});
+                
+                columnVector.add(col);
+            }
+            
+            final Enumeration<TableColumn> columns = columnVector.elements();
+            
+            checking(new Expectations() {{
+                one(jTableOperator).getTableHeader(); will(returnValue(tableHeader));
+                one(tableHeader).getColumnModel(); will(returnValue(columnModel));
+                one(columnModel).getColumns(); will(returnValue(columns));
+            }});
+
+            specify(context.getTableHeaders(), containsInOrder("column0", "column1", "column2"));
+        }
     }
     
     public class RetrievingCellValues {
-        public DefaultTableOperator create() {
+        public TableOperator create() {
             jTableOperator = mock(JTableOperator.class);
             checking(new Expectations() {{
                 ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
             }});
-            return new DefaultTableOperator(jTableOperator);
+            return new TableOperator(jTableOperator);
         }
 
         public void getsSelectedCellValue() {
@@ -154,8 +187,8 @@ public class DefaultTableOperatorSpec extends Specification<DefaultTableOperator
         protected String column;
         protected abstract JTableOperator createMockJTableOperator();
         
-        public DefaultTableOperator create() {
-            return new DefaultTableOperator(createMockJTableOperator());
+        public TableOperator create() {
+            return new TableOperator(createMockJTableOperator());
         }
         
         public void getsCellValue() {

@@ -1,7 +1,6 @@
 *Setting*	*Value*	*Value*
 library	SwingLibrary
 testSetup	clearTable
-
 *Variable*	*Value*	*Value*
 ${tableName}	testTable
 ${columnHeaderOne}	column one
@@ -112,6 +111,13 @@ Table Cell Popup Menu Should Be Disabled
 Table Cell Popup Menu Should Be Enabled
 	tableCellPopupMenuShouldBeEnabled	${tableName}	2	column one	${enabledMenuItem}
 	runKeywordAndExpectError	Menuitem '${disabledMenuItem}' at '2, column one' is disabled.	tableCellPopupMenuShouldBeEnabled	${tableName}	2	column one	${disabledMenuItem}
+
+Get Table Headers
+	${header1}	${header2}	${header3}	${header4}=	getTableHeaders	${tableName}
+	shouldBeEqual	column one	${header1}
+	shouldBeEqual	column two	${header2}
+	shouldBeEqual	column three	${header3}
+	shouldBeEqual	column four	${header4}
 
 Table Keywords Fail If Context Is Not Set
 	selectEmptyContext

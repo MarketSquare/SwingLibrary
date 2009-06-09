@@ -14,7 +14,6 @@ import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.table.DefaultTableOperator;
 import org.robotframework.swing.table.TableOperator;
 
 
@@ -96,6 +95,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context, satisfies(new RobotKeywordContract("findTableRow")));
         }
         
+        public void hasGetTableHeadersKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTableHeaders")));
+        }
+        
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
@@ -136,6 +139,15 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         public TableKeywords create() {
             injectMockOperatorFactory();
             return tableKeywords;
+        }
+        
+        public void getsTableHeaders() {
+            final String[] tableHeaders = new String[] {"1", "2", "3"};
+            checking(new Expectations() {{
+                one(tableOperator).getTableHeaders(); will(returnValue(tableHeaders));
+            }});
+            
+            specify(context.getTableHeaders(tableIdentifier), containsInOrder("1", "2", "3"));
         }
         
         public void getsTableColumnCount() {
@@ -346,7 +358,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
     private void injectMockOperatorFactory() {
         operatorFactory = injectMockTo(tableKeywords, OperatorFactory.class);
-        tableOperator = mock(DefaultTableOperator.class);
+        tableOperator = mock(TableOperator.class);
 
         checking(new Expectations() {{
             one(operatorFactory).createOperator(tableIdentifier);
