@@ -33,7 +33,7 @@ Select From Combobox By Name
 	selectFromComboBox	${comboboxName}	two
 	comboboxSelectionShouldBe	${comboboxName}	two
 
-Select From Combobox Works With Rendered Text	[tags]	not_ready
+Select From Combobox Works With Rendered Text
 	selectFromComboBox	comboboxWithRenderer	TWO
 	comboboxSelectionShouldBe	comboboxWithRenderer	two
 
