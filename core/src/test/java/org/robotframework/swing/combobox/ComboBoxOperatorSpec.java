@@ -8,17 +8,18 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.robotframework.swing.comparator.EqualsStringComparator;
 
 @RunWith(JDaveRunner.class)
-public class DefaultComboBoxOperatorSpec extends Specification<DefaultComboBoxOperator> {
+public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
     public class Any {
         private JComboBoxOperator jComboboxOperator;
         private String comboItemIdentifier = "someItem";
+        private ItemTextExtractor textExtractor;
 
-        public DefaultComboBoxOperator create() {
+        public ComboBoxOperator create() {
             jComboboxOperator = mock(JComboBoxOperator.class);
-            return new DefaultComboBoxOperator(jComboboxOperator);
+            textExtractor = mock(ItemTextExtractor.class);
+            return new ComboBoxOperator(jComboboxOperator, textExtractor);
         }
         
         public void wrapsSource() {
@@ -33,7 +34,9 @@ public class DefaultComboBoxOperatorSpec extends Specification<DefaultComboBoxOp
         public void selectsItemWithName() {
             checking(new Expectations() {{
                 one(jComboboxOperator).pushComboButton();
-                one(jComboboxOperator).selectItem(with(equal(comboItemIdentifier)), with(any(EqualsStringComparator.class)));
+                one(textExtractor).itemCount(); will(returnValue(1));
+                one(textExtractor).getTextFromRenderedComponent(0); will(returnValue(comboItemIdentifier));
+                one(jComboboxOperator).selectItem(0);
             }});
             
             context.selectItem(comboItemIdentifier);

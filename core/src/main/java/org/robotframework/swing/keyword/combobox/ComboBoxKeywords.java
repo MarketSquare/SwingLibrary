@@ -36,7 +36,7 @@ public class ComboBoxKeywords {
     public void selectFromComboBox(String identifier, String comboItemIdentifier) {
         createOperator(identifier).selectItem(comboItemIdentifier);
     }
-
+    
     @RobotKeyword("Alias for `Select From Combobox` keyword.\n")
     public void selectFromDropdownMenu(String menuIdentifier, String menuItemIdentifier) {
         selectFromComboBox(menuIdentifier, menuItemIdentifier);

@@ -72,6 +72,14 @@ public class TestApplication {
         panel.add(new JCheckBox("Test Checkbox 3"));
         panel.add(new JCheckBox("Test Checkbox 4"));
         panel.add(new TestComboBox());
+        panel.add(new TestComboBox() {{
+            setName("comboboxWithRenderer");
+            setRenderer(new DefaultListCellRenderer() {
+                public String getText() {
+                    return super.getText().toUpperCase();
+                }
+            });
+        }});
         panel.add(new TestLabel());
         panel.add(new TestTable("testTable"));
         panel.add(new TestTable("anotherTable"));

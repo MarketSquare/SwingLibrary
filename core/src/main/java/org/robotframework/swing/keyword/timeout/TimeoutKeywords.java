@@ -25,7 +25,7 @@ public class TimeoutKeywords {
     public final static String[] JEMMY_TIMEOUTS = new String[] { "DialogWaiter.WaitDialogTimeout",
         "FrameWaiter.WaitFrameTimeout", "WindowWaiter.WaitWindowTimeout", "ComponentOperator.WaitComponentTimeout",
         "JMenuOperator.WaitPopupTimeout", "JTreeOperator.WaitNodeExpandedTimeout", "JTreeOperator.WaitNextNodeTimeout",
-        "JTreeOperator.WaitNodeVisibleTimeout", "ComponentOperator.WaitStateTimeout"};
+        "JTreeOperator.WaitNodeVisibleTimeout", "ComponentOperator.WaitStateTimeout", "JComboBoxOperator.WaitListTimeout"};
 
     @RobotKeyword("Sets the jemmy timeout used for waiting a component to appear.\n"
         + "Timeout names are listed here: http://jemmy.netbeans.org/OperatorsEnvironment.html#timeouts.\n\n"

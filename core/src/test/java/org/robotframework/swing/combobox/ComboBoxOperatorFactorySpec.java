@@ -11,7 +11,7 @@ import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.factory.OperatorFactorySpecification;
 
 @RunWith(JDaveRunner.class)
-public class DefaultComboBoxOperatorFactorySpec extends OperatorFactorySpecification<ComboBoxOperatorFactory> {
+public class ComboBoxOperatorFactorySpec extends OperatorFactorySpecification<ComboBoxOperatorFactory> {
     public class Any extends AnyIdentifierParsingOperatorFactory {
         protected OperatorFactory<ComboBoxOperator> createOperatorFactory() {
             return new ComboBoxOperatorFactory();

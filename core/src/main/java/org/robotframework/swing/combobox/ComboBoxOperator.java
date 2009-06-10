@@ -1,25 +1,63 @@
-/*
- * Copyright 2008 Nokia Siemens Networks Oyj
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.robotframework.swing.combobox;
 
+import java.awt.Component;
+
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
 
-public interface ComboBoxOperator extends ComponentWrapper {
-    void selectItem(String comboItemIdentifier);
-    Object getSelectedItem();
-    boolean isEnabled();
-    void typeText(String text);
+public class ComboBoxOperator extends IdentifierSupport implements ComponentWrapper {
+    private final JComboBoxOperator comboboxOperator;
+    private ItemTextExtractor itemTextExtractor;
+
+
+    public ComboBoxOperator(JComboBoxOperator jComboboxOperator) {
+        comboboxOperator = jComboboxOperator;
+        itemTextExtractor = new ItemTextExtractor(jComboboxOperator);
+    }
+    
+    ComboBoxOperator(JComboBoxOperator jComboboxOperator, ItemTextExtractor itemTextExtractor) {
+        this.comboboxOperator = jComboboxOperator;
+        this.itemTextExtractor = itemTextExtractor;
+    }
+
+    public Component getSource() {
+        return comboboxOperator.getSource();
+    }
+
+    public void selectItem(String comboItemIdentifier) {
+        comboboxOperator.pushComboButton();
+        comboboxOperator.selectItem(findItemIndex(comboItemIdentifier));
+    }
+    
+    public Object getSelectedItem() {
+        return comboboxOperator.getSelectedItem();
+    }
+
+    public boolean isEnabled() {
+        return comboboxOperator.isEnabled();
+    }
+    
+    public void typeText(String text) {
+        comboboxOperator.clearText();
+        comboboxOperator.typeText(text);
+    }
+    
+    private int findItemIndex(String comboItemIdentifier) {
+        if (isIndex(comboItemIdentifier)) {
+            return asIndex(comboItemIdentifier);
+        } else {
+            return findItemIndexFromRenderedText(comboItemIdentifier);
+        }
+    }
+
+    public int findItemIndexFromRenderedText(String expectedText) {
+        for (int itemIndex = 0; itemIndex < itemTextExtractor.itemCount(); itemIndex++) {
+            String text = itemTextExtractor.getTextFromRenderedComponent(itemIndex);
+            if (expectedText.equals(text))
+                return itemIndex;
+        }
+        comboboxOperator.hidePopup();
+        throw new RuntimeException("Couldn't find text '" + expectedText + "'");
+    }
 }

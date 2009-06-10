@@ -30,8 +30,12 @@ Select From Combobox By Index
 	comboboxSelectionShouldBe	${comboboxIndex}	${comboboxItem2}
 
 Select From Combobox By Name
-	selectFromCombobox	${comboboxName}	${comboboxItem2}
-	comboboxSelectionShouldBe	${comboboxName}	${comboboxItem2}
+	selectFromComboBox	${comboboxName}	two
+	comboboxSelectionShouldBe	${comboboxName}	two
+
+Select From Combobox Works With Rendered Text	[tags]	not_ready
+	selectFromComboBox	comboboxWithRenderer	TWO
+	comboboxSelectionShouldBe	comboboxWithRenderer	two
 
 Select From Combobbox Keyword Should Work With Indexes
 	selectFromCombobox	${comboboxName}	0

@@ -25,11 +25,11 @@ import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 public class ComboBoxOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComboBoxOperator> {
     public ComboBoxOperator createOperatorByIndex(int index) {
         JComboBoxOperator jComboboxOperator = new JComboBoxOperator((ContainerOperator) Context.getContext(), index);
-        return new DefaultComboBoxOperator(jComboboxOperator);
+        return new ComboBoxOperator(jComboboxOperator);
     }
 
     public ComboBoxOperator createOperatorByName(String name) {
         JComboBoxOperator jComboboxOperator = new JComboBoxOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
-        return new DefaultComboBoxOperator(jComboboxOperator);
+        return new ComboBoxOperator(jComboboxOperator);
     }
 }
