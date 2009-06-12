@@ -32,14 +32,14 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
     }
 
     public class Operating {
-        private TreeOperator enhancedTreeOperator;
+        private TreeOperator treeOperator;
         
         public TreeOperator create() {
             treePath = mock(TreePath.class);
             jTreeOperator = mock(JTreeOperator.class);
-            enhancedTreeOperator = new TreeOperator(jTreeOperator);
-            injectMockPathFactory();
-            return enhancedTreeOperator;
+            treeOperator = new TreeOperator(jTreeOperator);
+            injectMockPathFactory(treeOperator);
+            return treeOperator;
         }
         
         public void clicksOnNode() {
@@ -51,7 +51,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
             context.clickOnNode(nodeIdentifier, clickCount);
         }
 
-        public void expandsPath() {
+        public void expands() {
             checking(new Expectations() {{
                 one(jTreeOperator).expandPath(treePath);
             }});
@@ -59,14 +59,14 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
             context.expand(nodeIdentifier);
         }
         
-        public void collapsesPath() {
+        public void collapses() {
             checking(new Expectations() {{
                 one(jTreeOperator).collapsePath(treePath);
             }});
             
             context.collapse(nodeIdentifier);
         }
-        
+
         public void addsSelection() {
             checking(new Expectations() {{
                 one(jTreeOperator).addSelectionPath(treePath);
@@ -145,12 +145,64 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
             specify(context.isVisible(nodeIdentifier));
         }
         
-        private void injectMockPathFactory() {
-            final TreePathFactory pathFactory = injectMockTo(enhancedTreeOperator, TreePathFactory.class);
+        private void injectMockPathFactory(TreeOperator treeOperator) {
+            final TreePathFactory pathFactory = injectMockTo(treeOperator, TreePathFactory.class);
             checking(new Expectations() {{
                 one(pathFactory).createTreePath(nodeIdentifier);
                 will(returnValue(treePath));
             }});
+        }
+    }
+    
+    public class OperatingWithTreePath {
+        private JTreeOperator jTreeOperator;
+        private TreePath somePath = mock(TreePath.class);
+
+        public TreeOperator create() {
+            jTreeOperator = mock(JTreeOperator.class);
+            return new TreeOperator(jTreeOperator);
+        }
+        
+        public void collapses() {
+            checking(new Expectations() {{
+                one(jTreeOperator).collapsePath(somePath);
+            }});
+            
+            context.collapse(somePath);
+        }
+        
+        public void expands() {
+            checking(new Expectations() {{
+                one(jTreeOperator).expandPath(somePath);
+            }});
+            
+            context.expand(somePath);
+        }
+        
+        public void isCollapsed() {
+            checking(new Expectations() {{
+                one(jTreeOperator).isCollapsed(somePath); will(returnValue(true));
+            }});
+            
+            specify(context.isCollapsed(somePath));
+        }
+        
+        public void isExpanded() {
+            checking(new Expectations() {{
+                one(jTreeOperator).isExpanded(somePath); will(returnValue(true));
+            }});
+            
+            specify(context.isExpanded(somePath));
+        }
+        
+        public void isLeaf() {
+            final TreeNode node = mock(TreeNode.class);
+            checking(new Expectations() {{
+                one(somePath).getLastPathComponent(); will(returnValue(node));
+                one(node).isLeaf(); will(returnValue(true));
+            }});
+            
+            specify(context.isLeaf(somePath));
         }
     }
 
@@ -238,6 +290,29 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
             }});
             
             specify(context.callPopupOnRow(row), must.equal(popupMenu));
+        }
+    }
+    
+    public class OperatingOnAllNodes {
+        private TreeIterator treeIterator;
+
+        public TreeOperator create() {
+            treeIterator = mock(TreeIterator.class);
+            return new TreeOperator(dummy(JTreeOperator.class)) {
+                protected TreeIterator createIterator() {
+                    return treeIterator;
+                }
+            };
+        }
+        
+        public void operatesOnAllNodes() {
+            final TreePathAction someAction = dummy(TreePathAction.class);
+            
+            checking(new Expectations() {{
+                one(treeIterator).operateOnAllNodes(someAction);
+            }});
+            
+            context.operateOnAllNodes(someAction);
         }
     }
 }

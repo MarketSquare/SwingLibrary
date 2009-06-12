@@ -20,12 +20,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.tree.TreePath;
+
 import junit.framework.Assert;
 
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeOperator;
+import org.robotframework.swing.tree.TreePathAction;
 import org.robotframework.swing.tree.TreeSupport;
 
 @RobotKeywords
@@ -51,6 +54,30 @@ public class TreeNodeKeywords extends TreeSupport {
         + "| Expand Tree Node | _myTree_ | _3_ |\n")
     public void expandTreeNode(String identifier, String nodeIdentifier) {
         createTreeOperator(identifier).expand(nodeIdentifier);
+    }
+    
+    @RobotKeyword("Collapses all nodes in a tree.\n\n"
+        + "Example:\n"
+        + "| Collapse All Tree Nodes | _myTree_ |\n")
+    public void collapseAllTreeNodes(String identifier) {
+        final TreeOperator treeOperator = createTreeOperator(identifier);
+        treeOperator.operateOnAllNodes(new TreePathAction() {
+            public void operate(TreePath path) {
+                treeOperator.collapse(path);
+            }
+        });
+    }
+
+    @RobotKeyword("Expands all nodes in a tree.\n\n"
+        + "Example:\n"
+        + "| Expand All Tree Nodes | _myTree_ |\n")
+    public void expandAllTreeNodes(String identifier) {
+        final TreeOperator treeOperator = createTreeOperator(identifier);
+        treeOperator.operateOnAllNodes(new TreePathAction() {
+            public void operate(TreePath path) {
+                treeOperator.expand(path);
+            }
+        });
     }
 
     @RobotKeyword("Sets a node as selected in a tree.\n"

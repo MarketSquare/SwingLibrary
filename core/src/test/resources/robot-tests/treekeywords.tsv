@@ -228,6 +228,16 @@ Click On Tree Node
 	clickedNodesShouldBe	${leafNode2}
 	clickCountShouldBe	3
 
+Expand All Tree Nodes
+	[setup]	resetNodes
+	expandAllTreeNodes	${treeName}
+	allTreeNodesShouldBeExpanded	${treeName}
+
+Collapse All Tree Nodes
+	[setup]	resetNodes
+	collapseAllTreeNodes	${treeName}
+	allTreeNodesShouldBeCollapsed	${treeName}
+
 Keywords Also Work With Unnamed Root
 	resetNodes
 	selectFromTreeNodePopupMenu	0	${rootNode}	Remove root name

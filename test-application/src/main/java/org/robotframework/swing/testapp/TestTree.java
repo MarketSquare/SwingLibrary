@@ -5,12 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -72,16 +67,22 @@ public class TestTree extends JTree implements ActionListener {
                         return "Books for Java Implementers"; 
                     }
                 }) {{
-                        add(new DefaultMutableTreeNode(new Object() {
-                            public String toString() {
-                                return "The Java Virtual Machine Specification";       
-                            }
-                        }));
-                        add(new DefaultMutableTreeNode(new Object() {
-                            public String toString() {
-                                return "The Java Language Specification"; 
-                            }
-                        }));
+                    add(new DefaultMutableTreeNode(new Object() {
+                        public String toString() {
+                            return "The Java Virtual Machine Specification";       
+                        }
+                    }) {{
+                        add(new DefaultMutableTreeNode("leafnode1"));
+                        add(new DefaultMutableTreeNode("leafnode2"));
+                    }});
+                    add(new DefaultMutableTreeNode(new Object() {
+                        public String toString() {
+                            return "The Java Language Specification"; 
+                        }
+                    }) {{
+                        add(new DefaultMutableTreeNode("leafnode3"));
+                        add(new DefaultMutableTreeNode("leafnode4"));
+                    }});
                 }});
         }});
     }

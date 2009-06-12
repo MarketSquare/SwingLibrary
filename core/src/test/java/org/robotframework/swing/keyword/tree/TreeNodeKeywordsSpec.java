@@ -1,13 +1,19 @@
 package org.robotframework.swing.keyword.tree;
 
+import javax.swing.tree.TreePath;
+
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
 import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
+import org.robotframework.swing.tree.TreeIterator;
+import org.robotframework.swing.tree.TreeOperator;
+import org.robotframework.swing.tree.TreePathAction;
 
 
 @RunWith(JDaveRunner.class)
@@ -76,9 +82,17 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         public void hasGetTreeNodeChildNamesKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getTreeNodeChildNames")));
         }
+        
+        public void hasCollapseAllTreeNodesKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("collapseAllTreeNodes")));
+        }
+        
+        public void hasExpandAllTreeNodesKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("expandAllTreeNodes")));
+        }
     }
 
-    public class OperatingOnTree {
+    public class Operating {
         private String nodePath = "path|to|node";
 
         public TreeNodeKeywords create() {
@@ -265,6 +279,52 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
             }});
             
             specify(context.getTreeNodeCount(treeIdentifier), must.equal(3));
+        }
+    }
+    
+    public class OperatingOnAllNodes {
+        private TreeIterator treeIterator;
+        private TreePath treePath1;
+        private TreePath treePath2;
+        private JTreeOperator jTreeOperator;
+
+        public TreeNodeKeywords create() {
+            jTreeOperator = mock(JTreeOperator.class);
+            treePath1 = mock(TreePath.class, "path1");
+            treePath2 = mock(TreePath.class, "path2");
+            
+            treeIterator = new TreeIterator(jTreeOperator) {
+                public void operateOnAllNodes(TreePathAction treePathAction) {
+                    treePathAction.operate(treePath1);
+                    treePathAction.operate(treePath2);
+                }
+            };
+            
+            TreeOperator treeOperator = new TreeOperator(jTreeOperator) {
+                protected TreeIterator createIterator() {
+                    return treeIterator;
+                }
+            };
+            
+            return populateWithMockOperatorFactory(new TreeNodeKeywords(), treeOperator);
+        }
+
+        public void collapsesAllNodes() {
+            checking(new Expectations() {{
+                one(jTreeOperator).collapsePath(treePath1);
+                one(jTreeOperator).collapsePath(treePath2);
+            }});
+            
+            context.collapseAllTreeNodes(treeIdentifier);
+        }
+        
+        public void expandsAllNodes() {
+            checking(new Expectations() {{
+                one(jTreeOperator).expandPath(treePath1);
+                one(jTreeOperator).expandPath(treePath2);
+            }});
+            
+            context.expandAllTreeNodes(treeIdentifier);
         }
     }
 }

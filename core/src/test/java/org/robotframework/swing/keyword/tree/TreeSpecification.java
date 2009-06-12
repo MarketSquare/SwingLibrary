@@ -12,11 +12,15 @@ public abstract class TreeSpecification<T extends TreeSupport> extends MockSuppo
     protected OperatorFactory<?> operatorFactory;
 
     protected T populateWithMockOperatorFactory(T treeKeywords) {
-        treeOperator = mock(TreeOperator.class);
+        return populateWithMockOperatorFactory(treeKeywords, mock(TreeOperator.class));
+    }
+    
+    protected T populateWithMockOperatorFactory(T treeKeywords, TreeOperator treeOperator) {
+        this.treeOperator = treeOperator;
         operatorFactory = injectMockTo(treeKeywords, OperatorFactory.class);
         checking(new Expectations() {{
             one(operatorFactory).createOperator(treeIdentifier);
-            will(returnValue(treeOperator));
+            will(returnValue(TreeSpecification.this.treeOperator));
         }});
         return treeKeywords;
     }

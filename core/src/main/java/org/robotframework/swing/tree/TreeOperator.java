@@ -73,11 +73,19 @@ public class TreeOperator implements ComponentWrapper {
     }
     
     public void expand(String nodeIdentifier) {
-        jTreeOperator.expandPath(createTreePath(nodeIdentifier));
+        expand(createTreePath(nodeIdentifier));
+    }
+    
+    public void expand(TreePath path) {
+        jTreeOperator.expandPath(path);
     }
     
     public void collapse(String nodeIdentifier) {
-        jTreeOperator.collapsePath(createTreePath(nodeIdentifier));
+        collapse(createTreePath(nodeIdentifier));
+    }
+    
+    public void collapse(TreePath nodeIdentifier) {
+        jTreeOperator.collapsePath(nodeIdentifier);
     }
     
     public void addSelection(String nodeIdentifier) {
@@ -89,15 +97,27 @@ public class TreeOperator implements ComponentWrapper {
     }
     
     public boolean isExpanded(String nodeIdentifier) {
-        return jTreeOperator.isExpanded(createTreePath(nodeIdentifier));
+        return isExpanded(createTreePath(nodeIdentifier));
+    }
+    
+    public boolean isExpanded(TreePath nodeIdentifier) {
+        return jTreeOperator.isExpanded(nodeIdentifier);
     }
     
     public boolean isCollapsed(String nodeIdentifier) {
-        return jTreeOperator.isCollapsed(createTreePath(nodeIdentifier));
+        return isCollapsed(createTreePath(nodeIdentifier));
+    }
+    
+    public boolean isCollapsed(TreePath nodeIdentifier) {
+        return jTreeOperator.isCollapsed(nodeIdentifier);
     }
     
     public boolean isLeaf(String nodeIdentifier) {
-        TreeNode lastPathComponent = (TreeNode) createTreePath(nodeIdentifier).getLastPathComponent();
+        return isLeaf(createTreePath(nodeIdentifier));
+    }
+    
+    public boolean isLeaf(TreePath nodeIdentifier) {
+        TreeNode lastPathComponent = (TreeNode) nodeIdentifier.getLastPathComponent();
         return lastPathComponent.isLeaf();
     }
     
@@ -157,6 +177,10 @@ public class TreeOperator implements ComponentWrapper {
     public TreePath[] getSelectionPaths() {
         return jTreeOperator.getSelectionPaths();
     }
+    
+    public void operateOnAllNodes(TreePathAction action) {
+        createIterator().operateOnAllNodes(action);
+    }
 
     @SuppressWarnings("unchecked")
     public Collection<String> getTreeNodeChildNames(String nodeIdentifier) {
@@ -171,6 +195,10 @@ public class TreeOperator implements ComponentWrapper {
 
     private List<TreePath> getChildPaths(TreePath treePath) {
         return Arrays.asList(jTreeOperator.getChildPaths(treePath));
+    }
+    
+    protected TreeIterator createIterator() {
+        return new TreeIterator(jTreeOperator);
     }
     
     protected TreePopupMenuOperatorFactory createPopupFactory() {
