@@ -32,7 +32,7 @@ public class SpinnerKeywords {
 
     @RobotKeyword("Scrolls spinner button up.\n"
             + "The number of notches to scroll can be given as a second argument.\n\n"
-            + "Examle:\n"
+            + "Example:\n"
             + "| Increase Spinner Value | _mySpinner_ |   | # scrolls spinner button up a notch |\n"
             + "| Increase Spinner Value | _mySpinner_ | 4 | # scrolls spinner button up four notches |\n")
     @ArgumentNames({"identifier", "times=1"})
@@ -42,7 +42,7 @@ public class SpinnerKeywords {
 
     @RobotKeyword("Scrolls spinner button down.\n"
             + "The number of notches to scroll can be given as a second argument.\n\n"
-            + "Examle:\n"
+            + "Example:\n"
             + "| Decrease Spinner Value | _mySpinner_ |   | # scrolls spinner button down a notch |\n"
             + "| Decrease Spinner Value | _mySpinner_ | 4 | # scrolls spinner button down four notches |\n")
     @ArgumentNames({"identifier", "times=1"})
