@@ -62,10 +62,6 @@ module HelperMethods
     end
   end
 
-  def set_env(name, values)
-    ENV[name] = "#{values.flatten.join(File::PATH_SEPARATOR)}"
-  end
-
   def sources
     Dir.glob(__("src/main") + "/**/*")
   end

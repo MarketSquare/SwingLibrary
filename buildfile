@@ -4,7 +4,7 @@ require 'lib/dependencies'
 
 PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
-VERSION_NUMBER = '0.14-SNAPSHOT'
+VERSION_NUMBER = '0.15-SNAPSHOT'
 
 repositories.remote << 'http://www.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
@@ -68,13 +68,12 @@ task :at => :acceptance_tests
 task :acceptance_tests => :dist do
   test_app = project("#{PROJECT_NAME}:test-application").package
   test_keywords = project("#{PROJECT_NAME}:test-keywords").package
-  set_env('CLASSPATH', [test_keywords, test_app, dist_jar, artifacts(TEST_DEPENDENCIES)])
-  puts ENV['CLASSPATH']
+  ENV['CLASSPATH'] = [test_keywords, test_app, dist_jar].flatten.join(File::PATH_SEPARATOR)
 
   if !Buildr.environment.nil? && Buildr.environment == 'legacy'
     retro_translate(test_app.to_s)
     retro_translate(test_keywords.to_s)
-    set_env('PATH', ["#{java14_home}/bin"])
+    ENV['PATH'] = "#{java14_home}/bin#{File::PATH_SEPARATOR}#{ENV['PATH']}"
   end
 
   output_dir = if ENV['ROBOT_OUTPUTDIR'].nil?
