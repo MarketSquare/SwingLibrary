@@ -85,12 +85,12 @@ task :acceptance_tests => :dist do
   sh "jybot --loglevel TRACE --outputdir #{output_dir} --debugfile debug.txt --critical regression " + __('src/test/resources/robot-tests')
 end
 
-task :doc => :compile do
+task :doc do
   generate_parameter_names(__('src/main/java'), __('target/classes'))
   output_dir = project(PROJECT_NAME)._('doc')
   output_file = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
   mkdir_p output_dir
-  set_env('CLASSPATH', [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)])
+  ENV['CLASSPATH'] = [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)].flatten.join(File::PATH_SEPARATOR)
   sh "jython -Dpython.path=#{python_path} lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
 end
 

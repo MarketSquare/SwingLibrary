@@ -1,9 +1,10 @@
 *Setting*	*Value*
 library	Collections
 library	SwingLibrary
-suiteSetup	setJemmyTimeouts	1
+suiteSetup	setTimeoutsAndDelays
 
 *Variable*	*Value*	*Value*
+${delay}	0
 ${treeName}	testTree
 ${nodeIndex}	2
 ${rootNode}	the java series
@@ -314,3 +315,10 @@ nodesShouldBeSaved
 
 hideRootNode	[arguments]	${root}=${rootNode}
 	selectFromTreeNodePopupMenu	${treeName}	${root}	Hide root node
+
+setTimeoutsAndDelays
+	${timeout}=	evaluate	${delay}/1000
+	log	${timeout}	
+	runKeywordIf	${timeout}	setJemmyTimeouts	${timeout}
+	setDelay	${delay}
+	randomizeDelay

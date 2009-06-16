@@ -1,5 +1,6 @@
 package org.robotframework.swing.testapp;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,71 +18,22 @@ public class TestTree extends JTree implements ActionListener {
     private static final String ROOT_NAME = "The Java Series";
     private String rootName = ROOT_NAME;
     
-    private JPopupMenu popup = new JPopupMenu() {{
-        add(new MenuItemWithCommand("Insert a child", "insert"));
-        add(new MenuItemWithCommand("Remove", "remove"));
-        add(new MenuItemWithCommand("Save node paths", "savenodes"));
-        add(new MenuItemWithCommand("Show dialog", "showdialog"));
-        add(new MenuItemWithCommand("Hide root node", "hideroot"));
-        add(new MenuItemWithCommand("Show root node", "showroot"));
-        add(new MenuItemWithCommand("Remove root name", "removerootname"));
-        add(new MenuItemWithCommand("Restore root name", "restorerootname"));
-        add(new JMenuItem("Disabled menuitem") {{
-            setEnabled(false);
-        }});
-        add(new JMenu("Submenu") {{
-            add(new JMenuItem("Disabled menuitem") {{
-                setEnabled(false);
-            }});
-            add(new JMenuItem("Enabled menuitem"));
-        }});
-
-        setOpaque(true);
-        setLightWeightPopupEnabled(true);
-        setName("popupMenu");
-    }};
-
-    
     public TestTree() {
-        this(new DefaultMutableTreeNode(ROOT_NAME) {{
+        this(new MyTreeNode(ROOT_NAME) {{
                 add(new DefaultMutableTreeNode("Books for Java Programmers") {{
-                        add(new DefaultMutableTreeNode(new Object() {
-                            public String toString() {
-                                return "The Java Tutorial: A Short Course on the Basics"; 
-                            }
-                        }));
-                        add(new DefaultMutableTreeNode(new Object() {
-                            public String toString() {
-                                return "The Java Tutorial Continued: The Rest of the JDK";
-                            }   
-                        }));
-                        add(new DefaultMutableTreeNode(new Object() {
-                            public String toString() {
-                                return "The JFC Swing Tutorial: A Guide to Constructing GUIs";       
-                            }
-                        }));
+                        add(new MyTreeNode("The Java Tutorial: A Short Course on the Basics")); 
+                        add(new MyTreeNode("The Java Tutorial Continued: The Rest of the JDK"));
+                        add(new MyTreeNode("The JFC Swing Tutorial: A Guide to Constructing GUIs"));       
                 }});
 
-                add(new DefaultMutableTreeNode(new Object() {
-                    public String toString() {
-                        return "Books for Java Implementers"; 
-                    }
-                }) {{
-                    add(new DefaultMutableTreeNode(new Object() {
-                        public String toString() {
-                            return "The Java Virtual Machine Specification";       
-                        }
-                    }) {{
-                        add(new DefaultMutableTreeNode("leafnode1"));
-                        add(new DefaultMutableTreeNode("leafnode2"));
+                add(new MyTreeNode("Books for Java Implementers") {{
+                    add(new MyTreeNode("The Java Virtual Machine Specification") {{
+                        add(new MyTreeNode("leafnode1"));
+                        add(new MyTreeNode("leafnode2"));
                     }});
-                    add(new DefaultMutableTreeNode(new Object() {
-                        public String toString() {
-                            return "The Java Language Specification"; 
-                        }
-                    }) {{
-                        add(new DefaultMutableTreeNode("leafnode3"));
-                        add(new DefaultMutableTreeNode("leafnode4"));
+                    add(new MyTreeNode("The Java Language Specification") {{
+                        add(new MyTreeNode("leafnode3"));
+                        add(new MyTreeNode("leafnode4"));
                     }});
                 }});
         }});
@@ -94,7 +46,7 @@ public class TestTree extends JTree implements ActionListener {
         addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                    popup.show((JComponent) e.getSource(), e.getX(), e.getY());
+                    new MyPopup().show((JComponent) e.getSource(), e.getX(), e.getY());
                 }
             }
             
@@ -117,51 +69,108 @@ public class TestTree extends JTree implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getActionCommand().equals("insert")) {
+        createActionCommand(ae.getActionCommand()).perform();
+    }
+    
+    private ActionCommand createActionCommand(String command) {
+        if (command.equals("insert")) {
+            return insertChild;
+        } else if (command.equals("remove")) {
+            return removeSelected;
+        } else if (command.equals("showdialog")) {
+            return showMessage;
+        } else if (command.equals("hideroot")) {
+            return hideRoot;
+        } else if (command.equals("showroot")) {
+            return showRoot;
+        } else if (command.equals("savenodes")) {
+            return saveNodes;
+        } else if (command.equals("removerootname")) {
+            return removeRootName;
+        } else if (command.equals("restorerootname")) {
+            return restoreRootName;
+        } else {
+            return new ActionCommand() {
+                protected void operate() {
+                    // Do nothing
+                }
+            };
+        }
+    }
+    
+    private abstract class ActionCommand {
+        public void perform() {
+            Delay.delay();
+            operate();
+            refresh();
+            updateUI();
+        }
+
+        protected abstract void operate();
+        
+        private void refresh() {
+            ((DefaultTreeModel) getModel()).nodeStructureChanged(getLastPathComponent());
+        }
+        
+        protected DefaultMutableTreeNode getLastPathComponent() {
+            TreePath selectionPath = getSelectionPath();
+            if (selectionPath == null) {
+                return null;
+            }
+            return (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
+        }
+    }
+    
+    private final ActionCommand insertChild = new ActionCommand() {
+        protected void operate() {
             getLastPathComponent().add(new DefaultMutableTreeNode("child"));
-        } else if (ae.getActionCommand().equals("remove")) {
-            removeSelected();
-        } else if (ae.getActionCommand().equals("showdialog")) {
-            JOptionPane.showMessageDialog(this, "This is an example message");
-        } else if (ae.getActionCommand().equals("hideroot")) {
+        }
+    };
+    
+    private final ActionCommand removeSelected = new ActionCommand() {
+        protected void operate() {
+            TreePath[] selectionPaths = getSelectionPaths();
+            for (TreePath treePath : selectionPaths) {
+                ((DefaultMutableTreeNode)treePath.getLastPathComponent()).removeFromParent();
+            }
+        }
+    };
+    
+    private final ActionCommand showMessage = new ActionCommand() {
+        protected void operate() {
+            JOptionPane.showMessageDialog(TestTree.this, "This is an example message");
+        }
+    };
+    
+    private final ActionCommand hideRoot = new ActionCommand() {
+        protected void operate() {
             setRootVisible(false);
-        } else if (ae.getActionCommand().equals("showroot")) {
+        }
+    };
+    
+    private final ActionCommand showRoot = new ActionCommand() {
+        protected void operate() {
             setRootVisible(true);
-        } else if (ae.getActionCommand().equals("savenodes")) {
-            TestTreeResults.saveNodes(getSelectionPaths());
-        } else if (ae.getActionCommand().equals("removerootname")) {
+        }
+    };
+    
+    private final ActionCommand saveNodes = new ActionCommand() {
+        protected void operate() {
+            TestTreeResults.saveNodes(getSelectionPaths());    
+        }
+    };
+    
+    private final ActionCommand removeRootName = new ActionCommand() {
+        protected void operate() {
             rootName = "";
-        } else if (ae.getActionCommand().equals("restorerootname")) {
-            rootName = ROOT_NAME;
         }
-        refresh();
-        updateUI();
-    }
+    };
     
-    @Override
-    public TreePath[] getSelectionPaths() {
-        TreePath[] selectionPaths = super.getSelectionPaths();
-        return (selectionPaths == null) ? new TreePath[0] : selectionPaths;
-    }
-    
-    private void removeSelected() {
-        TreePath[] selectionPaths = getSelectionPaths();
-        for (TreePath treePath : selectionPaths) {
-            ((DefaultMutableTreeNode)treePath.getLastPathComponent()).removeFromParent();
+    private final ActionCommand restoreRootName = new ActionCommand() {
+        protected void operate() {
+            rootName = ROOT_NAME;    
         }
-    }
-
-    private DefaultMutableTreeNode getLastPathComponent() {
-        TreePath selectionPath = getSelectionPath();
-        if (selectionPath == null) {
-            return null;
-        }
-        return (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
-    }
-
-    private void refresh() {
-        ((DefaultTreeModel) getModel()).nodeStructureChanged(getLastPathComponent());
-    }
+    };
 
     private class MenuItemWithCommand extends JMenuItem {
         public MenuItemWithCommand(String text, String actionCommand) {
@@ -169,6 +178,51 @@ public class TestTree extends JTree implements ActionListener {
             setName(new KeywordNameNormalizer().normalize(text));
             setActionCommand(actionCommand);
             addActionListener(TestTree.this);
+            Delay.delay();
+        }
+    }
+    
+    private class MyPopup extends JPopupMenu {
+        public MyPopup() {
+            add(new MenuItemWithCommand("Insert a child", "insert"));
+            add(new MenuItemWithCommand("Remove", "remove"));
+            add(new MenuItemWithCommand("Save node paths", "savenodes"));
+            add(new MenuItemWithCommand("Show dialog", "showdialog"));
+            add(new MenuItemWithCommand("Hide root node", "hideroot"));
+            add(new MenuItemWithCommand("Show root node", "showroot"));
+            add(new MenuItemWithCommand("Remove root name", "removerootname"));
+            add(new MenuItemWithCommand("Restore root name", "restorerootname"));
+            add(new JMenuItem("Disabled menuitem") {{
+                setEnabled(false);
+            }});
+            add(new JMenu("Submenu") {{
+                add(new JMenuItem("Disabled menuitem") {{
+                    setEnabled(false);
+                }});
+                add(new JMenuItem("Enabled menuitem"));
+            }});
+            
+            setOpaque(true);
+            setLightWeightPopupEnabled(true);
+            setName("popupMenu");
+        }
+        
+        @Override
+        public void show(Component invoker, int x, int y) {
+            Delay.delay();
+            super.show(invoker, x, y);
+        }
+    }
+    
+    private static class MyTreeNode extends DefaultMutableTreeNode {
+        public MyTreeNode(final String txt) {
+            super(new Object() {
+                public String toString() {
+                    return txt;
+                }   
+            });
+            
+            Delay.delay();
         }
     }
 }

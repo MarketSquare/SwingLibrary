@@ -27,6 +27,7 @@ import abbot.finder.matchers.JMenuItemMatcher;
 import abbot.tester.ComponentTester;
 import abbot.tester.JComponentTester;
 import abbot.tester.JTreeLocation;
+import abbot.util.AWT;
 
 public class TreePopupMenuItemFinder implements ITreePopupMenuItemFinder {
     private BasicFinder basicFinder = new BasicFinder();
@@ -36,6 +37,7 @@ public class TreePopupMenuItemFinder implements ITreePopupMenuItemFinder {
 
     public TreePopupMenuItemFinder(Component tree) {
         this.tree = tree;
+        AWT.POPUP_TIMEOUT = 250000;
     }
     
     public JMenuItem findMenu(String nodeIdentifier, String menuPath) {
