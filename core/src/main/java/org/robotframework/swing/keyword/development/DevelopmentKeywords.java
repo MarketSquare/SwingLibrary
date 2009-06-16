@@ -31,6 +31,7 @@ public class DevelopmentKeywords {
     private List<String> resultComponentList = new ArrayList<String>();
 
     @RobotKeyword("Prints components (their types and their internal names) from the selected context.\n"
+        + "The internal name is set with component's setName method: http://java.sun.com/j2se/1.4.2/docs/api/java/awt/Component.html#setName(java.lang.String).\n"
         + "See keywords, `Select Window`, `Select Dialog` and `Select Context` for details about context.\n\n"
         + "Example:\n"
         + "| Select Main Window         |\n"
