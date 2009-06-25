@@ -62,7 +62,7 @@ public class SwingLibrary extends AnnotationLibrary {
     }
 
     private void setDefaultTimeouts() {
-        new TimeoutKeywords().setJemmyTimeouts("5");
+        new TimeoutKeywords().setJemmyTimeouts("10");
     }
 
     private void disableOutput() {

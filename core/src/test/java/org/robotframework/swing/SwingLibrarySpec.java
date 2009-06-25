@@ -29,7 +29,7 @@ public class SwingLibrarySpec extends MockSupportSpecification<SwingLibrary> {
         public void setsTimeoutsTo5Seconds() {
             String[] timeouts = TimeoutKeywords.JEMMY_TIMEOUTS;
             for (String timeout : timeouts) {
-                specify(JemmyProperties.getCurrentTimeout(timeout), must.equal(5000));
+                specify(JemmyProperties.getCurrentTimeout(timeout), must.equal(10000));
             }
         }
     }
