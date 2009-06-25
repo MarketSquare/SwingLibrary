@@ -65,6 +65,15 @@ public class ComponentKeywords {
     public String getTooltipText(String identifier) {
         return createOperator(identifier).getToolTipText();
     }
+    
+    @RobotKeyword("Sets focus to the component.\n"
+        + "Useful for example when sending keyboard events to a component.\n\n"
+        + "Example:\n"
+        + "| Set Focus To Component | _myTextField_ |           | |\n"
+        + "| Send Keyboard Event    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
+    public void focusToComponent(String identifier) {
+        createOperator(identifier).getFocus();
+    }
 
     private JComponentOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);

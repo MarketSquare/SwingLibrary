@@ -16,6 +16,13 @@ public class TextfieldTestingKeywords {
     public void enableTextField(String identifier) {
         createOperator(identifier).setEnabled(true);
     }
+
+    @RobotKeyword
+    public void selectTextFieldContents(String identifier) {
+        TextComponentOperator textFieldOperator = createOperator(identifier);
+        textFieldOperator.makeComponentVisible();
+        textFieldOperator.selectAll();
+    }
     
     private TextComponentOperator createOperator(String identifier) {
         return new TextComponentOperatorFactory().createOperator(identifier);

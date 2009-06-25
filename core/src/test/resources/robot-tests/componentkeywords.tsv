@@ -2,10 +2,23 @@
 library	SwingLibrary
 
 *Variable*	*Value*
+${textAreaName}	testTextArea
+${textFieldName}	testTextField
 ${componentName}	Main Panel
 ${buttonName}	testButton
 
 *Test Case*	*Action*	*Argument*
+Sets Focus
+	clearTextField	${textFieldName}
+	clearTextField	${textAreaName}
+	typeIntoTextfield	${textFieldName}	copyPaste
+	selectTextFieldContents	${textFieldName}
+	sendKeyboardEvent	VK_C	CTRL_MASK
+	focusToComponent	${textAreaName}
+	sendKeyboardEvent	VK_V	CTRL_MASK
+	${textFieldContents}=	getTextFieldValue	${textAreaName}
+	shouldBeEqual	copyPaste	${textFieldContents}
+
 Component Should Exist By Index
 	componentShouldExist	0
 

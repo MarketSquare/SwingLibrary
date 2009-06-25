@@ -52,6 +52,10 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
         public void hasGetTooltipTextKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getTooltipText")));
         }
+        
+        public void hasSetFocusToComponentKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("focusToComponent")));
+        }
     }
 
     public class Operating {
@@ -90,6 +94,14 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
             }});
             
             specify(context.getTooltipText(componentIdentifier), "tooltip");
+        }
+        
+        public void focusesToComponent() {
+            checking(new Expectations() {{
+                one(operator).getFocus();
+            }});
+            
+            context.focusToComponent(componentIdentifier);
         }
     }
     
