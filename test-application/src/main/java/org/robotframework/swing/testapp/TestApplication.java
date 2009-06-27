@@ -98,5 +98,6 @@ public class TestApplication {
                 }
             });
         }});
+        panel.add(new TestEditorPane());
     }
 }
