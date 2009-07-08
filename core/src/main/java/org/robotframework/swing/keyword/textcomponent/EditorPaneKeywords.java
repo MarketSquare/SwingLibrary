@@ -27,10 +27,11 @@ import org.robotframework.swing.textcomponent.EditorPaneOperatorFactory;
 public class EditorPaneKeywords {
     private OperatorFactory<EditorPaneOperator> operatorFactory = new EditorPaneOperatorFactory();
     
-    @RobotKeyword("Clicks on a hyperlink in a JEditorPane.\n\n"
+    @RobotKeyword("Clicks on a hyperlink in a JEditorPane.\n"
+        + "Fails if the link is not found.\n\n"
         + "Example:\n"
-        + "| Click On Hyper Link | _myEditor_ | _Network Elements_ |\n")
-    public void clickOnHyperLink(String identifier, String linkText) {
+        + "| Click Hyperlink | _myEditor_ | _Network Elements_ |\n")
+    public void clickHyperLink(String identifier, String linkText) {
         operatorFactory.createOperator(identifier).activateHyperLink(linkText);
     }
 }

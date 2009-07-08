@@ -22,7 +22,7 @@ public class EditorPaneKeywordsSpec extends MockSupportSpecification<EditorPaneK
         }
         
         public void hasClickOnHyperLinkKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("clickOnHyperLink")));
+            specify(context, satisfies(new RobotKeywordContract("clickHyperLink")));
         }
     }
     
@@ -31,7 +31,7 @@ public class EditorPaneKeywordsSpec extends MockSupportSpecification<EditorPaneK
             return new EditorPaneKeywords();
         }
         
-        public void clicksOnHyperLink() {
+        public void clicksHyperLink() {
             final String identifier = "someEditor";
             final String linkText = "someLink";
             
@@ -43,7 +43,7 @@ public class EditorPaneKeywordsSpec extends MockSupportSpecification<EditorPaneK
                 one(operator).activateHyperLink(linkText);
             }});
             
-            context.clickOnHyperLink(identifier, linkText);
+            context.clickHyperLink(identifier, linkText);
         }
     }
 }
