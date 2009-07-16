@@ -18,6 +18,7 @@ package org.robotframework.swing.textcomponent;
 
 import javax.swing.event.HyperlinkEvent;
 
+import org.netbeans.jemmy.JemmyException;
 import org.netbeans.jemmy.operators.JEditorPaneOperator;
 
 public class EditorPaneOperator {
@@ -28,9 +29,14 @@ public class EditorPaneOperator {
         this.editorPaneOperator = editorPaneOperator;
         this.eventFactory = new HyperlinkEventFactory(editorPaneOperator);
     }
-    
+
     public void activateHyperLink(String linkText) {
         HyperlinkEvent hyperlinkEvent = eventFactory.createHyperLinkEvent(linkText);
-        editorPaneOperator.fireHyperlinkUpdate(hyperlinkEvent);
+        try {
+            editorPaneOperator.fireHyperlinkUpdate(hyperlinkEvent);
+        } catch (JemmyException e) {
+            Throwable innerThrowable = e.getInnerThrowable();
+            throw new RuntimeException(innerThrowable);
+        }
     }
 }

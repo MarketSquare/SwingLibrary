@@ -6,6 +6,7 @@ library	SwingLibrary
 
 ${editorPaneName}	testEditorPane
 ${linkText}	Network Elements
+${expectedEventDescription}	DeviceName
 
 *** Test Case ***
 
@@ -13,3 +14,4 @@ Click Hyper Link
 	runKeywordAndExpectError	Link was not clicked	linkShouldHaveBeenClicked
 	clickHyperLink	testEditorPane	Network Elements
 	linkShouldHaveBeenClicked
+	hyperLinkEventDescriptionShouldBe	${expectedEventDescription}

@@ -60,7 +60,7 @@ public class HtmlElementSpec extends Specification<HtmlElement> {
         }
     }
     
-    public class Getting {
+    public class Retrieving {
         private Element element;
 
         public HtmlElement create() {
@@ -88,6 +88,18 @@ public class HtmlElementSpec extends Specification<HtmlElement> {
             }});
             
             specify(context.getChild(0).getClass(), HtmlElement.class);
+        }
+        
+        public void getsHref() {
+            final AttributeSet attributes = mock(AttributeSet.class);
+            final AttributeSet a = mock(AttributeSet.class, "a");
+            checking(new Expectations() {{
+                one(element).getAttributes(); will(returnValue(attributes));
+                one(attributes).getAttribute(HTML.Tag.A); will(returnValue(a));
+                one(a).getAttribute(HTML.Attribute.HREF); will(returnValue("someHref"));
+            }});
+            
+            specify(context.getHref(), "someHref");
         }
     }
     

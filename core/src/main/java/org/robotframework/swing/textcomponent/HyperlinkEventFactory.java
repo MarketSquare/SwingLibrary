@@ -37,7 +37,8 @@ public class HyperlinkEventFactory {
     public HyperlinkEvent createHyperLinkEvent(String linkText) {
         HtmlElement linkElement = findElement(linkText);
         URL url = linkElement.getUrl();
-        return new HyperlinkEvent(editorPane, HyperlinkEvent.EventType.ACTIVATED, url, null, linkElement);
+        String description = linkElement.getHref();
+        return new HyperlinkEvent(editorPane, HyperlinkEvent.EventType.ACTIVATED, url, description, linkElement);
     }
 
     private HtmlElement findElement(String linkText) {

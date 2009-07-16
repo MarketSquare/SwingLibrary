@@ -47,7 +47,7 @@ public class HyperlinkEventFactorySpec extends Specification<HyperlinkEventFacto
             specify(sourceElement.getDocument(), editorPaneOperator.getDocument());
             AttributeSet attributes = sourceElement.getAttributes();
             AttributeSet a = (AttributeSet) attributes.getAttribute(HTML.Tag.A);
-            specify(a.getAttribute(HTML.Attribute.HREF), "somehref");
+            specify(linkEvent.getDescription(), "somehref");
         }
         
         public void failsWhenLinkNotFound() throws Exception {

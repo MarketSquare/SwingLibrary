@@ -11,4 +11,9 @@ public class EditorPaneTestingKeywords {
     public void linkShouldHaveBeenClicked() {
         Assert.assertTrue("Link was not clicked", TestEditorPane.clicked);
     }
+    
+    @RobotKeyword
+    public void hyperLinkEventDescriptionShouldBe(String expectedDescription) {
+        Assert.assertEquals(expectedDescription, TestEditorPane.eventDescription);
+    }
 }

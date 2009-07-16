@@ -6,6 +6,8 @@ import javax.swing.event.HyperlinkListener;
 
 public class TestEditorPane extends JEditorPane {
     public static boolean clicked = false;
+    public static String eventDescription;
+    
     private static String HTML = "<html>" +
         " <head>" +
         "  </head>" +
@@ -24,6 +26,7 @@ public class TestEditorPane extends JEditorPane {
             public void hyperlinkUpdate(HyperlinkEvent e) {
                 if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                     clicked = true;
+                    eventDescription = e.getDescription();
                 }
             }
         });

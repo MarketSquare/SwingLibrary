@@ -94,12 +94,12 @@ public class HtmlElement implements Element {
         return createURL(base, href);
     }
     
+    public String getHref() {
+        return (String)getA().getAttribute(HTML.Attribute.HREF);
+    }
+    
     private URL getBase() {
         return ((HTMLDocument) getDocument()).getBase();
-    }
-
-    private String getHref() {
-        return (String)getA().getAttribute(HTML.Attribute.HREF);
     }
 
     private AttributeSet getA() {
