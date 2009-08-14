@@ -4,7 +4,9 @@ library	SwingLibrary
 *Variable*	*Value*	*Value*
 ${menuRoot}	Test Menu
 ${dialogMenu}	${menuRoot}|Show Test Dialog
+${dialogMenu2}	${menuRoot}|Show Non-Modal Dialog
 ${dialogTitle}	Message
+${dialogTitle2}	Non-modal Dialog
 
 *Test Case*	*Action*	*Argument*
 Select Dialog
@@ -35,9 +37,40 @@ Dialog Should Be Open
 Dialog Should Be Open Fails If Dialog Is Not Open
 	runKeywordAndExpectError	*Dialog '${dialogTitle}' is not open*	dialogShouldBeOpen	${dialogTitle}
 
+Close All Dialogs When No Dialogs Open
+	closeAllDialogs
+
+Close All Dialogs When One Non-Modal, DO_NOTHING_ON_CLOSE Dialog Open
+	[setup]	openNonModalTestDialog
+	closeAllDialogs
+	nonModalTestDialogShouldBeClosed	
+
+Close All Dialogs When One Modal Dialog Open
+	[setup]	openTestDialog
+	closeAllDialogs
+	testDialogShouldBeClosed
+
+Close All Dialogs When Two Dialogs Open
+	[setup]	openNonModalTestDialog
+	openTestDialog
+	closeAllDialogs
+	testDialogShouldBeClosed
+	nonModalTestDialogShouldBeClosed	
+
 *Keyword*	*Action*	*Argument*	*Argument*
 openTestDialog
 	selectFromMainMenu	${dialogMenu}
+	dialogShouldBeOpen	${dialogTitle}
+
+openNonModalTestDialog
+	selectFromMainMenu	${dialogMenu2}
+	dialogShouldBeOpen	${dialogTitle2}
+
+testDialogShouldBeClosed
+	dialogShouldNotBeOpen	${dialogTitle}
+
+nonModalTestDialogShouldBeClosed
+	dialogShouldNotBeOpen	${dialogTitle2}
 
 closeTestDialog
 	closeDialog	${dialogTitle}

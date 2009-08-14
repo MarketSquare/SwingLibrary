@@ -18,6 +18,9 @@ package org.robotframework.swing.keyword.dialog;
 
 import junit.framework.Assert;
 
+import org.netbeans.jemmy.JemmyProperties;
+import org.netbeans.jemmy.TimeoutExpiredException;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
@@ -60,5 +63,27 @@ public class DialogKeywords {
         + "| Dialog Should Not Be Open | _About_ |\n")
     public void dialogShouldNotBeOpen(String identifier) {
         Assert.assertFalse("Dialog '" + identifier + "' is open", dialogExistenceResolver.satisfiesCondition(identifier));
+    }
+    
+    @RobotKeyword("Closes all the dialogs that are open.")
+    public void closeAllDialogs() {
+    	String timeout = "DialogWaiter.WaitDialogTimeout";
+    	long originalTimeout = JemmyProperties.getCurrentTimeout(timeout);
+        JemmyProperties.setCurrentTimeout(timeout, 100);
+    	while (closePossibleDialog());
+    	JemmyProperties.setCurrentTimeout(timeout, originalTimeout);
+    }
+    
+    private boolean closePossibleDialog() {
+    	JDialogOperator operator;
+    	try {
+    		operator = new JDialogOperator();
+    	}
+    	catch (TimeoutExpiredException e) {
+    		return false;
+    	}
+		System.out.println("Closed dialog '" + operator.getTitle() + "'.");
+		operator.close();
+		return true;
     }
 }
