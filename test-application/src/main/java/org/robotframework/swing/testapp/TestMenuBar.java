@@ -23,7 +23,11 @@ public class TestMenuBar extends JMenuBar {
                     JOptionPane.showMessageDialog(this, "This is an example message");
                 }
             });
-            
+            add(new TestMenuItem("Show Non-Modal Dialog") {
+                public void actionPerformed(ActionEvent e) {
+                	new TestNonModalDialog().showDialog();
+                }
+            });
             add(new TestMenuItem("Show Internal Frame") {
                 public void actionPerformed(ActionEvent e) {
                     TestDesktopPane.INSTANCE.showInternalFrame();
