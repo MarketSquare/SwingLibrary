@@ -31,7 +31,11 @@ public class TreeIterator {
     }
     
     public void operateOnAllNodes(TreePathAction treePathAction) {
-        doOnAll(treeOperator.getPathForRow(0), treePathAction);
+        doOnAll(root(), treePathAction);
+    }
+
+    private TreePath root() {
+        return new TreePath(treeOperator.getRoot());
     }
     
     private void doOnAll(TreePath parent, TreePathAction treePathAction) {

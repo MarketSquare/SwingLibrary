@@ -234,6 +234,12 @@ Expand All Tree Nodes
 	expandAllTreeNodes	${treeName}
 	allTreeNodesShouldBeExpanded	${treeName}
 
+Expand All Tree Nodes Should Work With Invisible Root
+	[setup]	resetNodes
+	hideRootNode
+	expandAllTreeNodes	${treeName}
+	allTreeNodesShouldBeExpanded	${treeName}
+
 Collapse All Tree Nodes
 	[setup]	resetNodes
 	collapseAllTreeNodes	${treeName}
