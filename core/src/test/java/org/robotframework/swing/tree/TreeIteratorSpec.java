@@ -19,14 +19,19 @@ import org.netbeans.jemmy.operators.JTreeOperator;
 public class TreeIteratorSpec extends Specification<TreeIterator> {
     public class Any {
         private JTreeOperator tree;
+        private TreePath root;
 
         public TreeIterator create() {
             tree = mock(JTreeOperator.class);
-            return new TreeIterator(tree);
+            root = mock(TreePath.class, "rootPath");
+            return new TreeIterator(tree) {
+                TreePath root() {
+                    return root;
+                }
+            };
         }
         
         public void actsOnAllNodes() {
-            final TreePath root = mock(TreePath.class, "rootPath");
             final TreePath childPath = mock(TreePath.class, "otherPath");
             final TreeNode someNode = mock(TreeNode.class);
             final TreeNode otherNode = dummy(TreeNode.class, "otherNode");
@@ -35,7 +40,6 @@ public class TreeIteratorSpec extends Specification<TreeIterator> {
             }}.elements();
             
             checking(new Expectations() {{
-                one(tree).getPathForRow(0); will(returnValue(root));
                 one(root).getLastPathComponent(); will(returnValue(someNode));
                 one(someNode).children(); will(returnValue(children));
                 

@@ -34,7 +34,7 @@ public class TreeIterator {
         doOnAll(root(), treePathAction);
     }
 
-    private TreePath root() {
+    TreePath root() {
         return new TreePath(treeOperator.getRoot());
     }
     
