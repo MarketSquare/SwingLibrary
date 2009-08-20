@@ -84,6 +84,7 @@ public class TestApplication {
         panel.add(new TestTable("testTable"));
         panel.add(new TestTable("anotherTable"));
         panel.add(new TestTree());
+        panel.add(new OtherTree());
         panel.add(new TestTabbedPane("testTabbedPane1"));
         panel.add(new TestTabbedPane("testTabbedPane2"));
         panel.add(new TestTextArea());
