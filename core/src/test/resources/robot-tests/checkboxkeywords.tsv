@@ -1,12 +1,15 @@
-*Setting*	*Value*
+*** Setting ***
+
 library	SwingLibrary
 testSetup	uncheckAllCheckboxes
 
-*Variable*	*Value*
+*** Variable ***
+
 ${checkBoxIndex}	0
 ${checkBoxText}	Test Checkbox
 
-*Test Case*	*Action*	*Argument*
+*** Test Case ***
+
 Checkbox Should Be Enabled
 	checkBoxShouldBeEnabled	${checkBoxIndex}
 	checkBoxShouldBeEnabled	${checkBoxText}
@@ -86,5 +89,3 @@ Checkbox Keywords Should Fail If Context Is Not A Window
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	checkAllCheckboxes
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	uncheckAllCheckboxes
 	[teardown]	selectMainWindow
-
-*Keyword*	*Action*
