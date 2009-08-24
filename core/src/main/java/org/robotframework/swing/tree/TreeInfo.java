@@ -17,10 +17,12 @@
 
 package org.robotframework.swing.tree;
 
-import javax.swing.tree.TreeNode;
+import java.util.Enumeration;
+
 
 public interface TreeInfo {
-    TreeNode getRoot();
+    Object getRoot();
     boolean rootIsVisible();
     String getNodeText(Object node);
+    Enumeration<Object> getChildren(Object node);
 }

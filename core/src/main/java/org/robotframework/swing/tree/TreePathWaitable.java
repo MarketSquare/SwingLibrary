@@ -17,8 +17,11 @@
 
 package org.robotframework.swing.tree;
 
+import java.util.Enumeration;
+import java.util.Vector;
+
 import javax.swing.JTree;
-import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreeModel;
 
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.operators.JTreeOperator;
@@ -49,12 +52,22 @@ public class TreePathWaitable implements Waitable {
                 return extractTextSmoothly(node);
             }
 
-            public TreeNode getRoot() {
+            public Object getRoot() {
                 return getRootSmoothly();   
             }
 
             public boolean rootIsVisible() {
                 return new JTreeOperator(tree).isRootVisible();
+            }
+
+            public Enumeration<Object> getChildren(Object node) {
+                TreeModel model = tree.getModel();
+                int childCount = model.getChildCount(node);
+                Vector<Object> children = new Vector<Object>(childCount);
+                for (int i = 0; i < childCount; i++) {
+                    children.add(model.getChild(node, i));
+                }
+                return children.elements();
             }
         };
     }
@@ -63,8 +76,8 @@ public class TreePathWaitable implements Waitable {
         return new NodeTextExtractor(tree).getText(node, path);
     }
     
-    private TreeNode getRootSmoothly() {
-        return new SmoothInvoker<TreeNode>() {
+    private Object getRootSmoothly() {
+        return new SmoothInvoker<Object>() {
             public Object work() {
                 return tree.getModel().getRoot();
             }

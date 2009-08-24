@@ -18,7 +18,6 @@ package org.robotframework.swing.tree;
 
 import java.util.Enumeration;
 
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.robotframework.javalib.util.ArrayUtil;
@@ -50,16 +49,16 @@ public class TreeNodes {
     
     @SuppressWarnings("unchecked")
     private TreePath buildTreePath(String[] nodeNames) {
-        TreeNode root = treeInfo.getRoot();
+        Object root = treeInfo.getRoot();
         TreePath treePathToNode = new TreePath(root);
-        Enumeration<TreeNode> currentLevelChildren = root.children();
+        Enumeration<Object> currentLevelChildren = treeInfo.getChildren(root);
         for (String nodeName : nodeNames) {
             boolean foundMatch = false;
             
             while (currentLevelChildren.hasMoreElements()) {
-                TreeNode currentNode = currentLevelChildren.nextElement();
+                Object currentNode = currentLevelChildren.nextElement();
                 if (ObjectUtils.nullSafeEquals(treeInfo.getNodeText(currentNode), nodeName)) {
-                    currentLevelChildren = currentNode.children();
+                    currentLevelChildren = treeInfo.getChildren(currentNode);
                     treePathToNode = treePathToNode.pathByAddingChild(currentNode);
                     foundMatch = true;
                     break;

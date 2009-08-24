@@ -73,9 +73,10 @@ Select Tree Node By Name
 	treeNodeShouldBeSelected	${treeName}	${rootNode}
 	[teardown]	unselectTreeNode	${treeName}	${rootNode}
 
-Select Tree Node Should Work With Nodes Other Than javax.swing.tree.TreeNode	[tags]	not_ready
-	selectTreeNode	otherTree	root
-	treeNodeShouldBeSelected	otherTree	root
+Select Tree Node Should Work With Nodes Other Than javax.swing.tree.TreeNode
+	${path}=	setVariable	root|node3|node5|node6
+	selectTreeNode	otherTree	${path}
+	treeNodeShouldBeSelected	otherTree	${path}
 
 Select Tree Node Keyword Selects Multiple Nodes
 	clearTreeSelection	${treeName}
