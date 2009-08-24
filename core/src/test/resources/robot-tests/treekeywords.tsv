@@ -1,9 +1,11 @@
-*Setting*	*Value*
+*** Setting ***
+
 library	Collections
 library	SwingLibrary
 suiteSetup	setTimeoutsAndDelays
 
-*Variable*	*Value*	*Value*
+*** Variable ***
+
 ${delay}	0
 ${treeName}	testTree
 ${nodeIndex}	2
@@ -17,7 +19,8 @@ ${leafNodePath}	${anotherNodePath}|${leafNode}
 ${insertChildMenuEntry}	Insert a child
 ${childCount}	6
 
-*Test Case*	*Action*	*Argument*	*Argument*
+*** Test Case ***
+
 Expand Node by Index
 	expandTreeNode	${treeName}	0
 	expandTreeNode	${treeName}	${nodeIndex}
@@ -297,7 +300,8 @@ Tree Keywords Fail If Context Is Not Correct
 	keywordShouldFailBecauseContextIsIllegal	getTreeNodeLabel	${treeName}	0
 	[teardown]	selectMainWindow
 
-*Keyword*	*Action*	*Argument*	*Argument*
+*** Keyword ***
+
 keywordShouldFailBecauseContextIsIllegal	[arguments]	${keyword}	@{arguments}
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	${keyword}	@{arguments}
 
