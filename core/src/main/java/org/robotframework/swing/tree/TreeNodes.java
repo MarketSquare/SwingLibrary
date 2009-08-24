@@ -16,7 +16,7 @@
 
 package org.robotframework.swing.tree;
 
-import java.util.Enumeration;
+import java.util.Iterator;
 
 import javax.swing.tree.TreePath;
 
@@ -58,12 +58,12 @@ public class TreeNodes {
     private TreePath buildTreePath(String[] nodeNames) {
         Object root = treeInfo.getRoot();
         TreePath treePathToNode = new TreePath(root);
-        Enumeration<Object> currentLevelChildren = treeInfo.getChildren(root);
+        Iterator<Object> currentLevelChildren = treeInfo.getChildren(root);
         for (String nodeName : nodeNames) {
             boolean foundMatch = false;
             
-            while (currentLevelChildren.hasMoreElements()) {
-                Object currentNode = currentLevelChildren.nextElement();
+            while (currentLevelChildren.hasNext()) {
+                Object currentNode = currentLevelChildren.next();
                 if (nodeTextEquals(nodeName, currentNode)) {
                     currentLevelChildren = treeInfo.getChildren(currentNode);
                     treePathToNode = treePathToNode.pathByAddingChild(currentNode);

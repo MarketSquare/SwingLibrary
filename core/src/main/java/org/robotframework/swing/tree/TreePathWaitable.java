@@ -16,8 +16,9 @@
 
 package org.robotframework.swing.tree;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
@@ -59,14 +60,14 @@ public class TreePathWaitable implements Waitable {
                 return new JTreeOperator(tree).isRootVisible();
             }
 
-            public Enumeration<Object> getChildren(Object node) {
+            public Iterator<Object> getChildren(Object node) {
                 TreeModel model = tree.getModel();
                 int childCount = model.getChildCount(node);
-                Vector<Object> children = new Vector<Object>(childCount);
+                List<Object> children = new ArrayList<Object>(childCount);
                 for (int i = 0; i < childCount; i++) {
                     children.add(model.getChild(node, i));
                 }
-                return children.elements();
+                return children.iterator();
             }
         };
     }
