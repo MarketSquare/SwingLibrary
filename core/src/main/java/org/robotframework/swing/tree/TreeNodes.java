@@ -39,15 +39,22 @@ public class TreeNodes {
     }
     
     private String[] removeRootIfNecessary(String[] nodeNames) {
-        String rootAsString = treeInfo.getNodeText(treeInfo.getRoot());
-        if (treeInfo.rootIsVisible() && nodeNames.length > 0 && nodeNames[0].equals(rootAsString)) {
-            return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
+        if (rootIsVisibleAndEqualsToRootIn(nodeNames)) {
+            return removeRoot(nodeNames);
         } else {
             return nodeNames;
         }
     }
+
+    private boolean rootIsVisibleAndEqualsToRootIn(String[] nodeNames) {
+        String rootText = treeInfo.getNodeText(treeInfo.getRoot());
+        return treeInfo.rootIsVisible() && nodeNames.length > 0 && nodeNames[0].equals(rootText);
+    }
+
+    private String[] removeRoot(String[] nodeNames) {
+        return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
+    }
     
-    @SuppressWarnings("unchecked")
     private TreePath buildTreePath(String[] nodeNames) {
         Object root = treeInfo.getRoot();
         TreePath treePathToNode = new TreePath(root);
