@@ -64,7 +64,7 @@ public class TreeNodes {
             
             while (currentLevelChildren.hasMoreElements()) {
                 Object currentNode = currentLevelChildren.nextElement();
-                if (ObjectUtils.nullSafeEquals(treeInfo.getNodeText(currentNode), nodeName)) {
+                if (nodeTextEquals(nodeName, currentNode)) {
                     currentLevelChildren = treeInfo.getChildren(currentNode);
                     treePathToNode = treePathToNode.pathByAddingChild(currentNode);
                     foundMatch = true;
@@ -76,5 +76,10 @@ public class TreeNodes {
                 return null;
         }
         return treePathToNode;
+    }
+
+    private boolean nodeTextEquals(String nodeName, Object node) {
+        String nodeText = treeInfo.getNodeText(node);
+        return ObjectUtils.nullSafeEquals(nodeText, nodeName);
     }
 }

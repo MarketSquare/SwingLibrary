@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package org.robotframework.swing.tree;
 
 import java.util.Enumeration;
@@ -36,7 +35,7 @@ public class TreePathWaitable implements Waitable {
         this.path = path;
     }
 
-    public Object actionProduced(Object arg0) {
+    public Object actionProduced(Object ignoredHere) {
         TreeInfo treeInfo = createTreeInfo();
         TreeNodes treeNodes = new TreeNodes(treeInfo);
         return treeNodes.extractTreePath(path);
