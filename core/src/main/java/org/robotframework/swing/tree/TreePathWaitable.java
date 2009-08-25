@@ -42,7 +42,7 @@ public class TreePathWaitable implements Waitable {
     }
     
     public String getDescription() {
-        return "Tree path";
+        return "Building tree path for: " + path;
     }
     
     private String[] parse(String path) {
@@ -95,7 +95,8 @@ public class TreePathWaitable implements Waitable {
     }
     
     private String getNodeText(Object node) {
-        return extractTextSmoothly(node);
+        JTree tree = (JTree) treeOperator.getSource();
+        return new NodeTextExtractor(tree).getText(node, path);
     }
 
     private Object getRoot() {
@@ -106,7 +107,7 @@ public class TreePathWaitable implements Waitable {
         return ((JTree)treeOperator.getSource()).isRootVisible();
     }
 
-    public Iterator<Object> getChildren(Object node) {
+    private Iterator<Object> getChildren(Object node) {
         TreeModel model = treeOperator.getModel();
         int childCount = model.getChildCount(node);
         List<Object> children = new ArrayList<Object>(childCount);
@@ -114,10 +115,5 @@ public class TreePathWaitable implements Waitable {
             children.add(model.getChild(node, i));
         }
         return children.iterator();
-    }
-
-    private String extractTextSmoothly(Object node) {
-        JTree tree = (JTree) treeOperator.getSource();
-        return new NodeTextExtractor(tree).getText(node, path);
     }
 }
