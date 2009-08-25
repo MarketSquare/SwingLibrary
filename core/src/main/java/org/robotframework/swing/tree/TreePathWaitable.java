@@ -22,10 +22,13 @@ import java.util.List;
 
 import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.operators.JTreeOperator;
+import org.robotframework.javalib.util.ArrayUtil;
 import org.robotframework.swing.common.SmoothInvoker;
+import org.springframework.util.ObjectUtils;
 
 public class TreePathWaitable implements Waitable {
     private final String path;
@@ -37,39 +40,86 @@ public class TreePathWaitable implements Waitable {
     }
 
     public Object actionProduced(Object ignoredHere) {
-        TreeInfo treeInfo = createTreeInfo();
-        TreeNodes treeNodes = new TreeNodes(treeInfo);
-        return treeNodes.extractTreePath(path);
+        return extractTreePath(path);
     }
     
     public String getDescription() {
         return "Tree path";
     }
+    
+    public TreePath extractTreePath(String path) {
+        return buildTreePath(parse(path));
+    }
+    
+    private String[] parse(String path) {
+        return removeRootIfNecessary(path.split("\\|"));
+    }
+    
+    private String[] removeRootIfNecessary(String[] nodeNames) {
+        if (rootIsVisibleAndEqualsToRootIn(nodeNames)) {
+            return removeRoot(nodeNames);
+        } else {
+            return nodeNames;
+        }
+    }
 
-    private TreeInfo createTreeInfo() {
-        return new TreeInfo() {
-            public String getNodeText(Object node) {
-                return extractTextSmoothly(node);
-            }
+    private boolean rootIsVisibleAndEqualsToRootIn(String[] nodeNames) {
+        String rootText = getNodeText(getRoot());
+        return rootIsVisible() && nodeNames.length > 0 && nodeNames[0].equals(rootText);
+    }
 
-            public Object getRoot() {
-                return getRootSmoothly();   
-            }
-
-            public boolean rootIsVisible() {
-                return new JTreeOperator(tree).isRootVisible();
-            }
-
-            public Iterator<Object> getChildren(Object node) {
-                TreeModel model = tree.getModel();
-                int childCount = model.getChildCount(node);
-                List<Object> children = new ArrayList<Object>(childCount);
-                for (int i = 0; i < childCount; i++) {
-                    children.add(model.getChild(node, i));
+    private String[] removeRoot(String[] nodeNames) {
+        return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
+    }
+    
+    private TreePath buildTreePath(String[] nodeNames) {
+        Object root = getRoot();
+        TreePath treePathToNode = new TreePath(root);
+        Iterator<Object> currentLevelChildren = getChildren(root);
+        for (String nodeName : nodeNames) {
+            boolean foundMatch = false;
+            
+            while (currentLevelChildren.hasNext()) {
+                Object currentNode = currentLevelChildren.next();
+                if (nodeTextEquals(nodeName, currentNode)) {
+                    currentLevelChildren = getChildren(currentNode);
+                    treePathToNode = treePathToNode.pathByAddingChild(currentNode);
+                    foundMatch = true;
+                    break;
                 }
-                return children.iterator();
             }
-        };
+            
+            if (!foundMatch)
+                return null;
+        }
+        return treePathToNode;
+    }
+
+    private boolean nodeTextEquals(String nodeName, Object node) {
+        String nodeText = getNodeText(node);
+        return ObjectUtils.nullSafeEquals(nodeText, nodeName);
+    }
+    
+    private String getNodeText(Object node) {
+        return extractTextSmoothly(node);
+    }
+
+    private Object getRoot() {
+        return getRootSmoothly();   
+    }
+
+    private boolean rootIsVisible() {
+        return new JTreeOperator(tree).isRootVisible();
+    }
+
+    public Iterator<Object> getChildren(Object node) {
+        TreeModel model = tree.getModel();
+        int childCount = model.getChildCount(node);
+        List<Object> children = new ArrayList<Object>(childCount);
+        for (int i = 0; i < childCount; i++) {
+            children.add(model.getChild(node, i));
+        }
+        return children.iterator();
     }
 
     private String extractTextSmoothly(Object node) {
