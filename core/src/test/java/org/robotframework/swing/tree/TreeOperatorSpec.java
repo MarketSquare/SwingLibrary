@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -31,7 +32,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         }
     }
 
-    public class Operating {
+    public class OperatingWithTreePath {
         private TreeOperator treeOperator;
         
         public TreeOperator create() {
@@ -154,13 +155,30 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         }
     }
     
-    public class OperatingWithTreePath {
+    public class Operating {
         private JTreeOperator jTreeOperator;
         private TreePath somePath = mock(TreePath.class);
 
         public TreeOperator create() {
             jTreeOperator = mock(JTreeOperator.class);
             return new TreeOperator(jTreeOperator);
+        }
+        
+        public void isRootVisible() {
+            checking(new Expectations() {{
+                one(jTreeOperator).isRootVisible(); will(returnValue(true));
+            }});
+            
+            specify(context.isRootVisible());
+        }
+        
+        public void getsModel() {
+            final TreeModel model = dummy(TreeModel.class);
+            checking(new Expectations() {{
+                one(jTreeOperator).getModel(); will(returnValue(model));
+            }});
+            
+            specify(context.getModel(), model);
         }
         
         public void collapses() {

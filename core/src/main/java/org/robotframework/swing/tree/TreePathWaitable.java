@@ -25,30 +25,24 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.Waitable;
-import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.javalib.util.ArrayUtil;
-import org.robotframework.swing.common.SmoothInvoker;
 import org.springframework.util.ObjectUtils;
 
 public class TreePathWaitable implements Waitable {
     private final String path;
-    private final JTree tree;
+    private final TreeOperator treeOperator;
 
-    public TreePathWaitable(JTree tree, String path) {
-        this.tree = tree;
+    public TreePathWaitable(TreeOperator treeOperator, String path) {
+        this.treeOperator = treeOperator;
         this.path = path;
     }
 
     public Object actionProduced(Object ignoredHere) {
-        return extractTreePath(path);
+        return buildTreePath(parse(path));
     }
     
     public String getDescription() {
         return "Tree path";
-    }
-    
-    public TreePath extractTreePath(String path) {
-        return buildTreePath(parse(path));
     }
     
     private String[] parse(String path) {
@@ -105,15 +99,15 @@ public class TreePathWaitable implements Waitable {
     }
 
     private Object getRoot() {
-        return getRootSmoothly();   
+        return treeOperator.getModel().getRoot();   
     }
 
     private boolean rootIsVisible() {
-        return new JTreeOperator(tree).isRootVisible();
+        return ((JTree)treeOperator.getSource()).isRootVisible();
     }
 
     public Iterator<Object> getChildren(Object node) {
-        TreeModel model = tree.getModel();
+        TreeModel model = treeOperator.getModel();
         int childCount = model.getChildCount(node);
         List<Object> children = new ArrayList<Object>(childCount);
         for (int i = 0; i < childCount; i++) {
@@ -123,14 +117,7 @@ public class TreePathWaitable implements Waitable {
     }
 
     private String extractTextSmoothly(Object node) {
+        JTree tree = (JTree) treeOperator.getSource();
         return new NodeTextExtractor(tree).getText(node, path);
-    }
-    
-    private Object getRootSmoothly() {
-        return new SmoothInvoker<Object>() {
-            public Object work() {
-                return tree.getModel().getRoot();
-            }
-        }.invoke();
     }
 }

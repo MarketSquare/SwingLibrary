@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -154,6 +155,10 @@ public class TreeOperator implements ComponentWrapper {
         return jTreeOperator.getSource();
     }
     
+    public TreeModel getModel() {
+        return jTreeOperator.getModel();
+    }
+    
     public TreePath getPathForRow(int i) {
         return jTreeOperator.getPathForRow(i);
     }
@@ -164,6 +169,10 @@ public class TreeOperator implements ComponentWrapper {
     
     public void clearSelection() {
         jTreeOperator.clearSelection();
+    }
+    
+    public boolean isRootVisible() {
+        return jTreeOperator.isRootVisible();
     }
     
     public JPopupMenu callPopupOnPath(TreePath treePath) {
@@ -210,7 +219,7 @@ public class TreeOperator implements ComponentWrapper {
     }
     
     protected Waiter createTreeWaiter(String treePath) {
-        Waiter waiter = new Waiter(new TreePathWaitable((JTree) getSource(), treePath));
+        Waiter waiter = new Waiter(new TreePathWaitable(this, treePath));
         Timeouts nextNodeTimeout = copyTimeout("JTreeOperator.WaitNextNodeTimeout");
         waiter.setTimeouts(nextNodeTimeout);
         return waiter;
