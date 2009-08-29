@@ -104,7 +104,7 @@ public class TreePathWaitable implements Waitable {
     }
 
     private boolean rootIsVisible() {
-        return ((JTree)treeOperator.getSource()).isRootVisible();
+        return treeOperator.isRootVisible();
     }
 
     private Iterator<Object> getChildren(Object node) {
