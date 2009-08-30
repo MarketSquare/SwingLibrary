@@ -1,15 +1,18 @@
-*Setting*	*Value*
+*** Setting ***
+
 library	SwingLibrary
 testTeardown	selectMainWindow
 
-*Variable*	*Value*
+*** Variable ***
+
 ${menuText}	Test Menu
 ${showDialog}	${menuText}|Show Test Dialog
 ${mutableMenu}	${menuText}|Mutable Menu
 ${disabledMenu}	${menuText}|Disabled Menu Item
 ${checkboxMenu}	Test menu checkbox
 
-*Test Case*	*Action*	*Argument*
+*** Test Case ***
+
 Select From Main Menu
 	selectEmptyContext
 	selectFromMainMenu	${showDialog}
@@ -60,7 +63,8 @@ Main Menu Item Should Not Be Selected
 	runKeywordAndExpectError	Menu item '${menuText}|${checkboxMenu}' is selected.	mainMenuItemShouldNotBeChecked	${menuText}|${checkboxMenu}
 	[teardown]	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
 
-*Keyword*	*Action*
+*** Keyword ***
+
 mainMenuItemNameShouldBe	[arguments]	${menuItemIndex}	${expectedName}
 	${menuItemName}=	getMainMenuItemName	0
 	shouldBeEqual	${expectedName}	${menuItemName}
