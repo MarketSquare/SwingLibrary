@@ -40,7 +40,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "Example:\n"
         + "| Select From Tree Node Popup Menu | _myTree_ | _Root|Folder_ | _New Folder_ | ")
     public void selectFromTreeNodePopupMenu(String identifier, String nodeIdentifier, String menuPath) {
-        JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
+        JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
         popupOperator.pushMenu(menuPath, new EqualsStringComparator());
     }
 
@@ -50,7 +50,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "Example:\n"
         + "| Select From Tree Node Popup Menu In Separate Thread | _myTree_ | _Root|Folder_ | _New Folder_ | ")
     public void selectFromTreeNodePopupMenuInSeparateThread(String identifier, String nodeIdentifier, String menuPath) {
-        JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
+        JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
         popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
     }
 
@@ -62,7 +62,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "| Select Tree Node | _myTree_ | _Root|Folder2_ |\n"
         + "| Select From Popup Menu On Selected Tree Nodes | _myTree_ | _Remove_ | ")
     public void selectFromPopupMenuOnSelectedTreeNodes(String identifier, String menuPath) {
-        JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperatorOnSelectedNodes();
+        JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperatorOnSelectedNodes();
         popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
         waitToAvoidInstability();
     }
@@ -98,7 +98,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
     }
 
     private JMenuItem createPopupMenuItem(String identifier, String nodeIdentifier, String menuPath) {
-        Component source = createTreeOperator(identifier).getSource();
+        Component source = treeOperator(identifier).getSource();
         return createPopupMenuItemFinder(source).findMenu(nodeIdentifier, menuPath);
     }
     
