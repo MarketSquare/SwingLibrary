@@ -63,6 +63,12 @@ Main Menu Item Should Not Be Selected
 	runKeywordAndExpectError	Menu item '${menuText}|${checkboxMenu}' is selected.	mainMenuItemShouldNotBeChecked	${menuText}|${checkboxMenu}
 	[teardown]	selectFromMainMenuAndWait	${menuText}|${checkboxMenu}
 
+Select From Popup Menu	[tags]	not_ready
+	selectFromPopupMenu	testTextField	Show name
+	selectDialog	Message
+	${labelContents}=	getLabelContent	0
+	shouldBeEqual	testTextField	${labelContents}
+
 *** Keyword ***
 
 mainMenuItemNameShouldBe	[arguments]	${menuItemIndex}	${expectedName}

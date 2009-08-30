@@ -75,6 +75,14 @@ public class ComponentKeywords {
         createOperator(identifier).getFocus();
     }
 
+    @RobotKeyword("Selects an item from the components context popup menu.\n"
+        + "Does a right click on the component and selects the specified menu item from the popup menu.\n\n"
+        + "Example:\n"
+        + "| Select From Popup Menu | _myComponent_ | _Actions|Do something_ |\n")
+    public void selectFromPopupMenu(String identfier, String menuPath) {
+        
+    }
+    
     private JComponentOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }

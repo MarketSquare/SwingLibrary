@@ -56,6 +56,10 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
         public void hasSetFocusToComponentKeyword() {
             specify(context, satisfies(new RobotKeywordContract("focusToComponent")));
         }
+        
+        public void hasSelectFromPopupMenuKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("selectFromPopupMenu")));
+        }
     }
 
     public class Operating {

@@ -36,7 +36,7 @@ public class TreeTestingKeywords extends TreeSupport {
     
     @RobotKeyword
     public void allTreeNodesShouldBeExpanded(String identifier) {
-        final TreeOperator treeOperator = createTreeOperator(identifier);
+        final TreeOperator treeOperator = treeOperator(identifier);
         treeOperator.operateOnAllNodes(new TreePathAction() {
             public void operate(TreePath path) {
                 Assert.assertTrue(treeOperator.isLeaf(path) || treeOperator.isExpanded(path));
@@ -46,7 +46,7 @@ public class TreeTestingKeywords extends TreeSupport {
     
     @RobotKeyword
     public void allTreeNodesShouldBeCollapsed(String identifier) {
-        final TreeOperator treeOperator = createTreeOperator(identifier);
+        final TreeOperator treeOperator = treeOperator(identifier);
         treeOperator.operateOnAllNodes(new TreePathAction() {
             public void operate(TreePath path) {
                 Assert.assertTrue(treeOperator.isCollapsed(path));
