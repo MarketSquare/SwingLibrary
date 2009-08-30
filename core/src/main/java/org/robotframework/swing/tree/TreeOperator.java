@@ -33,16 +33,14 @@ import org.apache.commons.collections.Transformer;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waiter;
-import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.swing.operator.ComponentWrapper;
-import org.robotframework.swing.popup.DefaultPopupCaller;
 import org.robotframework.swing.popup.PopupCaller;
 
 public class TreeOperator implements ComponentWrapper {
-    protected PopupCaller<ComponentOperator> popupCaller = new DefaultPopupCaller();
+    protected PopupCaller popupCaller = new PopupCaller();
     protected TreePathFactory treePathFactory = new TreePathFactory(this);
     protected JTreeOperator jTreeOperator;
 

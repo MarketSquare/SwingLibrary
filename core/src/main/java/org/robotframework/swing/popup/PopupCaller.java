@@ -20,6 +20,13 @@ import java.awt.Point;
 
 import javax.swing.JPopupMenu;
 
-public interface PopupCaller<T> {
-    JPopupMenu callPopupOnComponent(T component, Point pointToClick);
+import org.netbeans.jemmy.operators.ComponentOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.netbeans.jemmy.operators.Operator;
+
+public class PopupCaller {
+    public JPopupMenu callPopupOnComponent(ComponentOperator componentOperator, Point pointToClick) {
+        return JPopupMenuOperator.callPopup(componentOperator, pointToClick.x, pointToClick.y, Operator
+            .getPopupMouseButton());
+    }
 }

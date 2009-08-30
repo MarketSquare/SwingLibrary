@@ -8,7 +8,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.keyword.MockSupportSpecification;
-import org.robotframework.swing.tree.PopupMenuOperatorFactory;
+import org.robotframework.swing.popup.PopupMenuOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class ComponentOperatorSpec extends MockSupportSpecification<ComponentOperator> {
@@ -29,7 +29,7 @@ public class ComponentOperatorSpec extends MockSupportSpecification<ComponentOpe
                 
             }});
             
-            specify(componentOperator.createPopupMenuOperator(), popupOperator);
+            specify(componentOperator.invokePopup(), popupOperator);
         }
     }
 }

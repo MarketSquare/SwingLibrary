@@ -297,7 +297,7 @@ public class TreeOperatorSpec extends MockSupportSpecification<TreeOperator> {
         }
         
         public void callsPopuOnRow() {
-            final PopupCaller<JTreeOperator> popupCaller = injectMockToContext(PopupCaller.class);
+            final PopupCaller popupCaller = injectMockToContext(PopupCaller.class);
             final JPopupMenu popupMenu = dummy(JPopupMenu.class);
             
             checking(new Expectations() {{

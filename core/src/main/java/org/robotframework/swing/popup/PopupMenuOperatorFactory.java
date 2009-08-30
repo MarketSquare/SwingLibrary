@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-
-package org.robotframework.swing.tree;
+package org.robotframework.swing.popup;
 
 import java.awt.Point;
 
@@ -24,12 +23,10 @@ import javax.swing.JPopupMenu;
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.swing.popup.DefaultPopupCaller;
-import org.robotframework.swing.popup.PopupCaller;
 
 public class PopupMenuOperatorFactory {
     private EventTool eventTool = new EventTool();
-    private PopupCaller<ComponentOperator> popupCaller = new DefaultPopupCaller();
+    private PopupCaller popupCaller = new PopupCaller();
     
     public JPopupMenuOperator createPopupOperator(ComponentOperator componentOperator) {
         Point pointToClick = getPointToClick(componentOperator);

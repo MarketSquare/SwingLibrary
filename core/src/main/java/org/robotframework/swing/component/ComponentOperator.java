@@ -22,7 +22,7 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.swing.tree.PopupMenuOperatorFactory;
+import org.robotframework.swing.popup.PopupMenuOperatorFactory;
 
 public class ComponentOperator extends JComponentOperator {
     private PopupMenuOperatorFactory popupMenuOperatorFactory = new PopupMenuOperatorFactory();
@@ -39,7 +39,7 @@ public class ComponentOperator extends JComponentOperator {
         super(source);
     }
 
-    public JPopupMenuOperator createPopupMenuOperator() {
+    public JPopupMenuOperator invokePopup() {
         return popupMenuOperatorFactory.createPopupOperator(this);
     }
 }

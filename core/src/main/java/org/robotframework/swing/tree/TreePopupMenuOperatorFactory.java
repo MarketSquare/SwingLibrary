@@ -21,6 +21,7 @@ import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.popup.PopupMenuOperatorFactory;
 
 public class TreePopupMenuOperatorFactory extends IdentifierParsingOperatorFactory<JPopupMenuOperator> {
     protected final TreeOperator treeOperator;
