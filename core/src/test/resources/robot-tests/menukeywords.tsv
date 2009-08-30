@@ -68,7 +68,7 @@ Select From Popup Menu
 	selectDialog	Message
 	${labelContents}=	getLabelContent	0
 	shouldBeEqual	testTextField	${labelContents}
-	[teardown]	closeDialog	Message
+	closeDialog	Message
 
 *** Keyword ***
 
