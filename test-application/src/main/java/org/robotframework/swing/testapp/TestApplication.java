@@ -1,11 +1,10 @@
 package org.robotframework.swing.testapp;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
@@ -43,7 +42,7 @@ public class TestApplication {
     }
 
     private void createMainPanel() {
-        panel = new JPanel();
+        panel = new PopupPanel();
         panel.setName("Main Panel");
         FlowLayout flowLayout = new FlowLayout();
         flowLayout.setAlignment(FlowLayout.CENTER);
@@ -100,5 +99,44 @@ public class TestApplication {
             });
         }});
         panel.add(new TestEditorPane());
+    }
+}
+
+class PopupPanel extends JPanel {
+    private final Operation showName = new Operation() {
+        public void perform(Component operatedComponent) {
+            JOptionPane.showMessageDialog(operatedComponent, operatedComponent.getName());
+        }
+    };
+    
+    private ContextMenu popup = new ContextMenu() {{
+        add("Show name", showName);
+    }};
+    
+    
+    @Override
+    public Component add(Component comp) {
+        addPopupToComponentIfRequired(comp);
+        return super.add(comp);
+    }
+
+    private void addPopupToComponentIfRequired(Component comp) {
+        if (isWithPopup(comp)) {
+            addPopupToComponent(comp);
+        }
+    }
+    
+    private boolean isWithPopup(Component comp) {
+        return comp.getClass().isAnnotationPresent(WithPopup.class);
+    }
+
+    private void addPopupToComponent(Component comp) {
+        comp.addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    popup.show((Component) e.getSource(), e.getX(), e.getY());
+                }
+            }
+        });
     }
 }

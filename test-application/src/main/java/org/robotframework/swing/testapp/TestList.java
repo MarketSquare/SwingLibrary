@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JList;
 
+@WithPopup
 public class TestList extends JList {
     private static Object[] items = new Object[] { "one", "two", "three" };
 
