@@ -37,7 +37,7 @@ import abbot.tester.ComponentTester;
 @RobotKeywords
 public class TreeNodePopupKeywords extends TreeSupport {
     @RobotKeyword("Selects an item from the tree node's popup menu.\n\n"
-        + "Examples:\n"
+        + "Example:\n"
         + "| Select From Tree Node Popup Menu | _myTree_ | _Root|Folder_ | _New Folder_ | ")
     public void selectFromTreeNodePopupMenu(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
@@ -47,7 +47,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
     @RobotKeyword("Selects an item from the tree node's popup menu and does not wait for a result.\n"
         + "Needed if the action starts a process that stays running (e.g. opens a dialog) and the above keyword doesn't return.\n"
         + "Separator for items is '|'.\n\n"
-        + "Examples:\n"
+        + "Example:\n"
         + "| Select From Tree Node Popup Menu In Separate Thread | _myTree_ | _Root|Folder_ | _New Folder_ | ")
     public void selectFromTreeNodePopupMenuInSeparateThread(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = createTreeOperator(identifier).createPopupOperator(nodeIdentifier);
@@ -68,7 +68,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
     }
     
     @RobotKeyword("Fails if given popup menu item is disabled.\n\n"
-        + "Example:\n"
+        + "Examples:\n"
         + "| Tree Node Popup Menu Item Should Be Enabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
         + "| Tree Node Popup Menu Item Should Be Enabled | _0_ | _1_ | _New Folder_ |\n")
     public void treeNodePopupMenuItemShouldBeEnabled(String identifier, String nodeIdentifier, String menuPath) {
@@ -77,7 +77,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Fails if given popup menu item is enabled.\n\n"
-        + "Example:\n"
+        + "Examples:\n"
         + "| Tree Node Popup Menu Item Should Be Disabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
         + "| Tree Node Popup Menu Item Should Be Disabled | _0_      | _1_ | _New Folder_ |\n")
     public void treeNodePopupMenuItemShouldBeDisabled(String identifier, String nodeIdentifier, String menuPath) {
