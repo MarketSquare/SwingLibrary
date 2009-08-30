@@ -7,6 +7,7 @@ testSetup	uncheckAllCheckboxes
 
 ${checkBoxIndex}	0
 ${checkBoxText}	Test Checkbox
+${checkBoxName}	TestCheckbox2
 
 *** Test Case ***
 
@@ -56,6 +57,15 @@ Checkbox Should Not Be Checked By Index
 
 Checkbox Should Not Be Checked By Text
 	checkBoxShouldNotBeChecked	${checkBoxText}
+
+Checkbox Keywords Should Work With Internal Names
+	checkCheckBox	${checkBoxName}
+	checkBoxShouldBeChecked	${checkBoxName}
+	uncheckCheckBox	${checkBoxName}
+	checkBoxShouldBeUnchecked	${checkBoxName}
+	checkBoxShouldBeEnabled	${checkBoxName}
+	disableCheckBox	${checkBoxName}
+	checkBoxShouldBeDisabled	${checkBoxName}
 
 All Checkboxes Should Be Checked
 	runKeywordAndExpectError	Checkbox 'Test Checkbox' is not checked.	allCheckboxesShouldBeChecked

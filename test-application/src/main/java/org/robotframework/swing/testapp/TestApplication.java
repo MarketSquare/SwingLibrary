@@ -66,10 +66,10 @@ public class TestApplication {
         panel.add(new TestTextField());
         panel.add(new TestButton());
         panel.add(new TestList());
-        panel.add(new JCheckBox("Test Checkbox"));
-        panel.add(new JCheckBox("Test Checkbox 2"));
-        panel.add(new JCheckBox("Test Checkbox 3"));
-        panel.add(new JCheckBox("Test Checkbox 4"));
+        panel.add(new TestCheckBox("Test Checkbox"));
+        panel.add(new TestCheckBox("Test Checkbox 2"));
+        panel.add(new TestCheckBox("Test Checkbox 3"));
+        panel.add(new TestCheckBox("Test Checkbox 4"));
         panel.add(new TestComboBox());
         panel.add(new TestComboBox() {{
             setName("comboboxWithRenderer");
