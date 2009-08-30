@@ -135,11 +135,11 @@ public class TreeOperator implements ComponentWrapper {
     }
     
     public JPopupMenuOperator createPopupOperator(String nodeIdentifier) {
-        return createPopupFactory().createOperator(nodeIdentifier);
+        return popupFactory().createOperator(nodeIdentifier);
     }
     
     public JPopupMenuOperator createPopupOperatorOnSelectedNodes() {
-        return createPopupFactory().createOperatorBySelection();
+        return popupFactory().createOperatorBySelection();
     }
     
     public String getTreeNodeLabel(int index) {
@@ -210,7 +210,7 @@ public class TreeOperator implements ComponentWrapper {
         return new TreeIterator(jTreeOperator);
     }
     
-    protected TreePopupMenuOperatorFactory createPopupFactory() {
+    protected TreePopupMenuOperatorFactory popupFactory() {
         return new TreePopupMenuOperatorFactory(this);
     }
     
