@@ -58,7 +58,6 @@ public class PopupMenuOperatorFactorySpec extends MockSupportSpecification<Popup
             popupMenuOperator = mock(JPopupMenuOperator.class);
             PopupMenuOperatorFactory popupMenuOperatorFactory = new PopupMenuOperatorFactory() {
                 public JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {
-                    System.out.println("createPopupOperator");
                     return popupMenuOperator;
                 }
             };
