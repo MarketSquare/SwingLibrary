@@ -8,7 +8,7 @@ ${panelName}	Main Panel
 Select Context
 	selectContext	${panelName}
 	${contextAsString}=	getCurrentContextSourceAsString
-	shouldContain	${contextAsString}	javax.swing.JPanel
+	shouldContain	${contextAsString}	org.robotframework.swing.testapp.PopupPanel
 	shouldContain	${contextAsString}	${panelName}
 
 *Keyword*	*Action*	*Argument*
