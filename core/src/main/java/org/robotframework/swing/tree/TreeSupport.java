@@ -22,7 +22,7 @@ import org.robotframework.swing.factory.OperatorFactory;
 public class TreeSupport extends IdentifierSupport {
     protected OperatorFactory<TreeOperator> operatorFactory = new TreeOperatorFactory();
     
-    public TreeOperator createTreeOperator(String identifier) {
+    public TreeOperator treeOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }
 }

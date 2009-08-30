@@ -40,7 +40,7 @@ public class TreeNodeVisibilityKeywords extends TreeSupport {
 
     private boolean isVisible(String identifier, String nodePath) {
         verifyPath(nodePath);
-        return createTreeOperator(identifier).isVisible(nodePath);
+        return treeOperator(identifier).isVisible(nodePath);
     }
 
     private void verifyPath(String nodePath) {

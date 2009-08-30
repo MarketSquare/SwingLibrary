@@ -32,7 +32,7 @@ public class TreeSupportSpec extends MockSupportSpecification<TreeSupport> {
         }
 
         public void createsTreeOperatorAndVerifiesContext() {
-            specify(context.createTreeOperator(treeIdentifier), must.equal(treeOperator));
+            specify(context.treeOperator(treeIdentifier), must.equal(treeOperator));
         }
         
         private void injectMockOperatorFactory() {

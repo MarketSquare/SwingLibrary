@@ -28,7 +28,7 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
         + "Example:\n"
         + "| Tree Node Should Be Selected | _myTree_ | _Root|Folder_ |\n")
     public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier) {
-        boolean isSelected = createTreeOperator(identifier).isPathSelected(nodeIdentifier);
+        boolean isSelected = treeOperator(identifier).isPathSelected(nodeIdentifier);
         Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not selected.", isSelected);
     }
 
@@ -36,7 +36,7 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
         + "Example:\n"
         + "| Tree Node Should Be Selected | _myTree_ | _Root|Folder_ |\n")
     public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier) {
-        boolean isSelected = createTreeOperator(identifier).isPathSelected(nodeIdentifier);
+        boolean isSelected = treeOperator(identifier).isPathSelected(nodeIdentifier);
         Assert.assertFalse("Tree node '" + nodeIdentifier + "' is selected.", isSelected);
     }
 }

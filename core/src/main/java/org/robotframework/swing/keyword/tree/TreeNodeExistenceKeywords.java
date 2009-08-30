@@ -43,6 +43,6 @@ public class TreeNodeExistenceKeywords extends TreeSupport {
     }
     
     TreeNodeExistenceResolver createExistenceResolver(String treeIdentifier) {
-        return new TreeNodeExistenceResolver(createTreeOperator(treeIdentifier));
+        return new TreeNodeExistenceResolver(treeOperator(treeIdentifier));
     }
 }
