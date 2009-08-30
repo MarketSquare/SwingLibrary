@@ -6,10 +6,12 @@ import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.operators.JComponentOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
+import org.robotframework.swing.comparator.EqualsStringComparator;
+import org.robotframework.swing.component.ComponentOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.keyword.MockSupportSpecification;
@@ -63,12 +65,12 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
     }
 
     public class Operating {
-        private JComponentOperator operator;
+        private ComponentOperator operator;
 
         public ComponentKeywords create() {
             ComponentKeywords keywords = new ComponentKeywords();
             final OperatorFactory operatorFactory = injectMockTo(keywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
-            operator = mock(JComponentOperator.class);
+            operator = mock(ComponentOperator.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(componentIdentifier); will(returnValue(operator));
             }});
@@ -106,6 +108,18 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
             }});
             
             context.focusToComponent(componentIdentifier);
+        }
+        
+        public void selectsFromPopupMenu() {
+            final JPopupMenuOperator popupOperator = mock(JPopupMenuOperator.class);
+            final String menuPath = "some|menu";
+            
+            checking(new Expectations() {{
+                one(operator).invokePopup(); will(returnValue(popupOperator));
+                one(popupOperator).pushMenuNoBlock(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
+            }});
+            
+            context.selectFromPopupMenu(componentIdentifier, menuPath);
         }
     }
     

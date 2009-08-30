@@ -17,19 +17,18 @@
 package org.robotframework.swing.component;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JComponentOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
-public class ComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<JComponentOperator> {
+public class ComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComponentOperator> {
     @Override
-    public JComponentOperator createOperatorByIndex(int index) {
-        return new JComponentOperator((ContainerOperator) Context.getContext(), index);
+    public ComponentOperator createOperatorByIndex(int index) {
+        return new ComponentOperator((ContainerOperator) Context.getContext(), index);
     }
 
     @Override
-    public JComponentOperator createOperatorByName(String name) {
-        return new JComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+    public ComponentOperator createOperatorByName(String name) {
+        return new ComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
     }
 }

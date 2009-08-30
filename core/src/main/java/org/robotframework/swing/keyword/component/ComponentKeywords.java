@@ -18,10 +18,12 @@ package org.robotframework.swing.keyword.component;
 
 import junit.framework.Assert;
 
-import org.netbeans.jemmy.operators.JComponentOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.comparator.EqualsStringComparator;
+import org.robotframework.swing.component.ComponentOperator;
 import org.robotframework.swing.component.ComponentOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
@@ -29,7 +31,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RobotKeywords
 public class ComponentKeywords {
-    private IdentifierParsingOperatorFactory<JComponentOperator> operatorFactory = new ComponentOperatorFactory();
+    private IdentifierParsingOperatorFactory<ComponentOperator> operatorFactory = new ComponentOperatorFactory();
     private IComponentConditionResolver componentExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
     @RobotKeyword("Fails if component exists within current context.\n"
@@ -55,7 +57,7 @@ public class ComponentKeywords {
         + "| Click On Component | _myComponent_ | 2 | # double click |\n")
     @ArgumentNames({"identifier", "times=1"})
     public void clickOnComponent(String identifier, String[] times) {
-        createOperator(identifier).clickMouse(getTimes(times));
+        operator(identifier).clickMouse(getTimes(times));
     }
     
     @RobotKeyword("Returns the component's tooltip text.\n\n"
@@ -63,7 +65,7 @@ public class ComponentKeywords {
         + "| ${tooltip}= | Get Tooltip Text | _saveButton_ |\n"
         + "| Should Be Equal    | _Save_ | _${tooltip}_ |\n")
     public String getTooltipText(String identifier) {
-        return createOperator(identifier).getToolTipText();
+        return operator(identifier).getToolTipText();
     }
     
     @RobotKeyword("Sets focus to the component.\n"
@@ -72,18 +74,19 @@ public class ComponentKeywords {
         + "| Set Focus To Component | _myTextField_ |           | |\n"
         + "| Send Keyboard Event    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
     public void focusToComponent(String identifier) {
-        createOperator(identifier).getFocus();
+        operator(identifier).getFocus();
     }
 
     @RobotKeyword("Selects an item from the components context popup menu.\n"
         + "Does a right click on the component and selects the specified menu item from the popup menu.\n\n"
         + "Example:\n"
         + "| Select From Popup Menu | _myComponent_ | _Actions|Do something_ |\n")
-    public void selectFromPopupMenu(String identfier, String menuPath) {
-        
+    public void selectFromPopupMenu(String identifier, String menuPath) {
+        JPopupMenuOperator popup = operator(identifier).invokePopup();
+        popup.pushMenuNoBlock(menuPath, new EqualsStringComparator());
     }
     
-    private JComponentOperator createOperator(String identifier) {
+    private ComponentOperator operator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }
 
