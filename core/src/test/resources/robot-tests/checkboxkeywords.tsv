@@ -63,9 +63,10 @@ Checkbox Keywords Should Work With Internal Names
 	checkBoxShouldBeChecked	${checkBoxName}
 	uncheckCheckBox	${checkBoxName}
 	checkBoxShouldBeUnchecked	${checkBoxName}
-	checkBoxShouldBeEnabled	${checkBoxName}
 	disableCheckBox	${checkBoxName}
 	checkBoxShouldBeDisabled	${checkBoxName}
+	enableCheckBox	${checkBoxName}
+	checkBoxShouldBeEnabled	${checkBoxName}
 
 All Checkboxes Should Be Checked
 	runKeywordAndExpectError	Checkbox 'Test Checkbox' is not checked.	allCheckboxesShouldBeChecked
