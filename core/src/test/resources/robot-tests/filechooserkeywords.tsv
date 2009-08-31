@@ -23,12 +23,12 @@ Cancel File Chooser Keyword Should Cance File Choosing
 	cancelFileChooser
 	fileChooserShouldHaveBeenCancelled
 
-Save File In File Chooser With Non Existing File	[tags]	not_ready
+Save File In File Chooser With Non Existing File
 	pushButton	${fileChooserButton}
 	chooseFromFileChooser	${anotherFile}
 	selectedFileShouldBe	${anotherFile}
 
-Choose File In File Chooser Without Args	[tags]	not_ready
+Choose File In File Chooser Without Args
 	pushButton	${fileChooserButton}
 	chooseFromFileChooser
 	selectedFileShouldBe	${defaultFile}
