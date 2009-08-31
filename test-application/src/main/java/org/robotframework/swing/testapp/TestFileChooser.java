@@ -9,7 +9,9 @@ public class TestFileChooser extends JFileChooser {
     public static boolean cancelled = false;
 
     public TestFileChooser() {
+        super(new File(System.getProperty("java.io.tmpdir")));
         setName("testFileChooser");
+        setSelectedFile(new File("someFile.txt"));
     }
     
     @Override

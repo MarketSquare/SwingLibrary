@@ -15,15 +15,10 @@
  */
 package org.robotframework.swing.filechooser;
 
-import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
 public class FileChooserOperatorFactory {
-    public FileChooserOperator createFileChooserOperator() {
-        return coerceFileChooserOperator(new JFileChooserOperator());
-    }
-    
-    private FileChooserOperator coerceFileChooserOperator(JFileChooserOperator jFileChooserOperator) {
-        return (FileChooserOperator) Retrofit.partial(jFileChooserOperator, FileChooserOperator.class);
+    public JFileChooserOperator createFileChooserOperator() {
+        return new JFileChooserOperator();
     }
 }

@@ -121,15 +121,22 @@ Select From Tree Node Popup Menu In Separate Thread
 	dialogShouldBeOpen	Message
 	closeDialog	Message
 
-Tree Node Should Be Visible AND Tree Node Should Not Be Visible
+Tree Node Should Be Visible
+	expandAllTreeNodes	${treeName}
 	treeNodeShouldBeVisible	${treeName}	${rootNode}
-	expandTreeNode	${treeName}	${rootNode}
 	treeNodeShouldBeVisible	${treeName}	${anotherNodePath}
-	expandTreeNode	${treeName}	${anotherNodePath}
 	treeNodeShouldBeVisible	${treeName}	${leafNodePath}
+	collapseTreeNode	${treeName}	${rootNode}
+	runKeywordAndExpectError	"Tree node '${anotherNodePath}' is not visible."	treeNodeShouldBeVisible	${treeName}	${anotherNodePath}
+	runKeywordAndExpectError	"Tree node '${leafNodePath}' is not visible."	treeNodeShouldBeVisible	${treeName}	${leafNodePath}
+
+Tree Node Should Not Be Visible
 	collapseTreeNode	${treeName}	${rootNode}
 	treeNodeShouldNotBeVisible	${treeName}	${anotherNodePath}
 	treeNodeShouldNotBeVisible	${treeName}	${leafNodePath}
+	expandAllTreeNodes	${treeName}
+	runKeywordAndExpectError	"Tree node '${anotherNodePath}' is visible."	treeNodeShouldNotBeVisible	${treeName}	${anotherNodePath}
+	runKeywordAndExpectError	"Tree node '${leafNodePath}' is visible."	treeNodeShouldNotBeVisible	${treeName}	${leafNodePath}
 
 Tree Node Should Be Leaf AND Tree Node Should Not Be Leaf
 	expandTreeNode	${treeName}	${rootNode}

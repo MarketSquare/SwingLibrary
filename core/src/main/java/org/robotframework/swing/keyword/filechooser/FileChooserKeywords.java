@@ -15,22 +15,29 @@
  */
 package org.robotframework.swing.keyword.filechooser;
 
+import org.netbeans.jemmy.operators.JFileChooserOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.filechooser.FileChooserOperator;
 import org.robotframework.swing.filechooser.FileChooserOperatorFactory;
 
 @RobotKeywords
 public class FileChooserKeywords {
     private FileChooserOperatorFactory fileChooserOperatorFactory = new FileChooserOperatorFactory();
     
-    @RobotKeyword("Selects the specified file.\n"
+    @RobotKeyword("Chooses from a filechooser by pushing the approve button.\n"
+        + "An optional file name can be provided, which is inserted to the file name textfield.\n"
         + "Expects the file chooser to be open.\n\n"
         + "Example:\n"
         + "| Push Button | _Open File_    |\n"
         + "| Choose From File Chooser | _/tmp/elements.xml_ |\n")
-    public void chooseFromFileChooser(String fileName) {
-        fileChooserOperator().chooseFile(fileName);
+    @ArgumentNames({"*fileName"})
+    public void chooseFromFileChooser(String[] fileName) {
+        if (fileName.length > 0) {
+            fileChooserOperator().chooseFile(fileName[0]);
+        } else {
+            fileChooserOperator().approve();
+        }
     }
     
     @RobotKeyword("Cancels and closes file chooser.\n"
@@ -42,7 +49,7 @@ public class FileChooserKeywords {
         fileChooserOperator().cancelSelection();
     }
 
-    private FileChooserOperator fileChooserOperator() {
+    private JFileChooserOperator fileChooserOperator() {
         return fileChooserOperatorFactory.createFileChooserOperator();
     }
 }

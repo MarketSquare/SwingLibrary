@@ -4,12 +4,12 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
-import org.robotframework.swing.filechooser.FileChooserOperator;
-import org.robotframework.swing.filechooser.FileChooserOperatorFactory;
 import org.robotframework.jdave.mock.MockSupportSpecification;
+import org.robotframework.swing.filechooser.FileChooserOperatorFactory;
 
 @RunWith(JDaveRunner.class)
 public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChooserKeywords> {
@@ -36,12 +36,12 @@ public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChoose
     }
     
     public class ChoosingFiles {
-        private String fileName = "elements.xml";
-        private FileChooserOperator fileChooserOperator;
+        private String[] fileName = new String[] { "elements.xml" };
+        private JFileChooserOperator fileChooserOperator;
         private FileChooserKeywords fileChooserKeywords = new FileChooserKeywords();
         
         public FileChooserKeywords create() {
-            fileChooserOperator = mock(FileChooserOperator.class);
+            fileChooserOperator = mock(JFileChooserOperator.class);
             final FileChooserOperatorFactory factory = injectMockTo(fileChooserKeywords, FileChooserOperatorFactory.class);
             checking(new Expectations() {{
                 one(factory).createFileChooserOperator(); will(returnValue(fileChooserOperator));
@@ -51,10 +51,18 @@ public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChoose
         
         public void choosesFile() {
             checking(new Expectations() {{
-                one(fileChooserOperator).chooseFile(fileName);
+                one(fileChooserOperator).chooseFile("elements.xml");
             }});
             
             context.chooseFromFileChooser(fileName);
+        }
+        
+        public void choosesDefaultFile() {
+            checking(new Expectations() {{
+                one(fileChooserOperator).approve();
+            }});
+            
+            context.chooseFromFileChooser(new String[0]);
         }
         
         public void cancelsFileSelection() {

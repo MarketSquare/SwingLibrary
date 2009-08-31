@@ -125,7 +125,8 @@ public class TreeOperator implements ComponentWrapper {
     }
     
     public boolean isVisible(String nodeIdentifier) {
-        return jTreeOperator.isVisible(createTreePath(nodeIdentifier));
+        TreePath treePath = createTreePath(nodeIdentifier);
+        return jTreeOperator.isVisible(treePath);
     }
 
     public void clickOnNode(String nodeIdentifier, int clickCount) {
