@@ -1,14 +1,17 @@
-*Setting*	*Value*
+*** Setting ***
+
 library	SwingLibrary
 testTeardown	resetDropdownMenu
 
-*Variable*	*Value*
+*** Variable ***
+
 ${comboboxName}	testComboBox
 ${comboboxIndex}	0
 ${comboboxItem1}	one
 ${comboboxItem2}	two
 
-*Test Case*	*Action*	*Argument*	*Argument*
+*** Test Case ***
+
 Get Selected Item From Combobox By Index
 	${selectedItem}=	getSelectedItemFromComboBox	${comboboxIndex}
 	shouldBeEqual	${comboboxItem1}	${selectedItem}
@@ -82,7 +85,8 @@ Dropdown Keywords Should Fail If Context Is Not A Window
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getSelectedItemFromDropdownMenu	${comboboxName}
 	[teardown]	selectMainWindow
 
-*Keyword*	*Action*	*Argument*
+*** Keyword ***
+
 resetDropdownMenu
 	selectFromDropdownMenu	${comboboxIndex}	${comboboxItem1}
 
