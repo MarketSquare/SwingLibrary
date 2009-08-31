@@ -1,13 +1,16 @@
-*Setting*	*Value*	*Value*
+*** Setting ***
+
 library	OperatingSystem
 library	SwingLibrary
 suiteSetup	createTestFileToTempDirectory
 
-*Variable*	*Value*	*Value*
+*** Variable ***
+
 ${fileChooserButton}	openFileChooser
 ${fileToChoose}	${TEMPDIR}${/}test_file.txt
 
-*Test Case*	*Action*	*Argument*
+*** Test Case ***
+
 Choose From File Chooser Keyword Should Choose File From File Chooser
 	pushButton	${fileChooserButton}
 	chooseFromFileChooser	${fileToChoose}
