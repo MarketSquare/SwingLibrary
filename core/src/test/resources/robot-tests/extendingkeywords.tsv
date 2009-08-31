@@ -1,9 +1,12 @@
 *** Setting ***
 
-library	org.robotframework.swing.extension.ExtendedSwingLibrary
+library	org.robotframework.swing.extension.ExtendedSwingLibrary	WITH NAME	ext1
+library	org.robotframework.swing.extension.ExtendedSwingLibrary2	WITH NAME	ext2
 
 *** Test Case ***
 
 Test Extended Keyword Is Available
-	${value}=	keywordInOtherPackage	HelloWorld!
+	${value}=	ext1.keywordInOtherPackage	HelloWorld!
+	shouldBeEqual	${value}	HelloWorld!
+	${value}=	ext2.keywordInOtherPackage	HelloWorld!
 	shouldBeEqual	${value}	HelloWorld!

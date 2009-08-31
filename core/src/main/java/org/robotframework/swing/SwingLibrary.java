@@ -15,6 +15,7 @@
  */
 package org.robotframework.swing;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -30,6 +31,10 @@ public class SwingLibrary extends AnnotationLibrary {
     
     public SwingLibrary() {
         this(Collections.<String>emptyList());
+    }
+    
+    protected SwingLibrary(final String keywordPattern) {
+        this(new ArrayList<String>() {{ add(keywordPattern); }});
     }
 
     protected SwingLibrary(Collection<String>  keywordPatterns) {
