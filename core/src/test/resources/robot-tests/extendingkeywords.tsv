@@ -1,11 +1,9 @@
-*Setting*	*Value*	*Value*
+*** Setting ***
+
 library	org.robotframework.swing.extension.ExtendedSwingLibrary
-								
-*Variable*	*Value*	*Value*
 
-*Test Case*	*Action*	*Argument*	*Argument*
+*** Test Case ***
+
 Test Extended Keyword Is Available
-	${value} =	Keyword In Other Package	Hello World!
-	Should Be Equal	${value}	Hello World!
-
-*Keyword*	*Action*	*Argument*	*Argument*
+	${value}=	keywordInOtherPackage	HelloWorld!
+	shouldBeEqual	${value}	HelloWorld!
