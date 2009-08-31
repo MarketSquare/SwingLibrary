@@ -18,11 +18,16 @@
 package org.robotframework.swing.extension;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.robotframework.swing.SwingLibrary;
 
 public class ExtendedSwingLibrary extends SwingLibrary {
+    private static List<String> PATTERNS = new ArrayList<String>() {{
+        add("com/some/own/keyword/*.class");
+    }};
+    
     public ExtendedSwingLibrary() {
-        super(new ArrayList<String>() {{add("com/some/own/keyword/*.class");}});
+        super(PATTERNS);
     }
 }
