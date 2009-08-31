@@ -2,6 +2,8 @@ package org.robotframework.swing.combobox;
 
 import java.awt.Component;
 
+import javax.swing.ComboBoxModel;
+
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.common.IdentifierSupport;
@@ -43,6 +45,15 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
     public void typeText(String text) {
         comboboxOperator.clearText();
         comboboxOperator.typeText(text);
+    }
+
+    public Object[] getValues() {
+        ComboBoxModel model = comboboxOperator.getModel();
+        Object[] values = new Object[model.getSize()];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = model.getElementAt(i);
+        }
+        return values;
     }
     
     private int findItemIndex(String comboItemIdentifier) {

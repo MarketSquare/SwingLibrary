@@ -2,6 +2,8 @@ package org.robotframework.swing.combobox;
 
 import java.awt.Component;
 
+import javax.swing.ComboBoxModel;
+
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
@@ -76,6 +78,20 @@ public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
             }});
             
             context.typeText("someText");
+        }
+        
+        public void getsValues() {
+            final ComboBoxModel treeModel = mock(ComboBoxModel.class);
+            
+            checking(new Expectations() {{
+                one(jComboboxOperator).getModel(); will(returnValue(treeModel));
+                one(treeModel).getSize(); will(returnValue(3));
+                one(treeModel).getElementAt(0); will(returnValue("one"));
+                one(treeModel).getElementAt(1); will(returnValue("two"));
+                one(treeModel).getElementAt(2); will(returnValue("three"));
+            }});
+            
+            specify(context.getValues(), containsExactly("one", "two", "three"));
         }
     }
 }

@@ -76,7 +76,18 @@ public class ComboBoxKeywords {
         createOperator(identifier).typeText(text);
     }
     
+    @RobotKeyword("Returns a list containing all the values of a combobox.\n"
+    	+ "*N.B* This keyword will return the values contained by _javax.swing.ComboBoxModel_,\n"
+    	+ "this is not necessarily what is displayed on the GUI.\n\n"
+        + "Example:\n"
+        + "| _${comboboxValues}=_ | Get Combobox Values | _myCombobox_ |\n"
+        + "| Should Contain  | _${expectedValue}_ | _${comboboxValues}_ |\n")
+    public Object[] getComboboxValues(String identifier) {
+        return createOperator(identifier).getValues();
+    }
+    
     private ComboBoxOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }
 }
+

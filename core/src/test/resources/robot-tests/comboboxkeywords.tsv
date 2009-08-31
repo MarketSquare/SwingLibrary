@@ -1,6 +1,7 @@
 *** Setting ***
 
 library	SwingLibrary
+library	Collections
 testTeardown	resetDropdownMenu
 
 *** Variable ***
@@ -84,6 +85,12 @@ Dropdown Keywords Should Fail If Context Is Not A Window
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getSelectedItemFromCombobox	${comboboxName}
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	getSelectedItemFromDropdownMenu	${comboboxName}
 	[teardown]	selectMainWindow
+
+Get Combobox Values
+	${expectedList}=	createList	one	two	three
+	${values}=	getComboboxValues	${comboboxName}
+	logMany	${values}
+	listsShouldBeEqual	${expectedList}	${values}
 
 *** Keyword ***
 

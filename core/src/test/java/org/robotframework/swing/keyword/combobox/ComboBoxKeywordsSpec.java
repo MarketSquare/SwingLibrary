@@ -58,6 +58,10 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         public void hasTypeIntoComboboxKeyword() {
             specify(context, satisfies(new RobotKeywordContract("typeIntoCombobox")));
         }
+        
+        public void hasGetComboboxValuesKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getComboboxValues")));
+        }
     }
 
     public class Operating {
@@ -152,6 +156,14 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
             }});
             
             context.typeIntoCombobox(comboBoxIdentifier, "someText");
+        }
+        
+        public void getsComboboxValues() {
+            checking(new Expectations() {{
+                one(operator).getValues(); will(returnValue(new Object[] {"one", "two", "three"}));
+            }});
+            
+            specify(context.getComboboxValues(comboBoxIdentifier), containsExactly("one", "two", "three"));
         }
     }
     
