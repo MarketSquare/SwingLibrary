@@ -8,7 +8,7 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.arguments.IdentifierHandler;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 
 import abbot.finder.BasicFinder;
 import abbot.finder.matchers.JMenuItemMatcher;

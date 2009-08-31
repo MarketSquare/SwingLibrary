@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.netbeans.jemmy.JemmyProperties;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.SwingLibrary;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 @RunWith(JDaveRunner.class)

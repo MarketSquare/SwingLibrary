@@ -8,7 +8,7 @@ import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.keyboard.KeyEventSender;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)
 public class KeyEventKeywordsSpec extends MockSupportSpecification<KeyEventKeywords> {

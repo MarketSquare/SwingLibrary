@@ -9,9 +9,9 @@ import org.junit.runner.RunWith;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.checkbox.CheckBoxOperator;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.keyword.MockSupportSpecification;
 
 
 @RunWith(JDaveRunner.class)

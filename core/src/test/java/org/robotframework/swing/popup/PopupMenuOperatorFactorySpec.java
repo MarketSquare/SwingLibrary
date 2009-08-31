@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)
 public class PopupMenuOperatorFactorySpec extends MockSupportSpecification<PopupMenuOperatorFactory> {

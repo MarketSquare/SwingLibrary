@@ -42,7 +42,7 @@ TEST_DEPENDENCIES =
   'org.jmock:jmock:jar:2.4.0',
   'cglib:cglib-nodep:jar:2.1_3',
   'org.objenesis:objenesis:jar:1.0',
-  'org.robotframework:javatools-test:jar:0.1',
+  'org.robotframework:javatools-test:jar:0.2',
   PARANAMER]
 
 TRANSLATOR =

@@ -9,7 +9,7 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JEditorPaneOperator;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)
 public class EditorPaneOperatorSpec extends MockSupportSpecification<EditorPaneOperator> {

@@ -9,9 +9,9 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.drivers.KeyDriver;
 import org.netbeans.jemmy.drivers.MouseDriver;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.context.ContainerOperator;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.keyword.MockSupportSpecification;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 

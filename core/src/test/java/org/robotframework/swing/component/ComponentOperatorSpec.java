@@ -7,7 +7,7 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.popup.PopupMenuOperatorFactory;
 
 @RunWith(JDaveRunner.class)

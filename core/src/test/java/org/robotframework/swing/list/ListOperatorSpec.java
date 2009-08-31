@@ -11,7 +11,7 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.chooser.ListItemChooser;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)
 public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {

@@ -9,7 +9,7 @@ import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.filechooser.FileChooserOperator;
 import org.robotframework.swing.filechooser.FileChooserOperatorFactory;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 
 @RunWith(JDaveRunner.class)
 public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChooserKeywords> {

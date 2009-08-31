@@ -24,7 +24,7 @@ import jdave.junit4.JDaveRunner;
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.swing.context.Context;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 @RunWith(JDaveRunner.class)

@@ -37,6 +37,7 @@ public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
                 one(textExtractor).itemCount(); will(returnValue(1));
                 one(textExtractor).getTextFromRenderedComponent(0); will(returnValue(comboItemIdentifier));
                 one(jComboboxOperator).selectItem(0);
+                one(jComboboxOperator).hidePopup();
             }});
             
             context.selectItem(comboItemIdentifier);

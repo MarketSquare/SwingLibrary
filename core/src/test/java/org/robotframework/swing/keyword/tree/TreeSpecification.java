@@ -2,7 +2,7 @@ package org.robotframework.swing.keyword.tree;
 
 import org.jmock.Expectations;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreeSupport;
 

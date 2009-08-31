@@ -10,7 +10,7 @@ import org.netbeans.jemmy.operators.JCheckBoxMenuItemOperator;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.keyword.window.WindowKeywords;
 
 @RunWith(JDaveRunner.class)

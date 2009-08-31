@@ -14,7 +14,7 @@ import org.robotframework.swing.context.Context;
 import org.robotframework.swing.dialog.DialogOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.swing.keyword.MockSupportSpecification;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 
