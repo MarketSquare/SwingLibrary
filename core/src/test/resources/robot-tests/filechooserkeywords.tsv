@@ -21,6 +21,7 @@ Cancel File Chooser Keyword Should Cance File Choosing
 	cancelFileChooser
 	fileChooserShouldHaveBeenCancelled
 
-*Keyword*	*Action*	*Argument*	*Argument*
+*** Keyword ***
+
 createTestFileToTempDirectory
 	touch	${fileToChoose}
