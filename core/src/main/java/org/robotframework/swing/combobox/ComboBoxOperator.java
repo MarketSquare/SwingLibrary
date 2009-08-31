@@ -2,6 +2,7 @@ package org.robotframework.swing.combobox;
 
 import java.awt.Component;
 
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
@@ -27,7 +28,8 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
 
     public void selectItem(String comboItemIdentifier) {
         comboboxOperator.pushComboButton();
-        comboboxOperator.selectItem(findItemIndex(comboItemIdentifier));
+        int itemIndex = findItemIndex(comboItemIdentifier);
+        comboboxOperator.selectItem(itemIndex);
     }
     
     public Object getSelectedItem() {
@@ -51,13 +53,30 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
         }
     }
 
-    public int findItemIndexFromRenderedText(String expectedText) {
+    private int findItemIndexFromRenderedText(String expectedText) {
+        try {
+            return findItemIndexWithRenderer(expectedText);
+        } finally {
+            hidePopup();
+        }
+        
+    }
+    
+    private int findItemIndexWithRenderer(String expectedText) {
         for (int itemIndex = 0; itemIndex < itemTextExtractor.itemCount(); itemIndex++) {
             String text = itemTextExtractor.getTextFromRenderedComponent(itemIndex);
             if (expectedText.equals(text))
                 return itemIndex;
         }
-        comboboxOperator.hidePopup();
         throw new RuntimeException("Couldn't find text '" + expectedText + "'");
+    }
+
+    private void hidePopup() {
+        comboboxOperator.hidePopup();
+        waitToAvoidInstability();
+    }
+    
+    private void waitToAvoidInstability() {
+        new EventTool().waitNoEvent(200);
     }
 }
