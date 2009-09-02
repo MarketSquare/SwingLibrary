@@ -171,7 +171,7 @@ public class TableKeywords extends IdentifierSupport {
         + "| _${columnValues}=_ | Get Table Column Values | _myTable_ | _columnTwo_ |\n"
         + "| Should Contain  | _${expectedValue}_ | _${columnValues}_ |\n")
     public Object[] getTableColumnValues(String identifier, String columnIdentifier) {
-        throw new UnsupportedOperationException("");
+        return createTableOperator(identifier).getColumnValues(columnIdentifier);
     }
     
     private TableOperator createTableOperator(String identifier) {

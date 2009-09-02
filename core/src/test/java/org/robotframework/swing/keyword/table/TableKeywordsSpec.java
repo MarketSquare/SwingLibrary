@@ -201,6 +201,15 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
             context.selectTableCell(tableIdentifier, row, columnIdentifier);
         }
+        
+        public void getsTableColumnValues() {
+            checking(new Expectations() {{
+                one(tableOperator).getColumnValues(columnIdentifier);
+                will(returnValue(new Object[] { "one", "two", "three" }));
+            }});
+            
+            specify(context.getTableColumnValues(tableIdentifier, columnIdentifier), containsExactly("one", "two", "three"));
+        }
 
         public void clearsTableSelection() {
             checking(new Expectations() {{

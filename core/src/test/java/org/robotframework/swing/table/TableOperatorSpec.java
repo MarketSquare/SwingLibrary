@@ -274,7 +274,7 @@ public class TableOperatorSpec extends Specification<TableOperator> {
                 }
             };
             
-            specify(operator.getTableColumnValues(columnHeader), containsExactly("one", "two", "three"));
+            specify(operator.getColumnValues(columnHeader), containsExactly("one", "two", "three"));
         }
     }
 }

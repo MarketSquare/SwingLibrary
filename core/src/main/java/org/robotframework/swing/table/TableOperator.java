@@ -110,7 +110,7 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         return results.toArray(new String[0]);
     }
     
-    public Object[] getTableColumnValues(String columnIdentifier) {
+    public Object[] getColumnValues(String columnIdentifier) {
         Object[] columnValues = new Object[getRowCount()];
         for (int row = 0; row < columnValues.length; ++row) {
             Point coordinates = findCell(row, columnIdentifier);

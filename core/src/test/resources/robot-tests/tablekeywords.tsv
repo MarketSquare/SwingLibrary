@@ -137,10 +137,10 @@ Table Keywords Fail If Context Is Not Set
 	tableKeywordShouldFail	getTableRowCount	someTable
 	[teardown]	selectMainWindow
 
-Get Table Column Values	[tags]	not_ready
+Get Table Column Values
 	${expectedValues}=	createList	one/two	two/two	three/two	four/two
 	${values}=	getTableColumnValues	${tableName}	${columnHeaderTwo}
-	listsShouldBeEqual	${expectedList}	${values}
+	listsShouldBeEqual	${expectedValues}	${values}
 
 *** Keyword ***
 
