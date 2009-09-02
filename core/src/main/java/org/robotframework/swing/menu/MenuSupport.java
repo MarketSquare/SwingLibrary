@@ -21,20 +21,29 @@ import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.Context;
 
 public class MenuSupport extends IdentifierSupport {
     private EventTool eventTool = new EventTool();
+    private EqualsStringComparator comparator = new EqualsStringComparator();
 
     protected JMenuBarOperator menubarOperator() {
-        return new JMenuBarOperator((ContainerOperator) Context.getContext());
+        JMenuBarOperator menuBarOperator = new JMenuBarOperator((ContainerOperator) Context.getContext());
+        menuBarOperator.setComparator(comparator);
+        return menuBarOperator;
     }
 
     protected JMenuItemOperator showMenuItem(final String path) {
         JMenuItemOperator menuItemOperator = menubarOperator().showMenuItem(path);
-        eventTool.waitNoEvent(200);
+        menuItemOperator.setComparator(comparator);
+        waitToAvoidInstability();
         menuItemOperator.grabFocus();
-        eventTool.waitNoEvent(200);
+        waitToAvoidInstability();
         return menuItemOperator;
+    }
+
+    private void waitToAvoidInstability() {
+        eventTool.waitNoEvent(200);
     }
 }

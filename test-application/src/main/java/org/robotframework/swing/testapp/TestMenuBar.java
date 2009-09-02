@@ -3,12 +3,7 @@ package org.robotframework.swing.testapp;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import org.robotframework.javalib.util.KeywordNameNormalizer;
 
@@ -18,6 +13,11 @@ public class TestMenuBar extends JMenuBar {
     public TestMenuBar() {
         setName("testMenuBar");
         add(new TestMenu("Test Menu") {{
+            add(new TestMenuItem("Show Test Dialog - do not open this") {
+                public void actionPerformed(ActionEvent e) {
+                    throw new RuntimeException("This menu item shouldn not be opened");
+                }
+            });
             add(new TestMenuItem("Show Test Dialog") {
                 public void actionPerformed(ActionEvent e) {
                     JOptionPane.showMessageDialog(this, "This is an example message");

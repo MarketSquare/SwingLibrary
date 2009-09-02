@@ -13,6 +13,7 @@ import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.jdave.mock.MockSupportSpecification;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
@@ -248,11 +249,10 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
         final EventTool eventTool = injectMockTo(menuKeywords, EventTool.class);
 
         checking(new Expectations() {{
-            one(menuBarOperator).showMenuItem(menuPath);
-            will(returnValue(menuItemOperator));
-
+            one(menuBarOperator).showMenuItem(menuPath); will(returnValue(menuItemOperator));
             exactly(2).of(eventTool).waitNoEvent(with(equal(200L)));
 
+            one(menuItemOperator).setComparator(with(any(EqualsStringComparator.class)));
             one(menuItemOperator).grabFocus();
         }});
         return menuKeywords;

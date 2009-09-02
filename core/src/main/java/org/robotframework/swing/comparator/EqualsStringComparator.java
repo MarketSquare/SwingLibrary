@@ -16,11 +16,36 @@
 
 package org.robotframework.swing.comparator;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.netbeans.jemmy.operators.Operator.DefaultStringComparator;
 import org.netbeans.jemmy.operators.Operator.StringComparator;
 
 public class EqualsStringComparator implements StringComparator {
+    private DefaultStringComparator defaultStringComparator = new DefaultStringComparator(true, true);
+
+    {
+        log("constructing EqualsStringComparator");
+    }
+    
     public boolean equals(String caption, String match) {
-        return new DefaultStringComparator(true, true).equals(caption, match);
+        boolean result = defaultStringComparator.equals(caption, match);
+        log(caption + " == " + match + " => " + result);
+        return result;
+    }
+    
+    public static void log(String msg) {
+        try {
+            writeToFile(msg);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void writeToFile(String msg) throws IOException {
+        FileWriter writer = new FileWriter("/tmp/swinglib.log", true);
+        writer.write(msg + "\n");
+        writer.close();
     }
 }
