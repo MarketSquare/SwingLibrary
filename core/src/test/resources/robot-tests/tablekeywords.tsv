@@ -139,7 +139,7 @@ Table Keywords Fail If Context Is Not Set
 
 Get Table Column Values
 	${expectedValues}=	createList	one/two	two/two	three/two	four/two
-	${values}=	getTableColumnValues	${tableName}	${columnHeaderTwo}
+	${values}=	getTableColumnValues	anotherTable	${columnHeaderTwo}
 	listsShouldBeEqual	${expectedValues}	${values}
 
 *** Keyword ***
