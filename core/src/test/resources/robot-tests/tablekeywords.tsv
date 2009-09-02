@@ -1,4 +1,5 @@
-*Setting*	*Value*	*Value*
+*** Setting ***
+
 library	SwingLibrary
 testSetup	clearTable
 *Variable*	*Value*	*Value*
@@ -7,7 +8,8 @@ ${columnHeaderOne}	column one
 ${enabledMenuItem}	Replace text
 ${disabledMenuItem}	Disabled menuitem
 
-*Test Case*	*Action*	*Argument*	*Argument*
+*** Test Case ***
+
 Table Cell Should Not Be Selected By Index
 	tableCellShouldNotBeSelected	${tableName}	0	0
 
@@ -131,7 +133,8 @@ Table Keywords Fail If Context Is Not Set
 	tableKeywordShouldFail	getTableRowCount	someTable
 	[teardown]	selectMainWindow
 
-*Keyword*	*Action*	*Argument*	*Argument*	*Argument*	*Argument*	*Argument*	*Argument*
+*** Keyword ***
+
 tableKeywordShouldFail	[Arguments]	${keyword}	@{arguments}
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	${keyword}	@{arguments}
 
