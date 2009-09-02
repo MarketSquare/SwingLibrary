@@ -41,7 +41,7 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     
     public Object getCellValue(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
-        return jTableOperator.getValueAt(coordinates.y, coordinates.x);
+        return getValueAt(coordinates);
     }
 
     public boolean isCellSelected(String row, String columnIdentifier) {
@@ -101,6 +101,10 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     }
     
     protected Point findCell(String row, String columnIdentifier) {
+        return findCell(asIndex(row), columnIdentifier);
+    }
+    
+    protected Point findCell(int row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
         Point cell = jTableOperator.findCell(cellChooser);
         if (cellIsInvalid(cell))
@@ -112,11 +116,15 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         return cell.x < 0 || cell.y < 0;
     }
 
-    protected TableCellChooser createCellChooser(String row, String columnIdentifier) {
+    protected TableCellChooser createCellChooser(int row, String columnIdentifier) {
     	if (isIndex(columnIdentifier)) {
     		return new ColumnIndexTableCellChooser(row, columnIdentifier);
     	} 
     	return new ColumnNameTableCellChooser(row, columnIdentifier);
+    }
+    
+    private Object getValueAt(Point coordinates) {
+        return jTableOperator.getValueAt(coordinates.y, coordinates.x);
     }
 
     public String[] getTableHeaders() {
@@ -127,5 +135,14 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
             results.add(tableColumn.getHeaderValue().toString());
         }
         return results.toArray(new String[0]);
+    }
+    
+    public Object[] getTableColumnValues(String columnIdentifier) {
+        Object[] columnValues = new Object[getRowCount()];
+        for (int row = 0; row < columnValues.length; ++row) {
+            Point coordinates = findCell(row, columnIdentifier);
+            columnValues[row] = getValueAt(coordinates);
+        }
+        return columnValues;
     }
 }
