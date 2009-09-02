@@ -8,12 +8,11 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.table.TableOperator;
 
 
@@ -99,8 +98,8 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context, satisfies(new RobotKeywordContract("getTableHeaders")));
         }
         
-        public void hasOperatorFactory() {
-            specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
+        public void hasGetTableColumnValuesKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTableColumnValues")));
         }
     }
 

@@ -159,11 +159,19 @@ public class TableKeywords extends IdentifierSupport {
         Assert.assertFalse(errorMessage, menuItem.isEnabled());
     }
 
-    @RobotKeyword("Returns table's header names.\n"
+    @RobotKeyword("Returns table's header names.\n\n"
         + "Example:\n"
         + "| @{headers}= | Get Table Headers | _myTable_ |\n")
     public String[] getTableHeaders(String identifier) {
         return createTableOperator(identifier).getTableHeaders();
+    }
+    
+    @RobotKeyword("Returns a list containing all the values of a table column.\n\n"
+        + "Example:\n"
+        + "| _${columnValues}=_ | Get Table Column Values | _myTable_ | _columnTwo_ |\n"
+        + "| Should Contain  | _${expectedValue}_ | _${columnValues}_ |\n")
+    public Object[] getTableColumnValues(String identifier, String columnIdentifier) {
+        throw new UnsupportedOperationException("");
     }
     
     private TableOperator createTableOperator(String identifier) {

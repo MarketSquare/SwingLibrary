@@ -9,7 +9,7 @@ import org.netbeans.jemmy.operators.JTableOperator;
 @RunWith(JDaveRunner.class)
 public class AbstractTableCellChooserSpec extends Specification<AbstractTableCellChooser> {
     public class Any {
-        private String row = "2";
+        private int row = 2;
         public AbstractTableCellChooser create() {
             return new AbstractTableCellChooser(row) {
                 protected boolean checkColumn(JTableOperator tableOperator, int column) {

@@ -22,8 +22,8 @@ import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 public abstract class AbstractTableCellChooser implements TableCellChooser {
     private final int expectedRow;
 
-    public AbstractTableCellChooser(String rowAsString) {
-        this.expectedRow = Integer.parseInt(rowAsString);
+    public AbstractTableCellChooser(int row) {
+        this.expectedRow = row;
     }
 
     public boolean checkCell(JTableOperator tableOperator, int actualRow, int column) {

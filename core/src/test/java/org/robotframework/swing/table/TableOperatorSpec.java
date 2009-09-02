@@ -250,4 +250,31 @@ public class TableOperatorSpec extends Specification<TableOperator> {
             specify(context.callPopupOnCell(row, column).getSource(), popupMenu);
         }
     }
+    
+    public class ColumnValues {
+        private Point[] columnCellCoordinates = new Point[] { new Point(1, 1), new Point(1, 2), new Point(1, 3) };
+        private String columnHeader = "someColumn";
+        
+        public void create() {
+            jTableOperator = mock(JTableOperator.class);
+        }
+        
+        public void getsTableColumnValues() {
+            checking(new Expectations() {{
+                one(jTableOperator).getRowCount(); will(returnValue(3));
+                one(jTableOperator).getValueAt(1, 1); will(returnValue("one"));
+                one(jTableOperator).getValueAt(2, 1); will(returnValue("two"));
+                one(jTableOperator).getValueAt(3, 1); will(returnValue("three"));
+                ignoring(jTableOperator);
+            }});
+            
+            TableOperator operator = new TableOperator(jTableOperator) {
+                protected Point findCell(int row, String columnIdentifier) {
+                    return columnCellCoordinates[row];
+                }
+            };
+            
+            specify(operator.getTableColumnValues(columnHeader), containsExactly("one", "two", "three"));
+        }
+    }
 }

@@ -1,16 +1,16 @@
 package org.robotframework.swing.table;
 
 public class InvalidCellException extends RuntimeException {
-    private final String rowIdentifier;
+    private final int row;
     private final String columnIdentifier;
 
-    public InvalidCellException(String rowIdentifier, String columnIdentifier) {
-        this.rowIdentifier = rowIdentifier;
+    public InvalidCellException(int row, String columnIdentifier) {
+        this.row = row;
         this.columnIdentifier = columnIdentifier;
     }
 
     @Override
     public String getMessage() {
-        return "The specified table cell (row: " + rowIdentifier + ", column: " + columnIdentifier + ") is invalid.";
+        return "The specified table cell (row: " + row + ", column: " + columnIdentifier + ") is invalid.";
     }
 }

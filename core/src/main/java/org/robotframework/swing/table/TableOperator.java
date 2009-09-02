@@ -100,6 +100,25 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         return jTableOperator.getSource();
     }
     
+    public String[] getTableHeaders() {
+        Enumeration<TableColumn> columns = jTableOperator.getTableHeader().getColumnModel().getColumns();
+        List<String> results = new ArrayList<String>();
+        while (columns.hasMoreElements()) {
+            TableColumn tableColumn = (TableColumn) columns.nextElement();
+            results.add(tableColumn.getHeaderValue().toString());
+        }
+        return results.toArray(new String[0]);
+    }
+    
+    public Object[] getTableColumnValues(String columnIdentifier) {
+        Object[] columnValues = new Object[getRowCount()];
+        for (int row = 0; row < columnValues.length; ++row) {
+            Point coordinates = findCell(row, columnIdentifier);
+            columnValues[row] = getValueAt(coordinates);
+        }
+        return columnValues;
+    }
+    
     protected Point findCell(String row, String columnIdentifier) {
         return findCell(asIndex(row), columnIdentifier);
     }
@@ -125,24 +144,5 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     
     private Object getValueAt(Point coordinates) {
         return jTableOperator.getValueAt(coordinates.y, coordinates.x);
-    }
-
-    public String[] getTableHeaders() {
-        Enumeration<TableColumn> columns = jTableOperator.getTableHeader().getColumnModel().getColumns();
-        List<String> results = new ArrayList<String>();
-        while (columns.hasMoreElements()) {
-            TableColumn tableColumn = (TableColumn) columns.nextElement();
-            results.add(tableColumn.getHeaderValue().toString());
-        }
-        return results.toArray(new String[0]);
-    }
-    
-    public Object[] getTableColumnValues(String columnIdentifier) {
-        Object[] columnValues = new Object[getRowCount()];
-        for (int row = 0; row < columnValues.length; ++row) {
-            Point coordinates = findCell(row, columnIdentifier);
-            columnValues[row] = getValueAt(coordinates);
-        }
-        return columnValues;
     }
 }
