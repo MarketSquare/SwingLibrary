@@ -21,7 +21,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
@@ -30,9 +33,11 @@ import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.operator.ComponentWrapper;
+import org.robotframework.swing.util.PropertyExtractor;
 
 public class TableOperator extends IdentifierSupport implements ComponentWrapper {
     private final JTableOperator jTableOperator;
+    private PropertyExtractor propertyExtractor = new PropertyExtractor();
 
     public TableOperator(JTableOperator jTableOperator) {
         this.jTableOperator = jTableOperator;
@@ -144,5 +149,20 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     
     private Object getValueAt(Point coordinates) {
         return jTableOperator.getValueAt(coordinates.y, coordinates.x);
+    }
+
+    public Map<String, Object> getCellProperties(String row, String columnIdentifier) {
+        Component cellComponent = getCellRendererComponent(row, columnIdentifier);
+        return propertyExtractor.extractProperties(cellComponent);
+    }
+
+    Component getCellRendererComponent(String row, String columnIdentifier) {
+        Point cell = findCell(row, columnIdentifier);
+        TableCellRenderer cellEditor = jTableOperator.getCellRenderer(cell.y, cell.x);
+        JTable table = (JTable) jTableOperator.getSource();
+        Object value = getCellValue(row, columnIdentifier);
+        boolean isSelected = isCellSelected(row, columnIdentifier);
+        boolean hasFocus = true;
+        return cellEditor.getTableCellRendererComponent(table, value, isSelected, hasFocus, cell.y, cell.x);
     }
 }

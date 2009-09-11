@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.keyword.table;
 
+import java.util.Map;
+
 import junit.framework.Assert;
 
 import org.netbeans.jemmy.operators.JMenuItemOperator;
@@ -172,6 +174,15 @@ public class TableKeywords extends IdentifierSupport {
         + "| Should Contain  | _${expectedValue}_ | _${columnValues}_ |\n")
     public Object[] getTableColumnValues(String identifier, String columnIdentifier) {
         return createTableOperator(identifier).getColumnValues(columnIdentifier);
+    }
+    
+    @RobotKeyword("Returns the property of the table cell.\n\n"
+        + "Example:\n"
+        + "| _${background}=_ | Get Table Cell Properties | _myTable_ | _1_ | _2_ | _background_ |\n"
+        + "| Should Be Equal As Integers | _255_ | _${background.getRed()}_ | | | |\n")
+    public Object getTableCellProperty(String identifier, String row, String columnIdentifier, String propertyName) {
+        Map<String, Object> properties = createTableOperator(identifier).getCellProperties(row, columnIdentifier);
+        return properties.get(propertyName);
     }
     
     private TableOperator createTableOperator(String identifier) {

@@ -3,6 +3,8 @@ package org.robotframework.swing.table;
 import java.awt.Component;
 import java.awt.Point;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JPopupMenu;
@@ -11,7 +13,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import jdave.Block;
-import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
 import org.hamcrest.Matcher;
@@ -20,10 +21,12 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.comparator.EqualsStringComparator;
+import org.robotframework.swing.util.PropertyExtractor;
 
 @RunWith(JDaveRunner.class)
-public class TableOperatorSpec extends Specification<TableOperator> {
+public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
     private String row = "2";
     private JTableOperator jTableOperator;
     private Object cellValue = new Object();
@@ -248,6 +251,31 @@ public class TableOperatorSpec extends Specification<TableOperator> {
             }});
             
             specify(context.callPopupOnCell(row, column).getSource(), popupMenu);
+        }
+    }
+    
+    public class ExtractingProperties {
+        private Component renderComponent;
+
+        public TableOperator create() {
+            renderComponent = dummy(Component.class);
+            TableOperator tableOperator = new TableOperator(dummy(JTableOperator.class)) {
+                Component getCellRendererComponent(String row, String columnIdentifier) {
+                    return renderComponent;
+                }
+            };
+            
+            return tableOperator;
+        }
+        
+        public void extractsCellProperties() {
+            final PropertyExtractor propertyExtractor = injectMockToContext(PropertyExtractor.class);
+            final Map<String, Object> props = new HashMap<String, Object>();
+            checking(new Expectations() {{
+                one(propertyExtractor).extractProperties(renderComponent); will(returnValue(props));
+            }});
+            
+            specify(context.getCellProperties(row, "someColumn"), props);
         }
     }
     

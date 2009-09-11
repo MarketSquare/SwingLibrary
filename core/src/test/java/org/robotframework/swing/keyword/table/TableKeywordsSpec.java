@@ -1,5 +1,9 @@
 package org.robotframework.swing.keyword.table;
 
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
 import junit.framework.AssertionFailedError;
@@ -101,6 +105,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         public void hasGetTableColumnValuesKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getTableColumnValues")));
         }
+        
+        public void hasGetTableCellPropertiesKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("getTableCellProperty")));
+        }
     }
 
     public class GettingCellValuesFromTable {
@@ -131,6 +139,20 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
 
             specify(context.getTableCellValue(tableIdentifier, row, columnIdentifier), must.equal(cellValue.toString()));
+        }
+        
+        public void getsTableCellProperties() {
+            final Map<String, Object> props = new HashMap<String, Object>() {{
+                put("background", Color.black);
+            }};
+            
+            checking(new Expectations() {{
+                one(tableOperator).getCellProperties(row, columnIdentifier);
+                will(returnValue(props)); 
+            }});
+            
+            Object cellProperty = context.getTableCellProperty(tableIdentifier, row, columnIdentifier, "background");
+            specify(cellProperty, Color.black);
         }
     }
     
