@@ -50,6 +50,12 @@ public class ThreadKeywords {
             }
         }.start();
     }
+    
+    public String stringify(String keywordName, Object... arguments) {
+        assertKeywordExists(keywordName);
+        assertArgumentCountIsCorrect(keywordName, arguments);
+        return SwingLibrary.instance.runKeyword(keywordName, arguments).toString();
+    }
 
     private void assertArgumentCountIsCorrect(String keywordName, Object[] arguments) {
         String[] keywordArguments = SwingLibrary.instance.getKeywordArguments(normalizer.normalize(keywordName));

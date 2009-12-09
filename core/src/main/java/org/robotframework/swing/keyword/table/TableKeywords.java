@@ -42,6 +42,23 @@ public class TableKeywords extends IdentifierSupport {
         createTableOperator(identifier).selectCell(row, cellIdentifier);
     }
 
+    @RobotKeyword("Selects a cell in a table and adds it to the selection.\n"
+        + "Does not clear earlier selections.\n\n"
+        + "Example:\n"
+        + "| Select Table Cell | _myTable_ | _0_ | _2_       | # Selects cell from first row and third column |\n"
+        + "| Select Table Cell | _myTable_ | _1_ | _Keyword_ | # Selects cell from second row and column with header 'Keyword' |\n")
+    public void addTableCellSelection(String identifier, String row, String cellIdentifier) {
+        createTableOperator(identifier).addTableCellSelection(row, cellIdentifier);
+    }
+    
+    @RobotKeyword("Selects a cell area in a table.\n"
+        + "Does not clear earlier selections.\n\n"
+        + "Example:\n"
+        + "| Select Table Cell Area | _myTable_ | _0_ | _2_ | _0_ | _2_ | # Selects cells from first to third row and first to third column |\n")
+    public void selectTableCellArea(String identifier, String startRow, String endRow, String startColumn, String endColumn) {
+        createTableOperator(identifier).selectCellArea(startRow, endRow, startColumn, endColumn);
+    }
+
     @RobotKeyword("Clears selection from a table.\n\n"
         + "Example:\n"
         + "| Clear Table Selection | _myTable_ |\n")

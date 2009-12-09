@@ -24,6 +24,33 @@ Table Cell Should Be Selected By Index
 	selectTableCell	${tableName}	3	2
 	tableCellShouldBeSelected	${tableName}	3	2
 
+Table Cells Should Be Selected By Index
+	selectTableCell	${tableName}	0	0
+	tableCellShouldBeSelected	${tableName}	0	0
+	
+Many Table Cells Should Be Selected By Index
+	selectTableCell	${tableName}	0	0
+	addTableCellSelection	${tableName}	2	1
+	addTableCellSelection	${tableName}	2	2
+	addTableCellSelection	${tableName}	3	1
+	addTableCellSelection	${tableName}	3	2
+	tableCellShouldBeSelected	${tableName}	0	0
+	tableCellShouldBeSelected	${tableName}	2	1
+	tableCellShouldBeSelected	${tableName}	2	2
+	tableCellShouldBeSelected	${tableName}	3	1
+	tableCellShouldBeSelected	${tableName}	3	2
+
+Table Cell Area Should Be Selected
+	selectTableCellArea	${tableName}	1	2	1	2
+	tableCellShouldBeSelected	${tableName}	1	1
+	tableCellShouldBeSelected	${tableName}	1	2
+	tableCellShouldBeSelected	${tableName}	2	1
+	tableCellShouldBeSelected	${tableName}	2	2
+	tableCellShouldNotBeSelected	${tableName}	0	0
+	tableCellShouldNotBeSelected	${tableName}	0	3
+	tableCellShouldNotBeSelected	${tableName}	3	0
+	tableCellShouldNotBeSelected	${tableName}	3	3
+
 Table Cell Should Be Selected By Column Header
 	selectTableCell	${tableName}	3	column two
 	tableCellShouldBeSelected	${tableName}	3	column two

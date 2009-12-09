@@ -36,6 +36,8 @@ textFieldContentsShouldBe	[arguments]	${expectedText}
 
 shouldSwitchCellsWithTabs
 	selectTableCell	${tableName}	0	0
+	tableCellShouldBeSelected	${tableName}	0	0
+	sleep	5
 	sendKeyboardEvent	VK_TAB
 	tableCellShouldBeSelected	${tableName}	0	1
 	sendKeyboardEvent	VK_TAB	SHIFT_DOWN_MASK

@@ -59,6 +59,22 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         jTableOperator.selectCell(coordinates.y, coordinates.x);
     }
 
+    public void addTableCellSelection(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        selectCellArea(coordinates.y, coordinates.y, coordinates.x, coordinates.x);
+    }
+
+    private void selectCellArea(int startRow, int endRow, int startColumn, int endColumn) {
+        jTableOperator.setRowSelectionAllowed(true);
+        jTableOperator.addRowSelectionInterval(startRow, endRow);
+        jTableOperator.setColumnSelectionAllowed(true);
+        jTableOperator.addColumnSelectionInterval(startColumn, endColumn);
+    }
+    
+    public void selectCellArea(String startRow, String endRow, String startColumn, String endColumn) {
+        selectCellArea(Integer.valueOf(startColumn), Integer.valueOf(endColumn), Integer.valueOf(startRow), Integer.valueOf(endRow));
+    }
+
     public void setCellValue(Object newValue, String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.setValueAt(newValue, coordinates.y, coordinates.x);

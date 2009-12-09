@@ -42,6 +42,10 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context, satisfies(new RobotKeywordContract("selectTableCell")));
         }
 
+        public void hasSelectTableCellAreaKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("selectTableCellArea")));
+        }
+        
         public void hasClearTableSelectionKeyword() {
             specify(context, satisfies(new RobotKeywordContract("clearTableSelection")));
         }
@@ -222,6 +226,18 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
 
             context.selectTableCell(tableIdentifier, row, columnIdentifier);
+        }
+        
+        public void selectsTableCellArea() {
+            final String columnStart = "0";
+            final String columnEnd = "1";
+            final String rowStart = "0";
+            final String rowEnd = "2";
+            checking(new Expectations() {{
+                one(tableOperator).selectCellArea(columnStart, columnEnd, rowStart, rowEnd);
+            }});
+            
+            context.selectTableCellArea(tableIdentifier, columnStart, columnEnd, rowStart, rowEnd);
         }
         
         public void getsTableColumnValues() {
