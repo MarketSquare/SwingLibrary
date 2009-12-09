@@ -5,7 +5,7 @@ JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.8.1'
 JDOM = 'jdom:jdom:jar:1.0'
 HAMCREST = 'org.hamcrest:hamcrest-core:jar:1.1'
 
-ABBOT = ['abbot:abbot:jar:1.0.2', 'abbot:costello:jar:1.0.2']
+ABBOT = ['abbot:abbot:jar:1.0.2', 'abbot:costello:jar:1.0.2', 'gnu-regexp:gnu-regexp:jar:1.1.4']
 
 JAVALIB_CORE_DEPENDENCIES =
  ['aopalliance:aopalliance:jar:1.0',
