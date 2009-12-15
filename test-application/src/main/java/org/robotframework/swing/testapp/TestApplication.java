@@ -84,8 +84,11 @@ public class TestApplication {
         panel.add(new TestTable("anotherTable"));
         panel.add(new TestTree());
         panel.add(new TreeWithoutTreeNode());
-        panel.add(new TestTabbedPane("testTabbedPane1"));
-        panel.add(new TestTabbedPane("testTabbedPane2"));
+        TestTextField tabButtonOutputTextField = new TestTextField();
+        tabButtonOutputTextField.setName("tabButtonOutputTextField");
+        panel.add(new TestTabbedPane("testTabbedPane1", tabButtonOutputTextField));
+        panel.add(new TestTabbedPane("testTabbedPane2", tabButtonOutputTextField));
+        panel.add(tabButtonOutputTextField);
         panel.add(new TestTextArea());
         panel.add(new TestSpinnerButton());
         panel.add(new TestRadioButton());
