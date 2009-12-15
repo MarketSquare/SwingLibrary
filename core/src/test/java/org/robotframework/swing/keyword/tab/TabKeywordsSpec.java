@@ -58,14 +58,14 @@ public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
             checking(new Expectations() {{
                 one(operator).selectPage(tabName);
             }});
-            context.selectTab(tabName);
+            context.selectTab(tabName, null);
         }
 
         public void selectsTabFromFirstTabbedPaneWhenTabbedPaneIdentifierOmittedByIndex() {
             checking(new Expectations() {{
                 one(operator).selectPage(Integer.parseInt(tabIndex));
             }});
-            context.selectTab(tabIndex);
+            context.selectTab(tabIndex, null);
         }
 
         public void getsTabNameFromFirstTabbedPaneWhenTabbedPaneIdentifierOmitted() {

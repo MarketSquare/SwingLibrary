@@ -25,6 +25,7 @@ import org.robotframework.swing.context.ContextVerifier;
 import org.robotframework.swing.context.DefaultContextVerifier;
 import org.robotframework.swing.factory.ContextBasedOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.operator.ComponentWrapper;
 
 public class TabPaneOperatorFactory extends IdentifierParsingOperatorFactory<TabbedPaneOperator> implements
     ContextBasedOperatorFactory<TabbedPaneOperator> {
@@ -47,11 +48,12 @@ public class TabPaneOperatorFactory extends IdentifierParsingOperatorFactory<Tab
     }
 
     public TabbedPaneOperator createOperatorFromContext() {
-        if (JTabbedPane.class.isAssignableFrom(Context.getContext().getSource().getClass())) {
-            return new TabbedPaneOperator((JTabbedPane) Context.getContext().getSource());
+        ComponentWrapper ctx = Context.getContext();
+        if (JTabbedPane.class.isAssignableFrom(ctx.getSource().getClass())) {
+            return new TabbedPaneOperator((JTabbedPane) ctx.getSource());
         } else {
             contextVerifier.verifyContext();
-            return new TabbedPaneOperator((ContainerOperator) Context.getContext());
+            return new TabbedPaneOperator((ContainerOperator) ctx);
         }
     }
 }
