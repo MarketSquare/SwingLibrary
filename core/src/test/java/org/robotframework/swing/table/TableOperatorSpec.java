@@ -135,26 +135,6 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
         }
     }
     
-    public class RetrievingCellValues {
-        public TableOperator create() {
-            jTableOperator = mock(JTableOperator.class);
-            checking(new Expectations() {{
-                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
-            }});
-            return new TableOperator(jTableOperator);
-        }
-
-        public void getsSelectedCellValue() {
-            checking(new Expectations() {{
-                one(jTableOperator).getSelectedRow(); will(returnValue(2));
-                one(jTableOperator).getSelectedColumn(); will(returnValue(3));
-                one(jTableOperator).getValueAt(2, 3); will(returnValue(cellValue));
-            }});
-            
-            specify(context.getSelectedCellValue(), cellValue);
-        }
-    }
-    
     public class OperatingOnTableWithColumnIndex extends OperatingOnTable {
         protected JTableOperator createMockJTableOperator() {
             column = "2";
@@ -193,15 +173,7 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
         public TableOperator create() {
             return new TableOperator(createMockJTableOperator());
         }
-        
-        public void getsCellValue() {
-            checking(new Expectations() {{
-                one(jTableOperator).getValueAt(coordinates.y, coordinates.x); will(returnValue(cellValue));
-            }});
-            
-            specify(context.getCellValue(row, column), cellValue);
-        }
-        
+
         public void checksCellIsSelected() {
             checking(new Expectations() {{
                 one(jTableOperator).isCellSelected(coordinates.y, coordinates.x); will(returnValue(true));
@@ -276,33 +248,6 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
             }});
             
             specify(context.getCellProperties(row, "someColumn"), props);
-        }
-    }
-    
-    public class ColumnValues {
-        private Point[] columnCellCoordinates = new Point[] { new Point(1, 1), new Point(1, 2), new Point(1, 3) };
-        private String columnHeader = "someColumn";
-        
-        public void create() {
-            jTableOperator = mock(JTableOperator.class);
-        }
-        
-        public void getsTableColumnValues() {
-            checking(new Expectations() {{
-                one(jTableOperator).getRowCount(); will(returnValue(3));
-                one(jTableOperator).getValueAt(1, 1); will(returnValue("one"));
-                one(jTableOperator).getValueAt(2, 1); will(returnValue("two"));
-                one(jTableOperator).getValueAt(3, 1); will(returnValue("three"));
-                ignoring(jTableOperator);
-            }});
-            
-            TableOperator operator = new TableOperator(jTableOperator) {
-                protected Point findCell(int row, String columnIdentifier) {
-                    return columnCellCoordinates[row];
-                }
-            };
-            
-            specify(operator.getColumnValues(columnHeader), containsExactly("one", "two", "three"));
         }
     }
 }

@@ -27,10 +27,14 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.laughingpanda.jretrofit.AllMethodsNotImplementedException;
+import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
+import org.robotframework.swing.chooser.WithText;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.common.SmoothInvoker;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.util.PropertyExtractor;
@@ -45,10 +49,42 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     }
     
     public Object getCellValue(String row, String columnIdentifier) {
-        Point coordinates = findCell(row, columnIdentifier);
-        return getValueAt(coordinates);
+        Point cell = findCell(row, columnIdentifier);
+        return getCellValueFromRenderer(cell.y, cell.x);
     }
 
+    private Object getCellValueFromRenderer(int row, int column) {
+        try {
+            Component cellRendererComponent = getCellRendererComponent(row, column);
+            return coerceToWithText(cellRendererComponent).getText();
+        } catch (AllMethodsNotImplementedException e) {
+            return wrapElementToWithText(row, column).getText();
+        }
+    }
+
+    private Component getCellRendererComponent(int row, int column) {
+        TableCellRenderer renderer = jTableOperator.getCellRenderer(row, column);
+        JTable table = (JTable) jTableOperator.getSource();
+        Object value = jTableOperator.getValueAt(row, column);
+        boolean isSelected = jTableOperator.isCellSelected(row, column);
+        boolean hasFocus = jTableOperator.hasFocus();
+        return getTableCellRendererComponentSmoothly(row, column, renderer, table, value, isSelected, hasFocus);
+    }
+    
+    private WithText coerceToWithText(Object element) {
+        return (WithText) Retrofit.complete(element, WithText.class);
+    }
+
+    private WithText wrapElementToWithText(final int rowIndex, final int columnIndex) {
+        return new WithText() {
+            public String getText() {
+                return jTableOperator.getModel()
+                .getValueAt(rowIndex, columnIndex)
+                .toString();
+            }
+        };
+    }
+    
     public boolean isCellSelected(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         return jTableOperator.isCellSelected(coordinates.y, coordinates.x);
@@ -109,9 +145,9 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     public Object getSelectedCellValue() {
       int selectedRow = jTableOperator.getSelectedRow();
       int selectedColumn = jTableOperator.getSelectedColumn();
-      return jTableOperator.getValueAt(selectedRow, selectedColumn);
+      return getCellValueFromRenderer(selectedRow, selectedColumn);
     }
-
+    
     public JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         return new JPopupMenuOperator(jTableOperator.callPopupOnCell(coordinates.y, coordinates.x));
@@ -140,6 +176,10 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         return columnValues;
     }
     
+    private Object getValueAt(Point coordinates) {
+        return getCellValueFromRenderer(coordinates.y, coordinates.x);
+    }
+
     protected Point findCell(String row, String columnIdentifier) {
         return findCell(asIndex(row), columnIdentifier);
     }
@@ -162,10 +202,6 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     	} 
     	return new ColumnNameTableCellChooser(row, columnIdentifier);
     }
-    
-    private Object getValueAt(Point coordinates) {
-        return jTableOperator.getValueAt(coordinates.y, coordinates.x);
-    }
 
     public Map<String, Object> getCellProperties(String row, String columnIdentifier) {
         Component cellComponent = getCellRendererComponent(row, columnIdentifier);
@@ -174,11 +210,15 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
 
     Component getCellRendererComponent(String row, String columnIdentifier) {
         Point cell = findCell(row, columnIdentifier);
-        TableCellRenderer cellEditor = jTableOperator.getCellRenderer(cell.y, cell.x);
-        JTable table = (JTable) jTableOperator.getSource();
-        Object value = getCellValue(row, columnIdentifier);
-        boolean isSelected = isCellSelected(row, columnIdentifier);
-        boolean hasFocus = true;
-        return cellEditor.getTableCellRendererComponent(table, value, isSelected, hasFocus, cell.y, cell.x);
+        return getCellRendererComponent(cell.y, cell.x);
+    }
+
+    private Component getTableCellRendererComponentSmoothly(final int row, final int column, final TableCellRenderer renderer,
+            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus) {
+        return new SmoothInvoker<Component>() {
+            public Object work() {
+                return renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            }
+        }.invoke();
     }
 }
