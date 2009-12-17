@@ -20,6 +20,7 @@ import java.awt.Component;
 import java.awt.Container;
 
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
@@ -37,6 +38,7 @@ public class TabKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| Select Tab | _Customer Information_ |\n"
         + "| Select Tab | _Customer Information_ | _Customers_ |\n")
+    @ArgumentNames({"tabIdentifier", "*tabPaneIdentifier"})
     public void selectTab(String tabIdentifier, String[] tabPaneIdentifier) {
         selectTheTab(tabIdentifier, tabPaneIdentifier);
     }
@@ -66,6 +68,7 @@ public class TabKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| Select Tab | _Customer Information_ |\n"
         + "| Select Tab | _Customer Information_ | _Customers_ |\n")
+    @ArgumentNames({"tabIdentifier", "*tabPaneIdentifier"})
     public void selectTabAsContext(String tabIdentifier, String[] tabPaneIdentifier) {
         try {
             Component container = selectTheTab(tabIdentifier, tabPaneIdentifier);
@@ -96,8 +99,8 @@ public class TabKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| Select Tab Pane | _Other Tab Pane_ |\n"
         + "| Select Tab | _Customer Information_ |\n")
-    public void selectTabPane(String identifier) {
-        TabbedPaneOperator operator = paneOperatorFactory.createOperator(identifier);
+    public void selectTabPane(String tabPaneIdentifier) {
+        TabbedPaneOperator operator = paneOperatorFactory.createOperator(tabPaneIdentifier);
         Context.setContext(operator);
     }
 

@@ -39,7 +39,7 @@ public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
         }
 
         public void hasOperatorFactory() {
-            specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
+            specify(context, satisfies(new FieldIsNotNullContract("paneOperatorFactory")));
         }
     }
 
@@ -55,15 +55,18 @@ public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
         }
 
         public void selectsTabFromFirstTabbedPaneWhenTabbedPaneIdentifierOmittedByName() {
+            final int index = 1;
             checking(new Expectations() {{
-                one(operator).selectPage(tabName);
+                one(operatorFactory).createOperatorFromContext(); will(returnValue(operator));
+                one(operator).indexOfTab(tabName); will(returnValue(index));
+                one(operator).selectPage(index);
             }});
             context.selectTab(tabName, null);
         }
 
         public void selectsTabFromFirstTabbedPaneWhenTabbedPaneIdentifierOmittedByIndex() {
             checking(new Expectations() {{
-                one(operator).selectPage(Integer.parseInt(tabIndex));
+                one(operator).selectPage(Integer.valueOf(tabIndex));
             }});
             context.selectTab(tabIndex, null);
         }
@@ -78,7 +81,7 @@ public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
         }
 
         private void injectMockOperatorFactory() {
-            operatorFactory = injectMockTo(tabKeywords, "operatorFactory", TabPaneOperatorFactory.class);
+            operatorFactory = injectMockTo(tabKeywords, "paneOperatorFactory", TabPaneOperatorFactory.class);
             checking(new Expectations() {{
                 one(operatorFactory).createOperatorFromContext();
                 will(returnValue(operator));
@@ -92,7 +95,7 @@ public class TabKeywordsSpec extends MockSupportSpecification<TabKeywords> {
 
         public TabKeywords create() {
             operator = mock(TabbedPaneOperator.class);
-            operatorFactory = injectMockTo(tabKeywords, "operatorFactory", TabPaneOperatorFactory.class);
+            operatorFactory = injectMockTo(tabKeywords, "paneOperatorFactory", TabPaneOperatorFactory.class);
             return tabKeywords;
         }
 
