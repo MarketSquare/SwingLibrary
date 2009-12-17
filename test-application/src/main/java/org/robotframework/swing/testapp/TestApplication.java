@@ -1,12 +1,29 @@
 package org.robotframework.swing.testapp;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
 
 public class TestApplication {
     private JPanel panel;
@@ -79,6 +96,7 @@ public class TestApplication {
                 }
             });
         }});
+        panel.add(new ContentChangingCombobox());
         panel.add(new TestLabel());
         panel.add(new TestTable("testTable"));
         panel.add(new TestTable("anotherTable"));
@@ -103,6 +121,32 @@ public class TestApplication {
         }});
         panel.add(new TestEditorPane());
     }
+}
+
+class ContentChangingCombobox extends JComboBox implements ActionListener {
+    
+    public ContentChangingCombobox() {
+        setEditable(true);
+        setName("contentChangingCombobox");
+        addActionListener(this);
+        setModel(new DefaultComboBoxModel(new String[]{"Foo", "Bar", "Quux"}));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        if (event.getActionCommand().equals("comboBoxChanged")) {
+            String selected = (String) getSelectedItem();
+            List<String> items = new ArrayList<String>();
+            items.add(""+System.currentTimeMillis());
+            for (int i = 0, size = getItemCount(); i < size ; i++) {
+                String item = (String)getItemAt(i);
+                if (!item.equals(selected))
+                    items.add(item);
+            }
+            setModel(new DefaultComboBoxModel(items.toArray()));
+            setSelectedIndex(0);
+        }
+    }              
 }
 
 class PopupPanel extends JPanel {
@@ -141,5 +185,34 @@ class PopupPanel extends JPanel {
                 }
             }
         });
+    }
+}
+
+class CustomComboBoxRenderer extends JLabel implements ListCellRenderer {
+    private Font uhOhFont;
+    public CustomComboBoxRenderer() {
+        setOpaque(true);
+        setHorizontalAlignment(CENTER);
+        setVerticalAlignment(CENTER);
+    }
+
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        if (isSelected) {
+            setBackground(list.getSelectionBackground());
+            setForeground(list.getSelectionForeground());
+        } else {
+            setBackground(list.getBackground());
+            setForeground(list.getForeground());
+        }
+        String pet = "Pet"+index;
+        setUhOhText(pet + " (no image)", list.getFont());
+        return this;
+    }
+
+    protected void setUhOhText(String uhOhText, Font normalFont) {
+        if (uhOhFont == null)
+            uhOhFont = normalFont.deriveFont(Font.ITALIC);
+        setFont(uhOhFont);
+        setText(uhOhText);
     }
 }
