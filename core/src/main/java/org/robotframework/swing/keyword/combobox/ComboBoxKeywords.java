@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.combobox;
 
 import junit.framework.Assert;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.combobox.ComboBoxOperator;
@@ -29,17 +30,36 @@ public class ComboBoxKeywords {
     private OperatorFactory<ComboBoxOperator> operatorFactory = new ComboBoxOperatorFactory();
 
     @RobotKeyword("Selects an item from a combobox.\n"
-    	+ "NB. If the _comboItemIdentifier_ is a numerical value it vill be interpreted as index.\n"
+        + "The item selection is verified by default and can be disabled using the optional _verifySelection_ parameter with any value.\n\n"
+    	+ "*N.B* If the _comboItemIdentifier_ is a numerical value it vill be interpreted as index.\n\n"
         + "Example:\n"
         + "| Select From Combo Box | _myComboBox_ | _myItem_ | # Selects _'myItem'_ from combobox |\n"
-        + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n")
-    public void selectFromComboBox(String identifier, String comboItemIdentifier) {
-        createOperator(identifier).selectItem(comboItemIdentifier);
+        + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n"
+        + "| Select From Combo Box | _myComboBox_ | _myItem_      | _don't verify_ | # Selects _'myItem'_ from combobox and doesn't verify that myItem is selected |\n")
+    @ArgumentNames({"identifier", "comboItemIdentifier", "*verifySelection"})
+    public void selectFromComboBox(String identifier, String comboItemIdentifier, String[] verifySelection) {
+        createOperator(identifier, verifySelection).selectItem(comboItemIdentifier);
+    }
+
+    private ComboBoxOperator createOperator(String identifier, String[] verifySelection) {
+        if (isVerificationDisabled(verifySelection))
+            return createNonVerifyingOperator(identifier);
+        return createOperator(identifier);
+    }
+
+    private ComboBoxOperator createOperator(String identifier) {
+        return operatorFactory.createOperator(identifier);
+    }
+    
+    private boolean isVerificationDisabled(String[] verifySelection) {
+        return verifySelection != null && verifySelection.length > 0 
+            && verifySelection[0] != null && verifySelection[0].length() > 0;
     }
     
     @RobotKeyword("Alias for `Select From Combobox` keyword.\n")
-    public void selectFromDropdownMenu(String menuIdentifier, String menuItemIdentifier) {
-        selectFromComboBox(menuIdentifier, menuItemIdentifier);
+    @ArgumentNames({"menuIdentifier", "menuItemIdentifier", "*verificationDisabled"})
+    public void selectFromDropdownMenu(String menuIdentifier, String menuItemIdentifier, String[] verificationDisabled) {
+        selectFromComboBox(menuIdentifier, menuItemIdentifier, verificationDisabled);
     }
 
     @RobotKeyword("Returns an item from a combobox.\n\n"
@@ -76,7 +96,7 @@ public class ComboBoxKeywords {
         createOperator(identifier).typeText(text);
     }
     
-    @RobotKeyword("Returns a list containing all the values of a combobox.\n"
+    @RobotKeyword("Returns a list containing all the values of a combobox.\n\n"
     	+ "*N.B* This keyword will return the values contained by _javax.swing.ComboBoxModel_,\n"
     	+ "this is not necessarily what is displayed on the GUI.\n\n"
         + "Example:\n"
@@ -85,9 +105,11 @@ public class ComboBoxKeywords {
     public Object[] getComboboxValues(String identifier) {
         return createOperator(identifier).getValues();
     }
-    
-    private ComboBoxOperator createOperator(String identifier) {
-        return operatorFactory.createOperator(identifier);
+
+    private ComboBoxOperator createNonVerifyingOperator(String identifier) {
+        ComboBoxOperator operator = operatorFactory.createOperator(identifier);
+        operator.disableVerification();
+        return operator;
     }
 }
 

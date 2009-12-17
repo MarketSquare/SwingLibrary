@@ -88,7 +88,7 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
                 one(operator).selectItem(comboItemIdentifier);
             }});
 
-            context.selectFromComboBox(comboBoxIdentifier, comboItemIdentifier);
+            context.selectFromComboBox(comboBoxIdentifier, comboItemIdentifier, null);
         }
 
         public void getsSelectedItem() {
@@ -160,7 +160,7 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         
         public void getsComboboxValues() {
             checking(new Expectations() {{
-                one(operator).getValues(); will(returnValue(new Object[] {"one", "two", "three"}));
+                one(operator).getValues(); will(returnValue(new String[] {"one", "two", "three"}));
             }});
             
             specify(context.getComboboxValues(comboBoxIdentifier), containsExactly("one", "two", "three"));
@@ -174,14 +174,14 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
 
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords() {
                 @Override
-                public void selectFromComboBox(String boxIdentifier, String itemIdentifier) {
+                public void selectFromComboBox(String boxIdentifier, String itemIdentifier, String[] verification) {
                     if (boxIdentifier.equals(comboBoxIdentifier) && itemIdentifier.equals(comboItemIdentifier)) {
                         isAnAlias = true;
                     }
                 }
             };
 
-            comboBoxKeywords.selectFromDropdownMenu(comboBoxIdentifier, comboItemIdentifier);
+            comboBoxKeywords.selectFromDropdownMenu(comboBoxIdentifier, comboItemIdentifier, null);
             specify(isAnAlias);
         }
     }

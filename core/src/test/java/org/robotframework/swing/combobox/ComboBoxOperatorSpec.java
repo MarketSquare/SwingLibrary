@@ -49,15 +49,20 @@ public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
             checking(new Expectations() {{
                 one(jComboboxOperator).pushComboButton();
                 one(jComboboxOperator).selectItem(1);
+                one(jComboboxOperator).hidePopup();
             }});
             
             context.selectItem("1");
         }
         
         public void getsSelectedItem() {
-            final Object selectedItem = new Object();
+            final int index = 7;
+            final Object selectedItem = "Fooness";
             checking(new Expectations() {{
-                one(jComboboxOperator).getSelectedItem(); will(returnValue(selectedItem));
+                one(jComboboxOperator).pushComboButton();
+                one(jComboboxOperator).getSelectedIndex(); will(returnValue(index));
+                one(textExtractor).getTextFromRenderedComponent(index); will(returnValue(selectedItem));
+                one(jComboboxOperator).hidePopup();
             }});
             
             specify(context.getSelectedItem(), selectedItem);
@@ -81,14 +86,14 @@ public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
         }
         
         public void getsValues() {
-            final ComboBoxModel treeModel = mock(ComboBoxModel.class);
-            
             checking(new Expectations() {{
-                one(jComboboxOperator).getModel(); will(returnValue(treeModel));
-                one(treeModel).getSize(); will(returnValue(3));
-                one(treeModel).getElementAt(0); will(returnValue("one"));
-                one(treeModel).getElementAt(1); will(returnValue("two"));
-                one(treeModel).getElementAt(2); will(returnValue("three"));
+                one(jComboboxOperator).pushComboButton();
+                String[] items = new String[]{"one", "two", "three"};
+                one(textExtractor).itemCount(); will(returnValue(items.length));
+                for (int i=0, size = items.length; i < size; i++) {
+                    one(textExtractor).getTextFromRenderedComponent(i); will(returnValue(items[i]));
+                }
+                one(jComboboxOperator).hidePopup();
             }});
             
             specify(context.getValues(), containsExactly("one", "two", "three"));

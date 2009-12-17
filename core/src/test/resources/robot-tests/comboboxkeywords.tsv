@@ -36,10 +36,14 @@ Select From Combobox By Index
 Select From Combobox By Name
 	selectFromComboBox	${comboboxName}	two
 	comboboxSelectionShouldBe	${comboboxName}	two
+	
+Select From Combobox By Name No Verification
+	selectFromComboBox	contentChangingCombobox	Foo	false
+	comboboxSelectionShouldBe	${comboboxName}	one
 
 Select From Combobox Works With Rendered Text
 	selectFromComboBox	comboboxWithRenderer	TWO
-	comboboxSelectionShouldBe	comboboxWithRenderer	two
+	comboboxSelectionShouldBe	comboboxWithRenderer	TWO
 
 Select From Combobbox Keyword Should Work With Indexes
 	selectFromCombobox	${comboboxName}	0

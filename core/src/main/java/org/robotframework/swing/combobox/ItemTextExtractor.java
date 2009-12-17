@@ -50,9 +50,8 @@ public class ItemTextExtractor {
     }
 
     private WithText getComponentWithText(int itemIndex) {
-        Component renderedComponent = getRenderedComponent(itemIndex);
         try {
-            return coerceToWithText(renderedComponent);
+            return coerceToWithText(getRenderedComponent(itemIndex));
         } catch (AllMethodsNotImplementedException e) {
             return wrapElementToWithText(itemIndex);
         }

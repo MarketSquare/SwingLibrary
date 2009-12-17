@@ -1,8 +1,8 @@
 package org.robotframework.swing.combobox;
 
 import java.awt.Component;
-
-import javax.swing.ComboBoxModel;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -12,7 +12,6 @@ import org.robotframework.swing.operator.ComponentWrapper;
 public class ComboBoxOperator extends IdentifierSupport implements ComponentWrapper {
     private final JComboBoxOperator comboboxOperator;
     private ItemTextExtractor itemTextExtractor;
-
 
     public ComboBoxOperator(JComboBoxOperator jComboboxOperator) {
         comboboxOperator = jComboboxOperator;
@@ -24,18 +23,47 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
         this.itemTextExtractor = itemTextExtractor;
     }
 
+    public void disableVerification() {
+        comboboxOperator.setVerification(false);
+    }
+    
     public Component getSource() {
         return comboboxOperator.getSource();
     }
 
-    public void selectItem(String comboItemIdentifier) {
-        comboboxOperator.pushComboButton();
-        int itemIndex = findItemIndex(comboItemIdentifier);
-        comboboxOperator.selectItem(itemIndex);
+    public void selectItem(final String comboItemIdentifier) {
+        new ComboboxAction() {
+            @Override
+            protected Object executeWhenComboBoxOpen() {
+                int itemIndex = findItemIndex(comboItemIdentifier);
+                comboboxOperator.selectItem(itemIndex);
+                return null;
+            }            
+        }.execute();
+    }
+
+    private int findItemIndex(String comboItemIdentifier) {
+        if (isIndex(comboItemIdentifier))
+            return asIndex(comboItemIdentifier);
+        return findItemIndexWithRenderer(comboItemIdentifier);
+    }
+
+    private int findItemIndexWithRenderer(String expectedText) {
+        for (int itemIndex = 0, itemCount = itemTextExtractor.itemCount(); itemIndex < itemCount; itemIndex++) {
+            String text = itemTextExtractor.getTextFromRenderedComponent(itemIndex);
+            if (expectedText.equals(text))
+                return itemIndex;
+        }
+        throw new RuntimeException("Couldn't find text '" + expectedText + "'");
     }
     
     public Object getSelectedItem() {
-        return comboboxOperator.getSelectedItem();
+        return new ComboboxAction() {
+            @Override
+            protected Object executeWhenComboBoxOpen() {
+                return itemTextExtractor.getTextFromRenderedComponent(comboboxOperator.getSelectedIndex());
+            }            
+        }.execute();
     }
 
     public boolean isEnabled() {
@@ -47,47 +75,33 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
         comboboxOperator.typeText(text);
     }
 
-    public Object[] getValues() {
-        ComboBoxModel model = comboboxOperator.getModel();
-        Object[] values = new Object[model.getSize()];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = model.getElementAt(i);
-        }
-        return values;
+    public String[] getValues() {
+        return (String[]) new ComboboxAction() {
+            @Override
+            protected Object executeWhenComboBoxOpen() {
+                List<String> values = new ArrayList<String>();
+                for (int i = 0, itemCount = itemTextExtractor.itemCount(); i < itemCount; i++)
+                    values.add(itemTextExtractor.getTextFromRenderedComponent(i));
+                return values.toArray(new String[0]);
+            }            
+        }.execute();
     }
     
-    private int findItemIndex(String comboItemIdentifier) {
-        if (isIndex(comboItemIdentifier)) {
-            return asIndex(comboItemIdentifier);
-        } else {
-            return findItemIndexFromRenderedText(comboItemIdentifier);
-        }
-    }
-
-    private int findItemIndexFromRenderedText(String expectedText) {
-        try {
-            return findItemIndexWithRenderer(expectedText);
-        } finally {
-            hidePopup();
+    private abstract class ComboboxAction {
+        public Object execute() {
+            try {
+                comboboxOperator.pushComboButton();
+                return executeWhenComboBoxOpen();
+            } finally {
+                comboboxOperator.hidePopup();
+                waitToAvoidInstability();
+            }
         }
         
-    }
-    
-    private int findItemIndexWithRenderer(String expectedText) {
-        for (int itemIndex = 0; itemIndex < itemTextExtractor.itemCount(); itemIndex++) {
-            String text = itemTextExtractor.getTextFromRenderedComponent(itemIndex);
-            if (expectedText.equals(text))
-                return itemIndex;
+        private void waitToAvoidInstability() {
+            new EventTool().waitNoEvent(200);
         }
-        throw new RuntimeException("Couldn't find text '" + expectedText + "'");
-    }
 
-    private void hidePopup() {
-        comboboxOperator.hidePopup();
-        waitToAvoidInstability();
-    }
-    
-    private void waitToAvoidInstability() {
-        new EventTool().waitNoEvent(200);
+        protected abstract Object executeWhenComboBoxOpen();
     }
 }
