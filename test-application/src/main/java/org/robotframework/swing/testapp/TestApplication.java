@@ -11,7 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -98,8 +100,9 @@ public class TestApplication {
         }});
         panel.add(new ContentChangingCombobox());
         panel.add(new TestLabel());
-        panel.add(new TestTable("testTable"));
-        panel.add(new TestTable("anotherTable"));
+        panel.add(new TestTable("testTable", getTestTableData()));
+        panel.add(new TestTable("anotherTable", getTestTableData()));
+        panel.add(new TestTable("TableWithSingleValue", getFoobarTestTableData()));
         panel.add(new TestTree());
         panel.add(new TreeWithoutTreeNode());
         TestTextField tabButtonOutputTextField = new TestTextField();
@@ -120,6 +123,26 @@ public class TestApplication {
             });
         }});
         panel.add(new TestEditorPane());
+    }
+
+    private Object[][] getTestTableData() {
+        Object[][] data = {
+                {"column one", "one/one", "two/one", "three/one", "four/one"},
+                {"column two", "one/two", "two/two", "three/two", "four/two"},
+                {"column three", "one/three", "two/three", "three/three", "four/three"},
+                {"column four", "one/four", "two/four", "three/four", "four/four"}
+        };
+        return data;
+    }
+    
+    private Object[][] getFoobarTestTableData() {
+        Object[][] data = {
+                {"column one", "foo", "bar", "bar", "bar"},
+                {"column two", "bar", "foo", "bar", "bar"},
+                {"column three", "bar", "bar", "foo", "bar"},
+                {"column four", "bar", "bar", "bar", "foo"}
+        };
+        return data;
     }
 }
 

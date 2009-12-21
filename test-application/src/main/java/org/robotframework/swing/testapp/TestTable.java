@@ -6,23 +6,32 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
+import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class TestTable extends JScrollPane {
-    public TestTable(String name) {
-        super(createTable(name));
-    }
 
+    public TestTable(String name, Object[][] data) {
+        super(createTable(name, data));
+    }
+    
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(200, 100);
     }
 
-    private static JTable createTable(String name) {
+    private static JTable createTable(String name, Object[][] data) {
         JTable table = new JTable();
         table.setName(name);
         table.addMouseListener(new MouseAdapter() {
@@ -32,12 +41,10 @@ public class TestTable extends JScrollPane {
                 }
             }
         });
-        
         DefaultTableModel model = (DefaultTableModel)table.getModel();
-        model.addColumn("column one", new Object[]{"one/one", "two/one", "three/one", "four/one"});
-        model.addColumn("column two", new Object[]{"one/two", "two/two", "three/two", "four/two"});
-        model.addColumn("column three", new Object[]{"one/three", "two/three", "three/three", "four/three"});
-        model.addColumn("column four", new Object[]{"one/four", "two/four", "three/four", "four/four"});
+        for (Object[] datarow: data)
+            model.addColumn(datarow[0], Arrays.copyOfRange(datarow, 1, datarow.length));
+        
         TableColumn col = table.getColumnModel().getColumn(0);
         String[] comboBoxValues = new String[] { "one/one", "two/one", "three/one", "four/one"};
         
