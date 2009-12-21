@@ -6,8 +6,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -42,8 +42,9 @@ public class TestTable extends JScrollPane {
             }
         });
         DefaultTableModel model = (DefaultTableModel)table.getModel();
-        for (Object[] datarow: data)
-            model.addColumn(datarow[0], Arrays.copyOfRange(datarow, 1, datarow.length));
+        for (Object[] datarow: data) {
+            model.addColumn(datarow[0], copyOfRange(datarow, 1, datarow.length));
+        }
         
         TableColumn col = table.getColumnModel().getColumn(0);
         String[] comboBoxValues = new String[] { "one/one", "two/one", "three/one", "four/one"};
@@ -52,6 +53,13 @@ public class TestTable extends JScrollPane {
         col.setCellRenderer(new MyComboBoxRenderer(comboBoxValues));
         
         return table;
+    }
+    
+    private static Object[] copyOfRange(Object[] datarow, int fromIndex, int toIndex) {
+        List<Object> range = new ArrayList<Object>();
+        for (int i = fromIndex; i < toIndex ; i++)
+            range.add(datarow[i]);
+        return range.toArray();
     }
     
     public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
