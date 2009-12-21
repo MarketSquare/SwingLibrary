@@ -22,6 +22,7 @@ import junit.framework.Assert;
 
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
@@ -144,9 +145,17 @@ public class TableKeywords extends IdentifierSupport {
         + "This is useful when we want to operate on cells which location can change.\n\n"
         + "Example:\n"
         + "| ${row}= | Find Table Row | _myTable_ | _Some Value_ |\n"
-        + "| Select From Table Cell Popup Menu | _myTable_ | _${row}_ | _2_ | _Activate_ |\n")
-    public int findTableRow(String identifier, String text) {
+        + "| Select From Table Cell Popup Menu | _myTable_ | _${row}_ | _2_ | _Activate_ |\n"
+        + "| ${row}= | Find Table Row | _myTable_ | _Some Value_ | _Some Column_ | # Searches the _'Some Value'_ from the specified  _'Some Column'_  | \n")
+    @ArgumentNames({"identifier", "text", "*columnIdentifier"})
+    public int findTableRow(String identifier, String text, String[] columnIdentifier) {
+        if (isProvided(columnIdentifier))
+            return createTableOperator(identifier).findCellRow(text, columnIdentifier[0]);
         return createTableOperator(identifier).findCellRow(text);
+    }
+
+    private boolean isProvided(String[] column) {
+        return column != null && column.length > 0 && column[0] != null && column[0].length() > 0;
     }
     
     @RobotKeyword("Selects an item from a table cell popup.\n"

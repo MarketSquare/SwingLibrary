@@ -196,7 +196,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 one(tableOperator).findCellRow("someValue"); will(returnValue(7));
             }});
 
-            specify(context.findTableRow(tableIdentifier, "someValue"), must.equal(7));
+            specify(context.findTableRow(tableIdentifier, "someValue", null), must.equal(7));
         }
 
         public void setsTableCellValue() {

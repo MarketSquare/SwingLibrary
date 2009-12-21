@@ -142,6 +142,13 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         return jTableOperator.findCellRow(text);
     }
     
+    public int findCellRow(String text, String columnIdentifier) {
+        int col = jTableOperator.findColumn(columnIdentifier);
+        if (col == -1)
+            throw new RuntimeException("Column '"+columnIdentifier+" not found.");
+        return jTableOperator.findCellRow(text, col, 0);
+    }
+    
     public Object getSelectedCellValue() {
       int selectedRow = jTableOperator.getSelectedRow();
       int selectedColumn = jTableOperator.getSelectedColumn();

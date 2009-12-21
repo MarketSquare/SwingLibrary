@@ -121,6 +121,20 @@ Find Table Row
 	${row}=	findTableRow	${tableName}	four/four
 	shouldBeEqualAsIntegers	3	${row}
 
+Find Table Row With Column
+	${row}=	findTableRow	${tableName}	one/one	column one	
+	shouldBeEqualAsIntegers	0	${row}
+	${row}=	findTableRow	${tableName}	four/four	column four
+	shouldBeEqualAsIntegers	3	${row}
+	${row}=	findTableRow	TableWithSingleValue	foo	
+	shouldBeEqualAsIntegers	0	${row}
+	${row}=	findTableRow	TableWithSingleValue	foo	column three
+	shouldBeEqualAsIntegers	2	${row}
+	${row}=	findTableRow	TableWithSingleValue	foo	column two
+	shouldBeEqualAsIntegers	1	${row}
+	${row}=	findTableRow	TableWithSingleValue	foo	column four
+	shouldBeEqualAsIntegers	3	${row}
+
 Get Table Row Count By Index
 	${rowCount}=	getTableRowCount	0
 	shouldBeEqualAsIntegers	4	${rowCount}
