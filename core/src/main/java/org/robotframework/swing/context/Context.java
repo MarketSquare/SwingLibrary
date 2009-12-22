@@ -27,7 +27,7 @@ public class Context {
 
     public static ComponentWrapper getContext() {
         if (context == null) {
-            throw new IllegalStateException("Current context is null. Please select a context.");
+            throw new IllegalStateException("Context is not selected. Please select a context using 'Select Window' or 'Select Dialog' keyword.");
         }
         return context;
     }
