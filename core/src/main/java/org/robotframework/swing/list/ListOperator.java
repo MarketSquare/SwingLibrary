@@ -4,9 +4,10 @@ import java.awt.Component;
 import java.util.List;
 
 import org.netbeans.jemmy.ComponentChooser;
+import org.netbeans.jemmy.Timeouts;
+import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JListOperator;
-import org.robotframework.swing.chooser.ListItemChooser;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
 
@@ -56,17 +57,36 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
 
     protected int[] findIndices(List<String> itemIdentifiers) {
         int[] indices = new int[itemIdentifiers.size()];
-        for (int i = 0; i < indices.length; i++) {
+        for (int i = 0; i < indices.length; i++)
             indices[i] = findIndex(itemIdentifiers.get(i));
-        }
         return indices;
     }
     
     protected int findIndex(String itemIdentifier) {
-        if (isIndex(itemIdentifier)) {
+        if (isIndex(itemIdentifier))
             return asIndex(itemIdentifier);
-        } else {
-            return jListOperator.findItemIndex(new ListItemChooser(itemIdentifier));
+        return findIndexWithWait(itemIdentifier);
+    }
+
+    private int findIndexWithWait(String itemIdentifier) {
+        try {
+            return (Integer) createListWaiter(itemIdentifier).waitAction(null);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+    }
+    
+    protected Waiter createListWaiter(String itemIdentifier) {
+        Waiter waiter = new Waiter(new ListFindItemIndexWaitable(jListOperator, itemIdentifier));
+        Timeouts nextNodeTimeout = copyTimeout("JListOperator.WaitFindItemIndexTimeout");
+        waiter.setTimeouts(nextNodeTimeout);
+        return waiter;
+    }
+    
+    protected Timeouts copyTimeout(String timeout) {
+        Timeouts timeouts = jListOperator.getTimeouts();
+        Timeouts times = timeouts.cloneThis();
+        times.setTimeout("Waiter.WaitingTime", timeouts.getTimeout(timeout));
+        return times;
     }
 }

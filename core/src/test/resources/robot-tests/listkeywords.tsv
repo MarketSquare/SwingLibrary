@@ -26,8 +26,19 @@ Select From List By Index
 	listSelectionShouldBe	${listIndex}	two
 
 Select From List By Name
-	selectFromList	${listName}	0
+	selectFromList	${listName}	one
 	listSelectionShouldBe	${listName}	one
+	selectFromList	${listName}	three
+	listSelectionShouldBe	${listName}	three
+
+Select From List By Name Not Found
+	${oldSetting}=	Set Jemmy Timeout	JListOperator.WaitFindItemIndexTimeout	3
+	${start}=	Get Time	epoch
+	${err}=	Run Keyword And Expect Error	*	selectFromList	${listName}	horse
+	${end}=	Get Time	epoch
+	Should Be True	${end} - ${start} >= 3
+	Should Start With	${err}	Couldn't find item:
+	Set Jemmy Timeout	JListOperator.WaitFindItemIndexTimeout	${oldSetting}
 
 Select Multiple Items From List
 	selectFromList	${listName}	one	two	three
