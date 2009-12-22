@@ -225,8 +225,9 @@ public class TreeOperator implements ComponentWrapper {
     }
 
     protected Timeouts copyTimeout(String timeout) {
-        Timeouts times = jTreeOperator.getTimeouts().cloneThis();
-        times.setTimeout("Waiter.WaitingTime", jTreeOperator.getTimeouts().getTimeout(timeout));
+        Timeouts timeouts = jTreeOperator.getTimeouts();
+        Timeouts times = timeouts.cloneThis();
+        times.setTimeout("Waiter.WaitingTime", timeouts.getTimeout(timeout));
         return times;
     }
 }
