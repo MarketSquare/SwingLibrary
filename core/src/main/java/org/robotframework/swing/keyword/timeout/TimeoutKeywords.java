@@ -25,14 +25,19 @@ public class TimeoutKeywords {
     public final static String[] JEMMY_TIMEOUTS = new String[] { "DialogWaiter.WaitDialogTimeout",
         "FrameWaiter.WaitFrameTimeout", "WindowWaiter.WaitWindowTimeout", "ComponentOperator.WaitComponentTimeout",
         "JMenuOperator.WaitPopupTimeout", "JTreeOperator.WaitNodeExpandedTimeout", "JTreeOperator.WaitNextNodeTimeout",
-        "JTreeOperator.WaitNodeVisibleTimeout", "ComponentOperator.WaitStateTimeout", "JComboBoxOperator.WaitListTimeout"};
+        "JTreeOperator.WaitNodeVisibleTimeout", "ComponentOperator.WaitStateTimeout", "JComboBoxOperator.WaitListTimeout", 
+        "JListOperator.WaitFindItemIndexTimeout" };
 
     @RobotKeyword("Sets the jemmy timeout used for waiting a component to appear.\n"
-        + "Timeout names are listed here: http://jemmy.netbeans.org/OperatorsEnvironment.html#timeouts.\n\n"
+        + "Timeout names are listed here: http://jemmy.netbeans.org/OperatorsEnvironment.html#timeouts.\n"
+        + "Returns the old timeout setting value.\n\n"
         + "Example:\n"
-        + "| Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n")
-    public void setJemmyTimeout(String timeoutName, String timeoutInSeconds) {
+        + "| Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n"
+        + "| ${oldSetting}= | Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n")
+    public long setJemmyTimeout(String timeoutName, String timeoutInSeconds) {
+        long oldTimeout = JemmyProperties.getCurrentTimeout(timeoutName);
         JemmyProperties.setCurrentTimeout(timeoutName, parseMillis(timeoutInSeconds));
+        return (oldTimeout/1000);
     }
 
     @RobotKeyword("Sets all relevant jemmy timeouts. \n"
@@ -47,7 +52,8 @@ public class TimeoutKeywords {
         + "| JMenuOperator.WaitPopupTimeout | Time to wait popup displayed |\n"
         + "| JTreeOperator.WaitNodeExpandedTimeout | Time to wait node expanded |\n"
         + "| JTreeOperator.WaitNextNodeTimeout | Time to wait next node displayed |\n"
-        + "| JTreeOperator.WaitNodeVisibleTimeout | Time to wait node visible |\n\n"
+        + "| JTreeOperator.WaitNodeVisibleTimeout | Time to wait node visible |"
+        + "| JListOperator.WaitFindItemIndexTimeout | Time to wait for list item to appear | \n\n"
         + "Example:\n"
         + "| Set Jemmy Timeouts | 3 |\n")
     public void setJemmyTimeouts(String timeoutInSeconds) {
