@@ -9,9 +9,10 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.operators.JListOperator;
-import org.robotframework.swing.chooser.ListItemChooser;
 import org.robotframework.jdave.mock.MockSupportSpecification;
+import org.robotframework.swing.chooser.ListItemChooser;
 
 @RunWith(JDaveRunner.class)
 public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {
@@ -66,8 +67,8 @@ public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {
             checking(new Expectations() {{
                 one(jListOperator).findItemIndex(with(any(ListItemChooser.class))); will(returnValue(1));
                 one(jListOperator).findItemIndex(with(any(ListItemChooser.class))); will(returnValue(4));
-                
                 one(jListOperator).selectItems(indices);
+                ignoring(jListOperator).getTimeouts();
             }});
             
             context.selectItems(new ArrayList<String>() {{ add("one"); add("2"); add("3"); add("four"); }});
@@ -87,6 +88,7 @@ public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {
                 one(jListOperator).clickOnItem(5, 1);
                 one(jListOperator).findItemIndex(with(any(ListItemChooser.class))); will(returnValue(8));
                 one(jListOperator).clickOnItem(8, 2);
+                ignoring(jListOperator).getTimeouts();
             }});
             
             context.clickOnItem("5", 1);
