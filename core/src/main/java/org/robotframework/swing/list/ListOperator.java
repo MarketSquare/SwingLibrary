@@ -7,6 +7,7 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
+import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
@@ -70,21 +71,20 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
 
     private int findIndexWithWait(String itemIdentifier) {
         try {
-            return (Integer) createListWaiter(itemIdentifier).waitAction(null);
+            return (Integer) createWaiter(itemIdentifier).waitAction(null);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
     
-    protected Waiter createListWaiter(String itemIdentifier) {
+    protected Waiter createWaiter(String itemIdentifier) {
         Waiter waiter = new Waiter(new ListFindItemIndexWaitable(jListOperator, itemIdentifier));
-        Timeouts nextNodeTimeout = copyTimeout("JListOperator.WaitFindItemIndexTimeout");
-        waiter.setTimeouts(nextNodeTimeout);
+        waiter.setTimeouts(copyTimeout(jListOperator, "JListOperator.WaitFindItemIndexTimeout"));
         return waiter;
     }
     
-    protected Timeouts copyTimeout(String timeout) {
-        Timeouts timeouts = jListOperator.getTimeouts();
+    protected Timeouts copyTimeout(JComponentOperator operator, String timeout) {
+        Timeouts timeouts = operator.getTimeouts();
         Timeouts times = timeouts.cloneThis();
         times.setTimeout("Waiter.WaitingTime", timeouts.getTimeout(timeout));
         return times;
