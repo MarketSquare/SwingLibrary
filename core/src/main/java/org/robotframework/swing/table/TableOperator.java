@@ -29,6 +29,7 @@ import javax.swing.table.TableColumn;
 
 import org.laughingpanda.jretrofit.AllMethodsNotImplementedException;
 import org.laughingpanda.jretrofit.Retrofit;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
@@ -153,6 +154,14 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
       int selectedRow = jTableOperator.getSelectedRow();
       int selectedColumn = jTableOperator.getSelectedColumn();
       return getCellValueFromRenderer(selectedRow, selectedColumn);
+    }
+    
+    public void callPopupMenuItemOnSelectedCells(String menuPath) {
+        int selectedRow = jTableOperator.getSelectedRow();
+        int selectedColumn = jTableOperator.getSelectedColumn();
+        JPopupMenuOperator menuOperator = new JPopupMenuOperator(jTableOperator.callPopupOnCell(selectedRow, selectedColumn));
+        JMenuItemOperator item = menuOperator.showMenuItem(menuPath, new EqualsStringComparator());
+        item.push();
     }
     
     public JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier) {

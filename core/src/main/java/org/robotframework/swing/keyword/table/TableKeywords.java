@@ -166,6 +166,14 @@ public class TableKeywords extends IdentifierSupport {
         JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
         menuItem.push();
     }
+
+    @RobotKeyword("Selects an item from a table cell popup on the table cells that are selected.\n"
+        + "Separator for items is '|'.\n\n"
+        + "Example:\n"
+        + "| Select From Table Cell Popup Menu On Selected Cells | _myTable_ | _Cell Actions|Clear Cell Value_ | ")
+    public void selectFromTableCellPopupMenuOnSelectedCells(String identifier, String menuPath) {
+        createTableOperator(identifier).callPopupMenuItemOnSelectedCells(menuPath);
+    }
     
     @RobotKeyword("Fails if the given table cell popup menu is disabled.\n"
         + "Separator for items is '|'.\n\n"

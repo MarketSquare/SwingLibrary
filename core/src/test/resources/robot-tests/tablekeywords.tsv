@@ -145,6 +145,18 @@ Select From Table Cell Popup Menu
 	${newCellValue}=	getTableCellValue	${tableName}	2	1
 	shouldBeEqual	newValue	${newCellValue}
 
+Select From Popup On Selected Cells
+	selectTableCellArea	${tableName}	1	2	1	2
+	selectFromTableCellPopupMenuOnSelectedCells	${tableName}	Replace text in selected
+	${newCellValue}=	getTableCellValue	${tableName}	1	1
+	shouldBeEqual	newValue	${newCellValue}
+	${newCellValue}=	getTableCellValue	${tableName}	1	2
+	shouldBeEqual	newValue	${newCellValue}
+	${newCellValue}=	getTableCellValue	${tableName}	2	1
+	shouldBeEqual	newValue	${newCellValue}
+	${newCellValue}=	getTableCellValue	${tableName}	2	2
+	shouldBeEqual	newValue	${newCellValue}
+
 Select From Table Cell Popup Menu Accepts Integer Arguments
 	${rowAsInteger}=	convertToInteger	3
 	selectFromTableCellPopupMenu	${tableName}	${rowAsInteger}	1	Replace text
