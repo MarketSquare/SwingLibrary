@@ -113,7 +113,17 @@ public class TestTable extends JScrollPane {
                 }});
                 add(new JMenuItem("Enabled menuitem"));
             }});
-
+            
+            add(new MenuItemWithCommand("Replace text in selected") {
+                public void actionPerformed(ActionEvent e) {
+                    int[] cols = invoker.getSelectedColumns();
+                    int[] rows = invoker.getSelectedRows();
+                    for (int col : cols)
+                        for (int row : rows)
+                            invoker.setValueAt("newValue", row, col);
+                }
+            });
+            
             setOpaque(true);
             setLightWeightPopupEnabled(true);
             setName("popupMenu");
