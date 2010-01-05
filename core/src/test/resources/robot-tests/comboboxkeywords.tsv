@@ -38,11 +38,15 @@ Select From Combobox By Name
 	comboboxSelectionShouldBe	${comboboxName}	two
 	
 Select From Combobox By Name No Verification
-	selectFromComboBox	contentChangingCombobox	Foo	false
-	comboboxSelectionShouldBe	${comboboxName}	one
+	selectFromComboBox	contentChangingCombobox	0
+	comboboxSelectionShouldBe	contentChangingCombobox	Foo
+	selectFromComboBox	contentChangingCombobox	Quux
+	comboboxSelectionShouldBe	contentChangingCombobox	Quux
 
 Select From Combobox Works With Rendered Text
 	selectFromComboBox	comboboxWithRenderer	TWO
+	comboboxSelectionShouldBe	comboboxWithRenderer	TWO
+	selectFromComboBox	comboboxWithRenderer	1
 	comboboxSelectionShouldBe	comboboxWithRenderer	TWO
 
 Select From Combobbox Keyword Should Work With Indexes

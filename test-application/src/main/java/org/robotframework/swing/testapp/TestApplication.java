@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -158,10 +159,11 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
         if (event.getActionCommand().equals("comboBoxChanged")) {
             String selected = (String) getSelectedItem();
             List<String> items = new ArrayList<String>();
-            items.add(""+System.currentTimeMillis());
-            for (int i = 0, size = getItemCount(); i < size ; i++) {
-                String item = (String)getItemAt(i);
-                if (!item.equals(selected))
+            items.add(selected);
+            ComboBoxModel model = getModel();
+            for (int i=0, size = model.getSize(); i < size; i++) {
+                String item = (String) model.getElementAt(i);
+                if (item != selected)
                     items.add(item);
             }
             setModel(new DefaultComboBoxModel(items.toArray()));
