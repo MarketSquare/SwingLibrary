@@ -2,8 +2,6 @@ package org.robotframework.swing.combobox;
 
 import java.awt.Component;
 
-import javax.swing.ComboBoxModel;
-
 import jdave.Specification;
 import jdave.junit4.JDaveRunner;
 
