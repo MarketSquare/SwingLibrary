@@ -36,14 +36,12 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
             @Override
             protected Object executeWhenComboBoxOpen() {
                 int itemIndex = findItemIndex(comboItemIdentifier);
-                if (! isIndex(comboItemIdentifier))
-                    comboboxOperator.setVerification(false);
                 comboboxOperator.selectItem(itemIndex);
                 return null;
-            }            
+            }
         }.execute();
     }
-
+    
     private int findItemIndex(String comboItemIdentifier) {
         if (isIndex(comboItemIdentifier))
             return asIndex(comboItemIdentifier);
