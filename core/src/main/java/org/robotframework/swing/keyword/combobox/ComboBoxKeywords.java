@@ -32,10 +32,12 @@ public class ComboBoxKeywords {
     @RobotKeyword("Selects an item from a combobox.\n"
         + "The item selection is verified by default and can be disabled using the optional _verifySelection_ parameter with any value.\n\n"
     	+ "*N.B* If the _comboItemIdentifier_ is a numerical value it vill be interpreted as index.\n\n"
+    	+ "*N.B.* If the combobox changes its items on selection, disable the verification and optionally "
+    	+ "check the selection using the keyword `Get Selected Item From Combo Box`.\n\n"
         + "Example:\n"
         + "| Select From Combo Box | _myComboBox_ | _myItem_ | # Selects _'myItem'_ from combobox |\n"
         + "| Select From Combo Box | _myComboBox_ | _0_      | # Selects the first item from combobox |\n"
-        + "| Select From Combo Box | _myComboBox_ | _myItem_      | _don't verify_ | # Selects _'myItem'_ from combobox and doesn't verify that myItem is selected |\n")
+        + "| Select From Combo Box | _myComboBox_ | _myItem_ | _don't verify_ | # Selects _'myItem'_ from combobox and doesn't verify that myItem is selected |\n")
     @ArgumentNames({"identifier", "comboItemIdentifier", "*verifySelection"})
     public void selectFromComboBox(String identifier, String comboItemIdentifier, String[] verifySelection) {
         createOperator(identifier, verifySelection).selectItem(comboItemIdentifier);
