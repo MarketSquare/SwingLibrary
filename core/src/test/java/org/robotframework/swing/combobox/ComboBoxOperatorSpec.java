@@ -34,7 +34,6 @@ public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
         public void selectsItemWithName() {
             checking(new Expectations() {{
                 one(jComboboxOperator).pushComboButton();
-                one(jComboboxOperator).setVerification(false);
                 one(textExtractor).itemCount(); will(returnValue(1));
                 one(textExtractor).getTextFromRenderedComponent(0); will(returnValue(comboItemIdentifier));
                 one(jComboboxOperator).selectItem(0);
