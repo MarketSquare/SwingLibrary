@@ -37,11 +37,22 @@ Select From Combobox By Name
 	selectFromComboBox	${comboboxName}	two
 	comboboxSelectionShouldBe	${comboboxName}	two
 	
-Select From Combobox By Name No Verification
+Select From Changing Combobox By Name No Verification
+	selectFromComboBox	contentChangingCombobox	0	false
+	comboboxSelectionShouldBe	contentChangingCombobox	Foo
+	selectFromComboBox	contentChangingCombobox	Quux	false
+	comboboxSelectionShouldBe	contentChangingCombobox	Quux
+	selectFromComboBox	contentChangingCombobox	Removable	false
+	pushButton	resetContentChangingComboBox
+	
+Select From Changing Combobox By Name
+	selectFromComboBox	contentChangingCombobox	Bar
+	comboboxSelectionShouldBe	contentChangingCombobox	Bar
+	selectFromComboBox	contentChangingCombobox	0
+	comboboxSelectionShouldBe	contentChangingCombobox	Bar
+	pushButton	resetContentChangingComboBox
 	selectFromComboBox	contentChangingCombobox	0
 	comboboxSelectionShouldBe	contentChangingCombobox	Foo
-	selectFromComboBox	contentChangingCombobox	Quux
-	comboboxSelectionShouldBe	contentChangingCombobox	Quux
 
 Select From Combobox Works With Rendered Text
 	selectFromComboBox	comboboxWithRenderer	TWO

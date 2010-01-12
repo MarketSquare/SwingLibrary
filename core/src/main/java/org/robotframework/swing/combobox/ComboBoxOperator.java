@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.netbeans.jemmy.EventTool;
+import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
@@ -12,6 +13,7 @@ import org.robotframework.swing.operator.ComponentWrapper;
 public class ComboBoxOperator extends IdentifierSupport implements ComponentWrapper {
     private final JComboBoxOperator comboboxOperator;
     private ItemTextExtractor itemTextExtractor;
+    private boolean verificationEnabled = true;
 
     public ComboBoxOperator(JComboBoxOperator jComboboxOperator) {
         comboboxOperator = jComboboxOperator;
@@ -24,6 +26,7 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
     }
 
     public void disableVerification() {
+        verificationEnabled = false;
         comboboxOperator.setVerification(false);
     }
     
@@ -36,12 +39,32 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
             @Override
             protected Object executeWhenComboBoxOpen() {
                 int itemIndex = findItemIndex(comboItemIdentifier);
+                comboboxOperator.setVerification(false);
                 comboboxOperator.selectItem(itemIndex);
+                if (verificationEnabled)
+                    verifyItemSelection(comboItemIdentifier);
                 return null;
             }
         }.execute();
     }
-    
+
+    private void verifyItemSelection(String comboItemIdentifier) {
+        try {
+            Waiter waiter = ComboboxSelectedItemWaitable.getWaiter(this, comboItemIdentifier);
+            Object selectedItem = waiter.waitAction(null);
+            boolean error = false;
+            if (isIndex(comboItemIdentifier)) {
+                error = ! Integer.valueOf(comboItemIdentifier).equals((Integer)selectedItem);
+            } else {
+                error = ! comboItemIdentifier.equals((String)selectedItem);
+            }
+            if (error)
+                throw new RuntimeException(comboItemIdentifier+" != "+selectedItem);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private int findItemIndex(String comboItemIdentifier) {
         if (isIndex(comboItemIdentifier))
             return asIndex(comboItemIdentifier);
@@ -103,5 +126,9 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
         }
 
         protected abstract Object executeWhenComboBoxOpen();
+    }
+    
+    public JComboBoxOperator getComboboxOperator() {
+        return comboboxOperator;
     }
 }
