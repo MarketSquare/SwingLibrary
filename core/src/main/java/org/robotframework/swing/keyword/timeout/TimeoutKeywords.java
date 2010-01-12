@@ -26,7 +26,7 @@ public class TimeoutKeywords {
         "FrameWaiter.WaitFrameTimeout", "WindowWaiter.WaitWindowTimeout", "ComponentOperator.WaitComponentTimeout",
         "JMenuOperator.WaitPopupTimeout", "JTreeOperator.WaitNodeExpandedTimeout", "JTreeOperator.WaitNextNodeTimeout",
         "JTreeOperator.WaitNodeVisibleTimeout", "ComponentOperator.WaitStateTimeout", "JComboBoxOperator.WaitListTimeout", 
-        "JListOperator.WaitFindItemIndexTimeout" };
+        "JComboboxOperator.WaitGetSelectedItemTimeout", "JListOperator.WaitFindItemIndexTimeout" };
 
     @RobotKeyword("Sets the jemmy timeout used for waiting a component to appear.\n"
         + "Timeout names are listed here: http://jemmy.netbeans.org/OperatorsEnvironment.html#timeouts.\n"
@@ -49,11 +49,12 @@ public class TimeoutKeywords {
         + "| WindowWaiter.WaitWindowTimeout | Time to wait window displayed |\n"
         + "| ComponentOperator.WaitComponentTimeout | Time to wait component displayed |\n"
         + "| ComponentOperator.WaitStateTimeout | Used for example in combobox selection |\n"
+        + "| JComboboxOperator.WaitGetSelectedItemTimeout | Time to wait for combobox selected item fetching |\n"
         + "| JMenuOperator.WaitPopupTimeout | Time to wait popup displayed |\n"
         + "| JTreeOperator.WaitNodeExpandedTimeout | Time to wait node expanded |\n"
         + "| JTreeOperator.WaitNextNodeTimeout | Time to wait next node displayed |\n"
-        + "| JTreeOperator.WaitNodeVisibleTimeout | Time to wait node visible |"
-        + "| JListOperator.WaitFindItemIndexTimeout | Time to wait for list item to appear | \n\n"
+        + "| JTreeOperator.WaitNodeVisibleTimeout | Time to wait node visible |\n"
+        + "| JListOperator.WaitFindItemIndexTimeout | Time to wait for list item to appear |\n\n"
         + "Example:\n"
         + "| Set Jemmy Timeouts | 3 |\n")
     public void setJemmyTimeouts(String timeoutInSeconds) {

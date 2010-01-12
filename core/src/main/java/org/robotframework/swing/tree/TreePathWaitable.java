@@ -25,14 +25,17 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.Waitable;
+import org.netbeans.jemmy.Waiter;
+import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.javalib.util.ArrayUtil;
+import org.robotframework.swing.common.TimeoutCopier;
 import org.springframework.util.ObjectUtils;
 
 public class TreePathWaitable implements Waitable {
     private final String path;
-    private final TreeOperator treeOperator;
+    private final JTreeOperator treeOperator;
 
-    public TreePathWaitable(TreeOperator treeOperator, String path) {
+    private TreePathWaitable(JTreeOperator treeOperator, String path) {
         this.treeOperator = treeOperator;
         this.path = path;
     }
@@ -115,5 +118,11 @@ public class TreePathWaitable implements Waitable {
             children.add(model.getChild(node, i));
         }
         return children.iterator();
+    }
+    
+    public static Waiter getWaiter(JTreeOperator treeOperator, String path) {
+        Waiter waiter = new Waiter(new TreePathWaitable(treeOperator, path));
+        waiter.setTimeouts(new TimeoutCopier(treeOperator, "JTreeOperator.WaitNextNodeTimeout").getTimeouts());
+        return waiter;
     }
 }

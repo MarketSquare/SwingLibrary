@@ -44,6 +44,7 @@ public class TreeOperator implements ComponentWrapper {
     protected TreePathFactory treePathFactory = new TreePathFactory(this);
     protected JTreeOperator jTreeOperator;
 
+
     public TreeOperator(ContainerOperator containerOperator, ComponentChooser componentChooser) {
         jTreeOperator = new JTreeOperator(containerOperator, componentChooser);
     }
@@ -65,7 +66,8 @@ public class TreeOperator implements ComponentWrapper {
 
     public TreePath findPath(final String treePath) {
         try {
-            return (TreePath) createWaiter(treePath).waitAction(null);
+            Waiter waiter = TreePathWaitable.getWaiter(jTreeOperator, treePath);
+            return (TreePath) waiter.waitAction(null);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -216,17 +218,8 @@ public class TreeOperator implements ComponentWrapper {
     protected TreePath createTreePath(String nodeIdentifier) {
         return treePathFactory.createTreePath(nodeIdentifier);
     }
-    
-    protected Waiter createWaiter(String treePath) {
-        Waiter waiter = new Waiter(new TreePathWaitable(this, treePath));
-        waiter.setTimeouts(copyTimeout("JTreeOperator.WaitNextNodeTimeout"));
-        return waiter;
-    }
 
-    protected Timeouts copyTimeout(String timeout) {
-        Timeouts timeouts = jTreeOperator.getTimeouts();
-        Timeouts times = timeouts.cloneThis();
-        times.setTimeout("Waiter.WaitingTime", timeouts.getTimeout(timeout));
-        return times;
+    public JTreeOperator getTreeOperator() {
+        return jTreeOperator;
     }
 }

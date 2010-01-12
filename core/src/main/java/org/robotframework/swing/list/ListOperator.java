@@ -71,22 +71,10 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
 
     private int findIndexWithWait(String itemIdentifier) {
         try {
-            return (Integer) createWaiter(itemIdentifier).waitAction(null);
+            Waiter waiter = ListFindItemIndexWaitable.getWaiter(jListOperator, itemIdentifier);
+            return (Integer) waiter.waitAction(null);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
-    
-    protected Waiter createWaiter(String itemIdentifier) {
-        Waiter waiter = new Waiter(new ListFindItemIndexWaitable(jListOperator, itemIdentifier));
-        waiter.setTimeouts(copyTimeout(jListOperator, "JListOperator.WaitFindItemIndexTimeout"));
-        return waiter;
-    }
-    
-    protected Timeouts copyTimeout(JComponentOperator operator, String timeout) {
-        Timeouts timeouts = operator.getTimeouts();
-        Timeouts times = timeouts.cloneThis();
-        times.setTimeout("Waiter.WaitingTime", timeouts.getTimeout(timeout));
-        return times;
     }
 }
