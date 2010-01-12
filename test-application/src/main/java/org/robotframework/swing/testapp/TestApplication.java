@@ -97,7 +97,16 @@ public class TestApplication {
                 }
             });
         }});
-        panel.add(new ContentChangingCombobox());
+        final ContentChangingCombobox contentChangingComboBox = new ContentChangingCombobox();
+        panel.add(new JButton("Reset Content Changing Combobox") {{
+            setName("resetContentChangingComboBox");
+            addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    contentChangingComboBox.resetModel();
+                }
+            });
+        }});
+        panel.add(contentChangingComboBox);
         panel.add(new TestLabel());
         panel.add(new TestTable("testTable", getTestTableData()));
         panel.add(new TestTable("anotherTable", getTestTableData()));
@@ -147,11 +156,14 @@ public class TestApplication {
 
 class ContentChangingCombobox extends JComboBox implements ActionListener {
     
+    private static final String REMOVABLE_ITEM = "Removable";
+    private static final String[] ITEMS = new String[]{"Foo", "Bar", "Quux", REMOVABLE_ITEM};
+
     public ContentChangingCombobox() {
         setEditable(true);
         setName("contentChangingCombobox");
         addActionListener(this);
-        setModel(new DefaultComboBoxModel(new String[]{"Foo", "Bar", "Quux"}));
+        setModel(new DefaultComboBoxModel(ITEMS));
     }
 
     @Override
@@ -159,7 +171,8 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
         if (event.getActionCommand().equals("comboBoxChanged")) {
             String selected = (String) getSelectedItem();
             List<String> items = new ArrayList<String>();
-            items.add(selected);
+            if (! selected.equals(REMOVABLE_ITEM))
+                items.add(selected);
             ComboBoxModel model = getModel();
             for (int i=0, size = model.getSize(); i < size; i++) {
                 String item = (String) model.getElementAt(i);
@@ -169,7 +182,11 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
             setModel(new DefaultComboBoxModel(items.toArray()));
             setSelectedIndex(0);
         }
-    }              
+    }  
+    
+    public void resetModel() {
+        setModel(new DefaultComboBoxModel(ITEMS));
+    }
 }
 
 class PopupPanel extends JPanel {
