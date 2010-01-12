@@ -52,14 +52,10 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
         try {
             Waiter waiter = ComboboxSelectedItemWaitable.getWaiter(this, comboItemIdentifier);
             Object selectedItem = waiter.waitAction(null);
-            boolean error = false;
-            if (isIndex(comboItemIdentifier)) {
-                error = ! Integer.valueOf(comboItemIdentifier).equals((Integer)selectedItem);
-            } else {
-                error = ! comboItemIdentifier.equals((String)selectedItem);
-            }
-            if (error)
-                throw new RuntimeException(comboItemIdentifier+" != "+selectedItem);
+            if (selectedItem == null)
+                throw new RuntimeException("Expected selection to be '"+comboItemIdentifier+"' but no selection found");
+            if (! comboItemIdentifier.equals(selectedItem.toString()))
+                throw new RuntimeException("Expected selection to be '"+comboItemIdentifier+"' but was '"+selectedItem+"'");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
