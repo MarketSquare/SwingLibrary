@@ -34,9 +34,19 @@ public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
         public void selectsItemWithName() {
             checking(new Expectations() {{
                 one(jComboboxOperator).pushComboButton();
+                one(jComboboxOperator).setVerification(false);
                 one(textExtractor).itemCount(); will(returnValue(1));
                 one(textExtractor).getTextFromRenderedComponent(0); will(returnValue(comboItemIdentifier));
                 one(jComboboxOperator).selectItem(0);
+                one(jComboboxOperator).hidePopup();
+                expectSelectionVerification();
+            }
+
+            private void expectSelectionVerification() {
+                one(jComboboxOperator).pushComboButton();
+                one(jComboboxOperator).getTimeouts();
+                one(jComboboxOperator).getSelectedIndex();
+                one(textExtractor).getTextFromRenderedComponent(0); will(returnValue(comboItemIdentifier));
                 one(jComboboxOperator).hidePopup();
             }});
             
@@ -44,13 +54,21 @@ public class ComboBoxOperatorSpec extends Specification<ComboBoxOperator> {
         }
         
         public void selectsItemWithIndex() {
+            final int index = 0;
             checking(new Expectations() {{
                 one(jComboboxOperator).pushComboButton();
-                one(jComboboxOperator).selectItem(1);
+                one(jComboboxOperator).setVerification(false);
+                one(jComboboxOperator).selectItem(index);
                 one(jComboboxOperator).hidePopup();
+                expectSelectionVerification();
+            }
+            
+            private void expectSelectionVerification() {
+                one(jComboboxOperator).getTimeouts();
+                one(jComboboxOperator).getSelectedIndex(); will(returnValue(new Integer(index)));
             }});
             
-            context.selectItem("1");
+            context.selectItem(""+index);
         }
         
         public void getsSelectedItem() {
