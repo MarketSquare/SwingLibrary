@@ -13,7 +13,6 @@ import org.robotframework.swing.operator.ComponentWrapper;
 public class ComboBoxOperator extends IdentifierSupport implements ComponentWrapper {
     private final JComboBoxOperator comboboxOperator;
     private ItemTextExtractor itemTextExtractor;
-    private boolean verificationEnabled = true;
 
     public ComboBoxOperator(JComboBoxOperator jComboboxOperator) {
         comboboxOperator = jComboboxOperator;
@@ -26,7 +25,6 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
     }
 
     public void disableVerification() {
-        verificationEnabled = false;
         comboboxOperator.setVerification(false);
     }
     
@@ -39,6 +37,7 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
             @Override
             protected Object executeWhenComboBoxOpen() {
                 int itemIndex = findItemIndex(comboItemIdentifier);
+                boolean verificationEnabled = comboboxOperator.getVerification();
                 comboboxOperator.setVerification(false);
                 comboboxOperator.selectItem(itemIndex);
                 if (verificationEnabled)
