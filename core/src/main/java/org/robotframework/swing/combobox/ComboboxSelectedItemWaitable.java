@@ -3,6 +3,7 @@ package org.robotframework.swing.combobox;
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.common.TimeoutName;
 import org.robotframework.swing.common.TimeoutCopier;
 
 public class ComboboxSelectedItemWaitable implements Waitable {
@@ -30,7 +31,7 @@ public class ComboboxSelectedItemWaitable implements Waitable {
     public static Waiter getWaiter(ComboBoxOperator comboboxOperator, String itemIdentifier) {
         Waiter waiter = new Waiter(new ComboboxSelectedItemWaitable(comboboxOperator, itemIdentifier));
         waiter.setTimeouts(new TimeoutCopier(comboboxOperator.getComboboxOperator(), 
-                                             "JComboboxOperator.WaitGetSelectedItemTimeout").getTimeouts());
+                                             TimeoutName.J_COMBOBOX_OPERATOR_WAIT_GET_SELECTED_ITEM_TIMEOUT).getTimeouts());
         return waiter;
     }
 }

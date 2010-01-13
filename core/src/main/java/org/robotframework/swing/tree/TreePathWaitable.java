@@ -28,6 +28,7 @@ import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.javalib.util.ArrayUtil;
+import org.robotframework.swing.common.TimeoutName;
 import org.robotframework.swing.common.TimeoutCopier;
 import org.springframework.util.ObjectUtils;
 
@@ -122,7 +123,8 @@ public class TreePathWaitable implements Waitable {
     
     public static Waiter getWaiter(JTreeOperator treeOperator, String path) {
         Waiter waiter = new Waiter(new TreePathWaitable(treeOperator, path));
-        waiter.setTimeouts(new TimeoutCopier(treeOperator, "JTreeOperator.WaitNextNodeTimeout").getTimeouts());
+        waiter.setTimeouts(new TimeoutCopier(treeOperator, 
+                                             TimeoutName.J_TREE_OPERATOR_WAIT_NEXT_NODE_TIMEOUT).getTimeouts());
         return waiter;
     }
 }

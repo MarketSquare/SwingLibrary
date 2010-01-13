@@ -4,6 +4,7 @@ import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.chooser.ListItemChooser;
+import org.robotframework.swing.common.TimeoutName;
 import org.robotframework.swing.common.TimeoutCopier;
 
 public class ListFindItemIndexWaitable implements Waitable {
@@ -29,7 +30,8 @@ public class ListFindItemIndexWaitable implements Waitable {
     
     public static Waiter getWaiter(JListOperator listOperator, String itemIdentifier) {
         Waiter waiter = new Waiter(new ListFindItemIndexWaitable(listOperator, itemIdentifier));
-        waiter.setTimeouts(new TimeoutCopier(listOperator, "JListOperator.WaitFindItemIndexTimeout").getTimeouts());
+        waiter.setTimeouts(new TimeoutCopier(listOperator, 
+                                             TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT).getTimeouts());
         return waiter;
     }
 }
