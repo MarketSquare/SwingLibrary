@@ -38,7 +38,7 @@ public class TimeoutKeywords {
         TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT };
 
     @RobotKeyword("Sets the jemmy timeout used for waiting a component to appear.\n"
-        + "Timeout names are listed here: http://jemmy.netbeans.org/OperatorsEnvironment.html#timeouts.\n"
+        + "Timeout names are listed here: https://jemmy.dev.java.net/OperatorsEnvironment.html#timeouts.\n"
         + "Returns the old timeout setting value.\n\n"
         + "Example:\n"
         + "| Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n"
