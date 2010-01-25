@@ -18,6 +18,8 @@ package org.robotframework.swing.common;
 
 
 public class IdentifierSupport {
+    public final static String REGEXP_IDENTIFIER_PREFIX = "regexp=";
+
     public int asIndex(String identifier) {
         return Integer.parseInt(identifier);
     }

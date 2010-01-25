@@ -20,9 +20,13 @@ import junit.framework.Assert;
 
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TimeoutExpiredException;
+import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.Operator.DefaultStringComparator;
+import org.netbeans.jemmy.util.RegExComparator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.dialog.DialogOperator;
 import org.robotframework.swing.dialog.DialogOperatorFactory;
@@ -36,17 +40,60 @@ public class DialogKeywords {
     private IComponentConditionResolver dialogExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
     @RobotKeyword("Selects a dialog as current context.\n\n"
+    	+ "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with 'regexp='.\n"
+    	+ "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
+    	+ "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
         + "Example:\n"
-        + "| Select Dialog  | _About_ |\n")
+        + "| Select Dialog  | _About_ |\n"
+        + "| Select Dialog  | _regexp=A.*_ | Selects a dialog starting with 'A' | \n")
     public void selectDialog(String identifier) {
-        Context.setContext(operatorFactory.createOperator(identifier));
+        new RegExpCheckingDialogAction(identifier) {
+            @Override
+            public void execute(String id) {
+                Context.setContext(operatorFactory.createOperator(id));
+            }
+        }.execute();
     }
-
+    
     @RobotKeyword("Closes a dialog.\n\n"
+        + "*N.B.* Regular expression can be used to close the dialog by prefixing the identifier with 'regexp='.\n"
+        + "Please see more about regexp usage at `Select Dialog` keyword.\n\n"
         + "Example:\n"
-        + "| Close Dialog | _About_ |\n")
+        + "| Close Dialog | _About_ |\n"
+        + "| Close Dialog  | _regexp=A.*_ | Closes a dialog starting with 'A' | \n")
     public void closeDialog(String identifier) {
-        operatorFactory.createOperator(identifier).close();
+        new RegExpCheckingDialogAction(identifier) {
+            @Override
+            public void execute(String id) {
+                operatorFactory.createOperator(id).close();
+            }
+        }.execute();
+    }
+    
+    public abstract class RegExpCheckingDialogAction {
+        private String identifier;
+        public RegExpCheckingDialogAction(String identifier) {this.identifier = identifier;}
+        public void execute() {
+            try {
+                if (isRegExpIdentifier()) {
+                    setRegExpComparatorAsGlobalDeafault();
+                    identifier = identifier.replaceFirst(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX, "");
+                }
+                execute(identifier);
+            } finally {
+                setDefaultStringComparatorAsGlobalDefault();
+            }  
+        }
+        private boolean isRegExpIdentifier() {
+            return identifier.startsWith(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX);
+        }
+        private void setRegExpComparatorAsGlobalDeafault() {
+            ComponentOperator.setDefaultStringComparator(new RegExComparator());
+        }
+        private void setDefaultStringComparatorAsGlobalDefault() {
+            ComponentOperator.setDefaultStringComparator(new DefaultStringComparator(false, false));
+        }
+        public abstract void execute(String id);
     }
 
     @RobotKeyword("Fails if the dialog is not open.\n\n"

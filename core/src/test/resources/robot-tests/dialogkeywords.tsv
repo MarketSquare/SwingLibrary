@@ -16,6 +16,22 @@ Select Dialog
 	contains	${context}	Dialog
 	[teardown]	closeTestDialog
 
+Select Dialog Using RegExp	
+	[setup]	openTestDialog
+	selectDialog	regexp=M.s{2}a.*
+	${context}=	getCurrentContextSourceAsString
+	contains	${context}	Dialog
+	[teardown]	closeTestDialog
+	
+Select Dialog Using RegExp Without Prefix Should Fail	
+	[setup]	openTestDialog
+	selectDialog	regexp=M.s{2}a.*
+	${context}=	getCurrentContextSourceAsString
+	contains	${context}	Dialog
+	select main window
+	run keyword and expect error	Dialog with title "M.s{2}a.*	selectDialog	M.s{2}a.*
+	[teardown]	closeTestDialog
+
 Close Dialog
 	[setup]	openTestDialog
 	closeTestDialog
