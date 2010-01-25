@@ -4,10 +4,8 @@ import java.awt.Component;
 import java.util.List;
 
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
