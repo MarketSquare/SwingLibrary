@@ -44,4 +44,12 @@ public class IdentifierSupport {
             return Integer.parseInt(args[0]);
         }
     }
+    
+    public static boolean isRegExpPrefixed(String identifier) {
+        return identifier.startsWith(REGEXP_IDENTIFIER_PREFIX);
+    }
+    
+    public static String removeRegExpPrefix(String identifier) {
+        return identifier.replaceFirst(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX, "");
+    }
 }

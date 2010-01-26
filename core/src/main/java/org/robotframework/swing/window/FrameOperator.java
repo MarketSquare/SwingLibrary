@@ -15,15 +15,40 @@
  */
 package org.robotframework.swing.window;
 
+import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.util.RegExComparator;
+import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 public class FrameOperator extends JFrameOperator implements ComponentWrapper {
-    public FrameOperator(int index) {
+
+    public static FrameOperator newOperatorFor(int index) {
+        return new FrameOperator(index);
+    }
+    
+    private FrameOperator(int index) {
         super(index);
     }
     
-    public FrameOperator(String title) {
+    public static FrameOperator newOperatorFor(String name) {
+        if (IdentifierSupport.isRegExpPrefixed(name)) {
+            String identifier = IdentifierSupport.removeRegExpPrefix(name);
+            return new FrameOperator(createRegExpChooser(identifier));
+        }
+        return new FrameOperator(name);
+    }
+
+    private static ComponentChooser createRegExpChooser(String title) {
+        return new JFrameFinder(new FrameByTitleFinder(title, new RegExComparator()));
+    }
+
+    private FrameOperator(ComponentChooser chooser) {
+        super(chooser);
+    }
+
+    private FrameOperator(String title) {
         super(title);
     }
+    
 }

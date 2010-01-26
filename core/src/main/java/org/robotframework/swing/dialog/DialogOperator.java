@@ -15,6 +15,7 @@
  */
 package org.robotframework.swing.dialog;
 
+import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.util.RegExComparator;
 import org.robotframework.swing.common.IdentifierSupport;
@@ -31,28 +32,18 @@ public class DialogOperator extends JDialogOperator implements ComponentWrapper 
     }
 
     public static DialogOperator newOperatorFor(String title) {
-        if (titleIsRegExpPrefixed(title)) {
-            String identifier = removeRegExpPrefix(title);
-            JDialogFinder chooser = createRegExpComponentChooser(identifier);
-            return new DialogOperator(chooser);
+        if (IdentifierSupport.isRegExpPrefixed(title)) {
+            String identifier = IdentifierSupport.removeRegExpPrefix(title);
+            return new DialogOperator(createRegExpComponentChooser(identifier));
         }
         return new DialogOperator(title);
     }
-
-    private static boolean titleIsRegExpPrefixed(String title) {
-        return title.startsWith(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX);
-    }
-
-    private static String removeRegExpPrefix(String title) {
-        return title.replaceFirst(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX, "");
-    }
     
-    private static JDialogFinder createRegExpComponentChooser(String identifier) {
-        DialogByTitleFinder finder = new DialogByTitleFinder(identifier, new RegExComparator());
-        return new JDialogFinder(finder);
+    private static ComponentChooser createRegExpComponentChooser(String identifier) {
+        return new JDialogFinder(new DialogByTitleFinder(identifier, new RegExComparator()));
     }
 
-    private DialogOperator(JDialogFinder chooser) {
+    private DialogOperator(ComponentChooser chooser) {
         super(chooser);
     }
     

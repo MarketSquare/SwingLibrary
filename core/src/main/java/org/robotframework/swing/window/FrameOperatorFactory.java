@@ -20,10 +20,10 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 public class FrameOperatorFactory extends IdentifierParsingOperatorFactory<FrameOperator> {
     public FrameOperator createOperatorByIndex(int index) {
-        return new FrameOperator(index);
+        return FrameOperator.newOperatorFor(index);
     }
 
     public FrameOperator createOperatorByName(String name) {
-        return new FrameOperator(name);
+        return FrameOperator.newOperatorFor(name);
     }
 }

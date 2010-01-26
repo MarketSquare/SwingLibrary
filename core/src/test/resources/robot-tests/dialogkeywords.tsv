@@ -36,6 +36,11 @@ Close Dialog
 	[setup]	openTestDialog
 	closeTestDialog
 	dialogShouldNotBeOpen	${dialogTitle}
+	
+Close Dialog With RegExp
+	[setup]	openTestDialog
+	closeDialog	regexp=M.s{2}a.*
+	dialogShouldNotBeOpen	${dialogTitle}
 
 Dialog Should Not Be Open
 	dialogShouldNotBeOpen	Non existent Dialog
