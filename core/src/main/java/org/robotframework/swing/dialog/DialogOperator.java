@@ -16,14 +16,47 @@
 package org.robotframework.swing.dialog;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.util.RegExComparator;
+import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 public class DialogOperator extends JDialogOperator implements ComponentWrapper {
-    public DialogOperator(int index) {
-        super(index);
+
+    public static DialogOperator newOperatorFor(int index) {
+        return new DialogOperator(index);
     }
     
-    public DialogOperator(String title) {
+    private DialogOperator(int index) {
+        super(index);
+    }
+
+    public static DialogOperator newOperatorFor(String title) {
+        if (titleIsRegExpPrefixed(title)) {
+            String identifier = removeRegExpPrefix(title);
+            JDialogFinder chooser = createRegExpComponentChooser(identifier);
+            return new DialogOperator(chooser);
+        }
+        return new DialogOperator(title);
+    }
+
+    private static boolean titleIsRegExpPrefixed(String title) {
+        return title.startsWith(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX);
+    }
+
+    private static String removeRegExpPrefix(String title) {
+        return title.replaceFirst(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX, "");
+    }
+    
+    private static JDialogFinder createRegExpComponentChooser(String identifier) {
+        DialogByTitleFinder finder = new DialogByTitleFinder(identifier, new RegExComparator());
+        return new JDialogFinder(finder);
+    }
+
+    private DialogOperator(JDialogFinder chooser) {
+        super(chooser);
+    }
+    
+    private DialogOperator(String title) {
         super(title);
     }
 }

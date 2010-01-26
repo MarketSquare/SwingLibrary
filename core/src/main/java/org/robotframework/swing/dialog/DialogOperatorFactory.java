@@ -20,10 +20,10 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 
 public class DialogOperatorFactory extends IdentifierParsingOperatorFactory<DialogOperator> {
     public DialogOperator createOperatorByIndex(int index) {
-        return new DialogOperator(index);
+        return DialogOperator.newOperatorFor(index);
     }
 
     public DialogOperator createOperatorByName(String name) {
-        return new DialogOperator(name);
+        return DialogOperator.newOperatorFor(name);
     }
 }

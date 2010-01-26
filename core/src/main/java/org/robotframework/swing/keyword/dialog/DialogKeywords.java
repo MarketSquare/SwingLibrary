@@ -20,13 +20,9 @@ import junit.framework.Assert;
 
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TimeoutExpiredException;
-import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.Operator.DefaultStringComparator;
-import org.netbeans.jemmy.util.RegExComparator;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.dialog.DialogOperator;
 import org.robotframework.swing.dialog.DialogOperatorFactory;
@@ -47,12 +43,7 @@ public class DialogKeywords {
         + "| Select Dialog  | _About_ |\n"
         + "| Select Dialog  | _regexp=A.*_ | Selects a dialog starting with 'A' | \n")
     public void selectDialog(String identifier) {
-        new RegExpCheckingDialogAction(identifier) {
-            @Override
-            public void execute(String id) {
-                Context.setContext(operatorFactory.createOperator(id));
-            }
-        }.execute();
+        Context.setContext(operatorFactory.createOperator(identifier));
     }
     
     @RobotKeyword("Closes a dialog.\n\n"
@@ -62,38 +53,7 @@ public class DialogKeywords {
         + "| Close Dialog | _About_ |\n"
         + "| Close Dialog  | _regexp=A.*_ | Closes a dialog starting with 'A' | \n")
     public void closeDialog(String identifier) {
-        new RegExpCheckingDialogAction(identifier) {
-            @Override
-            public void execute(String id) {
-                operatorFactory.createOperator(id).close();
-            }
-        }.execute();
-    }
-    
-    public abstract class RegExpCheckingDialogAction {
-        private String identifier;
-        public RegExpCheckingDialogAction(String identifier) {this.identifier = identifier;}
-        public void execute() {
-            try {
-                if (isRegExpIdentifier()) {
-                    setRegExpComparatorAsGlobalDeafault();
-                    identifier = identifier.replaceFirst(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX, "");
-                }
-                execute(identifier);
-            } finally {
-                setDefaultStringComparatorAsGlobalDefault();
-            }  
-        }
-        private boolean isRegExpIdentifier() {
-            return identifier.startsWith(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX);
-        }
-        private void setRegExpComparatorAsGlobalDeafault() {
-            ComponentOperator.setDefaultStringComparator(new RegExComparator());
-        }
-        private void setDefaultStringComparatorAsGlobalDefault() {
-            ComponentOperator.setDefaultStringComparator(new DefaultStringComparator(false, false));
-        }
-        public abstract void execute(String id);
+        operatorFactory.createOperator(identifier).close();
     }
 
     @RobotKeyword("Fails if the dialog is not open.\n\n"
