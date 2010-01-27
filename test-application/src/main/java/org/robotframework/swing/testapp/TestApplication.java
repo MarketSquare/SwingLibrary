@@ -84,6 +84,14 @@ public class TestApplication {
         panel.add(new TestTextField());
         panel.add(new TestButton());
         panel.add(new TestList());
+        panel.add(new TestList() {{
+            setName("listWithRenderer");
+            setCellRenderer(new DefaultListCellRenderer() {
+                public String getText() {
+                    return super.getText().toUpperCase();
+                }
+            });
+        }});
         panel.add(new TestCheckBox("Test Checkbox"));
         panel.add(new TestCheckBox("Test Checkbox 2"));
         panel.add(new TestCheckBox("Test Checkbox 3"));
