@@ -2,23 +2,23 @@ package org.robotframework.swing.combobox;
 
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.Waiter;
-import org.robotframework.swing.common.IdentifierSupport;
-import org.robotframework.swing.common.TimeoutName;
+import org.robotframework.swing.common.Identifier;
 import org.robotframework.swing.common.TimeoutCopier;
+import org.robotframework.swing.common.TimeoutName;
 
 public class ComboboxSelectedItemWaitable implements Waitable {
 
     private ComboBoxOperator comboboxOperator;
-    private String itemIdentifier;
+    private Identifier itemIdentifier;
     
     private ComboboxSelectedItemWaitable(ComboBoxOperator comboboxOperator, String itemIdentifier) {
         this.comboboxOperator = comboboxOperator;
-        this.itemIdentifier = itemIdentifier;
+        this.itemIdentifier = new Identifier(itemIdentifier);
     }
     
     /**@return The selected item or selected index, depending on the itemIdentifier.*/
     public Object actionProduced(Object obj) {
-        if (new IdentifierSupport().isIndex(itemIdentifier))
+        if (itemIdentifier.isIndex())
             return new Integer(comboboxOperator.getComboboxOperator()
                                                .getSelectedIndex());
         return comboboxOperator.getSelectedItem();

@@ -12,17 +12,23 @@ import org.robotframework.swing.operator.ComponentWrapper;
 
 public class ListOperator extends IdentifierSupport implements ComponentWrapper {
     private JListOperator jListOperator;
+    private CellTextExtractor itemTextExtractor;
 
     public ListOperator(ContainerOperator container, ComponentChooser chooser) {
-        jListOperator = new JListOperator(container, chooser);
+        this(new JListOperator(container, chooser));
     }
 
     public ListOperator(ContainerOperator container, int index) {
-        jListOperator = new JListOperator(container, index);
+        this(new JListOperator(container, index));
     }
     
     public ListOperator(JListOperator jListOperator) {
+        this(jListOperator, new CellTextExtractor(jListOperator)); 
+    }
+    
+    public ListOperator(JListOperator jListOperator, CellTextExtractor itemTextExtractor) {
         this.jListOperator = jListOperator;
+        this.itemTextExtractor = itemTextExtractor; 
     }
     
     public void clickOnItem(String itemIdentifier, int clickCount) {
@@ -34,7 +40,8 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
     }
     
     public Object getSelectedValue() {
-        return jListOperator.getSelectedValue();
+        int selectedIndex = jListOperator.getSelectedIndex();
+        return itemTextExtractor.getTextFromRenderedComponent(selectedIndex);
     }
     
     public Component getSource() {
@@ -42,7 +49,8 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
     }
 
     public int getSize() {
-        return jListOperator.getModel().getSize();
+        return jListOperator.getModel()
+                            .getSize();
     }
 
     public void selectAll() {
@@ -66,13 +74,15 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
             return asIndex(itemIdentifier);
         return findIndexWithWait(itemIdentifier);
     }
-
+        
     private int findIndexWithWait(String itemIdentifier) {
         try {
-            Waiter waiter = ListFindItemIndexWaitable.getWaiter(jListOperator, itemIdentifier);
+            Waiter waiter = ListFindItemIndexWaitable.getWaiter(itemTextExtractor, 
+                                                                jListOperator, 
+                                                                itemIdentifier);
             return (Integer) waiter.waitAction(null);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
+    }    
 }

@@ -1,7 +1,7 @@
 package org.robotframework.swing.list;
 
 import java.awt.Component;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.ListModel;
 
@@ -9,7 +9,6 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.chooser.ListItemChooser;
@@ -18,10 +17,12 @@ import org.robotframework.swing.chooser.ListItemChooser;
 public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {
     public class Any {
         private JListOperator jListOperator;
+        private CellTextExtractor textExtractor;
 
         public ListOperator create() {
             jListOperator = mock(JListOperator.class);
-            return new ListOperator(jListOperator);
+            textExtractor = mock(CellTextExtractor.class);
+            return new ListOperator(jListOperator, textExtractor);
         }
         
         public void clearsSelection() {
@@ -31,15 +32,7 @@ public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {
             
             context.clearSelection();   
         }
-        
-        public void getsSelectedValue() {
-            checking(new Expectations() {{
-                one(jListOperator).getSelectedValue(); will(returnValue("someValue"));
-            }});
-            
-            specify(context.getSelectedValue(), "someValue");
-        }
-        
+
         public void getsSize() {
             checking(new Expectations() {{
                 ListModel model = mock(ListModel.class);
@@ -63,15 +56,16 @@ public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {
         }
         
         public void selectsItem() {
-            final int[] indices = new int[] { 1, 2, 3, 4 };
             checking(new Expectations() {{
-                one(jListOperator).findItemIndex(with(any(ListItemChooser.class))); will(returnValue(1));
-                one(jListOperator).findItemIndex(with(any(ListItemChooser.class))); will(returnValue(4));
-                one(jListOperator).selectItems(indices);
-                ignoring(jListOperator).getTimeouts();
+                atLeast(1).of(textExtractor).itemCount(); will(returnValue(4));
+                ignoring(textExtractor).getTextFromRenderedComponent(0); will(returnValue("one"));
+                ignoring(textExtractor).getTextFromRenderedComponent(1); will(returnValue("2"));
+                ignoring(textExtractor).getTextFromRenderedComponent(2); will(returnValue("3"));
+                ignoring(textExtractor).getTextFromRenderedComponent(3); will(returnValue("four"));
+                ignoring(jListOperator);
             }});
             
-            context.selectItems(new ArrayList<String>() {{ add("one"); add("2"); add("3"); add("four"); }});
+            context.selectItems(Arrays.asList("one", "2", "3", "four"));
         }
         
         public void getsSource() {
@@ -84,15 +78,17 @@ public class ListOperatorSpec extends MockSupportSpecification<ListOperator> {
         }
 
         public void clicksOnListItem() {
+            final String[] items = new String[]{"someItem", "5"};
             checking(new Expectations() {{
+                ignoring(textExtractor).itemCount(); will(returnValue(8));
                 one(jListOperator).clickOnItem(5, 1);
-                one(jListOperator).findItemIndex(with(any(ListItemChooser.class))); will(returnValue(8));
-                one(jListOperator).clickOnItem(8, 2);
+                one(jListOperator).clickOnItem(0, 2);
+                ignoring(textExtractor).getTextFromRenderedComponent(with(any(Integer.class))); will(returnValue(items[0]));
                 ignoring(jListOperator).getTimeouts();
             }});
             
-            context.clickOnItem("5", 1);
-            context.clickOnItem("someItem", 2);
+            context.clickOnItem(items[1], 1);
+            context.clickOnItem(items[0], 2);
         }
     }
 }

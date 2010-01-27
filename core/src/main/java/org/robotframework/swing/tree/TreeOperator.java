@@ -31,7 +31,6 @@ import javax.swing.tree.TreePath;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.Timeouts;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
