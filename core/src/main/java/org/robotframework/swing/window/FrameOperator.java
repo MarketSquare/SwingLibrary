@@ -18,7 +18,7 @@ package org.robotframework.swing.window;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.util.RegExComparator;
-import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.common.Identifier;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 public class FrameOperator extends JFrameOperator implements ComponentWrapper {
@@ -32,11 +32,10 @@ public class FrameOperator extends JFrameOperator implements ComponentWrapper {
     }
     
     public static FrameOperator newOperatorFor(String name) {
-        if (IdentifierSupport.isRegExpPrefixed(name)) {
-            String identifier = IdentifierSupport.removeRegExpPrefix(name);
-            return new FrameOperator(createRegExpChooser(identifier));
-        }
-        return new FrameOperator(name);
+        Identifier identifier = new Identifier(name);
+        if (identifier.isRegExp())
+            return new FrameOperator(createRegExpChooser(identifier.asString()));
+        return new FrameOperator(identifier.asString());
     }
 
     private static ComponentChooser createRegExpChooser(String title) {

@@ -18,7 +18,6 @@ package org.robotframework.swing.common;
 
 
 public class IdentifierSupport {
-    public final static String REGEXP_IDENTIFIER_PREFIX = "regexp=";
 
     public int asIndex(String identifier) {
         return Integer.parseInt(identifier);
@@ -43,13 +42,5 @@ public class IdentifierSupport {
         } else {
             return Integer.parseInt(args[0]);
         }
-    }
-    
-    public static boolean isRegExpPrefixed(String identifier) {
-        return identifier.startsWith(REGEXP_IDENTIFIER_PREFIX);
-    }
-    
-    public static String removeRegExpPrefix(String identifier) {
-        return identifier.replaceFirst(IdentifierSupport.REGEXP_IDENTIFIER_PREFIX, "");
     }
 }

@@ -18,7 +18,7 @@ package org.robotframework.swing.dialog;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.util.RegExComparator;
-import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.common.Identifier;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 public class DialogOperator extends JDialogOperator implements ComponentWrapper {
@@ -32,10 +32,9 @@ public class DialogOperator extends JDialogOperator implements ComponentWrapper 
     }
 
     public static DialogOperator newOperatorFor(String title) {
-        if (IdentifierSupport.isRegExpPrefixed(title)) {
-            String identifier = IdentifierSupport.removeRegExpPrefix(title);
-            return new DialogOperator(createRegExpComponentChooser(identifier));
-        }
+        Identifier identifier = new Identifier(title);
+        if (identifier.isRegExp())
+            return new DialogOperator(createRegExpComponentChooser(identifier.asString()));
         return new DialogOperator(title);
     }
     
