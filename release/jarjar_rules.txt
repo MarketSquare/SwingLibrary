@@ -1,0 +1,16 @@
+rule org.robotframework.** @0
+rule abbot.** org.robotframework.@0
+rule com.thoughtworks.** org.robotframework.@0
+rule gnu.regexp.** org.robotframework.@0
+rule junit.extensions.** org.robotframework.@0
+rule junit.framework.** org.robotframework.@0
+rule junit.runner.** org.robotframework.@0
+rule junit.textui.** org.robotframework.@0
+rule org.aopalliance.** org.robotframework.@0
+rule org.apache.** org.robotframework.@0
+rule org.hamcrest.** org.robotframework.@0
+rule org.jdom.** org.robotframework.@0
+rule org.junit.** org.robotframework.@0
+rule org.laughingpanda.jretrofit.** org.robotframework.@0
+rule org.netbeans.jemmy.** org.robotframework.@0
+rule org.springframework.** org.robotframework.@0
