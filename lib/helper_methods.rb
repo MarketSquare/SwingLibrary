@@ -5,6 +5,10 @@ module HelperMethods
     main_project._(path)
   end
 
+  def jarjar(jar)
+    sh "java -jar lib/jarjar-1.0.jar process lib/jarjar_rules.txt #{jar} #{jar}"
+  end
+
   def assert_classes_have_correct_version(target)
     puts "Verifying classversions from '#{target}'"
     ClassVersionCheck.new(max_version).assert_classes_have_correct_version(target)
