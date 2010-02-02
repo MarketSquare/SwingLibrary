@@ -4,7 +4,7 @@ require 'lib/dependencies'
 
 PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
-VERSION_NUMBER = '1.1.1-SNAPSHOT'
+VERSION_NUMBER = '1.1-RC2'
 
 repositories.remote << 'http://www.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
@@ -62,12 +62,15 @@ task :dist => :package do
     end
   end
   assert_classes_have_correct_version(dist_jar)
+  jarjar dist_jar
 end
 
 task :at => :acceptance_tests
 task :acceptance_tests => :dist do
   test_app = project("#{PROJECT_NAME}:test-application").package
   test_keywords = project("#{PROJECT_NAME}:test-keywords").package
+  jarjar test_keywords
+
   ENV['CLASSPATH'] = [test_keywords, test_app, dist_jar].flatten.join(File::PATH_SEPARATOR)
 
   if !Buildr.environment.nil? && Buildr.environment == 'legacy'
