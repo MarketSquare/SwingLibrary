@@ -1,6 +1,6 @@
 *Setting*	*Value*	*Value*
 library	SwingLibrary							
-library	org.robotframework.javalib.library.ClassPathLibrary	org/robotframework/**/**.class
+library	org.robotframework.javalib.library.ClassPathLibrary	org/robotframework/swing/**/*.class
 								
 *Variable*	*Value*	*Value*
 
