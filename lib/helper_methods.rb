@@ -9,6 +9,15 @@ module HelperMethods
     sh "java -jar lib/jarjar-1.0.jar process lib/jarjar_rules.txt #{jar} #{jar}"
   end
 
+  def assert_doc_ok(version)
+    doc_name = "swinglibrary-#{version}-doc.html"
+    IO.readlines("doc/"+doc_name).each do |line|
+      if line =~ /\*<unknown>/
+        raise "Errors in documentation: " + doc_name + " contains *<unknown>-tags."
+      end
+    end
+  end
+
   def assert_classes_have_correct_version(target)
     puts "Verifying classversions from '#{target}'"
     ClassVersionCheck.new(max_version).assert_classes_have_correct_version(target)
