@@ -95,6 +95,7 @@ task :doc do
   mkdir_p output_dir
   ENV['CLASSPATH'] = [__('target/classes'), artifacts(DEPENDENCIES, TEST_DEPENDENCIES)].flatten.join(File::PATH_SEPARATOR)
   sh "jython -Dpython.path=#{python_path} lib/libdoc/libdoc.py --output #{output_file} SwingLibrary"
+  assert_doc_ok(VERSION_NUMBER)
 end
 
 task :runjython do
