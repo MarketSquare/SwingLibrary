@@ -8,6 +8,8 @@ import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.common.TimeoutCopier;
+import org.robotframework.swing.common.TimeoutName;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 public class ComboBoxOperator extends IdentifierSupport implements ComponentWrapper {
@@ -49,7 +51,7 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
 
     private void verifyItemSelection(String comboItemIdentifier) {
         try {
-            Waiter waiter = ComboboxSelectedItemWaitable.getWaiter(this, comboItemIdentifier);
+            Waiter waiter = comboboxSelectedItemWaiter(this, comboItemIdentifier);
             Object selectedItem = waiter.waitAction(null);
             if (selectedItem == null)
                 throw new RuntimeException("Expected selection to be '"+comboItemIdentifier+"' but no selection found");
@@ -60,6 +62,13 @@ public class ComboBoxOperator extends IdentifierSupport implements ComponentWrap
         }
     }
 
+    private Waiter comboboxSelectedItemWaiter(ComboBoxOperator comboboxOperator, String itemIdentifier) {
+        Waiter waiter = new Waiter(new ComboboxSelectedItemWaitable(comboboxOperator, itemIdentifier));
+        waiter.setTimeouts(new TimeoutCopier(comboboxOperator.getComboboxOperator(), 
+                                             TimeoutName.J_COMBOBOX_OPERATOR_WAIT_GET_SELECTED_ITEM_TIMEOUT).getTimeouts());
+        return waiter;
+    }
+    
     private int findItemIndex(String comboItemIdentifier) {
         if (isIndex(comboItemIdentifier))
             return asIndex(comboItemIdentifier);

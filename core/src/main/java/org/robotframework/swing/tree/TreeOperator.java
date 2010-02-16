@@ -35,6 +35,8 @@ import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTreeOperator;
+import org.robotframework.swing.common.TimeoutCopier;
+import org.robotframework.swing.common.TimeoutName;
 import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.popup.PopupCaller;
 
@@ -65,11 +67,17 @@ public class TreeOperator implements ComponentWrapper {
 
     public TreePath findPath(final String treePath) {
         try {
-            Waiter waiter = TreePathWaitable.getWaiter(jTreeOperator, treePath);
-            return (TreePath) waiter.waitAction(null);
+            return (TreePath) treePathWaiterFor(treePath).waitAction(null);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Waiter treePathWaiterFor(final String treePath) {
+        Waiter waiter = new Waiter(new TreePathWaitable(jTreeOperator, treePath));
+        waiter.setTimeouts(new TimeoutCopier(jTreeOperator, 
+                                             TimeoutName.J_TREE_OPERATOR_WAIT_NEXT_NODE_TIMEOUT).getTimeouts());
+        return waiter;
     }
     
     public void expand(String nodeIdentifier) {

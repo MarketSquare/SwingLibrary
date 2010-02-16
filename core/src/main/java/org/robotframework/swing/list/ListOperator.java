@@ -8,6 +8,8 @@ import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.common.TimeoutCopier;
+import org.robotframework.swing.common.TimeoutName;
 import org.robotframework.swing.operator.ComponentWrapper;
 
 public class ListOperator extends IdentifierSupport implements ComponentWrapper {
@@ -77,12 +79,19 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
         
     private int findIndexWithWait(String itemIdentifier) {
         try {
-            Waiter waiter = ListFindItemIndexWaitable.getWaiter(itemTextExtractor, 
-                                                                jListOperator, 
-                                                                itemIdentifier);
+            Waiter waiter = listIndexWaiterFor(itemTextExtractor, 
+                                               jListOperator, 
+                                               itemIdentifier);
             return (Integer) waiter.waitAction(null);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }    
+    
+    private Waiter listIndexWaiterFor(CellTextExtractor textExtractor, JListOperator listOperator, String itemIdentifier) {
+        Waiter waiter = new Waiter(new ListFindItemIndexWaitable(textExtractor, itemIdentifier));
+        waiter.setTimeouts(new TimeoutCopier(listOperator, 
+                                             TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT).getTimeouts());
+        return waiter;
+    }
 }
