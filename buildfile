@@ -67,6 +67,19 @@ end
 
 task :at => :acceptance_tests
 task :acceptance_tests => :dist do
+  setup_at_environment
+  output_dir = get_output_dir
+  sh "jybot --loglevel TRACE --outputdir #{output_dir} --debugfile debug.txt --critical regression " + __('src/test/resources/robot-tests')
+end
+
+task :ci_at => :ci_acceptance_tests
+task :ci_acceptance_tests => :dist do
+  setup_at_environment
+  output_dir = get_output_dir
+  sh "jybot --exclude not-ci --loglevel TRACE --outputdir #{output_dir} --debugfile debug.txt --critical regression " + __('src/test/resources/robot-tests')
+end
+
+def setup_at_environment()
   test_app = project("#{PROJECT_NAME}:test-application").package
   test_keywords = project("#{PROJECT_NAME}:test-keywords").package
   jarjar test_keywords
@@ -78,14 +91,13 @@ task :acceptance_tests => :dist do
     retro_translate(test_keywords.to_s)
     ENV['PATH'] = "#{java14_home}/bin#{File::PATH_SEPARATOR}#{ENV['PATH']}"
   end
+end
 
-  output_dir = if ENV['ROBOT_OUTPUTDIR'].nil?
-    Dir.tmpdir
-  else
-    ENV['ROBOT_OUTPUTDIR']
+def get_output_dir()
+  if ENV['ROBOT_OUTPUTDIR'].nil?
+    return Dir.tmpdir
   end
-  
-  sh "jybot --loglevel TRACE --outputdir #{output_dir} --debugfile debug.txt --critical regression " + __('src/test/resources/robot-tests')
+  return ENV['ROBOT_OUTPUTDIR']
 end
 
 task :doc do
