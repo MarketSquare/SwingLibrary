@@ -95,7 +95,7 @@ end
 
 def get_output_dir()
   if ENV['ROBOT_OUTPUTDIR'].nil?
-    return Dir.tmpdir
+    return Dir.pwd+"/results"
   end
   return ENV['ROBOT_OUTPUTDIR']
 end
