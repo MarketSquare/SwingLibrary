@@ -9,6 +9,7 @@ ${buttonName}	testButton
 
 *Test Case*	*Action*	*Argument*
 Sets Focus
+    [tags]  not-ci
 	clearTextField	${textFieldName}
 	clearTextField	${textAreaName}
 	typeIntoTextfield	${textFieldName}	copyPaste
