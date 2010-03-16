@@ -9,7 +9,7 @@ ${tableName}	testTable
 
 *Test Case*	*Action*	*Argument*
 Send Key Event Keyword Sends Key Events
-	[tags]	not-ci
+	[tags]	display-required
 	shouldInsertKeysToTextField
 	shouldSwitchCellsWithTabs
 

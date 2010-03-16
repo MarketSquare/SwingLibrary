@@ -172,23 +172,23 @@ Test Selecting Multiple Nodes
 	clearTreeSelection	${treeName}
 
 Tree Node Popup Menu Item Should Be Enabled
-	[tags]	not-ci
+	[tags]	display-required
 	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	${insertChildMenuEntry}
 	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Submenu|Enabled menuitem
 	popupMenuShouldNotBeDisplayed
 
 Tree Node Popup Menu Item Should Be Disabled
-	[tags]	not-ci
+	[tags]	display-required
 	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	Disabled menuitem
 	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	Submenu|Disabled menuitem
 	popupMenuShouldNotBeDisplayed
 
 Tree Node Popup Menu Item Should Be Disabled Should Fail If Menu Item Is Enabled
-	[tags]	not-ci
+	[tags]	display-required
 	runKeywordAndExpectError	*Menu item '${insertChildMenuEntry}' was enabled*	treeNodePopupMenuItemShouldBeDisabled	${treeName}	${rootNode}	${insertChildMenuEntry}
 
 Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
-	[tags]	not-ci
+	[tags]	display-required
 	runKeywordAndExpectError	*Menu item 'Disabled menuitem' was disabled*	treeNodePopupMenuItemShouldBeEnabled	${treeName}	${rootNode}	Disabled menuitem
 
 Get Tree Node Count Returns The Count Of All Visible Nodes
