@@ -43,6 +43,11 @@ define PROJECT_NAME do
     compile.with [project("core"), project("test-application"), DEPENDENCIES, TEST_DEPENDENCIES] 
     package :jar
   end
+
+  define "demo-application" do
+    compile.with [HSQLDB]
+    package :jar
+  end
 end
 
 task :dist => :package do

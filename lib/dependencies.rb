@@ -57,3 +57,5 @@ PARANAMER_GENERATOR =
   'com.thoughtworks.paranamer:paranamer-generator:jar:1.1.2',
   'asm:asm:jar:3.0',
   PARANAMER,]
+
+HSQLDB = 'hsqldb:hsqldb:jar:1.8.0.10'
