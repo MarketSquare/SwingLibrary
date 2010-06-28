@@ -219,6 +219,28 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             context.typeIntoTableCell(tableIdentifier, row, columnIdentifier, newValue);
         }
 
+        public void clicksOnTableCellNoOptArgs() {
+        	checking(new Expectations() {{
+                one(tableOperator).clickOnCell(row, "0", "1", "BUTTON1_MASK", new String[0]);
+            }});
+        	context.clickOnTableCell(tableIdentifier, row, "0", new String[0]);
+        }
+
+        public void doubleClicksOnTableCell() {
+        	checking(new Expectations() {{
+                one(tableOperator).clickOnCell(row, "0", "2", "BUTTON1_MASK", new String[0]);
+            }});
+        	context.clickOnTableCell(tableIdentifier, row, "0", new String[] {"2"});
+        }
+        
+        public void doubleClicksOnTableCellWithCtrlAndShift() {
+        	checking(new Expectations() {{
+                one(tableOperator).clickOnCell(row, "column_identifier", "2", "CTRL_MASK",
+                		                       new String[] {"SHIFT_MASK"});
+            }});
+        	context.clickOnTableCell(tableIdentifier, row, "column_identifier",
+        			                 new String[] {"2", "CTRL_MASK", "SHIFT_MASK"});
+        }
         
         public void selectsTableCell() {
             checking(new Expectations() {{

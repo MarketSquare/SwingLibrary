@@ -155,7 +155,7 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     private boolean isProvided(String[] column) {
-        return column != null && column.length > 0 && column[0] != null && column[0].length() > 0;
+        return column != null && clickCountSpecified(column) && column[0] != null && column[0].length() > 0;
     }
     
     @RobotKeyword("Selects an item from a table cell popup.\n"
@@ -227,5 +227,58 @@ public class TableKeywords extends IdentifierSupport {
         TableOperator tableOperator = createTableOperator(identifier);
         JPopupMenuOperator popupMenuOperator = tableOperator.callPopupOnCell(row, columnIdentifier);
         return popupMenuOperator.showMenuItem(menuPath, new EqualsStringComparator());
+    }
+
+    @RobotKeyword("Clicks on a cell in a table, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
+    + "The codes used for mouse button and key modifiers are the field names from java.awt.event.InputEvent."
+    + "For example BUTTON1_MASK, CTRL_MASK, ALT_MASK, ALT_GRAPH_MASK, SHIFT_MASK, and META_MASK.\n\n"
+    + "Examples:\n"
+    + "| Click On Table Cell | _myTable_ | _0_ | _2_ | # Double clicks with mouse button 2 on the cell in the first row and third column... |\n"
+    + "| ... | _2_ | _BUTTON2_MASK_ | _ALT_MASK_ | # ... while holding down the ALT key |\n"
+    + "| Click On Table Cell | _myTable_ | _1_ | _Header_ | # Single click on the cell in the second row and column with header 'Header'... |\n"
+    + "| ... | _1_ | _BUTTON1_MASK_ | _CTRL_MASK_ | _SHIFT_MASK_ |# ... while holding down the CTRL and SHIFT keys |\n")
+    @ArgumentNames({"identifier", "row", "column", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings"})
+    public void clickOnTableCell(final String identifier, final String row, final String column, final String[] optionalArgs) {
+        createTableOperator(identifier).clickOnCell(row, 
+        		                                    column,
+        		                                    clickCount(optionalArgs),
+        		                                    button(optionalArgs),
+        		                                    keyModifiers(optionalArgs));
+    }
+
+    
+    private String clickCount(String[] optionalArgs) {
+        if (clickCountSpecified(optionalArgs))
+            return optionalArgs[0];
+        return "1";
+    }
+
+	private boolean clickCountSpecified(String[] optionalArgs) {
+		return optionalArgs.length > 0;
+	}
+
+    private String button(final String[] optionalArgs) {
+    	if (buttonSpecifiedIn(optionalArgs))
+    		return optionalArgs[1];
+    	return "BUTTON1_MASK";
+    }
+
+    private boolean buttonSpecifiedIn(String[] optionalArgs) {
+    	return optionalArgs.length > 1;
+    }
+    
+    private String[] keyModifiers(String[] optionalArgs) {
+        String[] keyModifiers = new String[0];
+        if (keymodifiersSpecifiedIn(optionalArgs)) {
+        	final int nrOfOptionalArgs = optionalArgs.length;
+        	keyModifiers = new String[nrOfOptionalArgs - 2];
+        	for (int optionalArgNr = 2, keyModNr = 0; optionalArgNr < nrOfOptionalArgs; ++optionalArgNr, ++keyModNr)
+        		keyModifiers[keyModNr] = optionalArgs[optionalArgNr];
+        }
+        return keyModifiers;
+    }
+    
+    private boolean keymodifiersSpecifiedIn(String[] optionalArgs) {
+    	return optionalArgs.length > 2;
     }
 }

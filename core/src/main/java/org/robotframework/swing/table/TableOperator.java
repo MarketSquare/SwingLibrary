@@ -18,6 +18,7 @@ package org.robotframework.swing.table;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -80,8 +81,8 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         return new WithText() {
             public String getText() {
                 return jTableOperator.getModel()
-                .getValueAt(rowIndex, columnIndex)
-                .toString();
+                                     .getValueAt(rowIndex, columnIndex)
+                                     .toString();
             }
         };
     }
@@ -236,5 +237,40 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
                 return renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         }.invoke();
+    }
+
+    public void clickOnCell(String rowNumberString, String columnIdentifier, String clickCountString, String buttonString, String[] keyModifierStrings) {
+        Point coordinates = findCell(rowNumberString, columnIdentifier);
+        final int clickCount = Integer.parseInt(clickCountString);
+        final int button = toInputEventMask(buttonString);
+        final int modifiers = toCombinedInputEventMasks(keyModifierStrings);
+        System.out.println("*TRACE* TableOperator.clickOnCell keyModifiers integer value= " + modifiers);
+        jTableOperator.clickOnCell(coordinates.y, coordinates.x, clickCount, button, modifiers);
+    }
+
+    private int toInputEventMask(String inputEventFieldName) {
+    	try {
+    		return InputEvent.class.getField(inputEventFieldName).getInt(null);
+    	} catch (NoSuchFieldException e) {
+    		throw new IllegalArgumentException("No field name '" + inputEventFieldName + "' in class " + InputEvent.class.getName()+ ".");
+    	} catch (Exception e) {
+    		throw new RuntimeException(e);
+    	}
+    }
+
+    private int toCombinedInputEventMasks(String[] modifierStrings) {
+        int combinedInputEventMask = 0;
+        if (modifierStrings.length > 0) {
+            String logMsg = "*TRACE* TableOperator.toCombinedInputEventMasks modifier strings:|";
+            for (String modifierAsString : modifierStrings) {
+                logMsg = logMsg.concat(modifierAsString).concat("|");
+            }
+            System.out.println(logMsg);
+
+            for (String modifierAsString : modifierStrings) {
+                combinedInputEventMask |= toInputEventMask(modifierAsString);
+            }
+        }
+        return combinedInputEventMask;
     }
 }
