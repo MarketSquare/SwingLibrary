@@ -16,8 +16,10 @@ ${disabledMenuItem}	Disabled menuitem
 
 Click On Table Cell
 	tableCellShouldNotBeSelected	${tableName}	1	1
-	Click On Table Cell	${tableName}	1	1	
+	Click On Table Cell	${tableName}	1	1
 	tableCellShouldBeSelected	${tableName}	1	1
+	Click On Table Cell	${tableName}	1	1	2	BUTTON2_MASK
+	assertCellClick	${tableName}	2	2	512
 
 Table Cell Should Not Be Selected By Index
 	tableCellShouldNotBeSelected	${tableName}	0	0
@@ -207,6 +209,10 @@ Get Table Cell Properties
 	shouldBeEqualAsIntegers	255	${color.getBlue()}
 
 *** Keyword ***
+
+assertCellClick	[Arguments]	${tableName}	${clickCount}	${button}	${modEx}
+	${text}=	Get Text Field Value	tableEventTextField
+	Should Be Equal	${text}	${tableName} cell clicked ${clickCount} times, button: ${button} modEx: ${modEx}	
 
 tableKeywordShouldFail	[Arguments]	${keyword}	@{arguments}
 	runKeywordAndExpectError	*To use this keyword you must first select a correct context*	${keyword}	@{arguments}
