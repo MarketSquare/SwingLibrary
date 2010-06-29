@@ -41,5 +41,5 @@ shouldSwitchCellsWithTabs
 	sleep	5
 	sendKeyboardEvent	VK_TAB
 	tableCellShouldBeSelected	${tableName}	0	1
-	sendKeyboardEvent	VK_TAB	SHIFT_DOWN_MASK
+	sendKeyboardEvent	VK_TAB	SHIFT_MASK
 	tableCellShouldBeSelected	${tableName}	0	0
