@@ -145,7 +145,8 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             specify(context.getTableCellValue(tableIdentifier, row, columnIdentifier), must.equal(cellValue.toString()));
         }
         
-        public void getsTableCellProperties() {
+		public void getsTableCellProperties() {
+			@SuppressWarnings("serial")
             final Map<String, Object> props = new HashMap<String, Object>() {{
                 put("background", Color.black);
             }};
@@ -233,13 +234,13 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         	context.clickOnTableCell(tableIdentifier, row, "0", new String[] {"2"});
         }
         
-        public void doubleClicksOnTableCellWithCtrlAndShift() {
+        public void doubleClicksOnTableCellWithSeveralButtons() {
         	checking(new Expectations() {{
-                one(tableOperator).clickOnCell(row, "column_identifier", "2", "CTRL_MASK",
-                		                       new String[] {"SHIFT_MASK"});
+                one(tableOperator).clickOnCell(row, "column_identifier", "7", "CTRL_MASK",
+                		                       new String[] {"SHIFT_MASK", "META_MASK"});
             }});
         	context.clickOnTableCell(tableIdentifier, row, "column_identifier",
-        			                 new String[] {"2", "CTRL_MASK", "SHIFT_MASK"});
+        			                 new String[] {"7", "CTRL_MASK", "SHIFT_MASK", "META_MASK"});
         }
         
         public void selectsTableCell() {

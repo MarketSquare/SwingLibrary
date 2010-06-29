@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.keyword.table;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import junit.framework.Assert;
@@ -268,14 +269,9 @@ public class TableKeywords extends IdentifierSupport {
     }
     
     private String[] keyModifiers(String[] optionalArgs) {
-        String[] keyModifiers = new String[0];
-        if (keymodifiersSpecifiedIn(optionalArgs)) {
-        	final int nrOfOptionalArgs = optionalArgs.length;
-        	keyModifiers = new String[nrOfOptionalArgs - 2];
-        	for (int optionalArgNr = 2, keyModNr = 0; optionalArgNr < nrOfOptionalArgs; ++optionalArgNr, ++keyModNr)
-        		keyModifiers[keyModNr] = optionalArgs[optionalArgNr];
-        }
-        return keyModifiers;
+        if (keymodifiersSpecifiedIn(optionalArgs))
+        	return Arrays.copyOfRange(optionalArgs, 2, optionalArgs.length);
+        return new String[0];
     }
     
     private boolean keymodifiersSpecifiedIn(String[] optionalArgs) {
