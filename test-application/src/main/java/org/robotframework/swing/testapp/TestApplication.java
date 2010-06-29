@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
@@ -116,9 +117,15 @@ public class TestApplication {
         }});
         panel.add(contentChangingComboBox);
         panel.add(new TestLabel());
-        panel.add(new TestTable("testTable", getTestTableData()));
-        panel.add(new TestTable("anotherTable", getTestTableData()));
-        panel.add(new TestTable("TableWithSingleValue", getFoobarTestTableData()));
+
+        JTextField tableEventTextField = new JTextField("tableEventTextField");
+        tableEventTextField.setName("tableEventTextField");
+        tableEventTextField.setText("tableEventTextField");
+        panel.add(new TestTable("testTable", getTestTableData(), tableEventTextField));
+        panel.add(new TestTable("anotherTable", getTestTableData(), tableEventTextField));
+        panel.add(new TestTable("TableWithSingleValue", getFoobarTestTableData(), tableEventTextField));
+        panel.add(tableEventTextField);
+        
         panel.add(new TestTree());
         panel.add(new TreeWithoutTreeNode());
         TestTextField tabButtonOutputTextField = new TestTextField();

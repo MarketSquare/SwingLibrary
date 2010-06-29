@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
@@ -16,14 +17,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+@SuppressWarnings("serial")
 public class TestTable extends JScrollPane {
 
-    public TestTable(String name, Object[][] data) {
-        super(createTable(name, data));
+    public TestTable(String name, Object[][] data, final JTextField textField) {
+        super(createTable(name, data, textField));
     }
     
     @Override
@@ -31,7 +34,7 @@ public class TestTable extends JScrollPane {
         return new Dimension(200, 100);
     }
 
-    private static JTable createTable(String name, Object[][] data) {
+    private static JTable createTable(String name, Object[][] data, final JTextField textField) {
         JTable table = new JTable();
         table.setName(name);
         table.addMouseListener(new MouseAdapter() {
@@ -42,27 +45,40 @@ public class TestTable extends JScrollPane {
             }
         });
         DefaultTableModel model = (DefaultTableModel)table.getModel();
-        for (Object[] datarow: data) {
-            model.addColumn(datarow[0], copyOfRange(datarow, 1, datarow.length));
-        }
+        for (Object[] datarow: data)
+            model.addColumn(datarow[0], Arrays.copyOfRange(datarow, 1, datarow.length));
         
         TableColumn col = table.getColumnModel().getColumn(0);
-        String[] comboBoxValues = new String[] { "one/one", "two/one", "three/one", "four/one"};
+        String[] comboBoxValues = new String[] {"one/one", "two/one", "three/one", "four/one"};
         
         col.setCellEditor(new MyComboBoxEditor(comboBoxValues));
         col.setCellRenderer(new MyComboBoxRenderer(comboBoxValues));
+
+        table.setCellSelectionEnabled(true);
+//        ListSelectionModel listSelectionModel = table.getSelectionModel();
+//        listSelectionModel.addListSelectionListener(new ListSelectionListener() {
+//            public void valueChanged(ListSelectionEvent e) {
+//            	System.out.println(""+e);
+//            }
+//        });
+        
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+            	textField.setText(
+            		String.format("%s cell clicked %s times, button: %s modEx: %s", 
+                                  e.getComponent().getName(), 
+				                  e.getClickCount(), 
+				                  e.getButton(), 
+				                  e.getModifiersEx())
+				);
+            }
+         });
         
         return table;
     }
     
-    private static Object[] copyOfRange(Object[] datarow, int fromIndex, int toIndex) {
-        List<Object> range = new ArrayList<Object>();
-        for (int i = fromIndex; i < toIndex ; i++)
-            range.add(datarow[i]);
-        return range.toArray();
-    }
-    
-    public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
+    @SuppressWarnings("serial")
+	public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
         public MyComboBoxRenderer(String[] items) {
             super(items);
         }
@@ -74,13 +90,14 @@ public class TestTable extends JScrollPane {
         }
     }
     
+    @SuppressWarnings("serial")
     public static class MyComboBoxEditor extends DefaultCellEditor {
         public MyComboBoxEditor(String[] items) {
             super(new JComboBox(items));
         }
     }
     
-
+    @SuppressWarnings("serial")
     private static class TablePopupMenu extends JPopupMenu {
         private final JTable invoker;
 
