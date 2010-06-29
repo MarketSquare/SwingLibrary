@@ -6,9 +6,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -77,7 +75,6 @@ public class TestTable extends JScrollPane {
         return table;
     }
     
-    @SuppressWarnings("serial")
 	public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
         public MyComboBoxRenderer(String[] items) {
             super(items);
@@ -90,14 +87,12 @@ public class TestTable extends JScrollPane {
         }
     }
     
-    @SuppressWarnings("serial")
     public static class MyComboBoxEditor extends DefaultCellEditor {
         public MyComboBoxEditor(String[] items) {
             super(new JComboBox(items));
         }
     }
     
-    @SuppressWarnings("serial")
     private static class TablePopupMenu extends JPopupMenu {
         private final JTable invoker;
 
