@@ -53,13 +53,7 @@ public class TestTable extends JScrollPane {
         col.setCellRenderer(new MyComboBoxRenderer(comboBoxValues));
 
         table.setCellSelectionEnabled(true);
-//        ListSelectionModel listSelectionModel = table.getSelectionModel();
-//        listSelectionModel.addListSelectionListener(new ListSelectionListener() {
-//            public void valueChanged(ListSelectionEvent e) {
-//            	System.out.println(""+e);
-//            }
-//        });
-        
+
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
             	textField.setText(
