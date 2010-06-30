@@ -21,9 +21,6 @@ Doesn't Fail When Argument Names Are Not Available
 	runKeywordInSeparateThread	keywordWithoutArgumentNames	arg
 	runKeywordInSeparateThread	keywordWithoutArgumentNames	foo	bar	#even when it should
 
-Fails If Keyword Doesn't Exist
-	runKeywordAndExpectError	No keyword with name 'unexistingKeyword' found.	unexistingKeyword
-
 Works With Real Keywords
 	runKeywordInSeparateThread	selectFromMainMenuAndWait	Test Menu|Show Test Dialog
 	dialogShouldBeOpen	Message
