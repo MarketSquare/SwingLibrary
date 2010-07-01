@@ -226,6 +226,15 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             }});
         	context.clickOnTableCell(tableIdentifier, row, "0", new String[0]);
         }
+        
+        public void clicksOnTableCellWithKeyAliases() {
+        	checking(new Expectations() {{
+                one(tableOperator).clickOnCell(row, "column_identifier", "7", "CTRL_MASK",
+                		                       new String[] {"SHIFT_MASK", "META_MASK", "WHATEVER_MASK"});
+            }});
+        	context.clickOnTableCell(tableIdentifier, row, "column_identifier",
+        			                 new String[] {"7", "CTRL", "SHIFT", "META", "WHATEVER_MASK"});
+        }
 
         public void doubleClicksOnTableCell() {
         	checking(new Expectations() {{
@@ -236,11 +245,11 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         
         public void doubleClicksOnTableCellWithSeveralButtons() {
         	checking(new Expectations() {{
-                one(tableOperator).clickOnCell(row, "column_identifier", "7", "CTRL_MASK",
-                		                       new String[] {"SHIFT_MASK", "META_MASK"});
+                one(tableOperator).clickOnCell(row, "column_identifier", "2", "BUTTON2_MASK",
+                		                       new String[] {"CTRL_MASK", "SHIFT_MASK", "META_MASK"});
             }});
         	context.clickOnTableCell(tableIdentifier, row, "column_identifier",
-        			                 new String[] {"7", "CTRL_MASK", "SHIFT_MASK", "META_MASK"});
+        			                 new String[] {"2", "RIGHT BUTTON", "CTRL_MASK", "SHIFT", "META_MASK"});
         }
         
         public void selectsTableCell() {

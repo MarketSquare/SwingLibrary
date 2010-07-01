@@ -17,6 +17,7 @@
 package org.robotframework.swing.keyword.table;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import junit.framework.Assert;
@@ -229,7 +230,7 @@ public class TableKeywords extends IdentifierSupport {
         JPopupMenuOperator popupMenuOperator = tableOperator.callPopupOnCell(row, columnIdentifier);
         return popupMenuOperator.showMenuItem(menuPath, new EqualsStringComparator());
     }
-
+    
     @RobotKeyword("Clicks on a cell in a table, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
     + "The codes used for mouse button and key modifiers are the field names from java.awt.event.InputEvent."
     + "For example BUTTON1_MASK, CTRL_MASK, ALT_MASK, ALT_GRAPH_MASK, SHIFT_MASK, and META_MASK.\n\n"
@@ -246,7 +247,6 @@ public class TableKeywords extends IdentifierSupport {
         		                                    button(optionalArgs),
         		                                    keyModifiers(optionalArgs));
     }
-
     
     private String clickCount(String[] optionalArgs) {
         if (clickCountSpecified(optionalArgs))
@@ -260,7 +260,7 @@ public class TableKeywords extends IdentifierSupport {
 
     private String button(final String[] optionalArgs) {
     	if (buttonSpecifiedIn(optionalArgs))
-    		return optionalArgs[1];
+    		return keyMask(optionalArgs[1]);
     	return "BUTTON1_MASK";
     }
 
@@ -268,13 +268,37 @@ public class TableKeywords extends IdentifierSupport {
     	return optionalArgs.length > 1;
     }
     
+    @SuppressWarnings("serial")
+    private static final Map<String, String> keyAliases = new HashMap<String, String>() {{
+    	put("LEFT BUTTON", "BUTTON1_MASK");
+    	put("RIGHT BUTTON", "BUTTON2_MASK");
+    	put("CTRL", "CTRL_MASK");
+    	put("ALT", "ALT_MASK");
+    	put("ALT GR", "ALT_GRAPH_MASK");
+    	put("SHIFT", "SHIFT_MASK");
+    	put("META", "META_MASK");
+    }};
+    private String keyMask(String arg) {
+    	String keyMask = keyAliases.get(arg);
+    	if (keyMask != null)
+    		return keyMask;
+    	return arg;
+    }
+    
     private String[] keyModifiers(String[] optionalArgs) {
         if (keymodifiersSpecifiedIn(optionalArgs))
-        	return Arrays.copyOfRange(optionalArgs, 2, optionalArgs.length);
+			return replaceAliasesIn(Arrays.copyOfRange(optionalArgs, 2, optionalArgs.length));
         return new String[0];
     }
     
     private boolean keymodifiersSpecifiedIn(String[] optionalArgs) {
     	return optionalArgs.length > 2;
+    }
+    
+    private String[] replaceAliasesIn(String[] keyModifiers) {
+    	String[] mods = new String[keyModifiers.length];
+    	for(int i = 0; i < keyModifiers.length; i++)
+    		mods[i] = keyMask(keyModifiers[i]);
+    	return mods;
     }
 }
