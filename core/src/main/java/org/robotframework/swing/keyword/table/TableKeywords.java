@@ -234,9 +234,11 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Clicks on a cell in a table, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
     + "The codes used for mouse button and key modifiers are the field names from java.awt.event.InputEvent."
     + "For example BUTTON1_MASK, CTRL_MASK, ALT_MASK, ALT_GRAPH_MASK, SHIFT_MASK, and META_MASK.\n\n"
+    + "Note! Some keys have more convenient aliases that can be used: LEFT BUTTON, RIGHT BUTTON, SHIFT, "
+    + "CTRL, ALT, META\n\n"
     + "Examples:\n"
     + "| Click On Table Cell | _myTable_ | _0_ | _2_ | # Double clicks with mouse button 2 on the cell in the first row and third column... |\n"
-    + "| ... | _2_ | _BUTTON2_MASK_ | _ALT_MASK_ | # ... while holding down the ALT key |\n"
+    + "| ... | _2_ | _RIGHT BUTTON_ | _ALT_ | # ... while holding down the ALT key |\n"
     + "| Click On Table Cell | _myTable_ | _1_ | _Header_ | # Single click on the cell in the second row and column with header 'Header'... |\n"
     + "| ... | _1_ | _BUTTON1_MASK_ | _CTRL_MASK_ | _SHIFT_MASK_ |# ... while holding down the CTRL and SHIFT keys |\n")
     @ArgumentNames({"identifier", "row", "column", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings"})
@@ -279,10 +281,11 @@ public class TableKeywords extends IdentifierSupport {
     	put("META", "META_MASK");
     }};
     private String keyMask(String arg) {
-    	String keyMask = keyAliases.get(arg);
+    	String upperCasedArg = arg.toUpperCase();
+    	String keyMask = keyAliases.get(upperCasedArg);
     	if (keyMask != null)
     		return keyMask;
-    	return arg;
+    	return upperCasedArg;
     }
     
     private String[] keyModifiers(String[] optionalArgs) {

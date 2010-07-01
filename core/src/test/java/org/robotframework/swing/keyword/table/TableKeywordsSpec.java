@@ -233,7 +233,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 		                       new String[] {"SHIFT_MASK", "META_MASK", "WHATEVER_MASK"});
             }});
         	context.clickOnTableCell(tableIdentifier, row, "column_identifier",
-        			                 new String[] {"7", "CTRL", "SHIFT", "META", "WHATEVER_MASK"});
+        			                 new String[] {"7", "ctrl", "SHIFT", "MeTa", "WHATEVER_MASK"});
         }
 
         public void doubleClicksOnTableCell() {
