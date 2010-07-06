@@ -86,6 +86,11 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
             }
         };
     }
+
+    public boolean isCellEditable(String row, String columnIdentifier) {
+        Point coordinates = findCell(row, columnIdentifier);
+        return jTableOperator.isCellEditable(coordinates.y, coordinates.x);
+    }
     
     public boolean isCellSelected(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);

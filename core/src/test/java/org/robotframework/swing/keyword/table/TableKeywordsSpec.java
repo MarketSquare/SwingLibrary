@@ -289,6 +289,32 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             context.clearTableSelection(tableIdentifier);
         }
 
+        public void tableCellShouldBeEditablePassesWhenItIs() throws Throwable {
+            checking(new Expectations() {{
+                one(tableOperator).isCellEditable(row, columnIdentifier);
+                will(returnValue(true));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.tableCellShouldBeEditable(tableIdentifier, row, columnIdentifier);
+                }
+            }, must.not().raise(AssertionFailedError.class));
+        }
+        
+        public void tableCellShouldBeEditableFailsWhenItIsNot() throws Throwable {
+            checking(new Expectations() {{
+                one(tableOperator).isCellEditable(row, columnIdentifier);
+                will(returnValue(false));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.tableCellShouldBeEditable(tableIdentifier, row, columnIdentifier);
+                }
+            }, must.raise(AssertionFailedError.class));
+        }
+        
         public void tableCellShouldBeSelectedPassesIfCellIsSelected() throws Throwable {
             checking(new Expectations() {{
                 one(tableOperator).isCellSelected(row, columnIdentifier);

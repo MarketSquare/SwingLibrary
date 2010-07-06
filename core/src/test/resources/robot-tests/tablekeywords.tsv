@@ -21,6 +21,14 @@ Click On Table Cell
 	Click On Table Cell	${tableName}	1	1	2	BUTTON2_MASK
 	assertCellClick	${tableName}	2	2	512
 
+Table Cell Should Be Editable 
+	Table Cell Should Be Editable	simpleTable	0	0
+	Run Keyword And Expect Error	Cell '1', '1' is not editable.	Table Cell Should Be Editable	simpleTable	1	1
+
+Table Cell Should Not Be Editable
+	Table Cell Should Not Be Editable	simpleTable	0	1
+	Run Keyword And Expect Error	Cell '1', '0' is editable.	Table Cell Should Not Be Editable	simpleTable	1	0
+
 Table Cell Should Not Be Selected By Index
 	tableCellShouldNotBeSelected	${tableName}	0	0
 

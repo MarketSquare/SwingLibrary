@@ -69,6 +69,24 @@ public class TableKeywords extends IdentifierSupport {
         createTableOperator(identifier).clearSelection();
     }
 
+    @RobotKeyword("Fails if given table cell is not editable in a table.\n\n"
+        + "Example:\n"
+        + "| Table Cell Should Be Editable | _myTable_ | _0_ | _2_       |\n"
+        + "| Table Cell Should Be Editable | _myTable_ | _1_ | _Keyword_ |\n")
+    public void tableCellShouldBeEditable(String identifier, String row, String columnIdentifier) {
+        TableOperator tableOperator = createTableOperator(identifier);
+        Assert.assertTrue("Cell '" + row + "', '" + columnIdentifier + "' is not editable.", tableOperator.isCellEditable(row, columnIdentifier));
+    }    
+    
+    @RobotKeyword("Fails if given table cell is editable in a table.\n\n"
+        + "Example:\n"
+        + "| Table Cell Should Not Be Editable | _myTable_ | _0_ | _2_       |\n"
+        + "| Table Cell Should Not Be Editable | _myTable_ | _1_ | _Keyword_ |\n")
+    public void tableCellShouldNotBeEditable(String identifier, String row, String columnIdentifier) {
+        TableOperator tableOperator = createTableOperator(identifier);
+        Assert.assertFalse("Cell '" + row + "', '" + columnIdentifier + "' is editable.", tableOperator.isCellEditable(row, columnIdentifier));
+    } 
+    
     @RobotKeyword("Fails if given table cell is not selected in a table.\n\n"
         + "Example:\n"
         + "| Table Cell Should Be Selected | _myTable_ | _0_ | _2_       |\n"
@@ -157,7 +175,7 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     private boolean isProvided(String[] column) {
-        return column != null && clickCountSpecified(column) && column[0] != null && column[0].length() > 0;
+        return column != null && column.length > 0 && column[0] != null && column[0].length() > 0;
     }
     
     @RobotKeyword("Selects an item from a table cell popup.\n"
@@ -234,7 +252,7 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Clicks on a cell in a table, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
     + "The codes used for mouse button and key modifiers are the field names from java.awt.event.InputEvent."
     + "For example BUTTON1_MASK, CTRL_MASK, ALT_MASK, ALT_GRAPH_MASK, SHIFT_MASK, and META_MASK.\n\n"
-    + "Note! Some keys have more convenient aliases that can be used: LEFT BUTTON, RIGHT BUTTON, SHIFT, "
+    + "Note! Some keys have more convinient aliases that can be used: LEFT BUTTON, RIGHT BUTTON, SHIFT, "
     + "CTRL, ALT, META\n\n"
     + "Examples:\n"
     + "| Click On Table Cell | _myTable_ | _0_ | _2_ | # Double clicks with mouse button 2 on the cell in the first row and third column... |\n"
