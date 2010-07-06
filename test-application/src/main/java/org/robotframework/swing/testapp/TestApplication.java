@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
@@ -124,7 +125,6 @@ public class TestApplication {
         panel.add(new TestTable("testTable", getTestTableData(), tableEventTextField));
         panel.add(new TestTable("anotherTable", getTestTableData(), tableEventTextField));
         panel.add(new TestTable("TableWithSingleValue", getFoobarTestTableData(), tableEventTextField));
-        panel.add(tableEventTextField);
         
         panel.add(new TestTree());
         panel.add(new TreeWithoutTreeNode());
@@ -146,6 +146,9 @@ public class TestApplication {
             });
         }});
         panel.add(new TestEditorPane());
+
+        panel.add(simpleTable());
+        panel.add(tableEventTextField);
     }
 
     private Object[][] getTestTableData() {
@@ -166,6 +169,24 @@ public class TestApplication {
                 {"column four", "bar", "bar", "bar", "foo"}
         };
         return data;
+    }
+    
+    private JTable simpleTable() {
+    	String[] colNames = {"first col", "second col"};
+    	Object[][] data = {
+    			{"fooness", "barness"},
+    			{"quuxness", "lochness"},
+    	};
+    	JTable table = new JTable(data, colNames) {  
+    		public boolean isCellEditable(int row, int column){  
+    	        if (column == 1)
+    	        	return false;  
+    	        return true;  
+	        }
+    	};
+    	table.setName("simpleTable");
+    	table.setCellSelectionEnabled(true);
+    	return table;
     }
 }
 
