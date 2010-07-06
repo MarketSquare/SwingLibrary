@@ -39,4 +39,4 @@ end
 
 ENV['CLASSPATH'] = deps.join(":")
 
-system "jybot --loglevel TRACE --outputdir /tmp --critical regression #{args}"
+system "jybot --loglevel TRACE --outputdir /tmp --noncritical development --tagstatcombine *NOTdevelopment:regression #{args}"
