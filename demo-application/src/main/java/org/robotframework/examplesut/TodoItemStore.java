@@ -8,53 +8,53 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserStore {
+public class TodoItemStore {
 
-    public void addUser(final String name) {
-    	new DbCmd().execute(new Sql() {
+    public void addTodoItem(final String desc) {
+    	new WithConnection().execute(new DbCommand() {
 			public Object execute(Statement stmt) throws SQLException {
-				return stmt.execute("insert into users values (NULL, '" + name + "')");
+				return stmt.execute("insert into todo_items values (NULL, '" + desc + "')");
 		    }
 	    });
     }
 
-    public void removeUserWithName(final String name) {
-    	new DbCmd().execute(new Sql() {
+    public void removeTodoItemWithDesc(final String desc) {
+    	new WithConnection().execute(new DbCommand() {
 			public Object execute(Statement stmt) throws SQLException {
-				return stmt.execute("delete from users where name='" + name + "'");
+				return stmt.execute("delete from todo_items where desc='" + desc + "'");
 		    }
 	    });
     }
 
-	public Object[] allUsers() {
-		List<?> usersFromDB = (List<?>) new DbCmd().execute(new Sql() {
+	public Object[] allTodoItems() {
+		List<?> todoItemsFromDB = (List<?>) new WithConnection().execute(new DbCommand() {
 			public Object execute(Statement stmt) throws SQLException {
-				return parseUsersFrom(stmt.executeQuery("select * from users"));
+				return parseTodoItemsFrom(stmt.executeQuery("select * from todo_items"));
 			}
 		});
-		return usersFromDB.toArray();
+		return todoItemsFromDB.toArray();
 	}
 		
-    private Object parseUsersFrom(ResultSet rs) throws SQLException {
-        List<String> users = new ArrayList<String>();
-        while (rs.next()) users.add(rs.getString("name"));
-        return users;
+    private Object parseTodoItemsFrom(ResultSet rs) throws SQLException {
+        List<String> todoItems = new ArrayList<String>();
+        while (rs.next()) todoItems.add(rs.getString("desc"));
+        return todoItems;
     }
 
 	public void createTables() {
-    	new DbCmd().execute(new Sql() {
+    	new WithConnection().execute(new DbCommand() {
 			public Object execute(Statement stmt)  throws SQLException {
-				return stmt.execute("create table users(id identity, name varchar(40))");
+				return stmt.execute("create table todo_items(id identity, desc varchar(80))");
 		    }
 	    });
 	}
 }
 
-interface Sql{
+interface DbCommand{
 	public Object execute(Statement stmt) throws SQLException;
 } 
 
-class DbCmd {
+class WithConnection {
     {
         try {
             Class.forName("org.hsqldb.jdbcDriver" );
@@ -63,7 +63,7 @@ class DbCmd {
         }
     }  
 
-	public Object execute(Sql sql) {
+	public Object execute(DbCommand sql) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -79,6 +79,6 @@ class DbCmd {
 	}
 
 	private Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:hsqldb:mem:testdb", "SA", "");
+		return DriverManager.getConnection("jdbc:hsqldb:file:tododb", "SA", "");
 	}
 }

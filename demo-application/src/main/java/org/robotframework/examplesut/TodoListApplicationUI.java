@@ -15,15 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-public class RegistrationUI {
+public class TodoListApplicationUI {
     private JPanel panel;
     private JFrame frame;
-    private JList userList;
+    private JList todoList;
     private boolean introduceBugs;
-    private UserStore users;
+    private TodoItemStore todoItems;
 
-    public RegistrationUI(UserStore store, boolean introduceBugs) {
-    	this.users = store;
+    public TodoListApplicationUI(TodoItemStore store, boolean introduceBugs) {
+    	this.todoItems = store;
 		this.introduceBugs = introduceBugs;
 	}
 
@@ -41,7 +41,7 @@ public class RegistrationUI {
 
 	@SuppressWarnings("serial")
 	private void createFrame() {
-		frame = new JFrame("Test App") {
+		frame = new JFrame("Todo App") {
             public Dimension getPreferredSize() {
                 return new Dimension(300, 300);
             }
@@ -68,13 +68,13 @@ public class RegistrationUI {
 
     private void addComponentsToMainPanel() {
         createUsernameInput();
-        createUsersList();
+        createTodoList();
     }
 
 	private void createUsernameInput() {
 		JPanel topPanel = new JPanel();
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-        final JTextField textField = usernameField(topPanel);
+        final JTextField textField = descriptionField(topPanel);
         topPanel.add(textField);
         topPanel.add(submitButton(textField));
         panel.add(topPanel, BorderLayout.NORTH);
@@ -82,11 +82,12 @@ public class RegistrationUI {
 
 	private JButton submitButton(final JTextField textField) {
 		@SuppressWarnings("serial")
-		final JButton submitButton = new JButton("Add user") {{
+		final JButton submitButton = new JButton("Add todo item") {{
             addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-                	users.addUser(textField.getText());
-                    updateUsers();
+                	todoItems.addTodoItem(textField.getText());
+                    updateTodoList();
+                    textField.setText("");
                 }
             });
         }};
@@ -94,36 +95,36 @@ public class RegistrationUI {
 		return submitButton;
 	}
     
-    private void updateUsers() {
-		userList.setListData(users.allUsers());
+    private void updateTodoList() {
+		todoList.setListData(todoItems.allTodoItems());
 	}
 
-	private JTextField usernameField(JPanel topPanel) {
-		topPanel.add(new JLabel("Username:  "));
+	private JTextField descriptionField(JPanel topPanel) {
+		topPanel.add(new JLabel("Description:  "));
         final JTextField textField = new JTextField();
-        textField.setName("username");
+        textField.setName("description");
         topPanel.add(textField);
 		return textField;
 	}
     
-    private void createUsersList() {
-        JPanel usersPanel = usersPanel();
-        usersPanel.add(usersList(), BorderLayout.CENTER);
-        usersPanel.add(deleteButton(), BorderLayout.SOUTH);
-        panel.add(usersPanel, BorderLayout.CENTER);
+    private void createTodoList() {
+        JPanel todoPanel = todoListPanel();
+        todoPanel.add(todoItemList(), BorderLayout.CENTER);
+        todoPanel.add(deleteButton(), BorderLayout.SOUTH);
+        panel.add(todoPanel, BorderLayout.CENTER);
     }
 
-	private JList usersList() {
-		userList = new JList();
-        userList.setName("users");
-        updateUsers();
-        return userList;
+	private JList todoItemList() {
+		todoList = new JList();
+        todoList.setName("todolists");
+        updateTodoList();
+        return todoList;
 	}
 
-	private JPanel usersPanel() {
+	private JPanel todoListPanel() {
 		JPanel listPane = new JPanel();
         listPane.setLayout(new BorderLayout());
-        listPane.add(new JLabel("Users in system:"), BorderLayout.NORTH);
+        listPane.add(new JLabel("Todo items in system:"), BorderLayout.NORTH);
 		return listPane;
 	}
 
@@ -131,10 +132,10 @@ public class RegistrationUI {
 		JPanel deleteButtonPane = new JPanel();
 		deleteButtonPane.setLayout(new BorderLayout());
 		@SuppressWarnings("serial")
-		final JButton deleteButton = new JButton("Delete user") {{
+		final JButton deleteButton = new JButton("Delete item") {{
         	addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					removeUser();
+					removeTodoItem();
 				}
 			});
         }};
@@ -143,11 +144,11 @@ public class RegistrationUI {
 		return deleteButtonPane;
 	}
 
-	private void removeUser() {
-		Object possibleSelection = userList.getSelectedValue();
+	private void removeTodoItem() {
+		Object possibleSelection = todoList.getSelectedValue();
 		if (introduceBugs || possibleSelection != null) {
-			users.removeUserWithName(possibleSelection.toString());
-			updateUsers();
+			todoItems.removeTodoItemWithDesc(possibleSelection.toString());
+			updateTodoList();
 		}
 	}
 }
