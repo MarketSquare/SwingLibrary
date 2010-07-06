@@ -252,7 +252,7 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Clicks on a cell in a table, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
     + "The codes used for mouse button and key modifiers are the field names from java.awt.event.InputEvent."
     + "For example BUTTON1_MASK, CTRL_MASK, ALT_MASK, ALT_GRAPH_MASK, SHIFT_MASK, and META_MASK.\n\n"
-    + "Note! Some keys have more convinient aliases that can be used: LEFT BUTTON, RIGHT BUTTON, SHIFT, "
+    + "Note! Some keys have more convinient case insensitive aliases that can be used: LEFT BUTTON, RIGHT BUTTON, SHIFT, "
     + "CTRL, ALT, META\n\n"
     + "Examples:\n"
     + "| Click On Table Cell | _myTable_ | _0_ | _2_ | # Double clicks with mouse button 2 on the cell in the first row and third column... |\n"
@@ -261,43 +261,54 @@ public class TableKeywords extends IdentifierSupport {
     + "| ... | _1_ | _BUTTON1_MASK_ | _CTRL_MASK_ | _SHIFT_MASK_ |# ... while holding down the CTRL and SHIFT keys |\n")
     @ArgumentNames({"identifier", "row", "column", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings"})
     public void clickOnTableCell(final String identifier, final String row, final String column, final String[] optionalArgs) {
+    	OptionalArgs optArgs = new OptionalArgs(optionalArgs);
         createTableOperator(identifier).clickOnCell(row, 
         		                                    column,
-        		                                    clickCount(optionalArgs),
-        		                                    button(optionalArgs),
-        		                                    keyModifiers(optionalArgs));
+        		                                    optArgs.clickCount(),
+        		                                    optArgs.button(),
+        		                                    optArgs.keyModifiers());
     }
-    
-    private String clickCount(String[] optionalArgs) {
-        if (clickCountSpecified(optionalArgs))
+}
+
+class OptionalArgs {
+
+	@SuppressWarnings("serial")
+	private static final Map<String, String> keyAliases = new HashMap<String, String>() {{
+		put("LEFT BUTTON", "BUTTON1_MASK");
+		put("RIGHT BUTTON", "BUTTON2_MASK");
+		put("CTRL", "CTRL_MASK");
+		put("ALT", "ALT_MASK");
+		put("ALT GR", "ALT_GRAPH_MASK");
+		put("SHIFT", "SHIFT_MASK");
+		put("META", "META_MASK");
+	}};
+	
+	private String[] optionalArgs;
+
+	public OptionalArgs(String[] optionalArgs) {
+		this.optionalArgs = optionalArgs;
+	}
+	
+    public String clickCount() {
+        if (clickCountSpecified())
             return optionalArgs[0];
         return "1";
     }
 
-	private boolean clickCountSpecified(String[] optionalArgs) {
+	private boolean clickCountSpecified() {
 		return optionalArgs.length > 0;
 	}
 
-    private String button(final String[] optionalArgs) {
-    	if (buttonSpecifiedIn(optionalArgs))
+	public String button() {
+    	if (buttonSpecifiedIn())
     		return keyMask(optionalArgs[1]);
     	return "BUTTON1_MASK";
     }
 
-    private boolean buttonSpecifiedIn(String[] optionalArgs) {
+    private boolean buttonSpecifiedIn() {
     	return optionalArgs.length > 1;
     }
     
-    @SuppressWarnings("serial")
-    private static final Map<String, String> keyAliases = new HashMap<String, String>() {{
-    	put("LEFT BUTTON", "BUTTON1_MASK");
-    	put("RIGHT BUTTON", "BUTTON2_MASK");
-    	put("CTRL", "CTRL_MASK");
-    	put("ALT", "ALT_MASK");
-    	put("ALT GR", "ALT_GRAPH_MASK");
-    	put("SHIFT", "SHIFT_MASK");
-    	put("META", "META_MASK");
-    }};
     private String keyMask(String arg) {
     	String upperCasedArg = arg.toUpperCase();
     	String keyMask = keyAliases.get(upperCasedArg);
@@ -306,13 +317,13 @@ public class TableKeywords extends IdentifierSupport {
     	return upperCasedArg;
     }
     
-    private String[] keyModifiers(String[] optionalArgs) {
-        if (keymodifiersSpecifiedIn(optionalArgs))
+    public String[] keyModifiers() {
+        if (keymodifiersSpecifiedIn())
 			return replaceAliasesIn(Arrays.copyOfRange(optionalArgs, 2, optionalArgs.length));
         return new String[0];
     }
     
-    private boolean keymodifiersSpecifiedIn(String[] optionalArgs) {
+    private boolean keymodifiersSpecifiedIn() {
     	return optionalArgs.length > 2;
     }
     
