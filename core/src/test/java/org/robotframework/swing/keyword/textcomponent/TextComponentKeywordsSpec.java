@@ -165,11 +165,4 @@ public class TextComponentKeywordsSpec extends MockSupportSpecification<TextComp
             }});
         }
     }
-//    
-//    public class CheckingState {
-//        public TextComponentKeywords create() {
-//            
-//        }
-//        
-//    }
 }
