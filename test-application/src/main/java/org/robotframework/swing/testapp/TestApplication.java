@@ -149,6 +149,17 @@ public class TestApplication {
 
         panel.add(simpleTable());
         panel.add(tableEventTextField);
+        
+        panel.add(new JTextField() {{
+        	setName("disabledTextField");
+        	setEnabled(false);
+            setPreferredSize(new Dimension(100, 30));	
+        }});
+        panel.add(new JTextField() {{
+        	setName("uneditableTextField");
+        	setEditable(false);
+            setPreferredSize(new Dimension(100, 30));	
+        }});
     }
 
     private Object[][] getTestTableData() {
