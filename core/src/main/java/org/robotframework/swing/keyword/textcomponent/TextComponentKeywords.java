@@ -32,8 +32,15 @@ public class TextComponentKeywords {
         + "Example:\n"
         + "| Insert Into Textfield | _nameTextField_ | _John Doe_ |\n")
     public void insertIntoTextField(String identifier, String text) {
-        createOperator(identifier).setText(text);
+        TextComponentOperator operator = createOperator(identifier);
+        if (notEditable(operator))
+        	throw new RuntimeException("Text field '" + identifier + "' is not editable.");
+    	operator.setText(text);
     }
+
+	private boolean notEditable(TextComponentOperator operator) {
+		return ! operator.isEditable() || ! operator.isEnabled();
+	}
     
     @RobotKeyword("Returns the value of a text component.\n\n"
         + "Example:\n"

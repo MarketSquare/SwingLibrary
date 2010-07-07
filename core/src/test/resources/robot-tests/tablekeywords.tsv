@@ -117,6 +117,7 @@ Set Table Cell Value
 	setTableCellValue	${tableName}	1	0	four/one
 	${cellValue}=	getTableCellValue	${tableName}	1	0
 	shouldBeEqual	four/one	${cellValue}
+	run keyword and expect error	Cell '1', '1' is not editable.	setTableCellValue	simpleTable	1	1	some value
 
 Get Table Column Count By Name
 	${columnCount}=	getTableColumnCount	${tableName}

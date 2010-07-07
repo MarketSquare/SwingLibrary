@@ -204,12 +204,28 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
             final String newValue = "newValue";
 
             checking(new Expectations() {{
+            	one(tableOperator).isCellEditable(row, columnIdentifier); will(returnValue(true));
                 one(tableOperator).setCellValue(newValue, row, columnIdentifier);
             }});
 
             context.setTableCellValue(tableIdentifier, row, columnIdentifier, newValue);
         }
 
+        public void setsTableCellValueFailsIfCellIsNotEditable() {
+            final String newValue = "newValue";
+
+            checking(new Expectations() {{
+            	one(tableOperator).isCellEditable(row, columnIdentifier); will(returnValue(false));
+                never(tableOperator).setCellValue(newValue, row, columnIdentifier);
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                	context.setTableCellValue(tableIdentifier, row, columnIdentifier, newValue);
+                }
+            }, must.raise(RuntimeException.class));
+        }
+        
         public void typesIntoTableCell() {
             final String newValue = "newValue";
 

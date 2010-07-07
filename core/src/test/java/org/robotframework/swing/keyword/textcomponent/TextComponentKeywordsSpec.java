@@ -65,10 +65,24 @@ public class TextComponentKeywordsSpec extends MockSupportSpecification<TextComp
 
         public void insertsIntoTextField() {
             checking(new Expectations() {{
+            	one(operator).isEditable(); will(returnValue(true));
+            	one(operator).isEnabled(); will(returnValue(true));
                 one(operator).setText(someText);
             }});
 
             context.insertIntoTextField(textFieldIdentifier, someText);
+        }
+        
+        public void insertsIntoDisabledTextFieldFails() {
+            checking(new Expectations() {{
+            	one(operator).isEditable(); will(returnValue(false));
+            }});
+
+            specify(new Block() {
+                public void run() throws Throwable {
+                	context.insertIntoTextField(textFieldIdentifier, someText);
+                }
+            }, must.raise(RuntimeException.class));
         }
 
         public void typesIntoTextField() {

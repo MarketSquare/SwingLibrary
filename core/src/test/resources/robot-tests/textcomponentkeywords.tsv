@@ -15,6 +15,10 @@ Insert Into Text Field By Name
 	${textFieldContents}=	getTextFieldValue	${textFieldName}
 	shouldBeEqual	${testText}	${textFieldContents}
 
+Insert Into Uneditable/Disabled Field
+	run keyword and expect error	Text field 'uneditableTextField' is not editable.	insertIntoTextField	uneditableTextField	Some Value
+	run keyword and expect error	Text field 'disabledTextField' is not editable.	insertIntoTextField	disabledTextField	Some Value
+
 Insert Into Text Field By Index
 	insertIntoTextField	${textFieldIndex}	${testText}
 	${textFieldContents}=	getTextFieldValue	${textFieldName}
