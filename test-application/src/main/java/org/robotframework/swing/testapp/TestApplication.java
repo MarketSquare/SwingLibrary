@@ -79,6 +79,7 @@ public class TestApplication {
                 return new Dimension(1000, 1000);
             }
         };
+        frame.setName("Main Frame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
