@@ -28,7 +28,7 @@ import org.robotframework.swing.textcomponent.TextComponentOperatorFactory;
 public class TextComponentKeywords {
     private OperatorFactory<TextComponentOperator> operatorFactory = new TextComponentOperatorFactory();
 
-    @RobotKeyword("Inserts text into a text component.\n\n"
+    @RobotKeyword("Inserts text into a text component (e.g. text field, password field, text area).\n\n"
         + "Example:\n"
         + "| Insert Into Textfield | _nameTextField_ | _John Doe_ |\n")
     public void insertIntoTextField(String identifier, String text) {
@@ -42,7 +42,7 @@ public class TextComponentKeywords {
 		return ! operator.isEditable() || ! operator.isEnabled();
 	}
     
-    @RobotKeyword("Returns the value of a text component.\n\n"
+    @RobotKeyword("Returns the value of a text component (e.g. text field, password field, text area).\n\n"
         + "Example:\n"
         + "| ${textFieldValue}= | Get Textfield Value | _nameTextField_       |\n"
         + "| Should Be Equal    | _John Doe_          | _${textFieldValue}_ |\n")
@@ -50,7 +50,7 @@ public class TextComponentKeywords {
         return createOperator(identifier).getText();
     }
 
-    @RobotKeyword("Types text into a text component.\n"
+    @RobotKeyword("Types text into a text component (e.g. text field, password field, text area).\n"
         + "Same as `Insert Into Textfield` but sends real key events when setting text field contents.\n"
         + "Useful if application expects real keyboard events instead of only setting the text of the textfield.\n\n"
         + "Example:\n"
@@ -59,21 +59,21 @@ public class TextComponentKeywords {
         createOperator(identifier).typeText(text);
     }
 
-    @RobotKeyword("Clears text field contents.\n\n"
+    @RobotKeyword("Clears contents of text component (e.g. text field, password field, text area).\n\n"
         + "Example:\n"
         + "| Clear Textfield | _nameTextField_ |\n")
     public void clearTextField(String identifier) {
         createOperator(identifier).clearText();
     }
 
-    @RobotKeyword("Fails if text component is disabled.\n\n"
+    @RobotKeyword("Fails if text component (e.g. text field, password field, text area) is disabled.\n\n"
         + "Example:\n"
         + "| Textfield Should Be Enabled | _nameTextField_ |\n")
     public void textFieldShouldBeEnabled(String identifier) {
         Assert.assertTrue("Textfield '" + identifier + "' is disabled.", createOperator(identifier).isEnabled());
     }
     
-    @RobotKeyword("Fails if text component is enabled.\n\n"
+    @RobotKeyword("Fails if text component (e.g. text field, password field, text area) is enabled.\n\n"
         + "Example:\n"
         + "| Textfield Should Be Disabled | _nameTextField_ |\n")
     public void textFieldShouldBeDisabled(String identifier) {
