@@ -3,6 +3,8 @@ library	SwingLibrary
 
 *Variable*	*Value*
 ${panelName}	Main Panel
+${dialogMenu2}	Test Menu|Show Non-Modal Dialog
+${dialogTitle2}	Non-modal Dialog
 
 *Test Case*	*Action*	*Argument*
 Select Context
@@ -11,5 +13,43 @@ Select Context
 	shouldContain	${contextAsString}	org.robotframework.swing.testapp.PopupPanel
 	shouldContain	${contextAsString}	${panelName}
 
+Get Current Context With Panels
+	Select And Assert Main Window
+	selectContext	${panelName}	
+	${contextName}=	getCurrentContext
+	Should Be Equal	${contextName}	${panelName}
+	Select And Assert Main Window
+	selectContext	${contextName}	
+	${contextName}=	getCurrentContext
+	Should Be Equal	${contextName}	${panelName}
+
+Get Current Context With Window
+	select And Assert Main Window
+	${mainWindowTitle}=	getCurrentContext
+	Should Be Equal	${mainWindowTitle}	Test App	
+	selectContext	${panelName}
+	${contextName}=	getCurrentContext
+	Should Be Equal	${contextName}	${panelName}
+	selectWindow	${mainWindowTitle}
+	${title}=	getSelectedWindowTitle
+	Should Be Equal	${title}	Test App	
+
+Get Current Context With Dialog
+	[setup]	openNonModalTestDialog
+	selectDialog	${dialogTitle2}
+	${title}=	getCurrentContext
+	Should Be Equal	${dialogTitle2}	${title}
+	[teardown]	closeDialog	${dialogTitle2}
+
 *Keyword*	*Action*	*Argument*
+
+Select And Assert Main Window
+	selectMainWindow
+	${mainFrame}=	getCurrentContext
+	Should Be Equal	${mainFrame}	Test App	
+
+openNonModalTestDialog
+	selectFromMainMenu	${dialogMenu2}
+	dialogShouldBeOpen	${dialogTitle2}
+
 

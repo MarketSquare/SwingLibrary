@@ -16,6 +16,11 @@
 
 package org.robotframework.swing.keyword.context;
 
+import java.awt.Component;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.lang.reflect.Method;
+
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.ContainerOperator;
@@ -34,5 +39,30 @@ public class ContextKeywords {
         + "| Select Context | _myPanel_     | # Sets _'myPanel'_ as current context |\n")
     public void selectContext(String identifier) {
         Context.setContext(operatorFactory.createOperator(identifier));
+    }
+
+    @RobotKeyword("Returns the component name in current context or title if window or dialog is selected.\n\n"
+    	+ "Example:\n"
+    	+ "| ${context}= | Get Current Context | # Sets the identifier of the current context to a variable |\n")
+    public String getCurrentContext() {
+		Component component = Context.getContext()
+		                             .getSource();
+		if (hasTitle(component))
+			return titleOf(component);
+		return component.getName();
+    }
+    
+    private boolean hasTitle(Component component) {
+    	return component instanceof Frame || component instanceof Dialog;
+    }
+
+    private String titleOf(Component component) {
+    	try {
+			Method m = component.getClass()
+			                    .getMethod("getTitle");
+			return (String) m.invoke(component);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
     }
 }
