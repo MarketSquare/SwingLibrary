@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ComboBoxModel;
@@ -26,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 public class TestApplication {
@@ -73,6 +77,7 @@ public class TestApplication {
         frame.setJMenuBar(new TestMenuBar());
     }
 
+    @SuppressWarnings("serial")
     private void createFrame() {
         frame = new JFrame("Test App") {
             public Dimension getPreferredSize() {
@@ -83,7 +88,8 @@ public class TestApplication {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void addComponentsToMainPanel() {
+    @SuppressWarnings("serial")
+	private void addComponentsToMainPanel() {
         panel.add(new TestTextField());
         panel.add(new TestButton());
         panel.add(new TestList());
@@ -135,7 +141,6 @@ public class TestApplication {
         panel.add(new TestTabbedPane("testTabbedPane2", tabButtonOutputTextField));
         panel.add(tabButtonOutputTextField);
         panel.add(new TestTextArea());
-        panel.add(new TestSpinnerButton());
         panel.add(new TestRadioButton());
         panel.add(new TestToggleButton());
         panel.add(new JButton("Open File Chooser") {{
@@ -161,6 +166,11 @@ public class TestApplication {
         	setEditable(false);
             setPreferredSize(new Dimension(100, 30));	
         }});
+        
+        panel.add(new TestSpinnerButton("testSpinner"));
+        List<String> weekDays = Arrays.asList(new DateFormatSymbols().getWeekdays()).subList(1, 8);
+		panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(weekDays)));
+        panel.add(new TestSpinnerButton("floatSpinner", new SpinnerNumberModel(77.7, 0.0, 1000.0, 0.1)));
     }
 
     private Object[][] getTestTableData() {
@@ -183,12 +193,13 @@ public class TestApplication {
         return data;
     }
     
-    private JTable simpleTable() {
+	private JTable simpleTable() {
     	String[] colNames = {"first col", "second col"};
     	Object[][] data = {
     			{"fooness", "barness"},
     			{"quuxness", "lochness"},
     	};
+    	@SuppressWarnings("serial")
     	JTable table = new JTable(data, colNames) {  
     		public boolean isCellEditable(int row, int column){  
     	        if (column == 1)
@@ -202,6 +213,7 @@ public class TestApplication {
     }
 }
 
+@SuppressWarnings("serial")
 class ContentChangingCombobox extends JComboBox implements ActionListener {
     
     private static final String REMOVABLE_ITEM = "Removable";
@@ -237,6 +249,7 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
     }
 }
 
+@SuppressWarnings("serial")
 class PopupPanel extends JPanel {
     private final Operation showName = new Operation() {
         public void perform(Component operatedComponent) {
@@ -276,6 +289,7 @@ class PopupPanel extends JPanel {
     }
 }
 
+@SuppressWarnings("serial")
 class CustomComboBoxRenderer extends JLabel implements ListCellRenderer {
     private Font uhOhFont;
     public CustomComboBoxRenderer() {
