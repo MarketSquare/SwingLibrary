@@ -30,6 +30,29 @@ Get Spinner Value By Index
 	${spinnerValue}=	getSpinnerValue	0
 	shouldBeEqualAsIntegers	0	${spinnerValue}
 
+Set Integer Spinner Value
+	${oldValue}=	getSpinnerValue	${spinnerName}
+	setSpinnerNumberValue	${spinnerName}	666	
+	${spinnerValue}=	getSpinnerValue	${spinnerName}
+	shouldBeEqualAsIntegers	666	${spinnerValue}
+	[teardown]	setSpinnerNumberValue	${spinnerName}	${oldValue}
+
+Set Float Spinner Value
+	${oldValue}=	getSpinnerValue	floatSpinner	
+	setSpinnerNumberValue	floatSpinner	66.6	
+	${spinnerValue}=	getSpinnerValue	floatSpinner	
+	shouldBeEqualAsNumbers	66.599998	${spinnerValue}
+	run keyword and expect error	Can't convert 'hevonen' to a number.	setSpinnerNumberValue	floatSpinner	hevonen	
+	[teardown]	setSpinnerNumberValue	floatSpinner	${oldValue}
+
+
+Set String Spinner Value
+	${oldValue}=	getSpinnerValue	stringSpinner 
+	setSpinnerStringValue	stringSpinner	Monday	
+	${spinnerValue}=	getSpinnerValue	stringSpinner
+	shouldBeEqual	Monday	${spinnerValue}
+	[teardown]	setSpinnerStringValue	stringSpinner	${oldValue}
+
 Increase Spinner Value By Name Without Parameters
 	increaseSpinnerValue	${spinnerName}
 	${spinnerValue}=	getSpinnerValue	${spinnerName}

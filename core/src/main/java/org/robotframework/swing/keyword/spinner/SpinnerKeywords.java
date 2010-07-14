@@ -39,6 +39,16 @@ public class SpinnerKeywords {
     public void increaseSpinnerValue(String identifier, String[] times) {
         increase(operatorFactory.createOperator(identifier), getNotches(times));
     }
+    
+    private int getNotches(String[] times) {
+    	return times.length == 0 ? 1 : Integer.parseInt(times[0]);
+    }
+
+    private void increase(SpinnerOperator spinnerOperator, int numberOfIncreases) {
+    	for (int i = 0; i < numberOfIncreases; ++i) {
+    		spinnerOperator.increase();
+    	}
+    }
 
     @RobotKeyword("Scrolls spinner button down.\n"
             + "The number of notches to scroll can be given as a second argument.\n\n"
@@ -48,6 +58,12 @@ public class SpinnerKeywords {
     @ArgumentNames({"identifier", "times=1"})
     public void decreaseSpinnerValue(String identifier, String[] times) {
         decrease(operatorFactory.createOperator(identifier), getNotches(times));
+    }
+    
+    private void decrease(SpinnerOperator spinnerOperator, int numberOfDecreases) {
+    	for (int i = 0; i < numberOfDecreases; ++i) {
+    		spinnerOperator.decrease();
+    	}
     }
 
     @RobotKeyword("Uses current context to search for a spinner button and when found, "
@@ -59,19 +75,24 @@ public class SpinnerKeywords {
         return operatorFactory.createOperator(identifier).getValue();
     }
 
-    private void increase(SpinnerOperator spinnerOperator, int numberOfIncreases) {
-        for (int i = 0; i < numberOfIncreases; ++i) {
-            spinnerOperator.increase();
-        }
+    @RobotKeyword("Sets the string value for the spinner found from the current context.\n\n"
+            + "Example:\n"
+            + "| Set Spinner String Value | _mySpinner_  | _January_  |\n")
+    public void setSpinnerStringValue(String identifier, String value) {
+		operatorFactory.createOperator(identifier).setValue(value);
+    }
+    
+    @RobotKeyword("Sets the number value for the spinner found from the current context.\n\n"
+            + "Example:\n"
+            + "| Set Spinner Number Value | _mySpinner_  | _100_  |\n"
+            + "| Set Spinner Number Value | _mySpinner_  | _7.5_  |\n")
+    public void setSpinnerNumberValue(String identifier, String value) {
+		operatorFactory.createOperator(identifier).setValue(asNumber(value));
     }
 
-    private void decrease(SpinnerOperator spinnerOperator, int numberOfDecreases) {
-        for (int i = 0; i < numberOfDecreases; ++i) {
-            spinnerOperator.decrease();
-        }
-    }
-
-    private int getNotches(String[] times) {
-        return times.length == 0 ? 1 : Integer.parseInt(times[0]);
+    private Object asNumber(String value) {
+    	try { return Integer.valueOf(value); } catch (NumberFormatException ignored) {}
+    	try { return Float.valueOf(value); } catch (NumberFormatException ignored) {}
+    	throw new RuntimeException("Can't convert '"+value+"' to a number.");
     }
 }

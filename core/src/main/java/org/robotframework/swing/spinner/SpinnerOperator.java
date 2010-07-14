@@ -4,6 +4,7 @@ import org.robotframework.swing.operator.ComponentWrapper;
 
 public interface SpinnerOperator extends ComponentWrapper {
     Object getValue();
+    void setValue(Object value);
     void increase();
     void increaseToMaximum();
     void decrease();

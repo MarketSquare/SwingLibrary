@@ -19,6 +19,10 @@ public class DefaultSpinnerOperator implements SpinnerOperator {
         return spinnerOperator.getValue();
     }
 
+    public void setValue(Object value) {
+    	spinnerOperator.setValue(value);
+    }
+    
     public void decrease() {
         spinnerOperator.getDecreaseOperator().push();
     }
