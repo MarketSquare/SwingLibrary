@@ -8,6 +8,7 @@
   <artifactId>swinglibrary-parent</artifactId>
   <packaging>pom</packaging>
   <version>1.1.1</version>
+  <name>swinglibrary-multiproject-parent</name>
  
   <modules>
     <module>core</module>
