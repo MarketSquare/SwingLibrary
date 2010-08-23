@@ -4,7 +4,7 @@
   <artifactId>demo-application</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
-  <name>examplesut</name>
+  <name>swinglibrary-demo-application</name>
   <dependencies>
     <dependency>
       <groupId>hsqldb</groupId>
