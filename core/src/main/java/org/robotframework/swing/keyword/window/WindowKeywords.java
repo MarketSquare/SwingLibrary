@@ -44,7 +44,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         setContext(operatorFactory.createOperatorByIndex(0));
     }
 
-    @RobotKeyword("Selects a window was as current context.\n\n"
+    @RobotKeyword("Selects a window as current context.\n\n"
         + "*N.B.* Regular expression can be used to select the window by prefixing the identifier with 'regexp='.\n"
         + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
         + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
