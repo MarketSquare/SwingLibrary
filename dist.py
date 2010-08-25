@@ -12,26 +12,30 @@ def call(cmd, cwd='.'):
     print " ".join(cmd)
     return subprocess.call(cmd, cwd=cwd)
 
+def mvn(project):
+    call(['mvn', 'clean', 'assembly:assembly'], cwd=project)
+
 def build_projects():
-    call(['mvn', 'clean', 'assembly:assembly'], cwd='core')
-    call(['mvn', 'clean', 'assembly:assembly'], cwd='test-application')
-    call(['mvn', 'clean', 'assembly:assembly'], cwd='test-keywords')
-    call(['mvn', 'clean', 'assembly:assembly'], cwd='demo-application')
+    mvn('core')
+    mvn('test-application')
+    mvn('test-keywords')
+    mvn('demo-application')
 
 def jarjar(jar):
     call(['java', '-jar', 'lib/jarjar-1.0.jar', 'process', 'lib/jarjar_rules.txt', '%s' %(jar), '%s' %(jar)])
 
-def get_jar_with(pattern):
+def get_jar_with_dependencies_for(project):
+    pattern = '%s/target/*-jar-with-dependencies.jar' % project
     paths = glob.glob(pattern)
     if paths:
         paths.sort()
         path = paths[-1]
-    return os.path.abspath(path)
+    return os.path.abspath(os.path.abspath(path))
 
 def setup_acceptance_test_env():
-    test_keywords = os.path.abspath(get_jar_with('test-keywords/target/*-jar-with-dependencies.jar'))
+    test_keywords = get_jar_with_dependencies_for('test-keywords')
     jarjar(test_keywords)
-    test_app = os.path.abspath(get_jar_with('test-application/target/*-jar-with-dependencies.jar'))
+    test_app = get_jar_with_dependencies_for('test-application')
     dist_jar = os.path.abspath(RELAT_DIST_JAR_PATH)
     os.environ['CLASSPATH'] = os.pathsep.join([test_keywords, test_app, dist_jar])
 
@@ -44,7 +48,8 @@ def get_output_dir():
 def run_acceptance_tests():
     output_dir = get_output_dir()
     test_dir = os.path.abspath(os.path.join('core', 'src', 'test', 'resources', 'robot-tests'))
-    call(['xvfb-run', 'jybot', '--exclude', 'display-required', '--loglevel', 'TRACE', '--monitorcolors', 'off', 
+    #, '--exclude', 'display-required'
+    call(['jybot', '--loglevel', 'TRACE', '--monitorcolors', 'off', 
           '--outputdir', output_dir, '--debugfile', 'debug.txt', '--noncritical', 'development',
           '--tagstatcombine', '*NOTdevelopment:regression', test_dir])
 
