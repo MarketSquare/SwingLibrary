@@ -223,38 +223,6 @@
           </execution>
         </executions>
       </plugin>
-      <!--plugin>
-        <groupId>org.robotframework</groupId>
-        <artifactId>robot-maven-plugin</artifactId>
-        <configuration>
-          <robotTestDirectory>/home/husa/work/robotframework-swinglibrary/core/src/test/resources/robot-tests
-          </robotTestDirectory>
-          <robotScript>jybot</robotScript>
-          <robotArguments>
-            <param>--loglevel</param>
-            <param>TRACE</param>
-            <param>--outputdir</param>
-            <param>/tmp</param>
-            <param>--noncritical</param>
-            <param>development</param>
-            <param>--tagstatcombine</param>
-            <param>*NOTdevelopment:regression</param>
-          </robotArguments>
-          <robotEnvironmentVariables>
-            <CLASSPATH>
-              ${env.CLASSPATH}:/home/husa/work/robotframework-swinglibrary/core/target/swinglibrary-jar-with-dependencies-1.1.1.jar:/home/husa/work/robotframework-swinglibrary/test-application/target/swinglibrary-test-jar-application-with-dependencies-1.1.1.jar
-            </CLASSPATH>
-          </robotEnvironmentVariables>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin-->
     </plugins>
   </build>
 
