@@ -3,19 +3,22 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.robotframework</groupId>
   <artifactId>swinglibrary-test-keywords</artifactId>
-  <version>1.1.1</version>
+  <properties>
+    <dist.version>1.1.2-SNAPSHOT</dist.version>
+  </properties>
+  <version>${dist.version}</version>
   <packaging>jar</packaging>
   <name>swinglibrary-test-keywords</name>
   <dependencies>
     <dependency>
       <groupId>org.robotframework</groupId>
       <artifactId>swinglibrary-test-application</artifactId>
-      <version>1.1.1</version>
+      <version>${dist.version}</version>
     </dependency>
     <dependency>
       <groupId>org.robotframework</groupId>
       <artifactId>swinglibrary</artifactId>
-      <version>1.1.1</version>
+      <version>${dist.version}</version>
     </dependency>
     <dependency>
       <groupId>aopalliance</groupId>
@@ -43,8 +46,8 @@
       <version>1.1</version>
       <exclusions>
         <exclusion>
-            <artifactId>servlet-api</artifactId>
-            <groupId>javax.servlet</groupId>
+          <artifactId>servlet-api</artifactId>
+          <groupId>javax.servlet</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -200,7 +203,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -210,6 +212,39 @@
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>java</executable>
+          <workingDirectory>.</workingDirectory>
+          <arguments>
+            <argument>-jar</argument>
+            <argument>../lib/jarjar-1.0.jar</argument>
+            <argument>process</argument>
+            <argument>../lib/jarjar_rules.txt</argument>
+            <argument>target/${artifactId}-${version}-jar-with-dependencies.jar</argument>
+            <argument>target/${artifactId}-${version}-jar-with-dependencies.jar</argument>
+          </arguments>
         </configuration>
       </plugin>
       <plugin>
@@ -239,7 +274,39 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>jybot</executable>
+          <environmentVariables>
+              <CLASSPATH>${basedir}/target/swinglibrary-test-keywords-${dist.version}-jar-with-dependencies.jar</CLASSPATH>
+          </environmentVariables>
+          <arguments>
+            <argument>--loglevel</argument>
+            <argument>TRACE</argument>
+            <argument>--monitorcolors</argument>
+            <argument>--outputdir</argument>
+            <argument>target/robot</argument>
+            <argument>--debugfile</argument>
+            <argument>debug.txt</argument>
+            <argument>--noncritical</argument>
+            <argument>development</argument>
+            <argument>--tagstatcombine</argument>
+            <argument>*NOTdevelopment:regression</argument>
+            <argument>${basedir}/../core/src/test/resources/robot-tests</argument>
+          </arguments>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
-
 </project>
