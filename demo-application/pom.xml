@@ -3,7 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.robotframework</groupId>
   <artifactId>demo-application</artifactId>
-  <version>1.0</version>
+  <properties>
+    <dist.version>1.1.2-SNAPSHOT</dist.version>
+  </properties>
+  <version>${dist.version}</version>
   <packaging>jar</packaging>
   <name>swinglibrary-demo-application</name>
   <dependencies>
@@ -12,8 +15,12 @@
       <artifactId>hsqldb</artifactId>
       <version>1.8.0.10</version>
     </dependency>
+    <dependency>
+      <groupId>org.robotframework</groupId>
+      <artifactId>swinglibrary</artifactId>
+      <version>${dist.version}</version>
+    </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -24,6 +31,14 @@
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
         </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -54,5 +69,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
