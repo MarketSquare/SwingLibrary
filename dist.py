@@ -5,8 +5,6 @@ import subprocess
 import glob
 
 VERSION = '1.1.2-SNAPSHOT'
-SWINGLIB_DIST_JAR_NAME = 'swinglibrary-%s-jar-with-dependencies.jar' % VERSION
-RELAT_DIST_JAR_PATH = 'core/target/%s' % SWINGLIB_DIST_JAR_NAME
 
 def call(cmd, cwd='.'):
     print " ".join(cmd)
@@ -35,10 +33,7 @@ def init_dirs():
 
 def copy_jars_to_target():
     call(['cp', 'core/target/swinglibrary-%s.jar'% VERSION, 'target'])
-    call(['cp', RELAT_DIST_JAR_PATH, 'target'])
-
-def jarjar_dist_jar():
-    jarjar('core/target/%s' % SWINGLIB_DIST_JAR_NAME)
+    call(['cp', 'core/swinglibrary-%s-jar-with-dependencies.jar' % VERSION, 'target'])
 
 if __name__ == '__main__':
     init_dirs()
