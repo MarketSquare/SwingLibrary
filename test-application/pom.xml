@@ -3,7 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.robotframework</groupId>
   <artifactId>swinglibrary-test-application</artifactId>
-  <version>1.1.1</version>
+  <properties>
+    <dist.version>1.1.2-SNAPSHOT</dist.version>
+  </properties>
+  <version>${dist.version}</version>>
   <packaging>jar</packaging>
   <name>swinglibrary-test-application</name>
   <dependencies>
@@ -38,8 +41,8 @@
       <version>1.1</version>
       <exclusions>
       	<exclusion>
-      		<artifactId>servlet-api</artifactId>
-      		<groupId>javax.servlet</groupId>
+      	  <artifactId>servlet-api</artifactId>
+      	  <groupId>javax.servlet</groupId>
       	</exclusion>
       </exclusions>
     </dependency>
@@ -195,18 +198,8 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2-beta-5</version>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-eclipse-plugin</artifactId>
