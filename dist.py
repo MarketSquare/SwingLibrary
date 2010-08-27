@@ -33,7 +33,7 @@ def init_dirs():
 
 def copy_jars_to_target():
     call(['cp', 'core/target/swinglibrary-%s.jar'% VERSION, 'target'])
-    call(['cp', 'core/swinglibrary-%s-jar-with-dependencies.jar' % VERSION, 'target'])
+    call(['cp', 'core/target/swinglibrary-%s-jar-with-dependencies.jar' % VERSION, 'target'])
 
 if __name__ == '__main__':
     init_dirs()
