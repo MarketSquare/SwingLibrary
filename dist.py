@@ -92,10 +92,6 @@ def add_dependencies_to_classpath():
     dependencies =  [get_swinglib_jar()] + [test_classes] + get_test_deps() + [paranamer_jar]
     os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
 
-def get_robot_installation_path():
-    import robot
-    return os.path.dirname(robot.__file__)
-
 def assert_doc_ok():
     doc_name = 'swinglibrary-%s-doc.html' % VERSION
     dependencies_txt = open(os.path.join(base, 'dependencies.txt'), 'r')
@@ -117,8 +113,7 @@ def doc():
     base = os.path.dirname(__file__)
     libdoc = os.path.join(base, 'lib', 'libdoc', 'libdoc.py')
     output = os.path.join(base, 'doc', 'SwingLibrary-%s-doc.html' % (VERSION))
-    lib = 'SwingLibrary'
-    command = 'jython -Dpython.path=%s %s --output %s %s' % ('/usr/local/lib/python2.6/dist-packages', libdoc, output, lib)
+    command = 'jython -Dpython.path=%s %s --output %s %s' % (os.path.join(base, 'lib', 'robotframework-2.5.2.jar', 'Lib'), libdoc, output, 'SwingLibrary')
     print command
     sys.exit(os.system(command))
     assert_doc_ok()
@@ -127,5 +122,6 @@ if __name__ == '__main__':
     init_dirs()
     build_projects()
     copy_jars_to_target()
+    doc()
 
 
