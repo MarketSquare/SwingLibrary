@@ -10,12 +10,12 @@ VERSION = '1.1.2-SNAPSHOT'
 
 base = os.path.abspath(os.path.normpath(os.path.dirname(__file__)))
 
-def call(cmd, cwd='.'):
+def call(cmd):
     print " ".join(cmd)
-    return subprocess.call(cmd, cwd=cwd)
+    return subprocess.call(cmd)
 
-def build_projects(project='.'):
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-Dmaven.tests.skip=true', 'clean', 'package', 'install', 'integration-test'], cwd=project)
+def build_projects():
+    call(['mvn', '-Ddist.version=%s' % VERSION, 'clean', 'package', 'install'])
 
 def get_jar_with_dependencies_for(project):
     pattern = '%s/target/*-jar-with-dependencies.jar' % project
