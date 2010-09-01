@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import glob
 
@@ -32,6 +33,8 @@ def get_test_deps():
              or 'objenesis' in dep 
              or 'javatools-test' in dep
              or 'paranamer' in dep
+             or 'paranamer-generator' in dep
+             or 'qdox' in dep
              or 'asm' in dep ]
 
 def sh(command):
@@ -72,7 +75,6 @@ def assert_doc_ok():
 def generate_parameter_names(this, to):
     paraname_file = os.path.join(base, 'core', 'target', '.paraname')
     if not os.path.exists(paraname_file):
-        print 'Running paranamer...'
         open(paraname_file, 'a')
         from com.nsn.robot.paraname import Paranamer
         gen = Paranamer()
@@ -90,4 +92,5 @@ def doc():
 
 if __name__ == '__main__':
     doc()
+    assert_doc_ok()
 
