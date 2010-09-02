@@ -15,7 +15,10 @@ def call(cmd):
     return subprocess.call(cmd)
 
 def build_projects():
-    call(['mvn', '-Ddist.version=%s' % VERSION, 'clean', 'package', 'install'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'core/pom.xml' 'clean', 'package', 'install', 'assembly:assembly'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-application/pom.xml' 'clean', 'package', 'install'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-keywords/pom.xml' 'clean', 'package', 'install', 'assembly:assembly']) 
+    #call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'demo-application/pom.xml' 'clean', 'package', 'install', 'assembly:assembly'])
 
 def get_jar_with_dependencies_for(project):
     pattern = '%s/target/*-jar-with-dependencies.jar' % project
