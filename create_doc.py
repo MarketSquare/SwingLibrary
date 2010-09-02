@@ -66,9 +66,9 @@ def add_dependencies_to_classpath():
     os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
 
 def assert_doc_ok():
-    doc_name = 'swinglibrary-%s-doc.html' % VERSION
-    dependencies_txt = open(os.path.join(base, 'dependencies.txt'), 'r')
-    for line in dependencies_txt.read().splitlines():
+    doc_name = 'SwingLibrary-%s-doc.html' % VERSION
+    docfile = open(os.path.join(base, 'doc', doc_name), 'r')
+    for line in docfile.read().splitlines():
         if '*<unknown>' in line:
             raise "Errors in documentation: " + doc_name + " contains *<unknown>-tags."
 
@@ -87,10 +87,10 @@ def doc():
     output = os.path.join(base, 'doc', 'SwingLibrary-%s-doc.html' % (VERSION))
     command = 'jython -Dpython.path=%s %s --output %s %s' % (os.path.join(base, 'lib', 'robotframework-2.5.2.jar', 'Lib'), libdoc, output, 'SwingLibrary')
     print command
-    assert_doc_ok()
-    sys.exit(os.system(command))
+    return os.system(command)
 
 if __name__ == '__main__':
-    doc()
+    ret_code = doc()
     assert_doc_ok()
+    sys.exit(ret_code)
 
