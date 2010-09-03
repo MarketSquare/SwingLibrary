@@ -6,6 +6,8 @@ import sys
 import subprocess
 import glob
 
+from create_doc import doc, assert_doc_ok
+
 VERSION = '1.1.2-SNAPSHOT'
 
 base = os.path.abspath(os.path.normpath(os.path.dirname(__file__)))
@@ -15,10 +17,9 @@ def call(cmd):
     return subprocess.call(cmd)
 
 def build_projects():
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'core/pom.xml' 'clean', 'package', 'install', 'assembly:assembly'])
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-application/pom.xml' 'clean', 'package', 'install'])
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-keywords/pom.xml' 'clean', 'package', 'install', 'assembly:assembly']) 
-    #call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'demo-application/pom.xml' 'clean', 'package', 'install', 'assembly:assembly'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'core/pom.xml', 'clean', 'package', 'install', 'assembly:assembly'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-application/pom.xml', 'clean', 'package', 'install'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-keywords/pom.xml', 'clean', 'package', 'install', 'assembly:assembly']) 
 
 def get_jar_with_dependencies_for(project):
     pattern = '%s/target/*-jar-with-dependencies.jar' % project
@@ -36,13 +37,15 @@ def copy_jars_to_target():
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s.jar' % VERSION), 'target'])
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s-jar-with-dependencies.jar' % VERSION), 'target'])
 
-def doc():
-    call(['jython', 'create_doc.py'])
+def create_doc():
+    call(['mvn', '-f', 'core/pom.xml', 'assembly:assembly'])
+    doc()
+    assert_doc_ok()
 
 if __name__ == '__main__':
     init_dirs()
     build_projects()
-    doc()
+    create_doc()
     copy_jars_to_target()
 
 
