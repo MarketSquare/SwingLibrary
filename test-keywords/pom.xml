@@ -215,7 +215,7 @@
         </configuration>
         <executions>
           <execution>
-            <phase>assembly</phase>
+            <phase>package</phase>
             <goals>
               <goal>assembly</goal>
             </goals>
@@ -298,8 +298,6 @@
             <argument>off</argument>
             <argument>--outputdir</argument>
             <argument>target/robot</argument>
-            <argument>--include</argument>
-            <argument>foo</argument>
             <argument>--debugfile</argument>
             <argument>debug.txt</argument>
             <argument>--noncritical</argument>
