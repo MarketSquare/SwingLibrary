@@ -15,7 +15,7 @@ def get_swinglib_jar():
         paths.sort()
         return paths[-1]
     else:
-        raise RuntimeError('Please run "mvn -f core/pom.xml package first')
+        raise RuntimeError('Please run "mvn -f core/pom.xml assembly:assembly" first')
 
 def exists(file_name):
     file = os.path.join(base, file_name)
@@ -76,9 +76,12 @@ def generate_parameter_names(this, to):
     paraname_file = os.path.join(base, 'core', 'target', '.paraname')
     if not os.path.exists(paraname_file):
         open(paraname_file, 'a')
-        from com.nsn.robot.paraname import Paranamer
-        gen = Paranamer()
-        gen.processSourcePath(this, to)
+        run_paranamer(this, to)
+
+def run_paranamer(this, to):
+    from com.nsn.robot.paraname import Paranamer
+    gen = Paranamer()
+    gen.processSourcePath(this, to)
 
 def doc():
     add_dependencies_to_classpath()
