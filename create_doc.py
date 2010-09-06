@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import glob
+import subprocess
 
 base = os.path.abspath(os.path.dirname(__file__))
 
@@ -92,7 +93,11 @@ def doc():
     print command
     return os.system(command)
 
+def mvn():
+    subprocess.call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'core/pom.xml', 'assembly:assembly'])
+
 if __name__ == '__main__':
+    mvn()
     ret_code = doc()
     assert_doc_ok()
     sys.exit(ret_code)
