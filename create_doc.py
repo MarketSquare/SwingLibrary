@@ -56,12 +56,8 @@ def add_dependencies_to_classpath():
                 dependencies_txt.write(jar + '\n')
         dependencies_txt.flush()
 
-    test_classes = os.path.join(base, 'core','target', 'test-classes')
-    if not exists(test_classes):
-        sh('mvn -f core/pom.xml test-compile')
-
     paranamer_jar = os.path.join(base, 'lib', 'swing-library-paranamer.jar')
-    dependencies =  [get_swinglib_jar()] + [test_classes] + get_test_deps() + [paranamer_jar]
+    dependencies =  [get_swinglib_jar()] + get_test_deps() + [paranamer_jar]
     for deb in dependencies:
         sys.path.append(deb)
     os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
@@ -93,11 +89,11 @@ def doc():
     print command
     return os.system(command)
 
-def mvn():
+def assemble_core():
     subprocess.call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'core/pom.xml', 'assembly:assembly'])
 
 if __name__ == '__main__':
-    mvn()
+    assemble_core()
     ret_code = doc()
     assert_doc_ok()
     sys.exit(ret_code)
