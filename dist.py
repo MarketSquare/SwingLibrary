@@ -38,7 +38,6 @@ def copy_jars_to_target():
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s-jar-with-dependencies.jar' % VERSION), 'target'])
 
 def create_doc():
-    call(['mvn', '-f', 'core/pom.xml', 'assembly:assembly'])
     doc()
     assert_doc_ok()
 
