@@ -1,5 +1,17 @@
 #!/usr/bin/env python
 
+""" Create distribution of the SwingLibrary
+
+Usage: jython dist.py [task]
+
+Task can have the following values:
+
+ - doc	Creates the documentation for the library
+
+If no task is specified, the whole dist build will be run.
+
+ """
+
 import os
 import re
 import sys
@@ -77,10 +89,18 @@ def doc():
     print command
     return os.system(command)
 
-if __name__ == '__main__':
+def default():
     init_dirs()
     build_projects()
     create_doc()
     copy_jars_to_target()
+
+if __name__ == '__main__':
+    try:
+        name = sys.argv[1] if len(sys.argv) == 2 else 'default'
+        {'doc': doc, 'default': default}[name]()
+    except (KeyError, IndexError):
+        print __doc__
+
 
 
