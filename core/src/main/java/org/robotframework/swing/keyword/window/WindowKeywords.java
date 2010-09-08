@@ -50,7 +50,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
         + "Example:\n"
         + "| Select Window | _Help_ |\n"
-        + "| Select Window | _regexp=H*'_ | Selects a window starting with letter H. |\n")
+        + "| Select Window | _regexp=^H.*_ | Selects a window starting with letter H. |\n")
     public void selectWindow(String identifier) {
         setContext(operatorFactory.createOperator(identifier));
     }
@@ -61,7 +61,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
         + "Example:\n"
         + "| Close Window | _Help_ |\n"
-        + "| Close Window | _regexp=H*'_ | Closes a window starting with letter H. |\n")
+        + "| Close Window | _regexp=^H.*_ | Closes a window starting with letter H. |\n")
     public void closeWindow(String identifier) {
         FrameOperator frameOperator = operatorFactory.createOperator(identifier);
         frameOperator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
