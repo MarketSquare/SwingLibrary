@@ -41,7 +41,7 @@ public class DialogKeywords {
     	+ "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
         + "Example:\n"
         + "| Select Dialog  | _About_ |\n"
-        + "| Select Dialog  | _regexp=A.*_ | Selects a dialog starting with 'A' | \n")
+        + "| Select Dialog  | _regexp=^A.*_ | Selects a dialog starting with 'A' | \n")
     public void selectDialog(String identifier) {
         Context.setContext(operatorFactory.createOperator(identifier));
     }
@@ -51,7 +51,7 @@ public class DialogKeywords {
         + "Please see more about regexp usage at `Select Dialog` keyword.\n\n"
         + "Example:\n"
         + "| Close Dialog | _About_ |\n"
-        + "| Close Dialog  | _regexp=A.*_ | Closes a dialog starting with 'A' | \n")
+        + "| Close Dialog  | _regexp=^A.*_ | Closes a dialog starting with 'A' | \n")
     public void closeDialog(String identifier) {
         operatorFactory.createOperator(identifier).close();
     }
