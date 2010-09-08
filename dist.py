@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-""" Create distribution of the SwingLibrary
+""" Create distribution of the SwingLibrary.
 
 Usage: jython dist.py [task]
 
@@ -9,6 +9,11 @@ Task can have the following values:
  - doc	Creates the documentation for the library
 
 If no task is specified, the whole dist build will be run.
+
+The distribution consists of building all the subprojects with maven,
+packaging them with and without 3rd party classes, installing them
+into maven local repository and running the acceptance tests as well as
+generating the keyword documentation.
 
  """
 
