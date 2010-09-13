@@ -1,21 +1,26 @@
 #!/usr/bin/env python
 
-""" Create distribution of the SwingLibrary.
+""" Create a distribution of the SwingLibrary.
 
 Usage: jython dist.py [task]
 
-Task can have the following values:
+Optional task argument can have the following value:
 
  - doc	Creates the documentation for the library
 
-If no task is specified, the whole dist build will be run.
+If no task is specified, the whole dist build will be run, which means:
 
-The distribution consists of building all the subprojects with maven,
-packaging them with and without 3rd party classes, installing them
-into maven local repository and running the acceptance tests as well as
-generating the keyword documentation.
+ - building of all the subprojects with maven.
+   (Subprojects: core, test-application, test-keywords, demo-application)
+ - packaging them with and without 3rd party classes.
+ - installing them into local maven repository
+ - running the acceptance tests
+ - generating the keyword documentation.
 
- """
+The swinglibrary.jar with and without depencencies are copied into the 
+target directory and documentation html will be generated to the doc 
+directory.
+"""
 
 import os
 import re
@@ -37,17 +42,19 @@ def build_projects():
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-keywords/pom.xml', 'clean', 'install', 'assembly:assembly'])
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'demo-application/pom.xml', 'clean', 'install', 'assembly:assembly']) 
 
-def get_jar_with_dependencies_for(project):
-    pattern = '%s/target/*-jar-with-dependencies.jar' % project
-    paths = glob.glob(pattern)
-    if paths:
-        paths.sort()
-        path = paths[-1]
-    return os.path.abspath(os.path.abspath(path))
+#def get_jar_with_dependencies_for(project):
+#    pattern = '%s/target/*-jar-with-dependencies.jar' % project
+#    paths = glob.glob(pattern)
+#    if paths:
+#        paths.sort()
+#        path = paths[-1]
+#    return os.path.abspath(os.path.abspath(path))
 
 def init_dirs():
     call(['rm', '-r', 'target'])
     call(['mkdir', 'target'])
+    call(['rm', '-r', 'doc'])
+    call(['mkdir', 'doc'])
 
 def copy_jars_to_target():
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s.jar' % VERSION), 'target'])
@@ -75,9 +82,17 @@ def add_dependencies_to_classpath():
         sys.path.append(deb)
     os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
 
-def create_doc():
-    doc()
+def doc():
+    create_doc()
     assert_doc_ok()
+
+def create_doc():
+    add_dependencies_to_classpath()
+    libdoc = os.path.join(base, 'lib', 'libdoc', 'libdoc.py')
+    output = os.path.join(base, 'doc', 'SwingLibrary-%s-doc.html' % (VERSION))
+    command = 'jython -Dpython.path=%s %s --output %s %s' % (os.path.join(base, 'lib', 'robotframework-2.5.2.jar', 'Lib'), libdoc, output, 'SwingLibrary')
+    print command
+    return os.system(command)
 
 def assert_doc_ok():
     doc_name = 'SwingLibrary-%s-doc.html' % VERSION
@@ -86,18 +101,10 @@ def assert_doc_ok():
         if '*<unknown>' in line:
             raise "Errors in documentation: " + doc_name + " contains *<unknown>-tags."
 
-def doc():
-    add_dependencies_to_classpath()
-    libdoc = os.path.join(base, 'lib', 'libdoc', 'libdoc.py')
-    output = os.path.join(base, 'doc', 'SwingLibrary-%s-doc.html' % (VERSION))
-    command = 'jython -Dpython.path=%s %s --output %s %s' % (os.path.join(base, 'lib', 'robotframework-2.5.2.jar', 'Lib'), libdoc, output, 'SwingLibrary')
-    print command
-    return os.system(command)
-
 def default():
     init_dirs()
     build_projects()
-    create_doc()
+    doc()
     copy_jars_to_target()
 
 if __name__ == '__main__':
