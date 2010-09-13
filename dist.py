@@ -51,9 +51,23 @@ def copy_jars_to_target():
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s.jar' % VERSION), 'target'])
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s-jar-with-dependencies.jar' % VERSION), 'target'])
 
-def exists(file_name):
-    file = os.path.join(base, file_name)
-    return os.path.exists(file)
+def doc():
+    create_doc()
+    assert_doc_ok()
+
+def create_doc():
+    add_dependencies_to_classpath()
+    libdoc = os.path.join(base, 'lib', 'libdoc', 'libdoc.py')
+    output = os.path.join(base, 'doc', 'SwingLibrary-%s-doc.html' % (VERSION))
+    command = 'jython -Dpython.path=%s %s --output %s %s' % (os.path.join(base, 'lib', 'robotframework-2.5.2.jar', 'Lib'), libdoc, output, 'SwingLibrary')
+    print command
+    return os.system(command)
+
+def add_dependencies_to_classpath():
+    dependencies =  get_deps() + [os.path.join(base, 'core', 'target', 'classes')]
+    for deb in dependencies:
+        sys.path.append(deb)
+    os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
 
 def get_deps():
     os.environ['MAVEN_OPTS'] = '-DoutputAbsoluteArtifactFilename=true'
@@ -66,24 +80,6 @@ def sh(command):
     output = process.read()
     process.close()
     return output
-
-def add_dependencies_to_classpath():
-    dependencies =  get_deps() + [os.path.join(base, 'core', 'target', 'classes')]
-    for deb in dependencies:
-        sys.path.append(deb)
-    os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
-
-def doc():
-    create_doc()
-    assert_doc_ok()
-
-def create_doc():
-    add_dependencies_to_classpath()
-    libdoc = os.path.join(base, 'lib', 'libdoc', 'libdoc.py')
-    output = os.path.join(base, 'doc', 'SwingLibrary-%s-doc.html' % (VERSION))
-    command = 'jython -Dpython.path=%s %s --output %s %s' % (os.path.join(base, 'lib', 'robotframework-2.5.2.jar', 'Lib'), libdoc, output, 'SwingLibrary')
-    print command
-    return os.system(command)
 
 def assert_doc_ok():
     doc_name = 'SwingLibrary-%s-doc.html' % VERSION
