@@ -10,12 +10,12 @@ Optional task argument can have the following value:
 
 If no task is specified, the whole dist build will be run, which means:
 
- - building of all the subprojects with maven.
+ - building of all the subprojects with maven
    (Subprojects: core, test-application, test-keywords, demo-application)
- - packaging them with and without 3rd party classes.
+ - packaging them with and without 3rd party classes
  - installing them into local maven repository
  - running the acceptance tests
- - generating the keyword documentation.
+ - generating the keyword documentation
 
 The swinglibrary.jar with and without depencencies are copied into the 
 target directory and documentation html will be generated to the doc 
@@ -29,7 +29,6 @@ import subprocess
 import glob
 
 VERSION = '1.1.2-SNAPSHOT'
-
 base = os.path.abspath(os.path.normpath(os.path.dirname(__file__)))
 
 def call(cmd):
@@ -41,14 +40,6 @@ def build_projects():
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-application/pom.xml', 'clean', 'install'])
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-keywords/pom.xml', 'clean', 'install', 'assembly:assembly'])
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'demo-application/pom.xml', 'clean', 'install', 'assembly:assembly']) 
-
-#def get_jar_with_dependencies_for(project):
-#    pattern = '%s/target/*-jar-with-dependencies.jar' % project
-#    paths = glob.glob(pattern)
-#    if paths:
-#        paths.sort()
-#        path = paths[-1]
-#    return os.path.abspath(os.path.abspath(path))
 
 def init_dirs():
     call(['rm', '-r', 'target'])
