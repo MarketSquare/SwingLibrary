@@ -8,13 +8,38 @@ http://code.google.com/p/robotframework-swinglibrary/
 
 Prerequisites for building
 --------------------------
+There are two ways to build and test the SwingLibrary.
+The latter is deprecated and may not be supported in the future.
 
-SwingLibrary uses buildr and robot for building and testing:
+1. Using Jython 2.5.1, Maven and Robot:
+ - http://www.jython.org/
+ - http://maven.apache.org/
+ - robot: http://www.robotframework.org
+
+2. Using buildr and robot (Deprecated):
  - buildr: http://incubator.apache.org/buildr and
  - robot: http://www.robotframework.org
 
-Build tasks
------------
+
+Creating a distribution of SwingLibrary using Jython and Maven
+--------------------------------------------------------------
+
+In order to compile, test, package and create documentation run: 
+
+  jython dist.py
+
+Just to create a documentation of the readily build projects run:
+
+  jython dist.py doc
+
+The subprojects of the SwingLibrary can be built using their own
+Maven poms. E.g.
+
+  mvn -f core/pom.xml clean assembly:assembly
+
+
+Build tasks for Buildr
+----------------------
 
 In addition to buildr's default tasks we define few of our own:
 
