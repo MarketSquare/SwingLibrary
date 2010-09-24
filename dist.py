@@ -26,7 +26,7 @@ import os
 import re
 import sys
 import subprocess
-import glob
+from classversioncheck import ClassVersionCheck
 
 VERSION = '1.1.2-SNAPSHOT'
 base = os.path.abspath(os.path.normpath(os.path.dirname(__file__)))
@@ -50,6 +50,7 @@ def init_dirs():
 def copy_jars_to_target():
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s.jar' % VERSION), 'target'])
     call(['cp', os.path.join('core', 'target', 'swinglibrary-%s-jar-with-dependencies.jar' % VERSION), 'target'])
+    call(['cp', os.path.join('demo-application', 'target', 'demo-application-%s-jar-with-dependencies.jar' % VERSION), 'target'])
 
 def doc():
     create_doc()
@@ -88,16 +89,36 @@ def assert_doc_ok():
         if '*<unknown>' in line:
             raise "Errors in documentation: " + doc_name + " contains *<unknown>-tags."
 
+def package_demo():
+    print 'Packaging Demo application...'
+    demo_target = os.path.join('demo')
+    lib = os.path.join(demo_target, 'lib')
+    zip_file = os.path.join('target', 'SwingLibrary-%s-demo.zip' % VERSION)
+    call(['rm', '-r', demo_target])
+    call(['rm', zip_file])
+    call(['mkdir', '-p', lib])
+    call(['cp', os.path.join('core', 'target', 'swinglibrary-%s-jar-with-dependencies.jar' % VERSION), lib])
+    call(['cp', os.path.join('demo-application', 'target', 'demo-application-%s.jar' % VERSION), lib])
+    call(['cp', os.path.join('demo-application', 'run.sh'), demo_target])
+    call(['zip', '-r', zip_file, demo_target])
+    call(['rm', '-r', demo_target])
+    print 'Demo application packaged to ', os.path.abspath(demo_target)
+
 def default():
     init_dirs()
     build_projects()
     doc()
+    try:
+      ClassVersionCheck(49).assert_classes_have_correct_version(os.path.abspath(os.path.join('target', 'swinglibrary-%s.jar' % VERSION)))
+    except RuntimeError, err:
+      print err
     copy_jars_to_target()
+    package_demo()
 
 if __name__ == '__main__':
     try:
         name = sys.argv[1] if len(sys.argv) == 2 else 'default'
-        {'doc': doc, 'default': default}[name]()
+        {'doc': doc, 'package_demo': package_demo, 'default': default}[name]()
     except (KeyError, IndexError):
         print __doc__
 
