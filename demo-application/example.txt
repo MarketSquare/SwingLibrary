@@ -1,0 +1,7 @@
+*** Settings ***
+Library  SwingLibrary
+
+*** Test Cases ***
+Test App
+    Start Application  org.robotframework.examplesut.Main
+    Select Window  Todo App
