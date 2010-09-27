@@ -1,1 +1,1 @@
-Main-Class: org.robotframework.examplesut
+Main-Class: org.robotframework.examplesut.Main
