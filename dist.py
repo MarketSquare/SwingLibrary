@@ -27,6 +27,7 @@ import os
 import re
 import sys
 import subprocess
+import zipfile
 from classversioncheck import ClassVersionCheck
 
 VERSION = '1.1.2-SNAPSHOT'
@@ -104,7 +105,7 @@ def assert_doc_ok():
 
 def package_demo():
     print 'Packaging Demo application...'
-    demo_target = os.path.join('demo')
+    demo_target = 'demo'
     lib = os.path.join(demo_target, 'lib')
     zip_file = os.path.join('target', 'SwingLibrary-%s-demo.zip' % VERSION)
     call(['rm', '-r', demo_target])
@@ -114,9 +115,30 @@ def package_demo():
     call(['cp', os.path.join('demo-application', 'target', 'demo-application-%s-jar-with-dependencies.jar' % VERSION), lib])
     call(['cp', os.path.join('demo-application', 'run.sh'), demo_target])
     call(['cp', os.path.join('demo-application', 'example.txt'), demo_target])
-    call(['zip', '-r', zip_file, demo_target])
+    zip_demo()
     call(['rm', '-r', demo_target])
-    print 'Demo application packaged to ', os.path.abspath(demo_target)
+    print 'Demo application packaged to', os.path.abspath(zip_file)
+
+def zip_demo():
+    toZip('demo', os.path.join('target', 'SwingLibrary-%s-demo.zip' % VERSION))
+
+def toZip(f, filename):
+    zip_file = zipfile.ZipFile(filename, 'w')
+    if os.path.isfile(f):
+        zip_file.write(f)
+    else:
+        addFolderToZip(zip_file, f)
+    zip_file.close()
+
+def addFolderToZip(zip_file, folder): 
+    for f in os.listdir(folder):
+        full_path = os.path.join(folder, f)
+        if os.path.isfile(full_path):
+            print 'File added: ' + str(full_path)
+            zip_file.write(full_path)
+        elif os.path.isdir(full_path):
+            print 'Entering folder: ' + str(full_path)
+            addFolderToZip(zip_file, full_path)
 
 def default():
     init_dirs()
