@@ -6,7 +6,7 @@ Usage: jython dist.py [task]
 
 Optional task argument can have the following value:
 
- - doc	Creates the documentation for the library
+ - doc  Creates the documentation for the library
 
 If no task is specified, the whole dist build will be run, which means:
 
@@ -16,10 +16,11 @@ If no task is specified, the whole dist build will be run, which means:
  - installing them into local maven repository
  - running the acceptance tests
  - generating the keyword documentation
+ - packaging the demo application into distribution zip file
 
-The swinglibrary.jar with and without depencencies are copied into the 
-target directory and documentation html will be generated to the doc 
-directory.
+The swinglibrary.jar with and without depencencies and the demo application
+zip are copied into the target directory and documentation html will be 
+generated to the doc directory.
 """
 
 import os
@@ -36,9 +37,21 @@ def call(cmd):
     return subprocess.call(cmd)
 
 def build_projects():
+    build_core()
+    build_test_app()
+    build_test_kws()
+    build_demo_app()
+
+def build_core():
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'core/pom.xml', 'clean', 'install', 'assembly:assembly'])
+
+def build_test_app():
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-application/pom.xml', 'clean', 'install'])
+
+def build_test_kws():
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-keywords/pom.xml', 'clean', 'install', 'assembly:assembly'])
+
+def build_demo_app():
     call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'demo-application/pom.xml', 'clean', 'install', 'assembly:assembly']) 
 
 def init_dirs():
