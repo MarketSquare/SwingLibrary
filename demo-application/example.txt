@@ -5,3 +5,8 @@ Library  SwingLibrary
 Test App
     Start Application  org.robotframework.examplesut.Main
     Select Window  Todo App
+    Insert Into Text Field  description  some item
+    Push Button  submit
+    Select From List  todolist  0
+    ${val}=  Get Selected Value From List  todolist
+    Should Be Equal  ${val}  some item
