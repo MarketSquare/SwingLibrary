@@ -44,16 +44,16 @@ def build_projects():
     build_demo_app()
 
 def build_core():
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'core/pom.xml', 'clean', 'install', 'assembly:assembly'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', os.path.join('core', 'pom.xml'), 'clean', 'install', 'assembly:assembly'])
 
 def build_test_app():
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-application/pom.xml', 'clean', 'install'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', os.path.join('test-application', 'pom.xml'), 'clean', 'install'])
 
 def build_test_kws():
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'test-keywords/pom.xml', 'clean', 'install', 'assembly:assembly'])
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', os.path.join('test-keywords', 'pom.xml'), 'clean', 'install', 'assembly:assembly'])
 
 def build_demo_app():
-    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', 'demo-application/pom.xml', 'clean', 'install', 'assembly:assembly']) 
+    call(['mvn', '-Ddist.version=%s' % VERSION, '-f', os.path.join('demo-application', 'pom.xml'), 'clean', 'install', 'assembly:assembly']) 
 
 def init_dirs():
     call(['rm', '-r', 'target'])
@@ -86,7 +86,7 @@ def add_dependencies_to_classpath():
 
 def get_deps():
     os.environ['MAVEN_OPTS'] = '-DoutputAbsoluteArtifactFilename=true'
-    mvn_output = sh('mvn -f core/pom.xml dependency:list').splitlines()
+    mvn_output = sh('mvn -f %s dependency:list' % os.path.join('core', 'pom.xml')).splitlines()
     jars = [re.sub('.*:((:?C:)?)', '\\1', file) for file in mvn_output if re.search('jar', file)]
     return jars
 
