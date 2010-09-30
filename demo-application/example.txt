@@ -4,16 +4,14 @@ Suite Setup  Start Test Application
 
 *** Test Cases ***
 Test Add Todo Item
-    Insert Into Text Field  description  buy milk
-    Push Button  submit
+    Insert Todo Item buy milk
     Select From List  todolist  0
     ${item}=  Get Selected Value From List  todolist
     Should Be Equal  ${item}  buy milk
     Push Button  delete
 
 Test Delete Todo Item
-    Insert Into Text Field  description  to be deleted
-    Push Button  submit
+    Insert Todo Item to be deleted
     Select From List  todolist  0
     Push Button  delete
     ${items}=  Get List Item Count  todolist
@@ -23,3 +21,7 @@ Test Delete Todo Item
 Start Test Application
     Start Application  org.robotframework.examplesut.Main
     Select Window  Todo App
+
+Insert Todo Item ${arg}
+    Insert Into Text Field  description  ${arg}
+    Push Button  submit
