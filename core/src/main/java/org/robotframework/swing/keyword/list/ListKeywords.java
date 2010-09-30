@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.junit.Assert;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -88,6 +89,29 @@ public class ListKeywords extends IdentifierSupport {
         createOperator(identifier).selectAll();
     }
     
+    @RobotKeyword("Returns all values from a list.\n\n"
+    	+ "Example:\n"
+    	+ "| ${values}= | Get List Values | _myList_ |\n"
+    	+ "| Should Be Equal | ${values} | one, two, three |\n")
+    public List<String> getListValues(String identifier) {
+    	return createOperator(identifier).getListValues();
+    }
+    
+    @RobotKeyword("Fails if value not in list.\n\n"
+        	+ "Example:\n"
+        	+ "| List Should Contain | _myList_ | item |\n")
+    public void listShouldContain(String identifier, String value) {
+    	Assert.assertTrue("List "+identifier+" does not contain "+value, getListValues(identifier).contains(value));
+    }
+
+    @RobotKeyword("Fails if value is in list.\n\n"
+        	+ "Example:\n"
+        	+ "| List Should Not Contain | _myList_ | item |\n")
+    public void listShouldNotContain(String identifier, String value) {
+    	Assert.assertTrue("List "+identifier+" contains "+value, !getListValues(identifier).contains(value));
+    }
+
+
     private ListOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }

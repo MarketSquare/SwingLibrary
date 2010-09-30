@@ -1,7 +1,10 @@
 package org.robotframework.swing.list;
 
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ListModel;
 
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Waiter;
@@ -94,4 +97,12 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
                                              TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT).getTimeouts());
         return waiter;
     }
+
+	public List<String> getListValues() {
+		ListModel model = jListOperator.getModel();
+		List<String> items = new ArrayList<String>();
+		for (int i = 0, itemCount = model.getSize(); i < itemCount; i++)
+			items.add((String)model.getElementAt(i));
+		return items;
+	}
 }

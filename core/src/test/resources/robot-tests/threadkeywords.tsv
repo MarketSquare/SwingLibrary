@@ -3,6 +3,7 @@ library	org.robotframework.swing.extension.ExtendedSwingLibrary
 
 *Test Case*	*Action*	*Argument*
 Runs Keyword In Separate Thread
+	[tags]	flickering
 	runKeywordAndExpectError	*	shouldBeRunInSeparateThread
 	runKeywordInSeparateThread	shouldBeRunInSeparateThread
 	keywordWasRun
