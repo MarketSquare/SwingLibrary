@@ -54,21 +54,21 @@ public class TodoListPanel extends JPanel implements TodoListView {
 	}
 	
     public void addAddButtonListener(final  ButtonListener listener) {
-    	submitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				listener.onButtonPush();
-			}
-    	});
+    	bind(submitButton, listener);
     }
     
     public void addDeleteButtonListener(final ButtonListener listener) {
-		deleteButton.addActionListener(new ActionListener() {
+    	bind(deleteButton, listener);
+    }
+
+    private void bind(JButton button, final ButtonListener listener) {
+    	button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				listener.onButtonPush();
 			}
 		});
     }
-
+    
 	public Object getSelectedValue() {
 		return todoList.getSelectedValue();
 	}
