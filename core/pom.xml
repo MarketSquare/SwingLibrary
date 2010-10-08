@@ -1,5 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <repositories>
+    <repository>
+      <id>laughinpanda</id>
+      <url>http://www.laughingpanda.org/maven2</url>
+    </repository>
+    <repository>
+      <id>repo1</id>
+      <url>http://repo1.maven.org/maven2</url>
+    </repository>
+    <repository>
+      <id>codehaus</id>
+      <url>http://repository.codehaus.org</url>
+    </repository>
+  </repositories>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.robotframework</groupId>
   <artifactId>swinglibrary</artifactId>
