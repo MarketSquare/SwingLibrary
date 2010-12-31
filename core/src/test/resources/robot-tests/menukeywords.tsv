@@ -24,6 +24,10 @@ Select From Main Menu And Wait
 	selectFromMainMenuAndWait	${mutableMenu}
 	mainMenuItemShouldExist	${menuText}|Menu Item Was Pushed	
 
+Selecting Disabled Menu Item Should Fail
+	selectEmptyContext
+	runKeywordAndExpectError	Menu item '${disabledMenu}' is disabled.	selectFromMainMenu	${disabledMenu}
+
 Menu Item Should Exist
 	menuItemShouldExist	${showDialog}
 	runKeywordAndExpectError	Menu item 'unexisting|menu' does not exist.	menuItemShouldExist	unexisting|menu
