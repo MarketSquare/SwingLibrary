@@ -48,9 +48,9 @@ Set Float Spinner Value
 
 Set String Spinner Value
 	${oldValue}=	getSpinnerValue	stringSpinner 
-	setSpinnerStringValue	stringSpinner	maanantai	
+	setSpinnerStringValue	stringSpinner	Monday	
 	${spinnerValue}=	getSpinnerValue	stringSpinner
-	shouldBeEqual	maanantai	${spinnerValue}
+	shouldBeEqual	Monday	${spinnerValue}
 	[teardown]	setSpinnerStringValue	stringSpinner	${oldValue}
 
 Increase Spinner Value By Name Without Parameters

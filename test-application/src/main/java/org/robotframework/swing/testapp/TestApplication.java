@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +35,7 @@ public class TestApplication {
     private JPanel panel;
     private JFrame frame;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         new TestApplication().runTestApplication();
     }
 
@@ -168,7 +167,7 @@ public class TestApplication {
         }});
         
         panel.add(new TestSpinnerButton("testSpinner"));
-        List<String> weekDays = Arrays.asList(new DateFormatSymbols().getWeekdays()).subList(1, 8);
+        List<String> weekDays = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 		panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(weekDays)));
         panel.add(new TestSpinnerButton("floatSpinner", new SpinnerNumberModel(77.7, 0.0, 1000.0, 0.1)));
     }
