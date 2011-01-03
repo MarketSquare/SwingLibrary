@@ -35,7 +35,7 @@ public class TestApplication {
     private JPanel panel;
     private JFrame frame;
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
         new TestApplication().runTestApplication();
     }
 
