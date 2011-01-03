@@ -69,6 +69,8 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
 
         public void selectsFromMenu() {
             checking(new Expectations() {{
+                one(menuItemOperator).isEnabled(); will(returnValue(true));
+                one(menuBarOperator).pressMouse();
                 one(menuItemOperator).pushNoBlock();
             }});
 
@@ -77,6 +79,8 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
 
         public void selectsFromMenuAndWaits() {
             checking(new Expectations() {{
+                one(menuItemOperator).isEnabled(); will(returnValue(true));
+                one(menuBarOperator).pressMouse();
                 one(menuItemOperator).push();
             }});
 
@@ -244,17 +248,16 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 return menuBarOperator;
             }
         };
-
         menuItemOperator = mock(JMenuItemOperator.class);
         final EventTool eventTool = injectMockTo(menuKeywords, EventTool.class);
-
         checking(new Expectations() {{
-            one(menuBarOperator).showMenuItem(menuPath); will(returnValue(menuItemOperator));
-            exactly(2).of(eventTool).waitNoEvent(with(equal(200L)));
+            atLeast(1).of(menuBarOperator).showMenuItem(menuPath); will(returnValue(menuItemOperator));
+            atLeast(2).of(eventTool).waitNoEvent(with(equal(200L)));
 
-            one(menuItemOperator).setComparator(with(any(EqualsStringComparator.class)));
-            one(menuItemOperator).grabFocus();
+            atLeast(1).of(menuItemOperator).setComparator(with(any(EqualsStringComparator.class)));
+            atLeast(1).of(menuItemOperator).grabFocus();
         }});
         return menuKeywords;
     }
+
 }
