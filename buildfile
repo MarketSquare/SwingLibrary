@@ -80,7 +80,7 @@ task :ci_at => :ci_acceptance_tests
 task :ci_acceptance_tests => :dist do
   setup_at_environment
   output_dir = get_output_dir
-  sh "jybot --exclude display-required --loglevel TRACE --monitorcolors off --outputdir #{output_dir} --debugfile debug.txt --noncritical development --tagstatcombine *NOTdevelopment:regression " + __('src/test/resources/robot-tests')
+  sh "jybot --exclude display-required --loglevel TRACE --monitorcolors off --outputdir #{output_dir} --debugfile debug.txt --noncritical development " + __('src/test/resources/robot-tests')
 end
 
 def setup_at_environment()
