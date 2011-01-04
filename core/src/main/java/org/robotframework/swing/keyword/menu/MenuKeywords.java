@@ -44,7 +44,7 @@ public class MenuKeywords extends MenuSupport {
         + "| Select Window             | _My Application_           |\n"
         + "| Select From Menu And Wait | _Tools|Testing|MyTestTool_ |\n")
     public void selectFromMenuAndWait(String menuPath) {
-        menuItemShouldBeEnabled(menuPath);
+//        menuItemShouldBeEnabled(menuPath);
         showMenuItem(menuPath).push();
     }
 
