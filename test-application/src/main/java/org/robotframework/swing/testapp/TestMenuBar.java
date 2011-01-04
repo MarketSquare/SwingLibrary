@@ -3,7 +3,12 @@ package org.robotframework.swing.testapp;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import org.robotframework.javalib.util.KeywordNameNormalizer;
 
@@ -21,6 +26,15 @@ public class TestMenuBar extends JMenuBar {
             add(new TestMenuItem("Show Test Dialog") {
                 public void actionPerformed(ActionEvent e) {
                     JOptionPane.showMessageDialog(this, "This is an example message");
+            });
+            add(new TestMenuItem("Show 5 Sec Blocking Test Dialog") {
+                public void actionPerformed(ActionEvent e) {
+                    JOptionPane.showMessageDialog(this, "This is an example message");
+                    try {
+						Thread.sleep(5 * 1000);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
                 }
             });
             add(new TestMenuItem("Show Non-Modal Dialog") {

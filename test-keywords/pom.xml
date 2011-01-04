@@ -292,6 +292,8 @@
               <CLASSPATH>${basedir}/target/swinglibrary-test-keywords-${dist.version}-jar-with-dependencies.jar</CLASSPATH>
           </environmentVariables>
           <arguments>
+            <argument>--monitorwidth</argument>
+            <argument>73</argument>
             <argument>--loglevel</argument>
             <argument>TRACE</argument>
             <argument>--monitorcolors</argument>
