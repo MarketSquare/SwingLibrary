@@ -5,12 +5,9 @@ library	org.robotframework.swing.extension.ExtendedSwingLibrary
 Runs Keyword In Separate Thread
 	[tags]	flickering
 	runKeywordAndExpectError	*	shouldBeRunInSeparateThread
-	runKeywordInSeparateThread	shouldBeRunInSeparateThread
-	keywordWasRun
-	runKeywordInSeparateThread	shouldberuninseparatethread
-	keywordWasRun
-	runKeywordInSeparateThread	Should Be Run In Separate Thread
-	keywordWasRun
+	runInSeparateThread	shouldBeRunInSeparateThread
+	runInSeparateThread	 shouldberuninseparatethread
+	runInSeparateThread	Should Be Run In Separate Thread
 
 Runs Keywords From Other Packages
 	runKeywordInSeparateThread	keywordInOtherPackage	arg
@@ -26,3 +23,10 @@ Works With Real Keywords
 	runKeywordInSeparateThread	selectFromMainMenuAndWait	Test Menu|Show Test Dialog
 	dialogShouldBeOpen	Message
 	[teardown]	closeDialog	Message
+
+* Keywords *
+Run In Separate Thread
+	[Arguments]	${keyword name}
+	runKeywordInSeparateThread	${keyword name}
+	Wait Until Keyword Succeeds	10 seconds	1 second	keywordWasRun
+	
