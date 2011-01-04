@@ -7,7 +7,7 @@ testSetup	clearSelectionFromList	${listIndex}
 ${listName}	testList
 ${listWithRendererName}	listWithRenderer
 ${listIndex}	0
-${listValues}	one	two	three	
+@{listValues}	one	two	three	
 
 *Test Case*	*Action*	*Argument*
 Get Selected List Value From List By Index
