@@ -20,7 +20,7 @@ Doesn't Fail When Argument Names Are Not Available
 	runKeywordInSeparateThread	keywordWithoutArgumentNames	foo	bar	#even when it should
 
 Works With Real Keywords
-	runKeywordInSeparateThread	selectFromMainMenuAndWait	Test Menu|Show 5 Sec Blocking Test Dialog
+	runKeywordInSeparateThread	selectFromMainMenuAndWait	Test Menu|Show Test Dialog
 	Set Jemmy Timeout	DialogWaiter.WaitDialogTimeout	2
 	Wait Until Keyword Succeeds	10 seconds	1 second	dialogShouldBeOpen	Message
 	[teardown]	closeDialog	Message

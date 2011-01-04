@@ -1,7 +1,6 @@
 *Setting*	*Value*
 library	SwingLibrary
 suiteSetup	launchApplicationAndSetTimeouts
-defaultTags	regression
 
 *Keyword*	*Action*	*Argument*
 launchApplicationAndSetTimeouts

@@ -113,7 +113,7 @@ Select From Tree Node Popup Menu
 Select From Tree Node Popup Menu Should Accept Only Exact Matches For Menupaths
 	runKeywordAndExpectError	*	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Submenu|Enabled
 
-Select From Tree Node Popup Menu Fails If Menu Item Is Disabled	[tags]	development
+Select From Tree Node Popup Menu Fails If Menu Item Is Disabled
 	runKeywordAndExpectError	*Disabled menuitem*	selectFromTreeNodePopupMenu	${treeName}	${rootNode}	Disabled menuitem
 
 Select From Tree Node Popup Menu In Separate Thread
