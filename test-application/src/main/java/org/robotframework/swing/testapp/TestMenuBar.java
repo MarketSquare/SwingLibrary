@@ -26,7 +26,7 @@ public class TestMenuBar extends JMenuBar {
             add(new TestMenuItem("Show Test Dialog") {
                 public void actionPerformed(ActionEvent e) {
                     JOptionPane.showMessageDialog(this, "This is an example message");
-            });
+                }});
             add(new TestMenuItem("Show 5 Sec Blocking Test Dialog") {
                 public void actionPerformed(ActionEvent e) {
                     JOptionPane.showMessageDialog(this, "This is an example message");
