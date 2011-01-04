@@ -62,7 +62,7 @@ def add_dependencies_to_classpath():
     os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
 
 def run_robot_tests(args):
-    cmd = 'jybot --loglevel TRACE --outputdir /tmp --noncritical development --tagstatcombine *NOTdevelopment:regression %s' % (args)
+    cmd = 'jybot --loglevel TRACE --outputdir /tmp --noncritical development %s' % (args)
     os.system(cmd)
 
 if __name__ == '__main__':
