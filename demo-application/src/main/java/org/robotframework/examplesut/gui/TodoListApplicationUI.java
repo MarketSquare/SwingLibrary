@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.robotframework.examplesut.app.App;
-import org.robotframework.examplesut.app.Gui;
 
 public class TodoListApplicationUI implements Gui {
 

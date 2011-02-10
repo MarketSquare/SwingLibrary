@@ -14,7 +14,7 @@ import org.robotframework.examplesut.app.ItemStore;
 public class TodoItemStore implements ItemStore {
 
     public void addTodoItem(final String desc) {
-    	new WithConnection().execute(new DbCommand() {
+    	DB.execute(new Command() {
 			public Object execute(Statement stmt) throws SQLException {
 				return stmt.execute("insert into todo_items values (NULL, '" + desc + "')");
 		    }
@@ -22,7 +22,7 @@ public class TodoItemStore implements ItemStore {
     }
 
     public void removeTodoItemWithDesc(final String desc) {
-    	new WithConnection().execute(new DbCommand() {
+    	DB.execute(new Command() {
 			public Object execute(Statement stmt) throws SQLException {
 				return stmt.execute("delete from todo_items where desc='" + desc + "'");
 		    }
@@ -30,12 +30,11 @@ public class TodoItemStore implements ItemStore {
     }
 
 	public Object[] allTodoItems() {
-		List<?> todoItemsFromDB = (List<?>) new WithConnection().execute(new DbCommand() {
+		return ((List<?>) DB.execute(new Command() {
 			public Object execute(Statement stmt) throws SQLException {
 				return parseTodoItemsFrom(stmt.executeQuery("select * from todo_items"));
 			}
-		});
-		return todoItemsFromDB.toArray();
+		})).toArray();
 	}
 		
     private Object parseTodoItemsFrom(ResultSet rs) throws SQLException {
@@ -44,21 +43,21 @@ public class TodoItemStore implements ItemStore {
         return todoItems;
     }
 
-	public void createTables() {
-    	new WithConnection().execute(new DbCommand() {
-			public Object execute(Statement stmt)  throws SQLException {
+	public void create() {
+    	DB.execute(new Command() {
+			public Object execute(Statement stmt) throws SQLException {
 				return stmt.execute("create table todo_items(id identity, desc varchar(80))");
 		    }
 	    });
 	}
 }
 
-interface DbCommand{
+interface Command {
 	public Object execute(Statement stmt) throws SQLException;
 } 
 
-class WithConnection {
-    {
+class DB {
+    static {
         try {
             Class.forName("org.hsqldb.jdbcDriver" );
         } catch (ClassNotFoundException e) {
@@ -66,7 +65,7 @@ class WithConnection {
         }
     }  
 
-	public Object execute(DbCommand sql) {
+	public static Object execute(Command sql) {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -81,7 +80,7 @@ class WithConnection {
 		}
 	}
 
-	private Connection getConnection() throws SQLException {
+	private static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection("jdbc:hsqldb:mem:tododb", "SA", "");
 	}
 }

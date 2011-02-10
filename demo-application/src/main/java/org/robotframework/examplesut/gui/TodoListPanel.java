@@ -1,8 +1,6 @@
 package org.robotframework.examplesut.gui;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -53,20 +51,12 @@ public class TodoListPanel extends JPanel implements TodoListView {
 		descField.setText(text);
 	}
 	
-    public void addAddButtonListener(final  ButtonListener listener) {
-    	bind(submitButton, listener);
+    public void addAddButtonListener(ButtonListener listener) {
+        Bind.a(listener).to(submitButton);
     }
     
-    public void addDeleteButtonListener(final ButtonListener listener) {
-    	bind(deleteButton, listener);
-    }
-
-    private void bind(JButton button, final ButtonListener listener) {
-    	button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				listener.onButtonPush();
-			}
-		});
+    public void addDeleteButtonListener(ButtonListener listener) {
+    	Bind.a(listener).to(deleteButton);
     }
     
 	public Object getSelectedValue() {

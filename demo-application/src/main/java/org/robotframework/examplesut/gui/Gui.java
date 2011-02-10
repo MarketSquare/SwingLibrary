@@ -1,4 +1,4 @@
-package org.robotframework.examplesut.app;
+package org.robotframework.examplesut.gui;
 
 public interface Gui {
 	public void display();

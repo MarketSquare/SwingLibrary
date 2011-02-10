@@ -9,10 +9,6 @@ public class TodoListApplication implements App {
 	public TodoListApplication(ItemStore store, boolean introduceBugs) {
 		this.store = store;
 	}
-	
-	public void displayWith(Gui gui) {
-		gui.display();
-	}
 
 	public void addTodoItem(String desc) {
 		store.addTodoItem(desc);

@@ -1,7 +1,7 @@
 package org.robotframework.examplesut.guifactory;
 
 import org.robotframework.examplesut.app.App;
-import org.robotframework.examplesut.app.Gui;
+import org.robotframework.examplesut.gui.Gui;
 import org.robotframework.examplesut.gui.TodoListApplicationUI;
 
 public class SwingGuiFactory implements GuiFactory {
@@ -14,7 +14,7 @@ public class SwingGuiFactory implements GuiFactory {
 		this.introduceBugs = introduceBugs;
 	}
 	
-	public Gui getGui() {
+	public Gui createGui() {
 		return new TodoListApplicationUI(app, introduceBugs);
 	}
 
