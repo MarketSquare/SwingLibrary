@@ -173,13 +173,13 @@
     <dependency>
       <groupId>org.jdave</groupId>
       <artifactId>jdave-core</artifactId>
-      <version>1.1-rc1</version>
+      <version>1.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jdave</groupId>
       <artifactId>jdave-junit4</artifactId>
-      <version>1.1-rc1</version>
+      <version>1.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
