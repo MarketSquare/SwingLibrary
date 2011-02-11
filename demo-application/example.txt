@@ -19,9 +19,9 @@ Test Delete Todo Item
 
 *** Keywords ***
 Start Test Application
-    Start Application  org.robotframework.examplesut.Main
-    Select Window  Todo App
+    Start Application  org.robotframework.examplesut.TodoList
+    Select Window  Todo List
 
 Insert Todo Item ${arg}
     Insert Into Text Field  description  ${arg}
-    Push Button  submit
+    Push Button  add
