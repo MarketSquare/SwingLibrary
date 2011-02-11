@@ -19,7 +19,7 @@ Test Delete Todo Item
 
 *** Keywords ***
 Start Test Application
-    Start Application  org.robotframework.examplesut.TodoList
+    Start Application  org.robotframework.swing.testapp.examplesut.TodoList
     Select Window  Todo List
 
 Insert Todo Item ${arg}
