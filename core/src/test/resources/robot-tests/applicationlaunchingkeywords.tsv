@@ -2,7 +2,7 @@
 library	SwingLibrary
 
 *Variable*	*Value*
-${testApplicationName}	org.robotframework.swing.keyword.testapp.SomeApplication
+${testApplicationName}	org.robotframework.swing.testapp.keyword.testapp.SomeApplication
 ${classWithoutMainMethod}	org.robotframework.swing.keyword.launch.ApplicationLaunchingKeywords
 
 *Test Case*	*Action*	*Argument*

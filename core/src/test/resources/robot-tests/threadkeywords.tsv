@@ -1,5 +1,5 @@
 *Setting*	*Value*
-library	org.robotframework.swing.extension.ExtendedSwingLibrary
+library	org.robotframework.swing.testapp.extension.ExtendedSwingLibrary
 
 *Test Case*	*Action*	*Argument*
 Runs Keyword In Separate Thread

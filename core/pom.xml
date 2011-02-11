@@ -207,18 +207,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.thoughtworks.paranamer</groupId>
-      <artifactId>paranamer</artifactId>
-      <version>1.1.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.thoughtworks.paranamer</groupId>
-      <artifactId>paranamer-generator</artifactId>
-      <version>1.1.2</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>asm</groupId>
       <artifactId>asm-tree</artifactId>
       <version>3.0</version>
@@ -321,6 +309,44 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>jybot</executable>
+          <environmentVariables>
+              <CLASSPATH>${basedir}/target/swinglibrary-${dist.version}-jar-with-dependencies.jar</CLASSPATH>
+          </environmentVariables>
+          <arguments>
+            <argument>--monitorwidth</argument>
+            <argument>73</argument>
+            <argument>--loglevel</argument>
+            <argument>TRACE</argument>
+            <argument>--monitorcolors</argument>
+            <argument>off</argument>
+            <argument>--outputdir</argument>
+            <argument>target/robot</argument>
+            <argument>--debugfile</argument>
+            <argument>debug.txt</argument>
+            <argument>--noncritical</argument>
+            <argument>development</argument>
+            <argument>--noncritical</argument>
+            <argument>flickering</argument>
+            <argument>--tagstatcombine</argument>
+            <argument>*NOTdevelopment:regression</argument>
+            <argument>${basedir}/src/test/resources/robot-tests</argument>
+          </arguments>
+        </configuration>
       </plugin>
     </plugins>
   </build>

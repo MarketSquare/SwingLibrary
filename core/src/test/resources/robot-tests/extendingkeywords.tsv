@@ -1,7 +1,7 @@
 *** Setting ***
 
-library	org.robotframework.swing.extension.ExtendedSwingLibrary	WITH NAME	ext1
-library	org.robotframework.swing.extension.ExtendedSwingLibrary2	WITH NAME	ext2
+library	org.robotframework.swing.testapp.extension.ExtendedSwingLibrary	WITH NAME	ext1
+library	org.robotframework.swing.testapp.extension.ExtendedSwingLibrary2	WITH NAME	ext2
 
 *** Test Case ***
 
