@@ -1,4 +1,4 @@
-package org.robotframework.examplesut;
+package org.robotframework.swing.testapp.examplesut;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
