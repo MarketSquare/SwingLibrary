@@ -336,7 +336,7 @@
                <phase>integration-test</phase>
                <goals>
                   <goal>java</goal>
-                 </goals>
+               </goals>
                <configuration>
                   <mainClass>org.robotframework.RobotFramework</mainClass>
                   <classpathScope>test</classpathScope>
