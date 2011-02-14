@@ -19,6 +19,7 @@
   <artifactId>swinglibrary</artifactId>
   <properties>
     <dist.version>1.1.2-SNAPSHOT</dist.version>
+    <robot.exclude>NONE</robot.exclude>
   </properties>
   <version>${dist.version}</version>
   <packaging>jar</packaging>
@@ -207,6 +208,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.robotframework</groupId>
+      <artifactId>robotframework</artifactId>
+      <version>2.5.5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>asm</groupId>
       <artifactId>asm-tree</artifactId>
       <version>3.0</version>
@@ -321,43 +328,37 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.1</version>
-        <executions>
-          <execution>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <executable>jybot</executable>
-          <environmentVariables>
-              <CLASSPATH>${basedir}/target/swinglibrary-${dist.version}-jar-with-dependencies.jar</CLASSPATH>
-          </environmentVariables>
-          <arguments>
-            <argument>--monitorwidth</argument>
-            <argument>73</argument>
-            <argument>--loglevel</argument>
-            <argument>TRACE</argument>
-            <argument>--monitorcolors</argument>
-            <argument>off</argument>
-            <argument>--outputdir</argument>
-            <argument>target/robot</argument>
-            <argument>--debugfile</argument>
-            <argument>debug.txt</argument>
-            <argument>--noncritical</argument>
-            <argument>development</argument>
-            <argument>--noncritical</argument>
-            <argument>flickering</argument>
-            <argument>--tagstatcombine</argument>
-            <argument>*NOTdevelopment:regression</argument>
-            <argument>${basedir}/src/test/resources/robot-tests</argument>
-          </arguments>
-        </configuration>
-      </plugin>
+         <groupId>org.codehaus.mojo</groupId>
+         <artifactId>exec-maven-plugin</artifactId>
+         <version>1.1</version>
+         <executions>
+            <execution>
+               <phase>integration-test</phase>
+               <goals>
+                  <goal>java</goal>
+                 </goals>
+               <configuration>
+                  <mainClass>org.robotframework.RobotFramework</mainClass>
+                  <classpathScope>test</classpathScope>
+                  <arguments>
+                     <argument>--outputdir</argument>
+                     <argument>target/robot</argument>
+                     <argument>--debugfile</argument>
+                     <argument>debug.txt</argument>
+                     <argument>--noncritical</argument>
+                     <argument>development</argument>
+                     <argument>--noncritical</argument>
+                     <argument>flickering</argument>
+                     <argument>--tagstatcombine</argument>
+                     <argument>*NOTdevelopment:regression</argument>
+                     <argument>--exclude</argument>
+                     <argument>${robot.exclude}</argument>
+                     <argument>${basedir}/src/test/resources/robot-tests/</argument>
+                    </arguments>
+                 </configuration>
+              </execution>
+           </executions>
+        </plugin>
     </plugins>
   </build>
 </project>
