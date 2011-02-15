@@ -8,7 +8,7 @@ from glob import glob
 
 if __name__ == '__main__':
     dir = os.path.dirname(__file__)
-    jars = glob(os.path.join(dir, 'target', 'swinglibrary-*-jar-with-dependencies.jar'))
+    jars = glob(os.path.join(dir, 'lib', 'swinglibrary-*-jar-with-dependencies.jar'))
     os.environ['CLASSPATH'] = os.pathsep.join(jars)
     call(["jybot", "--outputdir",  "results"] + sys.argv[1:],
             shell=os.name=='nt')
