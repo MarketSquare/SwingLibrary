@@ -1,9 +1,0 @@
-*Setting*	*Value*
-library	SwingLibrary
-suiteSetup	launchApplicationAndSetTimeouts
-
-*Keyword*	*Action*	*Argument*
-launchApplicationAndSetTimeouts
-	startApplication	org.robotframework.swing.testapp.TestApplication
-	selectMainWindow
-	setJemmyTimeouts	1

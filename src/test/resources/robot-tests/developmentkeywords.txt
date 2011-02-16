@@ -1,0 +1,12 @@
+*** Settings ***
+Library         SwingLibrary
+Library         org.robotframework.javalib.library.ClassPathLibrary  org/robotframework/swing/**/*.class
+
+*** Test Cases ***
+List Components In Context
+    selectMainWindow
+    ${output}=  recordStdout  listComponentsInContext
+    log  ${output}
+    shouldContain  ${output}  0 org.robotframework.swing.testapp.TestApplication$2: Main Frame
+    shouldContain  ${output}  5 org.robotframework.swing.testapp.TestTextField: testTextField
+

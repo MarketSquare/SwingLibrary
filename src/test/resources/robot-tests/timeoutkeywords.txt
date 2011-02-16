@@ -1,0 +1,29 @@
+*** Settings ***
+Library         SwingLibrary
+
+*** Variables ***
+${tolerance}  3
+
+*** Test Cases ***
+Set Jemmy Timeout
+    setJemmyTimeout  DialogWaiter.WaitDialogTimeout  1
+    ${elapsedTime}=  runKeywordAndMeasureTime  dialogShouldNotBeOpen  Nonexistent Dialog
+    elapsedTimeWasLessThanLimit  ${elapsedTime}  ${tolerance}
+
+*** Keywords ***
+runKeywordAndMeasureTime    [Arguments] ${keyword}  @{arguments}
+    ${startTime}=   getTime epoch
+    runKeyword  ${keyword}  @{arguments}
+    ${endTime}= getTime epoch
+    ${elapsedTime}= evaluate    ${endTime}-${startTime}
+    log ${elapsedTime}
+    [return]    ${elapsedTime}
+
+elapsedTimeWasLessThanLimit [arguments] ${elapsedTime}  ${toleranceLimit}
+    ${elapsedWithinLimits}  evaluate    ${elapsedTime}<=${toleranceLimit}
+    shouldNotBeEqualAsIntegers  ${elapsedWithinLimits}  0
+
+elapsedTimeIsWithinLimits   [arguments] ${elapsedTime}  ${lowerLimit}   ${upperLimit}
+    ${elapsedWithinLimits}  evaluate    ${lowerLimit}<=${elapsedTime}<=${upperLimit}
+    shouldNotBeEqualAsIntegers  ${elapsedWithinLimits}  0
+

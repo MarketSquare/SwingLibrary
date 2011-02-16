@@ -1,0 +1,10 @@
+*** Settings ***
+Suite Setup     launchApplicationAndSetTimeouts
+Library         SwingLibrary
+
+*** Keywords ***
+launchApplicationAndSetTimeouts
+    startApplication  org.robotframework.swing.testapp.TestApplication
+    selectMainWindow
+    setJemmyTimeouts  1
+
