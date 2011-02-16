@@ -11,19 +11,19 @@ Set Jemmy Timeout
     elapsedTimeWasLessThanLimit  ${elapsedTime}  ${tolerance}
 
 *** Keywords ***
-runKeywordAndMeasureTime    [Arguments] ${keyword}  @{arguments}
-    ${startTime}=   getTime epoch
+runKeywordAndMeasureTime  [Arguments]  ${keyword}  @{arguments}
+    ${startTime}=   getTime  epoch
     runKeyword  ${keyword}  @{arguments}
-    ${endTime}= getTime epoch
-    ${elapsedTime}= evaluate    ${endTime}-${startTime}
-    log ${elapsedTime}
-    [return]    ${elapsedTime}
+    ${endTime}=  getTime  epoch
+    ${elapsedTime}=  evaluate  ${endTime}-${startTime}
+    log  ${elapsedTime}
+    [return]  ${elapsedTime}
 
-elapsedTimeWasLessThanLimit [arguments] ${elapsedTime}  ${toleranceLimit}
+elapsedTimeWasLessThanLimit  [Arguments]  ${elapsedTime}  ${toleranceLimit}
     ${elapsedWithinLimits}  evaluate    ${elapsedTime}<=${toleranceLimit}
     shouldNotBeEqualAsIntegers  ${elapsedWithinLimits}  0
 
-elapsedTimeIsWithinLimits   [arguments] ${elapsedTime}  ${lowerLimit}   ${upperLimit}
-    ${elapsedWithinLimits}  evaluate    ${lowerLimit}<=${elapsedTime}<=${upperLimit}
+elapsedTimeIsWithinLimits  [Arguments]  ${elapsedTime}  ${lowerLimit}  ${upperLimit}
+    ${elapsedWithinLimits}=  evaluate  ${lowerLimit}<=${elapsedTime}<=${upperLimit}
     shouldNotBeEqualAsIntegers  ${elapsedWithinLimits}  0
 
