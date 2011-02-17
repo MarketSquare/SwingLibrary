@@ -3,7 +3,7 @@ import re
 import sys
 import glob
 
-base = os.path.abspath(os.path.normpath(os.path.split(sys.argv[0])[0]))  
+base = os.path.abspath(os.path.normpath(os.path.split(sys.argv[0])[0]))
 
 def root_dir():
     this_dir = os.path.abspath(os.path.dirname(__file__))
@@ -32,12 +32,6 @@ def get_jar_for(project):
 def get_swinglibrary_jar():
     return get_jar_for(root_dir())
 
-def get_test_app_jar():
-    return get_jar_for(os.path.join(root_dir(), '..', 'test-application'))
-
-def get_test_kws_jar():
-    return get_jar_for(os.path.join(root_dir(), '..', 'test-keywords'))
-
 def get_test_deps():
     deps = open('dependencies.txt', 'rb').read().splitlines()
     return [ dep for dep in deps if 'swinglibrary' in dep or 'org/mortbay' in dep ]
@@ -58,7 +52,7 @@ def add_dependencies_to_classpath():
     if not exists(test_classes):
         sh('mvn test-compile')
 
-    dependencies =  [get_swinglibrary_jar()] + [get_test_app_jar()] + [get_test_kws_jar()] + [test_classes] + get_test_deps()
+    dependencies =  [get_swinglibrary_jar()] + [test_classes] + get_test_deps()
     os.environ['CLASSPATH'] = os.pathsep.join(dependencies)
 
 def run_robot_tests(args):
