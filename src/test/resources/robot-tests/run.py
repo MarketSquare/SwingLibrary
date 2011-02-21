@@ -61,4 +61,7 @@ def run_robot_tests(args):
 
 if __name__ == '__main__':
    add_dependencies_to_classpath()
-   run_robot_tests('.')
+   args = '.'
+   if len(sys.argv) > 1:
+     args = ' '.join(sys.argv[1:])
+   run_robot_tests(args)
