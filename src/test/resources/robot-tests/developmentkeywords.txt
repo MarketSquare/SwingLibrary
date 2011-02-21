@@ -7,6 +7,6 @@ List Components In Context
     selectMainWindow
     ${output}=  recordStdout  listComponentsInContext
     log  ${output}
-    shouldContain  ${output}  0 org.robotframework.swing.testapp.TestApplication$2: Main Frame
-    shouldContain  ${output}  5 org.robotframework.swing.testapp.TestTextField: testTextField
+    shouldContain  ${output}  0 org.robotframework.swing.testapp.TestApplication$2 0: Main Frame
+    shouldContain  ${output}  5 org.robotframework.swing.testapp.TestTextField 0: testTextField
 
