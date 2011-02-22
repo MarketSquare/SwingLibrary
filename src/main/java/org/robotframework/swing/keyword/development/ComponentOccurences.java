@@ -1,7 +1,7 @@
 package org.robotframework.swing.keyword.development;
 
 import java.awt.Component;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.swing.CellRendererPane;
@@ -33,50 +33,42 @@ import javax.swing.table.JTableHeader;
 public class ComponentOccurences {
 
     @SuppressWarnings("serial")
-    private Map<Class<? extends Component>, Integer> indexesByType = new HashMap<Class<? extends Component>, Integer>() {{
-        put(JButton.class, null);
-        put(JCheckBox.class, null);
-        put(JRadioButton.class, null);
-        put(JToggleButton.class, null);
-        put(JFileChooser.class, null);
-        put(JTable.class, null);
-        put(JList.class, null);
-        put(JTextField.class, null);
-        put(JTextArea.class, null);
-        put(JTree.class, null);
-        put(JInternalFrame.class, null);
-        put(JFrame.class, null);
-        put(JPanel.class, null);
-        put(JComboBox.class, null);
-        put(JSpinner.class, null);
-        put(JLabel.class, null);
-        put(JTabbedPane.class, null);
-        put(JRootPane.class, null);
-        put(JLayeredPane.class, null);
-        put(CellRendererPane.class, null);
-        put(JScrollPane.class, null);
-        put(JMenuBar.class, null);
-        put(JViewport.class, null);
-        put(JScrollBar.class, null);
-        put(JTableHeader.class, null);
+    private Map<Class<? extends Component>, Integer> indexesByType = new LinkedHashMap<Class<? extends Component>, Integer>() {{
+        put(JButton.class, -1);
+        put(JCheckBox.class, -1);
+        put(JRadioButton.class, -1);
+        put(JToggleButton.class, -1);
+        put(JFileChooser.class, -1);
+        put(JTable.class, -1);
+        put(JList.class, -1);
+        put(JTextField.class, -1);
+        put(JTextArea.class, -1);
+        put(JTree.class, -1);
+        put(JInternalFrame.class, -1);
+        put(JFrame.class, -1);
+        put(JPanel.class, -1);
+        put(JComboBox.class, -1);
+        put(JSpinner.class, -1);
+        put(JLabel.class, -1);
+        put(JTabbedPane.class, -1);
+        put(JRootPane.class, -1);
+        put(JLayeredPane.class, -1);
+        put(CellRendererPane.class, -1);
+        put(JScrollPane.class, -1);
+        put(JMenuBar.class, -1);
+        put(JViewport.class, -1);
+        put(JScrollBar.class, -1);
+        put(JTableHeader.class, -1);
     }};
     
     public Integer countIndexOf(Component component) {
-        for (Class<? extends Component> clazz: indexesByType.keySet())
-            if (clazz.isInstance(component))
-                return indexOfComponentOfClass(clazz);
+        for (Class<? extends Component> clazz: indexesByType.keySet()) {
+            if (clazz.isInstance(component)) {
+                Integer index = indexesByType.get(clazz) + 1;
+                indexesByType.put(clazz, index);
+                return index;
+            }
+        }
         return null;
-    }
-
-    private Integer indexOfComponentOfClass(Class<? extends Component> clazz) {
-        if (! indexesByType.containsKey(clazz))
-            return null;
-        Integer index = indexesByType.get(clazz);
-        if (index == null)
-            index = new Integer(0);
-        else
-            index = new Integer(index + 1);
-        indexesByType.put(clazz, index);
-        return index;
     }
 }
