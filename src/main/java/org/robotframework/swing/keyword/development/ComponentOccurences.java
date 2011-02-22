@@ -32,44 +32,52 @@ import javax.swing.table.JTableHeader;
 
 public class ComponentOccurences {
 
-    private Map<Class<? extends Component>, Integer> indexesByType = new HashMap<Class<? extends Component>, Integer>();
+    @SuppressWarnings("serial")
+    private Map<Class<? extends Component>, Integer> indexesByType = new HashMap<Class<? extends Component>, Integer>() {{
+        put(JButton.class, null);
+        put(JCheckBox.class, null);
+        put(JRadioButton.class, null);
+        put(JToggleButton.class, null);
+        put(JFileChooser.class, null);
+        put(JTable.class, null);
+        put(JList.class, null);
+        put(JTextField.class, null);
+        put(JTextArea.class, null);
+        put(JTree.class, null);
+        put(JInternalFrame.class, null);
+        put(JFrame.class, null);
+        put(JPanel.class, null);
+        put(JComboBox.class, null);
+        put(JSpinner.class, null);
+        put(JLabel.class, null);
+        put(JTabbedPane.class, null);
+        put(JRootPane.class, null);
+        put(JLayeredPane.class, null);
+        put(CellRendererPane.class, null);
+        put(JScrollPane.class, null);
+        put(JMenuBar.class, null);
+        put(JViewport.class, null);
+        put(JScrollBar.class, null);
+        put(JTableHeader.class, null);
+    }};
     
     public Integer count(Component component) {
-        if (component instanceof JButton) return indexOfComponentOfClass(JButton.class);
-        if (component instanceof JCheckBox) return indexOfComponentOfClass(JCheckBox.class);
-        if (component instanceof JRadioButton) return indexOfComponentOfClass(JRadioButton.class);
-        if (component instanceof JToggleButton) return indexOfComponentOfClass(JToggleButton.class);
-        if (component instanceof JFileChooser) return indexOfComponentOfClass(JFileChooser.class);
-        if (component instanceof JTable) return indexOfComponentOfClass(JTable.class);
-        if (component instanceof JList) return indexOfComponentOfClass(JList.class);
-        if (component instanceof JTextField) return indexOfComponentOfClass(JTextField.class);
-        if (component instanceof JTextArea) return indexOfComponentOfClass(JTextArea.class);
-        if (component instanceof JTree) return indexOfComponentOfClass(JTree.class);
-        if (component instanceof JInternalFrame) return indexOfComponentOfClass(JInternalFrame.class);
-        if (component instanceof JFrame) return indexOfComponentOfClass(JFrame.class);
-        if (component instanceof JPanel) return indexOfComponentOfClass(JPanel.class);
-        if (component instanceof JComboBox) return indexOfComponentOfClass(JComboBox.class);
-        if (component instanceof JSpinner) return indexOfComponentOfClass(JSpinner.class);
-        if (component instanceof JLabel) return indexOfComponentOfClass(JLabel.class);
-        if (component instanceof JTabbedPane) return indexOfComponentOfClass(JTabbedPane.class);
-        if (component instanceof JRootPane) return indexOfComponentOfClass(JRootPane.class);
-        if (component instanceof JLayeredPane) return indexOfComponentOfClass(JLayeredPane.class);
-        if (component instanceof CellRendererPane) return indexOfComponentOfClass(CellRendererPane.class);
-        if (component instanceof JScrollPane) return indexOfComponentOfClass(JScrollPane.class);
-        if (component instanceof JMenuBar) return indexOfComponentOfClass(JMenuBar.class);
-        if (component instanceof JViewport) return indexOfComponentOfClass(JViewport.class);
-        if (component instanceof JScrollBar) return indexOfComponentOfClass(JScrollBar.class);
-        if (component instanceof JTableHeader) return indexOfComponentOfClass(JTableHeader.class);
+        for (Class<? extends Component> clazz: indexesByType.keySet())
+            if (clazz.isInstance(component))
+                return indexOfComponentOfClass(clazz);
         return null;
     }
-    
-    private int indexOfComponentOfClass(Class<? extends Component> clazz) {
-        int index;
-        if (indexesByType.containsKey(clazz))
-            index = indexesByType.get(clazz) + 1;
-        else
-            index = 0;
-        indexesByType.put(clazz, new Integer(index));
+
+    private Integer indexOfComponentOfClass(Class<? extends Component> clazz) {
+        Integer index = null;
+        if (indexesByType.containsKey(clazz)) {
+            index = indexesByType.get(clazz);
+            if (index == null)
+                index = new Integer(0);
+            else
+                index = new Integer(index + 1);
+            indexesByType.put(clazz, index);
+        }
         return index;
     }
 }
