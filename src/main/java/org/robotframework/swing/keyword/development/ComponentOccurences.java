@@ -61,7 +61,7 @@ public class ComponentOccurences {
         put(JTableHeader.class, null);
     }};
     
-    public Integer count(Component component) {
+    public Integer countIndexOf(Component component) {
         for (Class<? extends Component> clazz: indexesByType.keySet())
             if (clazz.isInstance(component))
                 return indexOfComponentOfClass(clazz);
@@ -69,15 +69,14 @@ public class ComponentOccurences {
     }
 
     private Integer indexOfComponentOfClass(Class<? extends Component> clazz) {
-        Integer index = null;
-        if (indexesByType.containsKey(clazz)) {
-            index = indexesByType.get(clazz);
-            if (index == null)
-                index = new Integer(0);
-            else
-                index = new Integer(index + 1);
-            indexesByType.put(clazz, index);
-        }
+        if (! indexesByType.containsKey(clazz))
+            return null;
+        Integer index = indexesByType.get(clazz);
+        if (index == null)
+            index = new Integer(0);
+        else
+            index = new Integer(index + 1);
+        indexesByType.put(clazz, index);
         return index;
     }
 }

@@ -64,7 +64,7 @@ public class DevelopmentKeywords {
         public void operateOnComponent(Component component, int level) {
             printSpacesToFormatOutputAsTree(level);
             String componentName = componentToString(component);
-            System.out.println(level + " " + componentName + " " + occurences.count(component) + ": " + component.getName());
+            System.out.println(level + " " + componentName + " " + occurences.countIndexOf(component) + ": " + component.getName());
             resultComponentList.add(componentName);
         }
     }
