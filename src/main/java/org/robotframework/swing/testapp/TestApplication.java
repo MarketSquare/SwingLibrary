@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
@@ -170,6 +171,15 @@ public class TestApplication {
         List<String> weekDays = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 		panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(weekDays)));
         panel.add(new TestSpinnerButton("floatSpinner", new SpinnerNumberModel(77.7, 0.0, 1000.0, 0.1)));
+        panel.add(testSlider());
+    }
+
+    private JSlider testSlider() {
+        JSlider slider = new JSlider(0, 5);
+        slider.setName("testSlider");
+        slider.setMajorTickSpacing(1);
+        slider.setPaintTicks(true);
+        return slider;
     }
 
     private Object[][] getTestTableData() {
