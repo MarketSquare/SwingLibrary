@@ -44,7 +44,14 @@ Set Slider Value By Index
     shouldBeEqualAsIntegers  4  ${sliderValue}
     [teardown]  setSliderValue  0  ${oldValue}
 
+Slider Keywords Should Fail Context Is Not Correct
+    selectEmptyContext
+    runKeywordAndExpectError  *To use this keyword you must first select a correct context*  sliderShouldExist  someSlider
+    runKeywordAndExpectError  *To use this keyword you must first select a correct context*  sliderShouldNotExist  someSlider
+    runKeywordAndExpectError  *To use this keyword you must first select a correct context*  getSliderValue  deeSlider
+    runKeywordAndExpectError  *To use this keyword you must first select a correct context*  setSliderValue  deeSlider  1
+    [Teardown]  selectMainWindow
+
 *** Keywords ***
 setTimeouts
     setJemmyTimeouts  1
-
