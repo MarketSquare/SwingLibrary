@@ -70,17 +70,27 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
         public void selectsFromMenu() {
             checking(new Expectations() {{
                 one(menuItemOperator).isEnabled(); will(returnValue(true));
-                one(menuBarOperator).pressMouse();
                 one(menuItemOperator).pushNoBlock();
             }});
 
             context.selectFromMenu(menuPath);
         }
 
+        public void selectsFromDisabledMenuAndFails() {
+            checking(new Expectations() {{
+                one(menuItemOperator).isEnabled(); will(returnValue(false));
+                never(menuItemOperator).pushNoBlock();
+            }});
+            specify(new Block() {
+                public void run() throws Throwable {
+                    context.selectFromMenu(menuPath);
+                }
+            }, should.raise(AssertionFailedError.class));
+        }
+        
         public void selectsFromMenuAndWaits() {
             checking(new Expectations() {{
                 one(menuItemOperator).isEnabled(); will(returnValue(true));
-                one(menuBarOperator).pressMouse();
                 one(menuItemOperator).push();
             }});
 

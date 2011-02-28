@@ -33,8 +33,9 @@ public class MenuKeywords extends MenuSupport {
         + "| Select Window    | _My Application_           |\n"
         + "| Select From Menu | _Tools|Testing|MyTestTool_ |\n")
     public void selectFromMenu(String menuPath) {
-        menuItemShouldBeEnabled(menuPath);
-        showMenuItem(menuPath).pushNoBlock();
+        JMenuItemOperator operator = showMenuItem(menuPath);
+        Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", operator.isEnabled());
+        operator.pushNoBlock();
     }
 
     @RobotKeyword("Selects an item from the menu of the currently selected window "
@@ -44,8 +45,9 @@ public class MenuKeywords extends MenuSupport {
         + "| Select Window             | _My Application_           |\n"
         + "| Select From Menu And Wait | _Tools|Testing|MyTestTool_ |\n")
     public void selectFromMenuAndWait(String menuPath) {
-        menuItemShouldBeEnabled(menuPath);
-        showMenuItem(menuPath).push();
+        JMenuItemOperator operator = showMenuItem(menuPath);
+        Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", operator.isEnabled());
+        operator.push();
     }
 
     @RobotKeyword("Searches for an menu item from the menu of the currently selected window "
