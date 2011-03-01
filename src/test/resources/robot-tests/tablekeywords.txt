@@ -214,6 +214,17 @@ Get Table Cell Properties
     shouldBeEqualAsIntegers  255  ${color.getGreen()}
     shouldBeEqualAsIntegers  255  ${color.getBlue()}
 
+Click On Table Header
+    assertCellValue  tableWithHeader  0  0  ${EMPTY}
+    clickTableHeader  tableWithHeader  0
+    assertCellValue  tableWithHeader  0  0  Col header 0
+    clickTableHeader  tableWithHeader  B
+    assertCellValue  tableWithHeader  0  0  Col header 1
+    runKeywordAndExpectError  The specified column identifier 'kekkonen' is invalid.
+    ...  clickTableHeader  tableWithHeader  kekkonen
+    runKeywordAndExpectError  The specified column identifier '666' is invalid.
+    ...  clickTableHeader  tableWithHeader  666
+
 *** Keywords ***
 assertCellClick
     [Arguments]  ${tableName}  ${clickCount}  ${button}  ${modEx}
@@ -228,3 +239,7 @@ clearTable
     selectMainWindow
     clearTableSelection  ${tableName}
 
+assertCellValue
+    [Arguments]  ${tableId}  ${row}  ${col}  ${expected}
+    ${val}=  getTableCellVAlue  ${tableId}  ${row}  ${col}
+    Should Be Equal  ${val}  ${expected}
