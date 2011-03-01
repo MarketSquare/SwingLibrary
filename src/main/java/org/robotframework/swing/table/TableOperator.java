@@ -49,7 +49,11 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         this.jTableOperator = jTableOperator;
         this.jTableOperator.setComparator(new EqualsStringComparator());
     }
-    
+
+    public TableHeaderOperator headerOperator() {
+        return new TableHeaderOperator(jTableOperator.getHeaderOperator());
+    }
+
     public Object getCellValue(String row, String columnIdentifier) {
         Point cell = findCell(row, columnIdentifier);
         return getCellValueFromRenderer(cell.y, cell.x);
@@ -209,12 +213,12 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     protected Point findCell(int row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
         Point cell = jTableOperator.findCell(cellChooser);
-        if (cellIsInvalid(cell))
+        if (isInvalid(cell))
             throw new InvalidCellException(row, columnIdentifier);
         return cell;
     }
     
-    protected boolean cellIsInvalid(Point cell) {
+    protected boolean isInvalid(Point cell) {
         return cell.x < 0 || cell.y < 0;
     }
 

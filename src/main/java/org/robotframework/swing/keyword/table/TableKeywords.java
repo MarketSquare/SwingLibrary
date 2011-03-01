@@ -268,4 +268,13 @@ public class TableKeywords extends IdentifierSupport {
         		                                    optArgs.button(),
         		                                    optArgs.keyModifiers());
     }
+
+    @RobotKeyword("Clicks on table header of the given column.\n\n"
+    + "Column can be identified either by index or by column title. Indexes start at 0\n"
+    + "Examples:\n"
+    + "| Click Table Header | myTable | 2 | # Click the third column"
+    + "| Click Table Header | myTable | amount | # Click the column that has title 'amount'")
+    public void clickTableHeader(String tableIdentifier, String columnIdentifier) {
+        createTableOperator(tableIdentifier).headerOperator().clickColumn(columnIdentifier);
+    }
 }
