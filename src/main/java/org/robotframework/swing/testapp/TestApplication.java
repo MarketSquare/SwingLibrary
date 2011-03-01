@@ -6,14 +6,17 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
@@ -31,6 +34,8 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 
 public class TestApplication {
     private JPanel panel;
@@ -172,6 +177,25 @@ public class TestApplication {
 		panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(weekDays)));
         panel.add(new TestSpinnerButton("floatSpinner", new SpinnerNumberModel(77.7, 0.0, 1000.0, 0.1)));
         panel.add(testSlider());
+        panel.add(tableWithHeader());
+    }
+
+    private Component tableWithHeader() {
+        JTable tableWithHeader = new JTable(1, 2);
+        tableWithHeader.setName("tableWithHeader");
+        JTableHeader tableHeader = tableWithHeader.getTableHeader();
+        tableHeader.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JTable table = ((JTableHeader) evt.getSource()).getTable();
+                TableColumnModel colModel = table.getColumnModel();
+                int index = colModel.getColumnIndexAtX(evt.getX());
+                table.setValueAt("Col header " + index, 0, 0);
+            }
+        });
+        Box box = Box.createVerticalBox();
+        box.add(tableHeader);
+        box.add(tableWithHeader);
+        return box;
     }
 
     private JSlider testSlider() {
