@@ -35,13 +35,17 @@ public class SliderKeywords {
             + "| ${sliderValue}=  | Get Slider Value | _mySlider_    |\n"
             + "| Should Be Equal As Integers | _12_     | _${sliderValue}_ |\n")
     public Object getSliderValue(String identifier) {
-        return operatorFactory.createOperator(identifier).getValue();
+        return sliderOperator(identifier).getValue();
+    }
+
+    private SliderOperator sliderOperator(String identifier) {
+        return operatorFactory.createOperator(identifier);
     }
 
     @RobotKeyword("Sets the value for the slider found from the current context.\n\n"
             + "Example:\n"
             + "| Set Slider Value | _mySlider_  | _7_  |\n")
     public void setSliderValue(String identifier, String value) {
-        operatorFactory.createOperator(identifier).setValue(Integer.parseInt(value));
+        sliderOperator(identifier).setValue(Integer.parseInt(value));
     }
 }
