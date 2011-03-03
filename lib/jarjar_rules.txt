@@ -13,3 +13,4 @@ rule org.junit.** org.robotframework.@0
 rule org.laughingpanda.jretrofit.** org.robotframework.@0
 rule org.netbeans.jemmy.** org.robotframework.@0
 rule org.springframework.** org.robotframework.@0
+rule org.objectweb.** org.robotframework.@0
