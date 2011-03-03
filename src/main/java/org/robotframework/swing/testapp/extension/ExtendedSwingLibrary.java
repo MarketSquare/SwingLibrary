@@ -17,17 +17,12 @@
 
 package org.robotframework.swing.testapp.extension;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import org.robotframework.swing.SwingLibrary;
 
 public class ExtendedSwingLibrary extends SwingLibrary {
-    private static List<String> PATTERNS = new ArrayList<String>() {{
-        add("com/some/own/keyword/*.class");
-    }};
-    
     public ExtendedSwingLibrary() {
-        super(PATTERNS);
+        super(Arrays.<String>asList("com/some/own/keyword/*.class", "org/robotframework/swing/testkeyword/**/*.class"));
     }
 }
