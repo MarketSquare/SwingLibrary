@@ -13,29 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
-package org.robotframework.swing.keyword.testing;
+package org.robotframework.swing.testkeyword;
 
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.testapp.keyword.testapp.SomeApplication;
+import org.robotframework.swing.testapp.TestFileChooser;
 
 @RobotKeywords
-public class ApplicationLaunchingTestingKeywords {
+public class FileChooserTestingKeywords {
     @RobotKeyword
-    public void assertApplicationWasCalled() {
-        Assert.assertTrue(true);
-        if (!SomeApplication.wasCalled) {
-            throw new AssertionFailedError("Application was not called");
-        }
+    public void fileChooserShouldHaveBeenCancelled() {
+        Assert.assertTrue(TestFileChooser.cancelled);
     }
-
+    
     @RobotKeyword
-    public String[] getReceivedArguments() {
-        return SomeApplication.args;
+    public void selectedFileShouldBe(String expectedFile) {
+        Assert.assertEquals(expectedFile, TestFileChooser.selectedFilePath);
     }
 }

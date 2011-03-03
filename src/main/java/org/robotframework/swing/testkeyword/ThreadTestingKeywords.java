@@ -1,4 +1,4 @@
-package org.robotframework.swing.keyword.testing;
+package org.robotframework.swing.testkeyword;
 
 import junit.framework.Assert;
 

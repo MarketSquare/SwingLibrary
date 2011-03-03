@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.robotframework.swing.keyword.testing;
 
-import junit.framework.Assert;
+package org.robotframework.swing.testkeyword;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.testapp.TestFileChooser;
+import org.robotframework.swing.checkbox.CheckBoxOperator;
+import org.robotframework.swing.checkbox.CheckBoxOperatorFactory;
 
 @RobotKeywords
-public class FileChooserTestingKeywords {
+public class CheckboxTestingKeywords {
     @RobotKeyword
-    public void fileChooserShouldHaveBeenCancelled() {
-        Assert.assertTrue(TestFileChooser.cancelled);
+    public void disableCheckbox(String identifier) {
+        createOperator(identifier).setEnabled(false);
     }
-    
+
     @RobotKeyword
-    public void selectedFileShouldBe(String expectedFile) {
-        Assert.assertEquals(expectedFile, TestFileChooser.selectedFilePath);
+    public void enableCheckbox(String identifier) {
+        createOperator(identifier).setEnabled(true);
+    }
+
+    private CheckBoxOperator createOperator(String identifier) {
+        return new CheckBoxOperatorFactory().createOperator(identifier);
     }
 }

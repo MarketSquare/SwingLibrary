@@ -14,26 +14,28 @@
  * limitations under the License.
  */
 
-package org.robotframework.swing.keyword.testing;
+
+package org.robotframework.swing.testkeyword;
+
+import junit.framework.Assert;
+import junit.framework.AssertionFailedError;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.checkbox.CheckBoxOperator;
-import org.robotframework.swing.checkbox.CheckBoxOperatorFactory;
+import org.robotframework.swing.testapp.keyword.testapp.SomeApplication;
 
 @RobotKeywords
-public class CheckboxTestingKeywords {
+public class ApplicationLaunchingTestingKeywords {
     @RobotKeyword
-    public void disableCheckbox(String identifier) {
-        createOperator(identifier).setEnabled(false);
+    public void assertApplicationWasCalled() {
+        Assert.assertTrue(true);
+        if (!SomeApplication.wasCalled) {
+            throw new AssertionFailedError("Application was not called");
+        }
     }
 
     @RobotKeyword
-    public void enableCheckbox(String identifier) {
-        createOperator(identifier).setEnabled(true);
-    }
-
-    private CheckBoxOperator createOperator(String identifier) {
-        return new CheckBoxOperatorFactory().createOperator(identifier);
+    public String[] getReceivedArguments() {
+        return SomeApplication.args;
     }
 }

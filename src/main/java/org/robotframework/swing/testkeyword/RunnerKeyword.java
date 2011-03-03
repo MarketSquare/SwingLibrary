@@ -1,4 +1,4 @@
-package org.robotframework.swing.keyword.testing;
+package org.robotframework.swing.testkeyword;
 
 import org.robotframework.javalib.keyword.Keyword;
 import org.robotframework.javalib.library.AnnotationLibrary;
