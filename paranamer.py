@@ -17,7 +17,7 @@ def sh(command):
     return output
 
 def add_dependencies_to_classpath():
-    paranamer_jar = os.path.join(base, '..', 'lib', 'swing-library-paranamer.jar')
+    paranamer_jar = os.path.join(base, 'lib', 'swing-library-paranamer.jar')
     dependencies =  get_deps() + [paranamer_jar] + [os.path.join(base, 'target', 'classes')]
     for deb in dependencies:
         sys.path.append(deb)
@@ -39,4 +39,4 @@ def generate_parameter_names():
 
 if __name__ == '__main__':
     add_dependencies_to_classpath()
-    generate_parameter_names()
+    run_paranamer()
