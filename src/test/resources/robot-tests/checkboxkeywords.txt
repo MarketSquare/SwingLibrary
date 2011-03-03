@@ -1,6 +1,6 @@
 *** Settings ***
 Test Setup      uncheckAllCheckboxes
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${checkBoxIndex}  0

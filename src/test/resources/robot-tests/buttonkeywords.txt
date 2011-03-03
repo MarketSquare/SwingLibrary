@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup     captureOriginalButtonText
 Test Setup      resetButton
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${buttonName}  testButton

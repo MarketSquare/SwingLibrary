@@ -1,6 +1,6 @@
 *** Settings ***
 Test Teardown   resetDropdownMenu
-Library         SwingLibrary
+Library         TestSwingLibrary
 Library         Collections
 
 *** Variables ***

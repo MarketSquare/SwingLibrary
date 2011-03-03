@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup     setTimeoutsAndDelays
 Library         Collections
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${delay}  0

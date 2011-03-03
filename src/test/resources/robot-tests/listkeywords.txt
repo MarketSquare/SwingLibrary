@@ -1,6 +1,6 @@
 *** Settings ***
 Test Setup      clearSelectionFromList  ${listIndex}
-Library         SwingLibrary
+Library         TestSwingLibrary
 Library         Collections
 
 *** Variables ***

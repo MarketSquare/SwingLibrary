@@ -1,6 +1,6 @@
 *** Settings ***
 Test Teardown   selectMainWindow
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${menuText}  Test Menu

@@ -1,5 +1,5 @@
 *** Settings ***
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${testApplicationName}  org.robotframework.swing.testapp.keyword.testapp.SomeApplication

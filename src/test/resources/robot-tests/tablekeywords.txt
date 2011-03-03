@@ -1,6 +1,6 @@
 *** Settings ***
 Test Setup      clearTable
-Library         SwingLibrary
+Library         TestSwingLibrary
 Library         Collections
 
 *** Variables ***

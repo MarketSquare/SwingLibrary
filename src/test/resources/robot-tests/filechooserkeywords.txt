@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup     createTestFileToTempDirectory
 Library         OperatingSystem
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${fileChooserButton}  openFileChooser

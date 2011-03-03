@@ -1,5 +1,5 @@
 *** Settings ***
-Library         SwingLibrary
+Library         TestSwingLibrary
 Library         org.robotframework.javalib.library.ClassPathLibrary  org/robotframework/swing/**/*.class
 
 *** Test Cases ***

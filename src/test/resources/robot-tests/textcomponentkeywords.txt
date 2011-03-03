@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup     storeInitialTextFieldContents
 Test Setup      resetTextField
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${textAreaName}  testTextArea

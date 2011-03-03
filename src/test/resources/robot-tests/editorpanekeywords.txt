@@ -1,5 +1,5 @@
 *** Settings ***
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${editorPaneName}  testEditorPane

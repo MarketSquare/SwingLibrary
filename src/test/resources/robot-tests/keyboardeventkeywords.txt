@@ -1,6 +1,6 @@
 *** Settings ***
 Test Setup      selectMainWindow
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${textFieldName}  testTextField

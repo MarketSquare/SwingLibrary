@@ -1,6 +1,6 @@
 *** Settings ***
 Suite Setup     setTimeouts
-Library         SwingLibrary
+Library         TestSwingLibrary
 
 *** Variables ***
 ${spinnerName}  testSpinner
