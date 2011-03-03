@@ -37,10 +37,8 @@ public class IdentifierSupport {
     }
     
     public int extractIntArgument(String[] args, int defaultValue) {
-        if (args.length == 0) {
+        if (args.length == 0)
             return defaultValue;
-        } else {
-            return Integer.parseInt(args[0]);
-        }
+        return Integer.parseInt(args[0]);
     }
 }
