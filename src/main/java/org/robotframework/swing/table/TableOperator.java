@@ -24,19 +24,13 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.laughingpanda.jretrofit.AllMethodsNotImplementedException;
-import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTableOperator.TableCellChooser;
-import org.robotframework.swing.chooser.WithText;
 import org.robotframework.swing.common.IdentifierSupport;
-import org.robotframework.swing.common.SmoothInvoker;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.util.PropertyExtractor;
@@ -44,58 +38,28 @@ import org.robotframework.swing.util.PropertyExtractor;
 public class TableOperator extends IdentifierSupport implements ComponentWrapper {
     private final JTableOperator jTableOperator;
     private PropertyExtractor propertyExtractor = new PropertyExtractor();
+    private CellValueExtractor cellValueExtractor;
 
     public TableOperator(JTableOperator jTableOperator) {
         this.jTableOperator = jTableOperator;
         this.jTableOperator.setComparator(new EqualsStringComparator());
+        cellValueExtractor = new CellValueExtractor(jTableOperator);
     }
 
     public TableHeaderOperator headerOperator() {
         return new TableHeaderOperator(jTableOperator.getHeaderOperator());
     }
 
-    public Object getCellValue(String row, String columnIdentifier) {
+    public String getCellValue(String row, String columnIdentifier) {
         Point cell = findCell(row, columnIdentifier);
-        return getCellValueFromRenderer(cell.y, cell.x);
-    }
-
-    private Object getCellValueFromRenderer(int row, int column) {
-        try {
-            Component cellRendererComponent = getCellRendererComponent(row, column);
-            return coerceToWithText(cellRendererComponent).getText();
-        } catch (AllMethodsNotImplementedException e) {
-            return wrapElementToWithText(row, column).getText();
-        }
-    }
-
-    private Component getCellRendererComponent(int row, int column) {
-        TableCellRenderer renderer = jTableOperator.getCellRenderer(row, column);
-        JTable table = (JTable) jTableOperator.getSource();
-        Object value = jTableOperator.getValueAt(row, column);
-        boolean isSelected = jTableOperator.isCellSelected(row, column);
-        boolean hasFocus = jTableOperator.hasFocus();
-        return getTableCellRendererComponentSmoothly(row, column, renderer, table, value, isSelected, hasFocus);
-    }
-    
-    private WithText coerceToWithText(Object element) {
-        return (WithText) Retrofit.complete(element, WithText.class);
-    }
-
-    private WithText wrapElementToWithText(final int rowIndex, final int columnIndex) {
-        return new WithText() {
-            public String getText() {
-                return jTableOperator.getModel()
-                                     .getValueAt(rowIndex, columnIndex)
-                                     .toString();
-            }
-        };
+        return cellValueExtractor.textOf(cell.y, cell.x);
     }
 
     public boolean isCellEditable(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         return jTableOperator.isCellEditable(coordinates.y, coordinates.x);
     }
-    
+
     public boolean isCellSelected(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         return jTableOperator.isCellSelected(coordinates.y, coordinates.x);
@@ -117,7 +81,7 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         jTableOperator.setColumnSelectionAllowed(true);
         jTableOperator.addColumnSelectionInterval(startColumn, endColumn);
     }
-    
+
     public void selectCellArea(String startRow, String endRow, String startColumn, String endColumn) {
         selectCellArea(Integer.valueOf(startColumn), Integer.valueOf(endColumn), Integer.valueOf(startRow), Integer.valueOf(endRow));
     }
@@ -126,17 +90,17 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.setValueAt(newValue, coordinates.y, coordinates.x);
     }
-    
+
     public void typeIntoCell(Object newValue, String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.changeCellObject(coordinates.y, coordinates.x, newValue);
     }
-    
+
     public void clearCell(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.changeCellObject(coordinates.y, coordinates.x, "");
     }
-    
+
     public void clearSelection() {
         jTableOperator.clearSelection();
     }
@@ -152,20 +116,20 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     public int findCellRow(String text) {
         return jTableOperator.findCellRow(text);
     }
-    
+
     public int findCellRow(String text, String columnIdentifier) {
         int col = jTableOperator.findColumn(columnIdentifier);
         if (col == -1)
-            throw new RuntimeException("Column '"+columnIdentifier+" not found.");
+            throw new RuntimeException("Column '" + columnIdentifier + " not found.");
         return jTableOperator.findCellRow(text, col, 0);
     }
-    
+
     public Object getSelectedCellValue() {
-      int selectedRow = jTableOperator.getSelectedRow();
-      int selectedColumn = jTableOperator.getSelectedColumn();
-      return getCellValueFromRenderer(selectedRow, selectedColumn);
+        int selectedRow = jTableOperator.getSelectedRow();
+        int selectedColumn = jTableOperator.getSelectedColumn();
+        return cellValueExtractor.textOf(selectedRow, selectedColumn);
     }
-    
+
     public void callPopupMenuItemOnSelectedCells(String menuPath) {
         int selectedRow = jTableOperator.getSelectedRow();
         int selectedColumn = jTableOperator.getSelectedColumn();
@@ -173,16 +137,16 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         JMenuItemOperator item = menuOperator.showMenuItem(menuPath, new EqualsStringComparator());
         item.push();
     }
-    
+
     public JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         return new JPopupMenuOperator(jTableOperator.callPopupOnCell(coordinates.y, coordinates.x));
     }
-    
+
     public Component getSource() {
         return jTableOperator.getSource();
     }
-    
+
     public String[] getTableHeaders() {
         Enumeration<TableColumn> columns = jTableOperator.getTableHeader().getColumnModel().getColumns();
         List<String> results = new ArrayList<String>();
@@ -192,7 +156,7 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         }
         return results.toArray(new String[0]);
     }
-    
+
     public Object[] getColumnValues(String columnIdentifier) {
         Object[] columnValues = new Object[getRowCount()];
         for (int row = 0; row < columnValues.length; ++row) {
@@ -201,15 +165,15 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         }
         return columnValues;
     }
-    
+
     private Object getValueAt(Point coordinates) {
-        return getCellValueFromRenderer(coordinates.y, coordinates.x);
+        return cellValueExtractor.textOf(coordinates.y, coordinates.x);
     }
 
     protected Point findCell(String row, String columnIdentifier) {
         return findCell(asIndex(row), columnIdentifier);
     }
-    
+
     protected Point findCell(int row, String columnIdentifier) {
         TableCellChooser cellChooser = createCellChooser(row, columnIdentifier);
         Point cell = jTableOperator.findCell(cellChooser);
@@ -217,55 +181,42 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
             throw new InvalidCellException(row, columnIdentifier);
         return cell;
     }
-    
+
     protected boolean isInvalid(Point cell) {
         return cell.x < 0 || cell.y < 0;
     }
 
     protected TableCellChooser createCellChooser(int row, String columnIdentifier) {
-    	if (isIndex(columnIdentifier)) {
-    		return new ColumnIndexTableCellChooser(row, columnIdentifier);
-    	} 
-    	return new ColumnNameTableCellChooser(row, columnIdentifier);
+        if (isIndex(columnIdentifier)) {
+            return new ColumnIndexTableCellChooser(row, columnIdentifier);
+        }
+        return new ColumnNameTableCellChooser(row, columnIdentifier);
     }
 
     public Map<String, Object> getCellProperties(String row, String columnIdentifier) {
-        Component cellComponent = getCellRendererComponent(row, columnIdentifier);
-        return propertyExtractor.extractProperties(cellComponent);
-    }
-
-    Component getCellRendererComponent(String row, String columnIdentifier) {
         Point cell = findCell(row, columnIdentifier);
-        return getCellRendererComponent(cell.y, cell.x);
-    }
-
-    private Component getTableCellRendererComponentSmoothly(final int row, final int column, final TableCellRenderer renderer,
-            final JTable table, final Object value, final boolean isSelected, final boolean hasFocus) {
-        return new SmoothInvoker<Component>() {
-            public Object work() {
-                return renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            }
-        }.invoke();
+        Component cellComponent = cellValueExtractor.getCellRendererComponent(cell.y, cell.x);
+        return propertyExtractor.extractProperties(cellComponent);
     }
 
     public void clickOnCell(String rowNumber, String columnIdentifier, String clickCount, String button, String[] keyModifiers) {
         Point cell = findCell(rowNumber, columnIdentifier);
         jTableOperator.clickOnCell(cell.y,
-        		                   cell.x,
-        		                   Integer.parseInt(clickCount),
-        		                   toInputEventMask(button),
-        		                   toCombinedInputEventMasks(keyModifiers));
+                cell.x,
+                Integer.parseInt(clickCount),
+                toInputEventMask(button),
+                toCombinedInputEventMasks(keyModifiers));
     }
 
     private int toInputEventMask(String inputEventFieldName) {
-    	try {
-    		return InputEvent.class.getField(inputEventFieldName).getInt(null);
-    	} catch (NoSuchFieldException e) {
-    		throw new IllegalArgumentException("No field name '" + inputEventFieldName + "' in class " + 
-    				                           InputEvent.class.getName()+ ".");
-    	} catch (Exception e) {
-    		throw new RuntimeException(e);
-    	}
+        try {
+            return InputEvent.class.getField(inputEventFieldName).getInt(null);
+        } catch (NoSuchFieldException e) {
+            throw new IllegalArgumentException("No field name '" + inputEventFieldName + "' in class " +
+                    InputEvent.class.getName() + ".");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private int toCombinedInputEventMasks(String[] modifierStrings) {
