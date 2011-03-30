@@ -49,35 +49,6 @@ def create_jar_with_dependencies()
   end
 end
 
-desc "Run the swinglibrary acceptance tests using Robot Framework"
-task :at => :acceptance_tests
-task :acceptance_tests  do
-  run_robot "--noncritical development --tagstatcombine *NOTdevelopment:regression " + __('src/test/resources/robot-tests')
-end
-
-task :ci_at => :ci_acceptance_tests
-task :ci_acceptance_tests => :dist do
-  run_robot "--exclude display-required --monitorcolors off --noncritical development " + __('src/test/resources/robot-tests')
-end
-
-  desc 'lol'
-  task :bar, :args do |t, args|
-    puts "args = #{args.args}"
-  end
-
-def get_output_dir()
-  if ENV['ROBOT_OUTPUTDIR'].nil?
-    return Dir.pwd+"/robot-results"
-  end
-  return ENV['ROBOT_OUTPUTDIR']
-end
-
-def run_robot(args)
-  ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
-  output_dir = get_output_dir
-  sh "java org.robotframework.RobotFramework  --outputdir #{output_dir} --debugfile debug.txt  #{args}"
-end
-
 desc "Create keyword documentation using libdoc"
 task :libdoc do
   generate_parameter_names(__('src/main/java'), __('target/classes'))
@@ -86,6 +57,42 @@ task :libdoc do
   output_file = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
   runjython ("lib/libdoc/libdoc.py --output #{output_file} SwingLibrary")
   assert_doc_ok(VERSION_NUMBER)
+end
+
+desc "Run the swinglibrary acceptance tests"
+task :at => :acceptance_tests
+task :acceptance_tests  do
+  run_robot
+end
+
+desc "Run the swinglibrary acceptance tests using xvfb (xvfb has to be installed separately)"
+task :ci_at => :ci_acceptance_tests
+task :ci_acceptance_tests => :dist do
+  run_robot "--exclude display-required --monitorcolors off", true
+end
+
+desc "Run Robot Framework tests during development, args can be given like rt[-t testname]"
+task :rt => :robot_test
+task :robot_test, :args do |t, args|
+  run_robot args.args
+end
+
+def run_robot(args="", use_xvfb=false)
+  ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
+  output_dir = get_output_dir
+  cmd = "java org.robotframework.RobotFramework --outputdir #{output_dir} --debugfile debug.txt #{args} " +  __('src/test/resources/robot-tests')
+  if use_xvfb:
+    cmd = "xvfb-run " + cmd
+  end
+  puts "running robot tests with command:\n#{cmd}"
+  sh cmd
+end
+
+def get_output_dir()
+  if ENV['ROBOT_OUTPUTDIR'].nil?
+    return Dir.pwd+"/robot-results"
+  end
+  return ENV['ROBOT_OUTPUTDIR']
 end
 
 def runjython(cmd)
