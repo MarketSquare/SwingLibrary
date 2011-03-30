@@ -6,6 +6,7 @@ JDOM = 'jdom:jdom:jar:1.0'
 HAMCREST = 'org.hamcrest:hamcrest-core:jar:1.1'
 
 ABBOT = ['abbot:abbot:jar:1.0.2', 'abbot:costello:jar:1.0.2', 'gnu-regexp:gnu-regexp:jar:1.1.4']
+ROBOT = ['org.robotframework:robotframework:jar:2.5.5']
 
 JAVALIB_CORE_DEPENDENCIES =
  ['aopalliance:aopalliance:jar:1.0',
@@ -43,14 +44,8 @@ TEST_DEPENDENCIES =
   'cglib:cglib-nodep:jar:2.1_3',
   'org.objenesis:objenesis:jar:1.0',
   'org.robotframework:javatools-test:jar:0.2',
+  ROBOT,
   PARANAMER]
-
-TRANSLATOR =
- 'net.sf.retrotranslator:retrotranslator-transformer:jar:1.2.4'
-
-TRANSLATOR_RUNTIME =
- ['net.sf.retrotranslator:retrotranslator-runtime:jar:1.2.4',
-  'backport-util-concurrent:backport-util-concurrent:jar:3.1']
 
 PARANAMER_GENERATOR =
  ['com.thoughtworks.qdox:qdox:jar:1.6.3',
