@@ -26,7 +26,7 @@ public class TestTable extends JScrollPane {
     public TestTable(String name, Object[][] data, final JTextField textField) {
         super(createTable(name, data, textField));
     }
-    
+
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(200, 100);
@@ -42,13 +42,10 @@ public class TestTable extends JScrollPane {
                 }
             }
         });
-        DefaultTableModel model = (DefaultTableModel)table.getModel();
-        for (Object[] datarow: data)
-            model.addColumn(datarow[0], Arrays.copyOfRange(datarow, 1, datarow.length));
-        
+        table.setModel(new MyTabeModel(data));
         TableColumn col = table.getColumnModel().getColumn(0);
-        String[] comboBoxValues = new String[] {"one/one", "two/one", "three/one", "four/one"};
-        
+        String[] comboBoxValues = new String[]{"one/one", "two/one", "three/one", "four/one"};
+
         col.setCellEditor(new MyComboBoxEditor(comboBoxValues));
         col.setCellRenderer(new MyComboBoxRenderer(comboBoxValues));
 
@@ -56,37 +53,37 @@ public class TestTable extends JScrollPane {
 
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-            	textField.setText(
-            		String.format("%s cell clicked %s times, button: %s modEx: %s", 
-                                  e.getComponent().getName(), 
-				                  e.getClickCount(), 
-				                  e.getButton(), 
-				                  e.getModifiersEx())
-				);
+                textField.setText(
+                        String.format("%s cell clicked %s times, button: %s modEx: %s",
+                                e.getComponent().getName(),
+                                e.getClickCount(),
+                                e.getButton(),
+                                e.getModifiersEx())
+                );
             }
-         });
-        
+        });
+
         return table;
     }
-    
-	public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
+
+    public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
         public MyComboBoxRenderer(String[] items) {
             super(items);
         }
-        
+
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-            boolean hasFocus, int row, int column) {
+                                                       boolean hasFocus, int row, int column) {
             setSelectedIndex(row);
             return this;
         }
     }
-    
+
     public static class MyComboBoxEditor extends DefaultCellEditor {
         public MyComboBoxEditor(String[] items) {
             super(new JComboBox(items));
         }
     }
-    
+
     private static class TablePopupMenu extends JPopupMenu {
         private final JTable invoker;
 
@@ -119,7 +116,7 @@ public class TestTable extends JScrollPane {
                 }});
                 add(new JMenuItem("Enabled menuitem"));
             }});
-            
+
             add(new MenuItemWithCommand("Replace text in selected") {
                 public void actionPerformed(ActionEvent e) {
                     int[] cols = invoker.getSelectedColumns();
@@ -129,10 +126,26 @@ public class TestTable extends JScrollPane {
                             invoker.setValueAt("newValue", row, col);
                 }
             });
-            
+
             setOpaque(true);
             setLightWeightPopupEnabled(true);
             setName("popupMenu");
         }
+    }
+
+    private static class MyTabeModel extends DefaultTableModel {
+        private Object[][] data;
+
+        public MyTabeModel(Object[][] data) {
+            this.data = data;
+            for (Object[] datarow : data)
+                addColumn(datarow[0], Arrays.copyOfRange(datarow, 1, datarow.length));
+        }
+
+        public Class<?> getColumnClass(int col) {
+            return data[col][1].getClass();
+
+        }
+
     }
 }

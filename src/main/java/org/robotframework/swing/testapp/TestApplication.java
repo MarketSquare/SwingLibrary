@@ -6,12 +6,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -94,7 +92,7 @@ public class TestApplication {
     }
 
     @SuppressWarnings("serial")
-	private void addComponentsToMainPanel() {
+    private void addComponentsToMainPanel() {
         panel.add(new TestTextField());
         panel.add(new TestButton());
         panel.add(new TestList());
@@ -135,9 +133,8 @@ public class TestApplication {
         tableEventTextField.setName("tableEventTextField");
         tableEventTextField.setText("tableEventTextField");
         panel.add(new TestTable("testTable", getTestTableData(), tableEventTextField));
-        panel.add(new TestTable("anotherTable", getTestTableData(), tableEventTextField));
         panel.add(new TestTable("TableWithSingleValue", getFoobarTestTableData(), tableEventTextField));
-        
+
         panel.add(new TestTree());
         panel.add(new TreeWithoutTreeNode());
         TestTextField tabButtonOutputTextField = new TestTextField();
@@ -160,21 +157,21 @@ public class TestApplication {
 
         panel.add(simpleTable());
         panel.add(tableEventTextField);
-        
+
         panel.add(new JTextField() {{
-        	setName("disabledTextField");
-        	setEnabled(false);
-            setPreferredSize(new Dimension(100, 30));	
+            setName("disabledTextField");
+            setEnabled(false);
+            setPreferredSize(new Dimension(100, 30));
         }});
         panel.add(new JTextField() {{
-        	setName("uneditableTextField");
-        	setEditable(false);
-            setPreferredSize(new Dimension(100, 30));	
+            setName("uneditableTextField");
+            setEditable(false);
+            setPreferredSize(new Dimension(100, 30));
         }});
-        
+
         panel.add(new TestSpinnerButton("testSpinner"));
         List<String> weekDays = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-		panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(weekDays)));
+        panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(weekDays)));
         panel.add(new TestSpinnerButton("floatSpinner", new SpinnerNumberModel(77.7, 0.0, 1000.0, 0.1)));
         panel.add(testSlider());
         panel.add(tableWithHeader());
@@ -211,11 +208,11 @@ public class TestApplication {
                 {"column one", "one/one", "two/one", "three/one", "four/one"},
                 {"column two", "one/two", "two/two", "three/two", "four/two"},
                 {"column three", "one/three", "two/three", "three/three", "four/three"},
-                {"column four", "one/four", "two/four", "three/four", "four/four"}
+                {"column four", Boolean.TRUE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE}
         };
         return data;
     }
-    
+
     private Object[][] getFoobarTestTableData() {
         Object[][] data = {
                 {"column one", "foo", "bar", "bar", "bar"},
@@ -225,30 +222,30 @@ public class TestApplication {
         };
         return data;
     }
-    
-	private JTable simpleTable() {
-    	String[] colNames = {"first col", "second col"};
-    	Object[][] data = {
-    			{"fooness", "barness"},
-    			{"quuxness", "lochness"},
-    	};
-    	@SuppressWarnings("serial")
-    	JTable table = new JTable(data, colNames) {  
-    		public boolean isCellEditable(int row, int column){  
-    	        if (column == 1)
-    	        	return false;  
-    	        return true;  
-	        }
-    	};
-    	table.setName("simpleTable");
-    	table.setCellSelectionEnabled(true);
-    	return table;
+
+    private JTable simpleTable() {
+        String[] colNames = {"first col", "second col"};
+        Object[][] data = {
+                {"fooness", "barness"},
+                {"quuxness", "lochness"},
+        };
+        @SuppressWarnings("serial")
+        JTable table = new JTable(data, colNames) {
+            public boolean isCellEditable(int row, int column) {
+                if (column == 1)
+                    return false;
+                return true;
+            }
+        };
+        table.setName("simpleTable");
+        table.setCellSelectionEnabled(true);
+        return table;
     }
 }
 
 @SuppressWarnings("serial")
 class ContentChangingCombobox extends JComboBox implements ActionListener {
-    
+
     private static final String REMOVABLE_ITEM = "Removable";
     private static final String[] ITEMS = new String[]{"Foo", "Bar", "Quux", REMOVABLE_ITEM};
 
@@ -264,10 +261,10 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
         if (event.getActionCommand().equals("comboBoxChanged")) {
             String selected = (String) getSelectedItem();
             List<String> items = new ArrayList<String>();
-            if (! selected.equals(REMOVABLE_ITEM))
+            if (!selected.equals(REMOVABLE_ITEM))
                 items.add(selected);
             ComboBoxModel model = getModel();
-            for (int i=0, size = model.getSize(); i < size; i++) {
+            for (int i = 0, size = model.getSize(); i < size; i++) {
                 String item = (String) model.getElementAt(i);
                 if (item != selected)
                     items.add(item);
@@ -275,8 +272,8 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
             setModel(new DefaultComboBoxModel(items.toArray()));
             setSelectedIndex(0);
         }
-    }  
-    
+    }
+
     public void resetModel() {
         setModel(new DefaultComboBoxModel(ITEMS));
     }
@@ -289,12 +286,12 @@ class PopupPanel extends JPanel {
             JOptionPane.showMessageDialog(operatedComponent, operatedComponent.getName());
         }
     };
-    
+
     private ContextMenu popup = new ContextMenu() {{
         add("Show name", showName);
     }};
-    
-    
+
+
     @Override
     public Component add(Component comp) {
         addPopupToComponentIfRequired(comp);
@@ -306,7 +303,7 @@ class PopupPanel extends JPanel {
             addPopupToComponent(comp);
         }
     }
-    
+
     private boolean isWithPopup(Component comp) {
         return comp.getClass().isAnnotationPresent(WithPopup.class);
     }
@@ -325,6 +322,7 @@ class PopupPanel extends JPanel {
 @SuppressWarnings("serial")
 class CustomComboBoxRenderer extends JLabel implements ListCellRenderer {
     private Font uhOhFont;
+
     public CustomComboBoxRenderer() {
         setOpaque(true);
         setHorizontalAlignment(CENTER);
@@ -339,7 +337,7 @@ class CustomComboBoxRenderer extends JLabel implements ListCellRenderer {
             setBackground(list.getBackground());
             setForeground(list.getForeground());
         }
-        String pet = "Pet"+index;
+        String pet = "Pet" + index;
         setUhOhText(pet + " (no image)", list.getFont());
         return this;
     }
