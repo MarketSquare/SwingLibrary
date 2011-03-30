@@ -29,7 +29,7 @@ public class TreeIterator {
     public TreeIterator(JTreeOperator treeOperator) {
         this.treeOperator = treeOperator;
     }
-    
+
     public void operateOnAllNodes(TreePathAction treePathAction) {
         doOnAll(root(), treePathAction);
     }
@@ -37,14 +37,15 @@ public class TreeIterator {
     TreePath root() {
         return new TreePath(treeOperator.getRoot());
     }
-    
+
     private void doOnAll(TreePath parent, TreePathAction treePathAction) {
         TreeNode node = (TreeNode) parent.getLastPathComponent();
-        for (Enumeration<TreeNode> e = node.children(); e.hasMoreElements();) {
+        for (@SuppressWarnings("unchecked")
+             Enumeration<TreeNode> e = node.children(); e.hasMoreElements();) {
             TreePath path = parent.pathByAddingChild(e.nextElement());
             doOnAll(path, treePathAction);
         }
-        
+
         treePathAction.operate(parent);
     }
 }
