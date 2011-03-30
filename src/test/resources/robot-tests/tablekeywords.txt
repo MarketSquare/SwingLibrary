@@ -6,7 +6,7 @@ Library         Collections
 *** Variables ***
 ${tableName}  testTable
 ${columnHeaderOne}  column one
-${columnHeaderTwo}  column two
+${columnHeaderThree}  column three
 ${enabledMenuItem}  Replace text
 ${disabledMenuItem}  Disabled menuitem
 
@@ -131,13 +131,13 @@ Get Table Row Count By Name
 Find Table Row
     ${row}=  findTableRow  ${tableName}  one/one
     shouldBeEqualAsIntegers  0  ${row}
-    ${row}=  findTableRow  ${tableName}  four/four
+    ${row}=  findTableRow  ${tableName}  four/three
     shouldBeEqualAsIntegers  3  ${row}
 
 Find Table Row With Column
     ${row}=  findTableRow  ${tableName}  one/one  column one
     shouldBeEqualAsIntegers  0  ${row}
-    ${row}=  findTableRow  ${tableName}  four/four  column four
+    ${row}=  findTableRow  ${tableName}  four/three  column three
     shouldBeEqualAsIntegers  3  ${row}
     ${row}=  findTableRow  TableWithSingleValue  foo
     shouldBeEqualAsIntegers  0  ${row}
@@ -204,8 +204,8 @@ Table Keywords Fail If Context Is Not Set
     [Teardown]  selectMainWindow
 
 Get Table Column Values
-    ${expectedValues}=  createList  one/two  two/two  three/two  four/two
-    ${values}=  getTableColumnValues  anotherTable  ${columnHeaderTwo}
+    ${expectedValues}=  createList  bar  bar  foo  bar
+    ${values}=  getTableColumnValues  TableWithSingleValue  ${columnHeaderThree}
     listsShouldBeEqual  ${expectedValues}  ${values}
 
 Get Table Cell Properties
@@ -224,6 +224,11 @@ Click On Table Header
     ...  clickTableHeader  tableWithHeader  kekkonen
     runKeywordAndExpectError  The specified column identifier '666' is invalid.
     ...  clickTableHeader  tableWithHeader  666
+
+Get Value From Check Box
+    assertCellValue  ${tableName}  1  3  true
+    assertCellValue  ${tableName}  3  3  false
+
 
 *** Keywords ***
 assertCellClick
