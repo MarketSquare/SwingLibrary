@@ -5,6 +5,10 @@ module HelperMethods
     main_project._(path)
   end
 
+  def main_project
+    project(PROJECT_NAME)
+  end
+
   def jarjar(jar)
     sh "java -jar lib/jarjar-1.0.jar process lib/jarjar_rules.txt #{jar} #{jar}"
   end
@@ -24,14 +28,10 @@ module HelperMethods
   end
 
   def dist_jar
-    classifier = if Buildr.environment == 'legacy'
-      '-jre1.4'
-    else
-      ''
-    end
-    swinglib = project(PROJECT_NAME)
+    swinglib = main_project
     artifact = swinglib.package.to_hash
-    "#{swinglib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}#{classifier}.jar"
+    classifier = "jar-with-dependencies"
+    "#{swinglib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}-#{classifier}.jar"
   end
 
   def dist_contents
@@ -46,33 +46,8 @@ module HelperMethods
     end
   end
 
-  def main_project
-    project("#{PROJECT_NAME}:core")
-  end
-
   def max_version
-    if Buildr.environment == 'legacy' then 48 else 49 end
-  end
-
-  def retro_translate(target, options = {:include_retro => false})
-    return if ClassVersionCheck.new(max_version).class_versions_ok?(target)
-    translator = artifact(TRANSLATOR)
-    translator.invoke
-    jars = [translator] + artifacts(TRANSLATOR_RUNTIME)
-    temp_dir do |tmpdir|
-      cp jars.collect {|item| item.invoke; item.to_s}, tmpdir
-      translator_jar = File.basename(translator.to_s)
-      src = "#{if File.directory? target then "-srcdir" else "-srcjar" end} #{target}"
-      sh "java -jar #{translator_jar} #{src}"
-    end
-    if options[:include_retro] 
-      temp_dir do |tmpdir|
-        artifacts(TRANSLATOR_RUNTIME).each do |jar|
-          sh "unzip -qo #{jar}", :verbose => false
-        end
-        sh "zip -qru #{target} *", :verbose => false
-      end
-    end
+    49
   end
 
   def sources
@@ -99,23 +74,8 @@ module HelperMethods
     if ENV['TMP']; ENV['TMP'];
     else; '/tmp'; end
   end
-
-  def java14_home 
-    get_directory_from_settings('java14_home')
-  end
-
-  def python_path
-    get_directory_from_settings('site_packages')
-  end
-
-  def get_directory_from_settings(directory_setting)
-    dir = Buildr.settings.user[directory_setting]
-    error_msg = %{Please define path to your #{directory_setting} directory in the ~/.buildr/settings.yaml by adding a line:
-#{directory_setting}: /path/to/your/#{directory_setting}}
-    raise error_msg if dir.nil? || !File.directory?(dir)
-    dir
-  end
 end
+
 
 # Buildr tweakings and fixes
 module URI
