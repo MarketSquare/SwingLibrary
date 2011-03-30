@@ -1,6 +1,7 @@
 *** Settings ***
 Suite Setup     launchApplicationAndSetTimeouts
 Library         SwingLibrary
+Force Tags      regression
 
 *** Keywords ***
 launchApplicationAndSetTimeouts
