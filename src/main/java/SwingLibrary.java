@@ -2,7 +2,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /*
- * Copyright 2008 Nokia Siemens Networks Oyj
+ * Copyright 2008-2011 Nokia Siemens Networks Oyj
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
