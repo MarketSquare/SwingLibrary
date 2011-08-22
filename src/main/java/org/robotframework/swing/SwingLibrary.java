@@ -28,11 +28,21 @@ public class SwingLibrary extends AnnotationLibrary {
     public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
     private final AnnotationLibrary annotationLibrary = new AnnotationLibrary("org/robotframework/swing/keyword/**/*.class");
     public static SwingLibrary instance;
-    
+    public static final String LIBRARY_DOCUMENTATION =
+            "SwingLibrary is a Robot Framework test library for testing Java Swing user interfaces.\n" +
+            "It uses a tool called Jemmy (http://java.net/projects/jemmy/) internally to operate on the Swing components.\\nn" +
+            "*Locating components*\n\n  " +
+            "Most of the keywords that operate on a visible component take an argument named `identifier`." +
+            "This argument is used to locate the element. The `identifier` can be either:\n\n" +
+            "* the internal name of the component (set using `setName` method in Java code)\n" +
+            "* the index of the component in the component hierarchy. Using indices is strongly discouraged\n" +
+            "* for components that have visible text, such as buttons, the visible text can also be used as `identifier`\n\n";
+
+
     public SwingLibrary() {
         this(Collections.<String>emptyList());
     }
-    
+
     protected SwingLibrary(final String keywordPattern) {
         this(new ArrayList<String>() {{ add(keywordPattern); }});
     }
@@ -59,6 +69,8 @@ public class SwingLibrary extends AnnotationLibrary {
     }
 
     public String getKeywordDocumentation(String keywordName) {
+        if (keywordName.equals("__intro__"))
+            return LIBRARY_DOCUMENTATION;
         return annotationLibrary.getKeywordDocumentation(keywordName);
     }
 
