@@ -1,5 +1,5 @@
-require 'lib/helper_methods'
-require 'lib/dependencies'
+require './lib/helper_methods.rb'
+require './lib/dependencies.rb'
 
 PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'

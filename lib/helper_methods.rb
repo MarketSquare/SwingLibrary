@@ -1,4 +1,4 @@
-require 'lib/class_version_check'
+require './lib/class_version_check.rb'
 
 module HelperMethods
   def __(path)
@@ -87,7 +87,7 @@ module Buildr
     def pom_xml
       xml = Builder::XmlMarkup.new(:indent=>2)
       xml.instruct!
-      xml.project do 
+      xml.project do
         xml.modelVersion  '4.0.0'
         xml.groupId       group
         xml.artifactId    id
@@ -131,7 +131,7 @@ module Buildr
     end
   end
 
-  class Artifact 
+  class Artifact
     alias_method :old_download, :download
 
     def download
