@@ -43,7 +43,7 @@ class ClassVersionCheck
   def get_class_version(file)
     File.open(file) do |f|
       f.seek 6
-      ((0xFF & f.getc) << 8) | (0xFF & f.getc)
+      ((0xFF & f.getbyte) << 8) | (0xFF & f.getbyte)
     end
   end
 end
