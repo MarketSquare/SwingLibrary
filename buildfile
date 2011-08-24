@@ -35,6 +35,15 @@ task :dist do
   end
 end
 
+desc "Creates jar with dependencies without running tests"
+task :dist_devel do
+  options.test = false
+  main_project.package.invoke
+  create_jar_with_dependencies
+  puts "Successfully created #{dist_jar}"
+end
+
+
 desc "Packages the SwingLibrary demo"
 task :demo do
   demodir = "target/demo"
