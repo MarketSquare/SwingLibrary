@@ -1,3 +1,7 @@
+repositories.remote << 'http://www.laughingpanda.org/maven2'
+repositories.remote << 'http://repo1.maven.org/maven2'
+repositories.remote << 'http://repository.codehaus.org'
+
 JRETROFIT = 'jretrofit:jretrofit:jar:1.0'
 JEMMY = 'org.netbeans:jemmy:jar:2.2.7.5'
 PARANAMER = 'com.thoughtworks.paranamer:paranamer:jar:1.1.2'

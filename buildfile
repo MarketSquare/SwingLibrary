@@ -1,13 +1,9 @@
-require './lib/helper_methods.rb'
+require './lib/build_helpers.rb'
 require './lib/dependencies.rb'
 
 PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
 VERSION_NUMBER = '1.1.4-SNAPSHOT'
-
-repositories.remote << 'http://www.laughingpanda.org/maven2'
-repositories.remote << 'http://repo1.maven.org/maven2'
-repositories.remote << 'http://repository.codehaus.org'
 
 Java.classpath << artifacts(PARANAMER_GENERATOR)
 Java.classpath << File.expand_path('lib/swing-library-paranamer.jar')
@@ -39,6 +35,10 @@ task :dist do
   end
 end
 
+desc "Packages the SwingLibrary demo"
+task :demo do
+end
+
 def create_jar_with_dependencies()
   temp_dir do |tmpdir|
     artifacts(dist_contents).each do |jar|
@@ -55,7 +55,7 @@ task :libdoc do
   output_dir = main_project._('doc')
   mkdir_p output_dir
   output_file = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
-  runjython ("lib/libdoc/libdoc.py --output #{output_file} SwingLibrary")
+  runjython ("lib/libdoc.py --output #{output_file} SwingLibrary")
   assert_doc_ok(VERSION_NUMBER)
 end
 
