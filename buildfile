@@ -37,6 +37,12 @@ end
 
 desc "Packages the SwingLibrary demo"
 task :demo do
+  demodir = "target/demo"
+  sh "rm -rf #{demodir}"
+  sh "mkdir -p #{demodir}/lib"
+  sh "cp target/swinglibrary-*-jar-with-dependencies.jar demo/lib"
+  sh "zip -r target/swinglibrary-demo.zip demo -x '*/.svn/*'"
+  puts "created target/swinglibrary-demo.zip"
 end
 
 def create_jar_with_dependencies()
