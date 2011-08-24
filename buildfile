@@ -24,44 +24,24 @@ define PROJECT_NAME do
   package(:jar, :id => PROJECT_NAME)
 end
 
-desc "Creates a distributable jar with dependencies"
+desc "Creates a jar distribution with dependencies"
 task :dist do
   unless uptodate?(dist_jar, sources)
     main_project.package.invoke
     create_jar_with_dependencies
-    assert_classes_have_correct_version(dist_jar)
+    verify_correct_class_versions(dist_jar)
     jarjar dist_jar
     puts "Successfully created #{dist_jar}"
   end
 end
 
-desc "Creates jar with dependencies without running tests"
+desc "Creates a jar distribution without running tests"
+task :dd => :dist_devel
 task :dist_devel do
   options.test = false
   main_project.package.invoke
   create_jar_with_dependencies
   puts "Successfully created #{dist_jar}"
-end
-
-
-desc "Packages the SwingLibrary demo"
-task :demo do
-  demodir = "target/demo"
-  sh "rm -rf #{demodir}"
-  sh "mkdir -p #{demodir}/lib"
-  sh "cp target/swinglibrary-*-jar-with-dependencies.jar demo/lib"
-  sh "zip -r target/swinglibrary-demo.zip demo -x '*/.svn/*'"
-  puts "created target/swinglibrary-demo.zip"
-end
-
-def create_jar_with_dependencies()
-  temp_dir do |tmpdir|
-    artifacts(dist_contents).each do |jar|
-      puts "unzipping #{jar}"
-      sh "unzip -qo \"#{jar}\"", :verbose => false
-    end
-    sh "zip -qr \"#{dist_jar}\" * -x '*.SF'", :verbose => false
-  end
 end
 
 desc "Create keyword documentation using libdoc"
@@ -80,35 +60,24 @@ task :acceptance_tests  do
   run_robot
 end
 
-desc "Run the swinglibrary acceptance tests using xvfb (xvfb has to be installed separately)"
-task :ci_at => :ci_acceptance_tests
-task :ci_acceptance_tests => :dist do
+desc "Run the swinglibrary acceptance tests with virtual display"
+task :at_headless => :headless_acceptance_tests
+task :ci_at => :headless_acceptance_tests
+task :headless_acceptance_tests => :dist do
   run_robot "--exclude display-required --monitorcolors off"
 end
 
 desc "Run Robot Framework tests during development, args can be given like rt[-t testname]"
-task :rt => :robot_test
 task :robot_test, :args do |t, args|
   run_robot args.args
 end
 
-def run_robot(args="")
-  ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
-  output_dir = get_output_dir
-  cmd = "java org.robotframework.RobotFramework --outputdir #{output_dir} --debugfile debug.txt #{args} " +  __('src/test/resources/robot-tests')
-  puts "running robot tests with command:\n#{cmd}"
-  sh cmd
-end
-
-def get_output_dir()
-  if ENV['ROBOT_OUTPUTDIR'].nil?
-    return Dir.pwd+"/target/robot-results"
-  end
-  return ENV['ROBOT_OUTPUTDIR']
-end
-
-def runjython(cmd)
-  dependencies = [DEPENDENCIES, TEST_DEPENDENCIES].flatten
-  ENV['CLASSPATH'] = [__('target/classes') , Buildr.artifacts(dependencies).map(&:name)].join(File::PATH_SEPARATOR)
-  sh "java org.python.util.jython #{cmd}"
+desc "Packages the SwingLibrary demo"
+task :demo do
+  demodir = "target/demo"
+  sh "rm -rf #{demodir}"
+  sh "mkdir -p #{demodir}/lib"
+  sh "cp target/swinglibrary-*-jar-with-dependencies.jar demo/lib"
+  sh "zip -r target/swinglibrary-demo.zip demo -x '*/.svn/*'"
+  puts "created target/swinglibrary-demo.zip"
 end

@@ -7,6 +7,16 @@ module BuildHelpers
     project(PROJECT_NAME)
   end
 
+  def create_jar_with_dependencies()
+    temp_dir do |tmpdir|
+      artifacts(dist_contents).each do |jar|
+        puts "unzipping #{jar}"
+        sh "unzip -qo \"#{jar}\"", :verbose => false
+      end
+      sh "zip -qr \"#{dist_jar}\" * -x '*.SF'", :verbose => false
+    end
+  end
+
   def jarjar(jar)
     sh "java -jar lib/jarjar-1.0.jar process lib/jarjar_rules.txt #{jar} #{jar}"
   end
@@ -20,9 +30,30 @@ module BuildHelpers
     end
   end
 
-  def assert_classes_have_correct_version(target)
+  def run_robot(args="")
+    ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
+    output_dir = get_output_dir
+    cmd = "java org.robotframework.RobotFramework --outputdir #{output_dir} --debugfile debug.txt #{args} " +  __('src/test/resources/robot-tests')
+    puts "running robot tests with command:\n#{cmd}"
+    sh cmd
+  end
+
+  def get_output_dir()
+    if ENV['ROBOT_OUTPUTDIR'].nil?
+      return Dir.pwd+"/target/robot-results"
+    end
+    return ENV['ROBOT_OUTPUTDIR']
+  end
+
+  def runjython(cmd)
+    dependencies = [DEPENDENCIES, TEST_DEPENDENCIES].flatten
+    ENV['CLASSPATH'] = [__('target/classes') , Buildr.artifacts(dependencies).map(&:name)].join(File::PATH_SEPARATOR)
+    sh "java org.python.util.jython #{cmd}"
+  end
+
+  def verify_correct_class_versions(target)
     puts "Verifying classversions from '#{target}'"
-    ClassVersionCheck.new(max_version).assert_classes_have_correct_version(target)
+    ClassVersionCheck.new(max_version).verify_correct_class_versions(target)
   end
 
   def dist_jar
@@ -82,7 +113,7 @@ class ClassVersionCheck
     @max_version = max_version
   end
 
-  def assert_classes_have_correct_version(target)
+  def verify_correct_class_versions(target)
     if File.directory?(target)
       verify_directory(target)
     elsif File.file?(target)
@@ -92,7 +123,7 @@ class ClassVersionCheck
 
   def class_versions_ok?(target)
     begin
-      assert_classes_have_correct_version(target)
+      verify_correct_class_versions(target)
     rescue
       return false
     end
