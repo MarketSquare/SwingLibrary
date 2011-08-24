@@ -8,89 +8,41 @@ http://code.google.com/p/robotframework-swinglibrary/
 
 Prerequisites for building
 --------------------------
-There are two ways to build and test the SwingLibrary.
-The latter is deprecated and may not be supported in the future.
 
-1. Using Jython 2.5.1, Maven and Robot:
- - http://www.jython.org/
- - http://maven.apache.org/
- - robot: http://www.robotframework.org
-
-2. Using buildr and robot (Deprecated):
- - buildr: http://incubator.apache.org/buildr and
- - robot: http://www.robotframework.org
-
-
-Creating a distribution of SwingLibrary using Jython and Maven
---------------------------------------------------------------
-
-In order to compile, test, package and create documentation run: 
-
-  jython dist.py
-
-Just to create a documentation of the readily build projects run:
-
-  jython dist.py doc
-
-The subprojects of the SwingLibrary can be built using their own
-Maven poms. E.g.
-
-  mvn -f core/pom.xml clean assembly:assembly
+SwingLibrary uses Apache Buildr (http://buildr.apache.org/) as a build tool.
+All other dependencies are managed with Buildr.
 
 
 Build tasks for Buildr
 ----------------------
 
-In addition to buildr's default tasks we define few of our own:
+In addition to Buildr's default tasks we define few of our own:
 
-acceptance_tests:
-  Runs the acceptance tests, it is recommended to use a virtual display such as
-  vnc when this is run, so that the GUI operations are not disturbed. For
-  example on linux machine you could start vncserver and reset the DISPLAY=:1.0
-  environment variable:
+acceptance_tests (at):
+  Runs the acceptance tests with Robot Framework, on physical display.
 
-  export DISPLAY=:1.0
-  buildr acceptance_tests
+at_headless:
+  Runs Robot Framework acceptance tests, but excludes the
+  tests that require physical display. For example, to run the test
+  with xvfb, invoke:
 
-doc:
-  Builds the robot documentation for this library. The path to python site-packages
-  must be defined in the $HOME/.buildr/settings.yaml file:
+    xvfb-run buildr at
 
-  site_packages: <path-to-site-packages>
+robot_test:
+  Run acceptance tests using arguments. For example, to run only suite
+  called ButtonKeywords, invoke
+
+    (xvfb-run) robot_test[--suite ButtonKeywords]
 
 dist:
   Builds SwingLibrary distribution package by creating a jar file containing
   the library and all its dependencies.
 
+dist_devel (dd):
+  Builds same distribution package as dist, but without running any tests.
 
-Legacy Profile
---------------
+demo:
+  Package the SwingLibrary demo as a zip file.
 
-You can run all the tasks with '-e legacy' modifier (eg. buildr dist -e
-legacy).  This will force buildr to use java 1.4 for the task. This is
-especially useful when creating the distribution package as we want
-SwingLibrary to be compatible with jre 1.4. The path to your j2sdk1.4 must be
-defined in the $HOME/.buildr/settings.yaml:
-
-  java14_home: <path-to-site-j2sdk1.4.2>
-
-
-Example $HOME/.buildr/settings.yaml
------------------------------------
-
-Here is my settings.yaml:
-
------------------- 8< ------------------------
-site_packages: /usr/lib/python2.5/site-packages/
-java14_home: /home/hhulkko/opt/j2sdk1.4.2_13
-
-repositories:
-  release_to:
-    url: sftp://www.laughingpanda.org/var/www/localhost/htdocs/maven2   
-    username: hhulkko
-    password: ********
------------------- 8< ------------------------
-
-See http://incubator.apache.org/buildr/settings_profiles.html#personal_settings
-for more details.
-
+libdoc:
+  Generate library documentation with Robot Framework's libdoc tool.
