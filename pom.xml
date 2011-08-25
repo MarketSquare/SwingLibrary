@@ -35,8 +35,8 @@
   </scm>
   <developers>
     <developer>
-      <name>Robot Framework developers<name>
-      <email>robotframework@gmail.com<email>
+      <name>Robot Framework developers</name>
+      <email>robotframework@gmail.com</email>
     </developer>
   </developers>
   <dependencies>
