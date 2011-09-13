@@ -28,60 +28,63 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RobotKeywords
 public class ButtonKeywords {
-    private IdentifierParsingOperatorFactory<ButtonOperator> operatorFactory = new ButtonOperatorFactory();
-    private IComponentConditionResolver buttonExistenceResolver = new ComponentExistenceResolver(operatorFactory);
+
+    private final IdentifierParsingOperatorFactory<ButtonOperator> operatorFactory = new ButtonOperatorFactory();
+    private final IComponentConditionResolver buttonExistenceResolver = new ComponentExistenceResolver(operatorFactory);
 
     @RobotKeyword("Uses current context to search for a button and when found, pushes it.\n\n"
-        + "Example:\n"
-        + "| Push Button | _OK_ |\n")
+            + "Example:\n"
+            + "| Push Button | _OK_ |\n")
     public void pushButton(String identifier) {
-        createOperator(identifier).push();
+        new ButtonOperatorWrapper(createOperator(identifier)).push();
     }
 
     @RobotKeyword("Uses current context to search for a button and when found, "
-        + "returns the text it is labeled with.\n\n"
-        + "Example:\n"
-        + "| ${buttonText}=  | Get Button Text | _myButton_    |\n"
-        + "| Should Be Equal | _My Button_     | _${buttonText}_ |\n")
+            + "returns the text it is labeled with.\n\n"
+            + "Example:\n"
+            + "| ${buttonText}=  | Get Button Text | _myButton_    |\n"
+            + "| Should Be Equal | _My Button_     | _${buttonText}_ |\n")
     public String getButtonText(String identifier) {
         return createOperator(identifier).getText();
     }
 
     @RobotKeyword("Fails if button does not exist within current context.\n\n"
-        + "Example:\n"
-        + "| Button Should Exist | _OK_ |\n")
+            + "Example:\n"
+            + "| Button Should Exist | _OK_ |\n")
     public void buttonShouldExist(String identifier) {
         Assert.assertTrue("Button '" + identifier + "' doesn't exist", buttonExists(identifier));
     }
 
     @RobotKeyword("Fails if button exists within current context.\n"
-        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`.\n\n"
-        + "Example:\n"
-        + "| Set Jemmy Timeouts      | _1_  |\n"
-        + "| Button Should Not Exist | _OK_ |\n")
+            + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`.\n\n"
+            + "Example:\n"
+            + "| Set Jemmy Timeouts      | _1_  |\n"
+            + "| Button Should Not Exist | _OK_ |\n")
     public void buttonShouldNotExist(String identifier) {
         Assert.assertFalse("Button '" + identifier + "' exists", buttonExists(identifier));
     }
 
     @RobotKeyword("Fails if button is disabled\n\n"
-        + "Example:\n"
-        + "| Button Should Be Enabled | _OK_ |\n")
+            + "Example:\n"
+            + "| Button Should Be Enabled | _OK_ |\n")
     public void buttonShouldBeEnabled(String identifier) {
         Assert.assertTrue("Button was disabled.", createOperator(identifier).isEnabled());
     }
 
     @RobotKeyword("Fails if button is enabled\n\n"
-        + "Example:\n"
-        + "| Button Should Be Disabled | _OK_ |\n")
+            + "Example:\n"
+            + "| Button Should Be Disabled | _OK_ |\n")
     public void buttonShouldBeDisabled(String identifier) {
         Assert.assertFalse("Button was enabled.", createOperator(identifier).isEnabled());
     }
-    
+
     private ButtonOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }
-    
+
     private boolean buttonExists(String identifier) {
         return buttonExistenceResolver.satisfiesCondition(identifier);
     }
 }
+
+
