@@ -30,33 +30,47 @@ public class SwingLibrary extends AnnotationLibrary {
     private final AnnotationLibrary annotationLibrary = new AnnotationLibrary("org/robotframework/swing/keyword/**/*.class");
     private static final String LIBRARY_DOCUMENTATION =
             "SwingLibrary is a Robot Framework test library for testing Java Swing user interfaces.\n\n" +
-            "It uses a tool called Jemmy (http://java.net/projects/jemmy/) internally to operate on Swing components.\n\n" +
-            "*Getting Started*\n\n" +
-            "First, the SwingLibrary needs to be taken into use in the settings table:\n" +
-            "| *Settings * | *Value* |\n" +
-            "| Library | SwingLibrary |\n\n" +
+                    "It uses a tool called Jemmy (http://java.net/projects/jemmy/) internally to operate on Swing components.\n\n" +
+                    "*Getting Started*\n\n" +
+                    "First, the SwingLibrary needs to be taken into use in the settings table:\n\n\n" +
+                    "| *Settings * | *Value* |\n" +
+                    "| Library | SwingLibrary |\n\n" +
 
             "The tested application can be started with keyword `Start Application`, using the name " +
-            "of the main application class as an argument:\n" +
-            "| *Action* | *Argument* |\n"+
-            "| Start Application | com.acme.TheApplication |\n\n" +
+            "of the main application class as an argument:\n\n\n" +
+            "| *Test Case* | *Action* | *Argument* |\n"+
+            "| Start test  | Start Application | com.acme.TheApplication |\n" +
+            "|             | Select Window     | TheApplication Window   |\n" +
+            "|             | Push Button       | AcmeButton              |\n\n" +
             "When the tests are executed, both the SwingLibrary and the application and all its dependencies " +
             "need to be available in the CLASSPATH. Robot Framework needs to be started with `jybot` start script "+
-            "when using the SwingLibrary, for example like this:\n\n" +
-            "`CLASSPATH=swinglibrary-1.1.3.jar:myApp.jar jybot my_test.txt`\n\n" +
+            "when using the SwingLibrary. In Windows, this can be done like:\n\n" +
+            "`set CLASSPATH=swinglibrary-<version>.jar;myApp.jar`\n\n" +
+            "`jybot my_test.txt`\n\n" +
+            "and in *nix like this:\n\n" +
+            "`CLASSPATH=swinglibrary-<version>.jar:myApp.jar jybot my_test.txt`\n\n" +
             "*Contexts*\n\n" +
-            "Keywords that operate on a component always search for the component in some context, which has to explicitly set. " +
-            "Typical contexts are windows, dialogs and tabbed panes. For example, to choose a frame whose title is 'My App' as context, use:\n\n" +
-            "| Select Window | My App |\n\n" +
-            "After `Select Window` has been used, all subsequent keyword use the selected window as context until a new context is selected.\n\n" +
+            "Keywords that operate on a component always search for the component in some context, " +
+            "which has to explicitly set. " +
+            "Typical contexts are windows, dialogs and tabbed panes. " +
+            "After a context has been selected, all subsequent keywords search for components in that context " +
+            "until a new context is selected. Keywords that can be used to select a context are " +
+            "`Select Window`, `Select Dialog` and `Select Context`. For example:\n\n\n" +
+            "| *Test Case* | *Action* | *Argument* |\n"+
+            "| |  Select Window | My App |\n" +
+            "| | Select From Main Menu | File|Exit |\n" +
+            "| | Select Dialog | Confirm |\n" +
+            "| | Push Button   | No      |\n" +
+            "| | Select Window | My App  |\n\n\n" +
+
 
             "*Locating components*\n\n  " +
             "Most of the keywords that operate on a visible component take an argument named `identifier`, " +
             "which is used to locate the element. The first matching element is operated on, according to these rules: \n\n" +
-            "1. if the `identifier` is a number, it is used as a zero-based index for the particular component type in the current context. " +
+            "1. If the `identifier` is a number, it is used as a zero-based index for the particular component type in the current context. " +
             "Using indices is, however, fragile and is strongly discouraged\n" +
-            "2. if the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n" +
-            "3. for components that have visible text (e.g. buttons), `identifier` is also matched against that.\n\n" +
+            "2. If the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n" +
+            "3. For components that have visible text (e.g. buttons), `identifier` is also matched against that.\n\n" +
             "Keyword `List Components in Context` lists all components and their names and indices in a given context.";
 
 
@@ -81,20 +95,24 @@ public class SwingLibrary extends AnnotationLibrary {
         }
     }
 
+    @Override
     public Object runKeyword(String keywordName, Object[] args) {
         return annotationLibrary.runKeyword(keywordName, toStrings(args));
     }
 
+    @Override
     public String[] getKeywordArguments(String keywordName) {
         return annotationLibrary.getKeywordArguments(keywordName);
     }
 
+    @Override
     public String getKeywordDocumentation(String keywordName) {
         if (keywordName.equals("__intro__"))
             return LIBRARY_DOCUMENTATION;
         return annotationLibrary.getKeywordDocumentation(keywordName);
     }
 
+    @Override
     public String[] getKeywordNames() {
         return annotationLibrary.getKeywordNames();
     }
