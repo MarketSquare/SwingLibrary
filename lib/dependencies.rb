@@ -5,7 +5,7 @@ repositories.remote << 'http://repository.codehaus.org'
 JRETROFIT = 'jretrofit:jretrofit:jar:1.0'
 JEMMY = 'org.netbeans:jemmy:jar:2.2.7.5'
 PARANAMER = 'com.thoughtworks.paranamer:paranamer:jar:1.1.2'
-JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.8.1'
+JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.9'
 JDOM = 'jdom:jdom:jar:1.0'
 HAMCREST = 'org.hamcrest:hamcrest-core:jar:1.1'
 
@@ -22,8 +22,6 @@ JAVALIB_CORE_DEPENDENCIES =
   'junit:junit:jar:4.5',
   'log4j:log4j:jar:1.2.12',
   'logkit:logkit:jar:1.0.1',
-  'org.netbeans:jemmy:jar:2.2.7.5',
-  JEMMY,
   'org.springframework:spring-aop:jar:2.5.4',
   'org.springframework:spring-beans:jar:2.5.4',
   'org.springframework:spring-context:jar:2.5.4',
