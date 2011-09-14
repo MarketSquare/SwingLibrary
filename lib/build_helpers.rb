@@ -18,7 +18,9 @@ module BuildHelpers
   end
 
   def jarjar(jar)
-    sh "java -jar lib/jarjar-1.0.jar process lib/jarjar_rules.txt #{jar} #{jar}"
+    cmd = "java -jar lib/jarjar-1.0.jar process lib/jarjar_rules.txt #{jar} #{jar}"
+    puts "Running: #{cmd}"
+    sh cmd
   end
 
   def assert_doc_ok(version)
@@ -57,10 +59,7 @@ module BuildHelpers
   end
 
   def dist_jar
-    swinglib = main_project
-    artifact = swinglib.package.to_hash
-    classifier = "jar-with-dependencies"
-    "#{swinglib.path_to(:target)}/#{artifact[:id]}-#{artifact[:version]}-#{classifier}.jar"
+    main_project.package.to_s
   end
 
   def dist_contents
