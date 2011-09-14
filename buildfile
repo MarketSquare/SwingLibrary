@@ -25,7 +25,7 @@ define PROJECT_NAME do
 end
 
 desc "Creates a jar distribution with dependencies"
-task :dist do
+task :uberjar do
   unless uptodate?(dist_jar, sources)
     main_project.package.invoke
     create_jar_with_dependencies
@@ -35,23 +35,17 @@ task :dist do
   end
 end
 
-desc "Creates a jar distribution without running tests"
-task :dd => :dist_devel
-task :dist_devel do
-  options.test = false
-  main_project.package.invoke
-  create_jar_with_dependencies
-  puts "Successfully created #{dist_jar}"
-end
-
 desc "Create keyword documentation using libdoc"
 task :libdoc do
-  generate_parameter_names(__('src/main/java'), __('target/classes'))
   output_dir = main_project._('doc')
   mkdir_p output_dir
   output_file = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
-  runjython ("lib/libdoc.py --output #{output_file} SwingLibrary")
-  assert_doc_ok(VERSION_NUMBER)
+  unless uptodate?(output_file, [dist_jar])
+    puts "Creating library documentation"
+    generate_parameter_names(__('src/main/java'), __('target/classes'))
+    runjython ("lib/libdoc.py --output #{output_file} SwingLibrary")
+    assert_doc_ok(VERSION_NUMBER)
+  end
 end
 
 desc "Run the swinglibrary acceptance tests"
@@ -75,9 +69,19 @@ end
 desc "Packages the SwingLibrary demo"
 task :demo do
   demodir = "target/demo"
-  sh "rm -rf #{demodir}"
-  sh "mkdir -p #{demodir}/lib"
-  sh "cp target/swinglibrary-*-jar-with-dependencies.jar demo/lib"
-  sh "zip -r target/swinglibrary-demo.zip demo -x '*/.svn/*'"
-  puts "created target/swinglibrary-demo.zip"
+  demozip = "target/swinglibrary-demo.zip"
+  unless uptodate?(demozip, [dist_jar])
+    sh "rm -rf #{demodir}"
+    sh "mkdir -p #{demodir}/lib"
+    sh "cp #{dist_jar} demo/lib"
+    sh "zip -r #{demozip} demo"
+    puts "created #{demozip}"
+  end
+end
+
+task :deliver => [:uberjar, :demo, :libdoc] do
+  puts "To publish the release:"
+  puts "Upload artifacts to Github downloads page"
+  puts "Create release notes"
+  puts "Send release mail"
 end
