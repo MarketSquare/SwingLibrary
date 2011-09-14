@@ -18,8 +18,8 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RunWith(JDaveRunner.class)
 public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords> {
-    private ButtonKeywords buttonKeywords = new ButtonKeywords();
-    private String buttonIdentifier = "someButton";
+    private final ButtonKeywords buttonKeywords = new ButtonKeywords();
+    private final String buttonIdentifier = "someButton";
 
     public class Any {
         public ButtonKeywords create() {
@@ -72,14 +72,6 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             return buttonKeywords;
         }
 
-        public void pushesButton() {
-            checking(new Expectations() {{
-                one(operator).push();
-            }});
-
-            context.pushButton(buttonIdentifier);
-        }
-
         public void getsButtonText() {
             checking(new Expectations() {{
                 one(operator).getText(); will(returnValue("buttonText"));
@@ -92,6 +84,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonIsEnabled(true);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldBeEnabled(buttonIdentifier);
                 }
@@ -102,6 +95,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonIsEnabled(false);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldBeEnabled(buttonIdentifier);
                 }
@@ -112,6 +106,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonIsEnabled(false);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldBeDisabled(buttonIdentifier);
                 }
@@ -122,6 +117,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonIsEnabled(true);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldBeDisabled(buttonIdentifier);
                 }
@@ -155,6 +151,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonExists(true);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldExist(buttonIdentifier);
                 }
@@ -165,6 +162,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonExists(false);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldExist(buttonIdentifier);
                 }
@@ -175,6 +173,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonExists(false);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldNotExist(buttonIdentifier);
                 }
@@ -185,6 +184,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
             setButtonExists(true);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.buttonShouldNotExist(buttonIdentifier);
                 }
