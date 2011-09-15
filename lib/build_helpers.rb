@@ -23,11 +23,10 @@ module BuildHelpers
     sh cmd
   end
 
-  def assert_doc_ok(version)
-    doc_name = "swinglibrary-#{version}-doc.html"
-    IO.readlines("doc/"+doc_name).each do |line|
+  def assert_doc_ok(doc_path)
+    IO.readlines(doc_path).each do |line|
       if line =~ /\*<unknown>/
-        raise "Errors in documentation: " + doc_name + " contains *<unknown>-tags."
+        raise "Errors in documentation: " + doc_path + " contains *<unknown>-tags."
       end
     end
   end
