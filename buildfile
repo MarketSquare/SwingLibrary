@@ -3,7 +3,7 @@ require './lib/dependencies.rb'
 
 PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
-VERSION_NUMBER = '1.2-SNAPSHOT'
+VERSION_NUMBER = '1.2'
 
 Java.classpath << artifacts(PARANAMER_GENERATOR)
 Java.classpath << File.expand_path('lib/swing-library-paranamer.jar')
