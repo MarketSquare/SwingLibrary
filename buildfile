@@ -39,11 +39,11 @@ desc "Create keyword documentation using libdoc"
 task :libdoc do
   output_dir = main_project._('target')
   mkdir_p output_dir
-  output_file = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
-  unless uptodate?(output_file, [dist_jar])
+  outputfile = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
+  unless uptodate?(outputfile, [dist_jar])
     puts "Creating library documentation"
     generate_parameter_names(__('src/main/java'), __('target/classes'))
-    runjython ("lib/libdoc.py --output #{output_file} SwingLibrary")
+    runjython ("lib/libdoc.py --output #{outputfile} SwingLibrary")
     assert_doc_ok(outputfile)
   end
 end
@@ -68,18 +68,20 @@ end
 
 desc "Packages the SwingLibrary demo"
 task :demo do
-  demodir = "target/demo"
-  demozip = "target/swinglibrary-demo.zip"
+  demodir = "target/swinglibrary-demo"
+  time = Time.new.strftime("%Y-%m-%d")
+  demozip = "swinglibrary-demo-#{time}.zip"
   unless uptodate?(demozip, [dist_jar])
     sh "rm -rf #{demodir}"
     sh "mkdir -p #{demodir}/lib"
-    sh "cp #{dist_jar} demo/lib"
-    sh "zip -r #{demozip} demo"
+    sh "cp #{dist_jar} #{demodir}/lib/"
+    sh "cp demo/*.* #{demodir}"
+    sh "cd target && zip -r #{demozip} swinglibrary-demo"
     puts "created #{demozip}"
   end
 end
 
-task :deliver => [:uberjar, :demo, :libdoc] do
+task :dist => [:uberjar, :demo, :libdoc] do
   puts "To publish the release:"
   puts "Upload artifacts to Github downloads page"
   puts "Create release notes"
