@@ -5,7 +5,7 @@ repositories.remote << 'http://repository.codehaus.org'
 JRETROFIT = 'jretrofit:jretrofit:jar:1.0'
 JEMMY = 'org.netbeans:jemmy:jar:2.2.7.5'
 PARANAMER = 'com.thoughtworks.paranamer:paranamer:jar:1.1.2'
-JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.9'
+JAVALIB_CORE = 'org.robotframework:javalib-core:jar:0.9.1'
 JDOM = 'jdom:jdom:jar:1.0'
 HAMCREST = 'org.hamcrest:hamcrest-core:jar:1.1'
 
