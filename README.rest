@@ -14,9 +14,4 @@ __ http://code.google.com/p/robotframework-swinglibrary/
 Building SwingLibrary
 ---------------------
 
-SwingLibrary uses Apache Buildr__ as a build tool. For more information,
-execute::
-
-    buildr help
-
-__ http://buildr.apache.org/
+See BUILD.rest for development, build and release instructions.

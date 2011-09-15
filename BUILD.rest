@@ -1,0 +1,33 @@
+Sources
+=======
+
+Code is organized according to the Maven convention in `src/main/java` and
+`src/test/java`. In addition Robot Framework test cases for all the keywords
+are located in `src/test/resources/robot-tests`
+
+
+Building
+========
+
+SwingLibrary uses Apache Buildr__ as a build tool.
+
+__ http://buildr.apache.org/
+
+For most of the tasks, we have custom tasks since the default tasks
+do not allow for enough customization. All artifacts are created in
+`target` directory.
+
+The tasks most important tasks are::
+
+  uberjar  # Builds swinglibrary-<version>.jar, including dependencies
+  robottest # Run all robot tests
+  robottest[--suite buttonkeywords] # Command line options to RF
+  libdoc # Builds documentation using lib/libdoc.py
+  demo # Packages demo in timestamped zip file
+  dist # Build uberjar, libdoc and demo
+
+Most complex of these task is the `uberjar`, since in addition to compilation
+it runs `jarjar` to prevent runtime clashes with the application under test.
+
+The `libdoc` task uses `paranamer` to inject parameter names to bytecode
+so that they are available to `libdoc.py`.
