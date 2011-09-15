@@ -16,31 +16,22 @@
 
 package org.robotframework.swing.keyword.button;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import org.netbeans.jemmy.drivers.DriverManager;
 import org.robotframework.swing.button.ButtonOperator;
 
 public class ButtonOperatorWrapper {
-
     private final ButtonOperator buttonOperator;
-    private final ClickListener clickListener = new ClickListener();
 
     public ButtonOperatorWrapper(ButtonOperator buttonOperator) {
-        buttonOperator.addActionListener(clickListener);
         this.buttonOperator = buttonOperator;
     }
 
     public void push() {
-        // This is a workaround for behavior described in
-        // http://code.google.com/p/robotframework-swinglibrary/issues/detail?id=191
-        waitButtonIsEnabled();
-        clickIfNecessary();
+        waitButtonToBeEnabled();
+        pushButton();
     }
 
-    private void waitButtonIsEnabled() {
-        buttonOperator.makeComponentVisible();
+    private void waitButtonToBeEnabled() {
         try {
             buttonOperator.waitComponentEnabled();
         } catch (InterruptedException e) {
@@ -48,16 +39,7 @@ public class ButtonOperatorWrapper {
         }
     }
 
-    private void clickIfNecessary() {
-        if (!clickListener.clicked)
-            DriverManager.getButtonDriver(buttonOperator).push(buttonOperator);
-    }
-}
-
-class ClickListener implements ActionListener {
-    public boolean clicked = false;
-
-    public void actionPerformed(ActionEvent e) {
-        clicked = true;
+    private void pushButton() {
+        DriverManager.getButtonDriver(buttonOperator).push(buttonOperator);
     }
 }
