@@ -83,10 +83,6 @@ end
 
 desc "Create uberjar, demo and libdoc"
 task :dist => [:uberjar, :demo, :libdoc] do
-  puts "To publish the release:"
-  puts "Upload artifacts to Github downloads page"
-  puts "Create release notes"
-  puts "Send release mail"
 end
 
 desc "Deploys file to Sonatype OSS repository"
