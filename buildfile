@@ -61,8 +61,8 @@ task :headless_acceptance_tests => :uberjar do
   run_robot "--exclude display-required --monitorcolors off"
 end
 
-desc "Run Robot Framework tests during development, args can be given like rt[-t testname]"
-task :robot_test, :args do |t, args|
+desc "Run Robot Framework tests during development, args can be given like robottest[-t testname]"
+task :robottest, :args do |t, args|
   run_robot args.args
 end
 
