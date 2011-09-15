@@ -10,7 +10,7 @@ TESTAPP = 'org.robotframework.swing.testapp.examplesut.TodoListApplication'
 def _get_jars():
     dir = os.path.dirname(__file__)
     return glob(os.path.join(dir, 'lib',
-                'swinglibrary-*-jar-with-dependencies.jar'))
+                'swinglibrary-*.jar'))
 
 def _set_classpath():
     os.environ['CLASSPATH'] = os.pathsep.join(_get_jars())
