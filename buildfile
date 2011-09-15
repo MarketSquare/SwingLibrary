@@ -88,3 +88,8 @@ task :dist => [:uberjar, :demo, :libdoc] do
   puts "Create release notes"
   puts "Send release mail"
 end
+
+desc "Deploys file to Sonatype OSS repository"
+task :deploy do
+  sh  "mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=#{dist_jar}"
+end
