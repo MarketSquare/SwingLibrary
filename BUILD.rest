@@ -31,3 +31,22 @@ it runs `jarjar` to prevent runtime clashes with the application under test.
 
 The `libdoc` task uses `paranamer` to inject parameter names to bytecode
 so that they are available to `libdoc.py`.
+
+
+Releasing
+=========
+
+To make a relase:
+
+  * Update correct versions to buildfile and pom.xml
+  * Commit::
+      git ci buildfile pom.xml -m 'Updated to version $version'
+  * Create tag::
+      git tag $version
+  * Create packages::
+      buildr clean dist
+  * Upload demo, doc and jar to Github
+  * Depoloy to Sonatype::
+      buildr deploy
+  * Close and release the staging repo according to
+    https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt
