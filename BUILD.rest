@@ -42,7 +42,7 @@ To make a relase:
   * Commit::
       git ci buildfile pom.xml -m 'Updated to version $version'
   * Create tag::
-      git tag $version
+      git tag $version && git push --tags
   * Create packages::
       buildr clean dist
   * Upload demo, doc and jar to Github
