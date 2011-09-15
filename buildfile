@@ -81,6 +81,7 @@ task :demo do
   end
 end
 
+desc "Create uberjar, demo and libdoc"
 task :dist => [:uberjar, :demo, :libdoc] do
   puts "To publish the release:"
   puts "Upload artifacts to Github downloads page"
