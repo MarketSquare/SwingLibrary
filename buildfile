@@ -57,7 +57,7 @@ end
 desc "Run the swinglibrary acceptance tests with virtual display"
 task :at_headless => :headless_acceptance_tests
 task :ci_at => :headless_acceptance_tests
-task :headless_acceptance_tests => :dist do
+task :headless_acceptance_tests => :uberjar do
   run_robot "--exclude display-required --monitorcolors off"
 end
 
