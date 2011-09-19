@@ -90,7 +90,7 @@ task :demo do
 end
 
 desc "Create uberjar, demo, libdoc and spec file for RIDE"
-task :dist => [:uberjar, :demo, :libdoc :ridespec] do
+task :dist => [:uberjar, :demo, :libdoc, :ridespec] do
 end
 
 desc "Deploys file to Sonatype OSS repository"
