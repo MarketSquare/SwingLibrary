@@ -48,6 +48,14 @@ task :libdoc do
   end
 end
 
+desc "Create RIDE keyword spec using libdoc"
+task :ridespec => :libdoc do
+  output_dir = main_project._('target')
+  outputfile = "#{output_dir}/SwingLibrary.xml"
+  runjython ("lib/libdoc.py --output #{outputfile} --format xml SwingLibrary")
+  sh "cd target && zip #{PROJECT_NAME}-#{VERSION_NUMBER}-spec.zip SwingLibrary.xml"
+end
+
 desc "Run the swinglibrary acceptance tests"
 task :at => :acceptance_tests
 task :acceptance_tests  do
