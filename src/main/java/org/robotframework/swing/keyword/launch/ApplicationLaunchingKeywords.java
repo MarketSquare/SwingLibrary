@@ -26,7 +26,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 public class ApplicationLaunchingKeywords {
     @RobotKeyword("Launches application with the given arguments.\n\n"
         + "Example:\n"
-        + "| Launch Application | _com.acme.myapplication.MyApp_ | _C:\\data.txt_ |\n")
+        + "| Launch Application | _com.acme.myapplication.MyApp_ | _arg1_ | _arg2_ |\n")
     @ArgumentNames({"className", "*args"})
     public void launchApplication(String className, String[] args) throws Exception {
         Method mainMethod = getMainMethod(className);
