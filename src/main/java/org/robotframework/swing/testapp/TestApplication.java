@@ -127,6 +127,12 @@ public class TestApplication {
             });
         }});
         panel.add(contentChangingComboBox);
+        
+        panel.add(new TestComboBox() {{
+        	setName("disabledComboBox");
+        	setEnabled(false);
+        }});
+        
         panel.add(new TestLabel());
 
         JTextField tableEventTextField = new JTextField("tableEventTextField");
