@@ -1,4 +1,4 @@
-repositories.remote << 'http://www.laughingpanda.org/maven2'
+repositories.remote << 'http://maven.laughingpanda.org/maven2'
 repositories.remote << 'http://repo1.maven.org/maven2'
 repositories.remote << 'http://repository.codehaus.org'
 
