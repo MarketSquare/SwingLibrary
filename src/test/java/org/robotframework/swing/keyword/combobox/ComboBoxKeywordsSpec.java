@@ -13,10 +13,10 @@ import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.combobox.ComboBoxOperator;
 import org.robotframework.swing.factory.OperatorFactory;
 
-
 @RunWith(JDaveRunner.class)
-public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywords> {
-    private String comboBoxIdentifier = "someComboBox";
+public class ComboBoxKeywordsSpec extends
+        MockSupportSpecification<ComboBoxKeywords> {
+    private final String comboBoxIdentifier = "someComboBox";
 
     public class Any {
         public ComboBoxKeywords create() {
@@ -28,39 +28,48 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         }
 
         public void hasOperatorFactory() throws Throwable {
-            specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
+            specify(context, satisfies(new FieldIsNotNullContract(
+                    "operatorFactory")));
         }
 
         public void hasSelectFromComboBoxKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("selectFromComboBox")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "selectFromComboBox")));
         }
 
         public void hasSelectFromDropDownMenuKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("selectFromDropdownMenu")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "selectFromDropdownMenu")));
         }
 
         public void hasGetSelectedItemFromComboboxKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("getSelectedItemFromComboBox")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "getSelectedItemFromComboBox")));
         }
 
         public void hasGetSelectedItemFromDropDownMenuKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("getSelectedItemFromDropdownMenu")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "getSelectedItemFromDropdownMenu")));
         }
-        
+
         public void hasComboBoxShouldBeEnabledKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("comboBoxShouldBeEnabled")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "comboBoxShouldBeEnabled")));
         }
-        
+
         public void hasComboBoxShouldBeDisabledKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("comboBoxShouldBeDisabled")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "comboBoxShouldBeDisabled")));
         }
-        
+
         public void hasTypeIntoComboboxKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("typeIntoCombobox")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "typeIntoCombobox")));
         }
-        
+
         public void hasGetComboboxValuesKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("getComboboxValues")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "getComboboxValues")));
         }
     }
 
@@ -71,12 +80,16 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         public ComboBoxKeywords create() {
             operator = mock(ComboBoxOperator.class);
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords();
-            operatorFactory = injectMockTo(comboBoxKeywords, OperatorFactory.class);
+            operatorFactory = injectMockTo(comboBoxKeywords,
+                    OperatorFactory.class);
 
-            checking(new Expectations() {{
-                one(operatorFactory).createOperator(with(equal(comboBoxIdentifier)));
-                will(returnValue(operator));
-            }});
+            checking(new Expectations() {
+                {
+                    one(operatorFactory).createOperator(
+                            with(equal(comboBoxIdentifier)));
+                    will(returnValue(operator));
+                }
+            });
 
             return comboBoxKeywords;
         }
@@ -84,104 +97,146 @@ public class ComboBoxKeywordsSpec extends MockSupportSpecification<ComboBoxKeywo
         public void selectsFromComboBox() {
             final String comboItemIdentifier = "someComboItem";
 
-            checking(new Expectations() {{
-                one(operator).selectItem(comboItemIdentifier);
-            }});
+            checking(new Expectations() {
+                {
+                    one(operator).selectItem(comboItemIdentifier);
+                }
+            });
 
-            context.selectFromComboBox(comboBoxIdentifier, comboItemIdentifier, null);
+            context.selectFromComboBox(comboBoxIdentifier, comboItemIdentifier,
+                    null);
         }
 
         public void getsSelectedItem() {
             final Object selectedItem = new Object();
 
-            checking(new Expectations() {{
-                one(operator).getSelectedItem();
-                will(returnValue(selectedItem));
-            }});
+            checking(new Expectations() {
+                {
+                    one(operator).isEnabled();
+                    will(returnValue(true));
+                    one(operator).getSelectedItem();
+                    will(returnValue(selectedItem));
+                }
+            });
 
-            specify(context.getSelectedItemFromComboBox(comboBoxIdentifier), must.equal(selectedItem));
+            specify(context.getSelectedItemFromComboBox(comboBoxIdentifier),
+                    must.equal(selectedItem));
         }
-        
-        public void comboboxShouldBeEnabledPassesWhenComboboxIsEnabled() throws Throwable {
-            checking(new Expectations() {{
-                one(operator).isEnabled(); will(returnValue(true));
-            }});
-            
+
+        public void comboboxShouldBeEnabledPassesWhenComboboxIsEnabled()
+                throws Throwable {
+            checking(new Expectations() {
+                {
+                    one(operator).isEnabled();
+                    will(returnValue(true));
+                }
+            });
+
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.comboBoxShouldBeEnabled(comboBoxIdentifier);
                 }
             }, must.not().raiseAnyException());
         }
-        
-        public void comboboxShouldBeDisabledPassesWhenComboboxIsDisabled() throws Throwable {
-            checking(new Expectations() {{
-                one(operator).isEnabled(); will(returnValue(false));
-            }});
-            
+
+        public void comboboxShouldBeDisabledPassesWhenComboboxIsDisabled()
+                throws Throwable {
+            checking(new Expectations() {
+                {
+                    one(operator).isEnabled();
+                    will(returnValue(false));
+                }
+            });
+
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.comboBoxShouldBeDisabled(comboBoxIdentifier);
                 }
             }, must.not().raiseAnyException());
         }
-        
-        public void comboboxShouldBeEnabledFailsWhenComboboxIsDisabled() throws Throwable {
-            checking(new Expectations() {{
-                one(operator).isEnabled(); will(returnValue(false));
-            }});
-            
+
+        public void comboboxShouldBeEnabledFailsWhenComboboxIsDisabled()
+                throws Throwable {
+            checking(new Expectations() {
+                {
+                    one(operator).isEnabled();
+                    will(returnValue(false));
+                }
+            });
+
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.comboBoxShouldBeEnabled(comboBoxIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Combobox '" + comboBoxIdentifier + "' was disabled."));
+            },
+                    must.raiseExactly(AssertionFailedError.class, "Combobox '"
+                            + comboBoxIdentifier + "' was disabled."));
         }
-        
-        public void comboboxShouldBeDisabledFailsWhenComboboxIsEnabled() throws Throwable {
-            checking(new Expectations() {{
-                one(operator).isEnabled(); will(returnValue(true));
-            }});
-            
+
+        public void comboboxShouldBeDisabledFailsWhenComboboxIsEnabled()
+                throws Throwable {
+            checking(new Expectations() {
+                {
+                    one(operator).isEnabled();
+                    will(returnValue(true));
+                }
+            });
+
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.comboBoxShouldBeDisabled(comboBoxIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Combobox '" + comboBoxIdentifier + "' was enabled."));
+            },
+                    must.raiseExactly(AssertionFailedError.class, "Combobox '"
+                            + comboBoxIdentifier + "' was enabled."));
         }
-        
+
         public void typesIntoCombobox() {
-            checking(new Expectations() {{
-                one(operator).typeText("someText");
-            }});
-            
+            checking(new Expectations() {
+                {
+                    one(operator).typeText("someText");
+                }
+            });
+
             context.typeIntoCombobox(comboBoxIdentifier, "someText");
         }
-        
+
         public void getsComboboxValues() {
-            checking(new Expectations() {{
-                one(operator).getValues(); will(returnValue(new String[] {"one", "two", "three"}));
-            }});
-            
-            specify(context.getComboboxValues(comboBoxIdentifier), containsExactly("one", "two", "three"));
+            checking(new Expectations() {
+                {
+                    one(operator).getValues();
+                    will(returnValue(new String[] { "one", "two", "three" }));
+                }
+            });
+
+            specify(context.getComboboxValues(comboBoxIdentifier),
+                    containsExactly("one", "two", "three"));
         }
     }
-    
+
     public class HandlingAliases {
         private boolean isAnAlias = false;
+
         public void checkBoxShouldNotBeCheckedIsAnAliasForCheckBoxShouldBeUnchecked() {
             final String comboItemIdentifier = "itemIdentifier";
 
             ComboBoxKeywords comboBoxKeywords = new ComboBoxKeywords() {
                 @Override
-                public void selectFromComboBox(String boxIdentifier, String itemIdentifier, String[] verification) {
-                    if (boxIdentifier.equals(comboBoxIdentifier) && itemIdentifier.equals(comboItemIdentifier)) {
+                public void selectFromComboBox(String boxIdentifier,
+                        String itemIdentifier, String[] verification) {
+                    if (boxIdentifier.equals(comboBoxIdentifier)
+                            && itemIdentifier.equals(comboItemIdentifier)) {
                         isAnAlias = true;
                     }
                 }
             };
 
-            comboBoxKeywords.selectFromDropdownMenu(comboBoxIdentifier, comboItemIdentifier, null);
+            comboBoxKeywords.selectFromDropdownMenu(comboBoxIdentifier,
+                    comboItemIdentifier, null);
             specify(isAnAlias);
         }
     }

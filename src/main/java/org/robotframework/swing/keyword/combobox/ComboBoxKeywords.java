@@ -69,7 +69,8 @@ public class ComboBoxKeywords {
         + "| ${selectedItem}= | Get Selected Item From Combobox | _myComboBox_      |\n"
         + "| Should Be Equal  | _item three_                    | _${selectedItem}_ |\n")
     public Object getSelectedItemFromComboBox(String identifier) {
-        return createOperator(identifier).getSelectedItem();
+        ComboBoxOperator op = createOperator(identifier);
+		return op.isEnabled() ? op.getSelectedItem() : op.getSelectedItemFromDisabledComboBox();
     }
 
     @RobotKeyword("Alias for `Get Selected Item From Combobox` keyword.\n")
