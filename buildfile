@@ -43,7 +43,8 @@ task :libdoc do
   unless uptodate?(outputfile, [dist_jar])
     puts "Creating library documentation"
     generate_parameter_names(__('src/main/java'), __('target/classes'))
-    runjython ("lib/libdoc.py --output #{outputfile} SwingLibrary")
+    ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
+    sh "java org.robotframework.RobotFramework libdoc --version #{VERSION_NUMBER} SwingLibrary #{outputfile}"
     assert_doc_ok(outputfile)
   end
 end
