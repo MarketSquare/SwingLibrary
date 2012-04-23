@@ -52,7 +52,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         + "Example:\n"
         + "| Select Window | _Help_ |\n"
         + "| Select Window | _regexp=^H.*_ | Selects a window starting with letter H. |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier"})
+    @ArgumentNames({"identifier"})
     public void selectWindow(String identifier) {
         setContext(operatorFactory.createOperator(identifier));
     }
@@ -64,7 +64,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         + "Example:\n"
         + "| Close Window | _Help_ |\n"
         + "| Close Window | _regexp=^H.*_ | Closes a window starting with letter H. |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier"})
+    @ArgumentNames({"identifier"})
     public void closeWindow(String identifier) {
         FrameOperator frameOperator = operatorFactory.createOperator(identifier);
         frameOperator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

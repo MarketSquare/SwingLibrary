@@ -32,7 +32,7 @@ public class EditorPaneKeywords {
         + "Fails if the link is not found.\n\n"
         + "Example:\n"
         + "| Click Hyperlink | _myEditor_ | _Network Elements_ |\n")
-    @ArgumentNames({"identifier"})
+    @ArgumentNames({"identifier", "linkText"})
     public void clickHyperLink(String identifier, String linkText) {
         operatorFactory.createOperator(identifier).activateHyperLink(linkText);
     }
