@@ -53,8 +53,8 @@ desc "Create RIDE keyword spec using libdoc"
 task :ridespec => :libdoc do
   output_dir = main_project._('target')
   outputfile = "#{output_dir}/SwingLibrary.xml"
-  runjython ("lib/libdoc.py --output #{outputfile} --format xml SwingLibrary")
-  sh "cd target && zip #{PROJECT_NAME}-#{VERSION_NUMBER}-spec.zip SwingLibrary.xml"
+  ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
+  sh "java org.robotframework.RobotFramework libdoc --version #{VERSION_NUMBER} --format xml SwingLibrary #{outputfile}"
 end
 
 desc "Run the swinglibrary acceptance tests"
