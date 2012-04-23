@@ -49,8 +49,3 @@ TEST_DEPENDENCIES =
   ROBOT,
   PARANAMER]
 
-PARANAMER_GENERATOR =
- ['com.thoughtworks.qdox:qdox:jar:1.6.3',
-  'com.thoughtworks.paranamer:paranamer-generator:jar:1.1.2',
-  'asm:asm:jar:3.0',
-  PARANAMER,]

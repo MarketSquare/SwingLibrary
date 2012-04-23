@@ -19,6 +19,7 @@ public class SpinnerKeywords {
     @RobotKeyword("Fails if spinner does not exist within current context.\n\n"
             + "Example:\n"
             + "| Spinner Should Exist | _dateSpinner_ |\n")
+    @ArgumentNames({"identifier"})
     public void spinnerShouldExist(String identifier) {
         Assert.assertTrue("Spinner '" + identifier + "' doesn't exist.", existenceResolver.satisfiesCondition(identifier));
     }
@@ -26,6 +27,7 @@ public class SpinnerKeywords {
     @RobotKeyword("Fails if spinner exists within current context.\n\n"
             + "Example:\n"
             + "| Spinner Should Not Exist | _dateSpinner_ |\n")
+    @ArgumentNames({"identifier"})
     public void spinnerShouldNotExist(String identifier) {
         Assert.assertFalse("Spinner '" + identifier + "' exists.", existenceResolver.satisfiesCondition(identifier));
     }
@@ -39,7 +41,7 @@ public class SpinnerKeywords {
     public void increaseSpinnerValue(String identifier, String[] times) {
         increase(operatorFactory.createOperator(identifier), getNotches(times));
     }
-    
+
     private int getNotches(String[] times) {
     	return times.length == 0 ? 1 : Integer.parseInt(times[0]);
     }
@@ -59,7 +61,7 @@ public class SpinnerKeywords {
     public void decreaseSpinnerValue(String identifier, String[] times) {
         decrease(operatorFactory.createOperator(identifier), getNotches(times));
     }
-    
+
     private void decrease(SpinnerOperator spinnerOperator, int numberOfDecreases) {
     	for (int i = 0; i < numberOfDecreases; ++i) {
     		spinnerOperator.decrease();
@@ -71,6 +73,7 @@ public class SpinnerKeywords {
             + "Example:\n"
             + "| ${spinnerValue}=  | Get Spinner Value | _mySpinner_    |\n"
             + "| Should Be Equal As Integers | _12_     | _${spinnerValue}_ |\n")
+    @ArgumentNames({"identifier"})
     public Object getSpinnerValue(String identifier) {
         return operatorFactory.createOperator(identifier).getValue();
     }
@@ -78,14 +81,16 @@ public class SpinnerKeywords {
     @RobotKeyword("Sets the string value for the spinner found from the current context.\n\n"
             + "Example:\n"
             + "| Set Spinner String Value | _mySpinner_  | _January_  |\n")
+    @ArgumentNames({"identifier", "value"})
     public void setSpinnerStringValue(String identifier, String value) {
 		operatorFactory.createOperator(identifier).setValue(value);
     }
-    
+
     @RobotKeyword("Sets the number value for the spinner found from the current context.\n\n"
             + "Example:\n"
             + "| Set Spinner Number Value | _mySpinner_  | _100_  |\n"
             + "| Set Spinner Number Value | _mySpinner_  | _7.5_  |\n")
+    @ArgumentNames({"identifier", "value"})
     public void setSpinnerNumberValue(String identifier, String value) {
 		operatorFactory.createOperator(identifier).setValue(asNumber(value));
     }

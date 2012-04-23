@@ -5,8 +5,6 @@ PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
 VERSION_NUMBER = '1.2.1-SNAPSHOT'
 
-Java.classpath << artifacts(PARANAMER_GENERATOR)
-Java.classpath << File.expand_path('lib/swing-library-paranamer.jar')
 
 desc "Robot Framework test library for Swing GUI testing"
 define PROJECT_NAME do
@@ -42,7 +40,6 @@ task :libdoc do
   outputfile = "#{output_dir}/#{PROJECT_NAME}-#{VERSION_NUMBER}-doc.html"
   unless uptodate?(outputfile, [dist_jar])
     puts "Creating library documentation"
-    generate_parameter_names(__('src/main/java'), __('target/classes'))
     ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
     sh "java org.robotframework.RobotFramework libdoc --version #{VERSION_NUMBER} SwingLibrary #{outputfile}"
     assert_doc_ok(outputfile)

@@ -65,14 +65,6 @@ module BuildHelpers
     [DEPENDENCIES, main_project.package(:id => PROJECT_NAME)].flatten
   end
 
-  def generate_parameter_names(from, to)
-    unless File.exist? __('target/.paraname')
-      touch __('target/.paraname')
-      gen = Java.com.nsn.robot.paraname.Paranamer.new
-      gen.processSourcePath(from, to)
-    end
-  end
-
   def max_version
     49
   end

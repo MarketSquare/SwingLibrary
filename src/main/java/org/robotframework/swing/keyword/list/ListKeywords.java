@@ -36,6 +36,7 @@ public class ListKeywords extends IdentifierSupport {
     @RobotKeyword("Clears selection from list.\n\n"
         + "Example:\n"
         + "| Clear Selection From List | _myList_ |\n")
+    @ArgumentNames({"identifier"})
     public void clearSelectionFromList(String identifier) {
         createOperator(identifier).clearSelection();
     }
@@ -65,11 +66,12 @@ public class ListKeywords extends IdentifierSupport {
     public void clickOnListItem(String identifier, String listItemIdentifier, String[] clickCount) {
         createOperator(identifier).clickOnItem(listItemIdentifier, extractIntArgument(clickCount));
     }
-    
+
     @RobotKeyword("Returns the item that's currently selected in the list.\n\n"
         + "Example:\n"
         + "| ${listItem}=    | Get Selected Value From List | _myList_      |\n"
         + "| Should Be Equal | _Expected Item_              | _${listItem}_ |\n")
+    @ArgumentNames({"identifier"})
     public Object getSelectedValueFromList(String identifier) {
         return createOperator(identifier).getSelectedValue();
     }
@@ -78,28 +80,32 @@ public class ListKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| ${listItemCount}=    | Get List Item Count | _myList_      |\n"
         + "| Should Be Equal As Integers | _2_ | _${listItemCount}_ |\n")
+    @ArgumentNames({"identifier"})
     public int getListItemCount(String identifier) {
         return createOperator(identifier).getSize();
     }
-    
+
     @RobotKeyword("Selects all list items.\n\n"
         + "Example:\n"
         + "| Select All List Items | _My List_ |\n")
+    @ArgumentNames({"identifier"})
     public void selectAllListItems(String identifier) {
         createOperator(identifier).selectAll();
     }
-    
+
     @RobotKeyword("Returns all values from a list.\n\n"
     	+ "Example:\n"
     	+ "| ${values}= | Get List Values | _myList_ |\n"
     	+ "| Should Be Equal | ${values} | one, two, three |\n")
+    @ArgumentNames({"identifier"})
     public List<String> getListValues(String identifier) {
     	return createOperator(identifier).getListValues();
     }
-    
+
     @RobotKeyword("Fails if value not in list.\n\n"
         	+ "Example:\n"
         	+ "| List Should Contain | _myList_ | item |\n")
+    @ArgumentNames({"identifier", "value"})
     public void listShouldContain(String identifier, String value) {
     	Assert.assertTrue("List "+identifier+" does not contain "+value, getListValues(identifier).contains(value));
     }
@@ -107,6 +113,7 @@ public class ListKeywords extends IdentifierSupport {
     @RobotKeyword("Fails if value is in list.\n\n"
         	+ "Example:\n"
         	+ "| List Should Not Contain | _myList_ | item |\n")
+    @ArgumentNames({"identifier", "value"})
     public void listShouldNotContain(String identifier, String value) {
     	Assert.assertTrue("List "+identifier+" contains "+value, !getListValues(identifier).contains(value));
     }

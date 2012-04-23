@@ -52,12 +52,12 @@ public class ComboBoxKeywords {
     private ComboBoxOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }
-    
+
     private boolean isVerificationDisabled(String[] verifySelection) {
-        return verifySelection != null && verifySelection.length > 0 
+        return verifySelection != null && verifySelection.length > 0
             && verifySelection[0] != null && verifySelection[0].length() > 0;
     }
-    
+
     @RobotKeyword("Alias for `Select From Combobox` keyword.\n")
     @ArgumentNames({"menuIdentifier", "menuItemIdentifier", "*verificationDisabled"})
     public void selectFromDropdownMenu(String menuIdentifier, String menuItemIdentifier, String[] verificationDisabled) {
@@ -68,43 +68,49 @@ public class ComboBoxKeywords {
         + "Example:\n"
         + "| ${selectedItem}= | Get Selected Item From Combobox | _myComboBox_      |\n"
         + "| Should Be Equal  | _item three_                    | _${selectedItem}_ |\n")
+    @ArgumentNames({"identifier"})
     public Object getSelectedItemFromComboBox(String identifier) {
         ComboBoxOperator op = createOperator(identifier);
 		return op.isEnabled() ? op.getSelectedItem() : op.getSelectedItemFromDisabledComboBox();
     }
 
     @RobotKeyword("Alias for `Get Selected Item From Combobox` keyword.\n")
+    @ArgumentNames({"identifier"})
     public Object getSelectedItemFromDropdownMenu(String identifier) {
         return getSelectedItemFromComboBox(identifier);
     }
-    
+
     @RobotKeyword("Fails if combobox is disabled\n\n"
         + "Example:\n"
         + "| Combobox Should Be Enabled | _OK_ |\n")
+    @ArgumentNames({"identifier"})
     public void comboBoxShouldBeEnabled(String identifier) {
         Assert.assertTrue("Combobox '" + identifier + "' was disabled.", createOperator(identifier).isEnabled());
     }
-    
+
     @RobotKeyword("Fails if combobox is enabled\n\n"
         + "Example:\n"
         + "| Combobox Should Be Disabled | _OK_ |\n")
+    @ArgumentNames({"identifier"})
     public void comboBoxShouldBeDisabled(String identifier) {
         Assert.assertFalse("Combobox '" + identifier + "' was enabled.", createOperator(identifier).isEnabled());
     }
-    
+
     @RobotKeyword("Types text into a combobox.\n"
         + "Example:\n"
         + "| Type Into Combobox | _myCombobox_ | _someValue_ |\n")
+    @ArgumentNames({"identifier", "text"})
     public void typeIntoCombobox(String identifier, String text) {
         createOperator(identifier).typeText(text);
     }
-    
+
     @RobotKeyword("Returns a list containing all the values of a combobox.\n\n"
     	+ "*N.B* This keyword will return the values contained by _javax.swing.ComboBoxModel_,\n"
     	+ "this is not necessarily what is displayed on the GUI.\n\n"
         + "Example:\n"
         + "| _${comboboxValues}=_ | Get Combobox Values | _myCombobox_ |\n"
         + "| Should Contain  | _${expectedValue}_ | _${comboboxValues}_ |\n")
+    @ArgumentNames({"identifier"})
     public Object[] getComboboxValues(String identifier) {
         return createOperator(identifier).getValues();
     }

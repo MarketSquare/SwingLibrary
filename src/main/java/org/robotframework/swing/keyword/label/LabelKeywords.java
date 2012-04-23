@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.label;
 
 import junit.framework.Assert;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
@@ -36,6 +37,7 @@ public class LabelKeywords {
         + "Example:\n"
         + "| ${labelText}=   | Get Label Content | _addressLabel_    |\n"
         + "| Should Be Equal | _Address:_        | _${labelText}_ |\n")
+    @ArgumentNames({"identifier"})
     public String getLabelContent(String identifier) {
         return createOperator(identifier).getText();
     }
@@ -43,6 +45,7 @@ public class LabelKeywords {
     @RobotKeyword("Fails if label does not exist within current context.\n\n"
         + "Example:\n"
         + "| Label Should Exist | _myLabel_ |\n")
+    @ArgumentNames({"identifier"})
     public void labelShouldExist(String identifier) {
         Assert.assertTrue("Label '" + identifier + "' doesn't exist", labelExistenceResolver.satisfiesCondition(identifier));
     }
@@ -52,6 +55,7 @@ public class LabelKeywords {
         + "Example:\n"
         + "| Set Jemmy Timeouts     | _1_ |\n"
         + "| Label Should Not Exist | _myLabel_ |\n")
+    @ArgumentNames({"identifier"})
     public void labelShouldNotExist(String identifier) {
         Assert.assertFalse("Label '" + identifier + "' exists", labelExistenceResolver.satisfiesCondition(identifier));
     }
@@ -60,11 +64,12 @@ public class LabelKeywords {
         + "Assumes that the label exists in the current context.\n\n"
         + "Example:\n"
         + "| Label Text Should Be | _addressLabel_ | _Address:_ |\n")
+    @ArgumentNames({"identifier", "expected"})
     public void labelTextShouldBe(String identifier, String expected) {
         String actual = createOperator(identifier).getText();
         Assert.assertTrue("Expected label '" + identifier + "' value to be '" + expected + "', but was '" + actual + "'", expected.equals(actual));
     }
-    
+
     private LabelOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }

@@ -17,24 +17,25 @@
 package org.robotframework.swing.keyword.timeout;
 
 import org.netbeans.jemmy.JemmyProperties;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.TimeoutName;
 
 @RobotKeywords
 public class TimeoutKeywords {
-    public final static String[] JEMMY_TIMEOUTS = new String[] { 
+    public final static String[] JEMMY_TIMEOUTS = new String[] {
         TimeoutName.DIALOG_WAITER_WAIT_DIALOG_TIMEOUT,
-        TimeoutName.FRAME_WAITER_WAIT_FRAME_TIMEOUT, 
-        TimeoutName.WINDOW_WAITER_WAIT_WINDOW_TIMEOUT, 
+        TimeoutName.FRAME_WAITER_WAIT_FRAME_TIMEOUT,
+        TimeoutName.WINDOW_WAITER_WAIT_WINDOW_TIMEOUT,
         TimeoutName.COMPONENT_OPERATOR_WAIT_COMPONENT_TIMEOUT,
-        TimeoutName.J_MENU_OPERATOR_WAIT_POPUP_TIMEOUT, 
-        TimeoutName.J_TREE_OPERATOR_WAIT_NODE_EXPANDED_TIMEOUT, 
+        TimeoutName.J_MENU_OPERATOR_WAIT_POPUP_TIMEOUT,
+        TimeoutName.J_TREE_OPERATOR_WAIT_NODE_EXPANDED_TIMEOUT,
         TimeoutName.J_TREE_OPERATOR_WAIT_NEXT_NODE_TIMEOUT,
-        TimeoutName.J_TREE_OPERATOR_WAIT_NODE_VISIBLE_TIMEOUT, 
-        TimeoutName.COMPONENT_OPERATOR_WAIT_STATE_TIMEOUT, 
-        TimeoutName.J_COMBO_BOX_OPERATOR_WAIT_LIST_TIMEOUT, 
-        TimeoutName.J_COMBOBOX_OPERATOR_WAIT_GET_SELECTED_ITEM_TIMEOUT, 
+        TimeoutName.J_TREE_OPERATOR_WAIT_NODE_VISIBLE_TIMEOUT,
+        TimeoutName.COMPONENT_OPERATOR_WAIT_STATE_TIMEOUT,
+        TimeoutName.J_COMBO_BOX_OPERATOR_WAIT_LIST_TIMEOUT,
+        TimeoutName.J_COMBOBOX_OPERATOR_WAIT_GET_SELECTED_ITEM_TIMEOUT,
         TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT };
 
     @RobotKeyword("Sets the jemmy timeout used for waiting a component to appear.\n"
@@ -43,6 +44,7 @@ public class TimeoutKeywords {
         + "Example:\n"
         + "| Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n"
         + "| ${oldSetting}= | Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n")
+    @ArgumentNames({"timeoutName", "timeoutInSeconds"})
     public long setJemmyTimeout(String timeoutName, String timeoutInSeconds) {
         long oldTimeout = JemmyProperties.getCurrentTimeout(timeoutName);
         JemmyProperties.setCurrentTimeout(timeoutName, parseMillis(timeoutInSeconds));
@@ -67,6 +69,7 @@ public class TimeoutKeywords {
         + "| "+TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT+" | Time to wait for list item to appear |\n\n"
         + "Example:\n"
         + "| Set Jemmy Timeouts | 3 |\n")
+    @ArgumentNames({"timeoutInSeconds"})
     public void setJemmyTimeouts(String timeoutInSeconds) {
         for (String timeout : JEMMY_TIMEOUTS) {
             JemmyProperties.setCurrentTimeout(timeout, parseMillis(timeoutInSeconds));

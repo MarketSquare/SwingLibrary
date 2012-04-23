@@ -56,13 +56,13 @@ public class TabKeywords extends IdentifierSupport {
     private Component selectTabPage(String tabIdentifier) {
         return createTabPane().selectPage(indexOfTab(tabIdentifier));
     }
-    
+
     private int indexOfTab(String tabIdentifier) {
         if (isIndex(tabIdentifier))
             return Integer.valueOf(tabIdentifier);
         return createTabPane().indexOfTab(tabIdentifier);
     }
-    
+
     @RobotKeyword("Selects a tab and sets it as the context.\n"
         + "The optional tab pane identifier can be provided, otherwise the first matching tab is selected.\n\n"
         + "Example:\n"
@@ -99,6 +99,7 @@ public class TabKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| Select Tab Pane | _Other Tab Pane_ |\n"
         + "| Select Tab | _Customer Information_ |\n")
+    @ArgumentNames({"tabPaneIdentifier"})
     public void selectTabPane(String tabPaneIdentifier) {
         TabbedPaneOperator operator = paneOperatorFactory.createOperator(tabPaneIdentifier);
         Context.setContext(operator);

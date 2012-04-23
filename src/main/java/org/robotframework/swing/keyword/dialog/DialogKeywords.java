@@ -21,6 +21,7 @@ import junit.framework.Assert;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TimeoutExpiredException;
 import org.netbeans.jemmy.operators.JDialogOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.Context;
@@ -42,16 +43,18 @@ public class DialogKeywords {
         + "Example:\n"
         + "| Select Dialog  | _About_ |\n"
         + "| Select Dialog  | _regexp=^A.*_ | Selects a dialog starting with 'A' | \n")
+    @ArgumentNames({"identifier"})
     public void selectDialog(String identifier) {
         Context.setContext(operatorFactory.createOperator(identifier));
     }
-    
+
     @RobotKeyword("Closes a dialog.\n\n"
         + "*N.B.* Regular expression can be used to close the dialog by prefixing the identifier with 'regexp='.\n"
         + "Please see more about regexp usage at `Select Dialog` keyword.\n\n"
         + "Example:\n"
         + "| Close Dialog | _About_ |\n"
         + "| Close Dialog  | _regexp=^A.*_ | Closes a dialog starting with 'A' | \n")
+    @ArgumentNames({"identifier"})
     public void closeDialog(String identifier) {
         operatorFactory.createOperator(identifier).close();
     }
@@ -59,6 +62,7 @@ public class DialogKeywords {
     @RobotKeyword("Fails if the dialog is not open.\n\n"
         + "Example:\n"
         + "| Dialog Should Be Open | _About_ |\n")
+    @ArgumentNames({"identifier"})
     public void dialogShouldBeOpen(String identifier) {
         Assert.assertTrue("Dialog '" + identifier + "' is not open", dialogExistenceResolver.satisfiesCondition(identifier));
     }
@@ -68,10 +72,11 @@ public class DialogKeywords {
         + "Example:\n"
         + "| Set Jemmy Timeouts | _2_ |\n"
         + "| Dialog Should Not Be Open | _About_ |\n")
+    @ArgumentNames({"identifier"})
     public void dialogShouldNotBeOpen(String identifier) {
         Assert.assertFalse("Dialog '" + identifier + "' is open", dialogExistenceResolver.satisfiesCondition(identifier));
     }
-    
+
     @RobotKeyword("Closes all the dialogs that are open.")
     public void closeAllDialogs() {
     	String timeout = "DialogWaiter.WaitDialogTimeout";
@@ -80,7 +85,7 @@ public class DialogKeywords {
     	while (closePossibleDialog());
     	JemmyProperties.setCurrentTimeout(timeout, originalTimeout);
     }
-    
+
     private boolean closePossibleDialog() {
     	JDialogOperator operator;
     	try {

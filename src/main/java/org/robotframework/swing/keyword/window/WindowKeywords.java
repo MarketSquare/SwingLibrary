@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,6 +21,7 @@ import java.awt.Window;
 
 import javax.swing.JFrame;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.AbstractContextVerifier;
@@ -51,6 +52,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         + "Example:\n"
         + "| Select Window | _Help_ |\n"
         + "| Select Window | _regexp=^H.*_ | Selects a window starting with letter H. |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void selectWindow(String identifier) {
         setContext(operatorFactory.createOperator(identifier));
     }
@@ -62,6 +64,7 @@ public class WindowKeywords extends AbstractContextVerifier {
         + "Example:\n"
         + "| Close Window | _Help_ |\n"
         + "| Close Window | _regexp=^H.*_ | Closes a window starting with letter H. |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void closeWindow(String identifier) {
         FrameOperator frameOperator = operatorFactory.createOperator(identifier);
         frameOperator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -82,11 +85,11 @@ public class WindowKeywords extends AbstractContextVerifier {
     protected Class<? extends Component>[] getExpectedClasses() {
         return new Class[] { Window.class };
     }
-    
+
     private void setContext(FrameOperator frameOperator) {
         Context.setContext(frameOperator);
     }
-    
+
     private FrameOperator frameOperator() {
         verifyContext();
         return (FrameOperator) Context.getContext();

@@ -17,6 +17,7 @@
 
 package org.robotframework.swing.keyword.textcomponent;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.factory.OperatorFactory;
@@ -26,11 +27,12 @@ import org.robotframework.swing.textcomponent.EditorPaneOperatorFactory;
 @RobotKeywords
 public class EditorPaneKeywords {
     private OperatorFactory<EditorPaneOperator> operatorFactory = new EditorPaneOperatorFactory();
-    
+
     @RobotKeyword("Clicks on a hyperlink in a JEditorPane.\n"
         + "Fails if the link is not found.\n\n"
         + "Example:\n"
         + "| Click Hyperlink | _myEditor_ | _Network Elements_ |\n")
+    @ArgumentNames({"identifier"})
     public void clickHyperLink(String identifier, String linkText) {
         operatorFactory.createOperator(identifier).activateHyperLink(linkText);
     }

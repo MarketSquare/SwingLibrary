@@ -21,6 +21,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.lang.reflect.Method;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.ContainerOperator;
@@ -37,6 +38,7 @@ public class ContextKeywords {
         + "Example:\n"
         + "| Select Window  | _Main Window_ | # Selects the 'parent context' |\n"
         + "| Select Context | _myPanel_     | # Sets _'myPanel'_ as current context |\n")
+    @ArgumentNames({"identifier"})
     public void selectContext(String identifier) {
         Context.setContext(operatorFactory.createOperator(identifier));
     }
@@ -51,7 +53,7 @@ public class ContextKeywords {
 			return titleOf(component);
 		return component.getName();
     }
-    
+
     private boolean hasTitle(Component component) {
     	return component instanceof Frame || component instanceof Dialog;
     }

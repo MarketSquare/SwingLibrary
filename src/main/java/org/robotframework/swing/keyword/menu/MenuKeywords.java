@@ -19,6 +19,7 @@ package org.robotframework.swing.keyword.menu;
 import junit.framework.Assert;
 
 import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.arguments.ArgumentParser;
@@ -32,6 +33,7 @@ public class MenuKeywords extends MenuSupport {
         + "Example:\n"
         + "| Select Window    | _My Application_           |\n"
         + "| Select From Menu | _Tools|Testing|MyTestTool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void selectFromMenu(String menuPath) {
         JMenuItemOperator operator = showMenuItem(menuPath);
         Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", operator.isEnabled());
@@ -44,6 +46,7 @@ public class MenuKeywords extends MenuSupport {
         + "Example:\n"
         + "| Select Window             | _My Application_           |\n"
         + "| Select From Menu And Wait | _Tools|Testing|MyTestTool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void selectFromMenuAndWait(String menuPath) {
         JMenuItemOperator operator = showMenuItem(menuPath);
         Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", operator.isEnabled());
@@ -55,6 +58,7 @@ public class MenuKeywords extends MenuSupport {
         + "Example:\n"
         + "| Select Window               | _My Application_           |\n"
         + "| Menu Item Should Be Enabled | _Tools|Testing|MyTestTool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void menuItemShouldBeEnabled(String menuPath) {
         Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", menuIsEnabled(menuPath));
     }
@@ -64,11 +68,13 @@ public class MenuKeywords extends MenuSupport {
         + "Example:\n"
         + "| Select Window                   | _My Application_           |\n"
         + "| Menu Item Should Not Be Enabled | _Tools|Testing|MyTestTool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void menuItemShouldNotBeEnabled(String menuPath) {
         Assert.assertFalse("Menu item '" + menuPath + "' is enabled.", menuIsEnabled(menuPath));
     }
 
     @RobotKeyword("Alias for `Menu Item Should Not Be Enabled`\n")
+    @ArgumentNames({"menuPath"})
     public void menuItemShouldBeDisabled(String menuPath) {
         menuItemShouldNotBeEnabled(menuPath);
     }
@@ -76,17 +82,19 @@ public class MenuKeywords extends MenuSupport {
     @RobotKeyword("Fails if menu item doesn't exist.\n\n"
         + "Example:\n"
         + "| Menu Item Should Exist | _Tools|Testing|Test Tool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void menuItemShouldExist(String menuPath) {
         Assert.assertTrue("Menu item '" + menuPath + "' does not exist.", menuExists(menuPath));
     }
-    
+
     @RobotKeyword("Fails if menu item exists.\n\n"
         + "Example:\n"
         + "| Menu Item Should Not Exist | _Tools|Testing|Test Tool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void menuItemShouldNotExist(String menuPath) {
         Assert.assertFalse("Menu item '" + menuPath + "' exists.", menuExists(menuPath));
     }
-    
+
     private interface MenuAction<T> {
         T doWithMenuItem();
     }
@@ -99,7 +107,7 @@ public class MenuKeywords extends MenuSupport {
             }
         });
     }
-    
+
     private Boolean menuIsEnabled(final String menuPath) {
         return getFromMenuItem(new MenuAction<Boolean>() {
             public Boolean doWithMenuItem() {
@@ -107,7 +115,7 @@ public class MenuKeywords extends MenuSupport {
             }
         });
     }
-    
+
     private <T> T getFromMenuItem(MenuAction<T> action) {
         try {
             return action.doWithMenuItem();
@@ -115,7 +123,7 @@ public class MenuKeywords extends MenuSupport {
             closeMenu();
         }
     }
-    
+
     private void closeMenu() {
         menubarOperator().pressMouse();
     }

@@ -36,6 +36,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Clears selections from a tree.\n\n"
             + "Example:\n"
             + "| Clear Tree Selection | _myTree_ |\n")
+    @ArgumentNames({"identifier"})
     public void clearTreeSelection(String identifier) {
         treeOperator(identifier).clearSelection();
     }
@@ -45,6 +46,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "Examples:\n"
             + "| Collapse Tree Node | _myTree_ | _Root|Folder_ |\n"
             + "| Collapse Tree Node | _myTree_ | _3_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void collapseTreeNode(String identifier, String nodeIdentifier) {
         treeOperator(identifier).collapse(nodeIdentifier);
     }
@@ -55,6 +57,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "using the tree path syntax. Examples:\n"
             + "| Expand Tree Node | _myTree_ | _Root|Folder_ |\n"
             + "| Expand Tree Node | _myTree_ | _3_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void expandTreeNode(String identifier, String nodeIdentifier) {
         treeOperator(identifier).expand(nodeIdentifier);
     }
@@ -62,6 +65,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Collapses all nodes in a tree.\n\n"
             + "Example:\n"
             + "| Collapse All Tree Nodes | _myTree_ |\n")
+    @ArgumentNames({"identifier"})
     public void collapseAllTreeNodes(String identifier) {
         final TreeOperator treeOperator = treeOperator(identifier);
         treeOperator.operateOnAllNodes(new TreePathAction() {
@@ -74,6 +78,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Expands all nodes in a tree.\n\n"
             + "Example:\n"
             + "| Expand All Tree Nodes | _myTree_ |\n")
+    @ArgumentNames({"identifier"})
     public void expandAllTreeNodes(String identifier) {
         final TreeOperator treeOperator = treeOperator(identifier);
         treeOperator.operateOnAllNodes(new TreePathAction() {
@@ -114,6 +119,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Fails if the tree node is collapsed.\n\n"
             + "Example:\n"
             + "| Tree Node Should Be Expanded | _myTree_ | _Root|Folder_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier) {
         boolean isExpanded = treeOperator(identifier).isExpanded(nodeIdentifier);
         Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not expanded.", isExpanded);
@@ -122,6 +128,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Fails if the tree node is expanded.\n\n"
             + "Example:\n"
             + "| Tree Node Should Be Collapsed | _myTree_ | _Root|Folder_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier) {
         boolean isCollapsed = treeOperator(identifier).isCollapsed(nodeIdentifier);
         Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not collapsed.", isCollapsed);
@@ -130,6 +137,7 @@ public class TreeNodeKeywords extends TreeSupport {
     @RobotKeyword("Sets a tree node as unselected.\n\n"
             + "Example:\n"
             + "| Unselect Tree Node | _myTree_ | _Root|Folder_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void unselectTreeNode(String identifier, String nodeIdentifier) {
         treeOperator(identifier).removeSelection(nodeIdentifier);
     }
@@ -139,6 +147,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
             + "Example:\n"
             + "| Tree Node Should Be Leaf | _myTree_ | _Root|Folder_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier) {
         boolean isLeaf = treeOperator(identifier).isLeaf(nodeIdentifier);
         Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", isLeaf);
@@ -148,6 +157,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
             + "Example:\n"
             + "| Tree Node Should Not Be Leaf | _myTree_ | _Root|Folder_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier) {
         boolean isLeaf = treeOperator(identifier).isLeaf(nodeIdentifier);
         Assert.assertFalse("Tree node '" + nodeIdentifier + "' is leaf.", isLeaf);
@@ -157,6 +167,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "Example:\n"
             + "| ${nodeCount}= | Get Tree Node Count | _myTree_ |\n"
             + "| Should Be Equal As Integers | _3_ | _${nodeCount}_ |\n")
+    @ArgumentNames({"identifier"})
     public int getTreeNodeCount(String identifier) {
         return treeOperator(identifier).getRowCount();
     }
@@ -166,6 +177,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "Example:\n"
             + "| ${nodeLabel}= | Get Tree Node Label | _myTree_ | _3_ |\n"
             + "| Should Be Equal | _Element1_ | _${nodeLabel}_ |\n")
+    @ArgumentNames({"identifier", "nodeIndex"})
     public String getTreeNodeLabel(String identifier, String nodeIndex) {
         TreeOperator treeOperator = treeOperator(identifier);
         return treeOperator.getTreeNodeLabel(asIndex(nodeIndex));
@@ -176,6 +188,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "Example:\n"
             + "| ${nodeIndex}= | Get Tree Node Index | _myTree_ | _Root|Folder|ElementX_ |\n"
             + "| Should Be Equal As Integers | _4_ | _${nodeIndex}_ |\n")
+    @ArgumentNames({"identifier", "nodePath"})
     public int getTreeNodeIndex(String identifier, String nodePath) {
         return treeOperator(identifier).getTreeNodeIndex(nodePath);
     }
@@ -185,6 +198,7 @@ public class TreeNodeKeywords extends TreeSupport {
             + "| ${expectedElements}= | Create List | _someElement_ | _otherElement_ |\n"
             + "| ${actualElements}=   | Get Tree Node Child Names | _myTree_ | _Element Folder_ |\n"
             + "| Lists Should Be Equal | _${expectedElements}_ | _${actualElements}_ | # This keyword comes from Collections library |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier"})
     public List<String> getTreeNodeChildNames(String identifier, String nodeIdentifier) {
         Collection<String> childNames = treeOperator(identifier).getTreeNodeChildNames(nodeIdentifier);
         return new ArrayList<String>(childNames);

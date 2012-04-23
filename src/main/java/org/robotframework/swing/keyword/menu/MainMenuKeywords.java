@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.keyword.menu;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.keyword.window.WindowKeywords;
@@ -32,6 +33,7 @@ public class MainMenuKeywords extends MenuSupport {
         + "| Select From Menu | _Tools|Testing|MyTestTool_ |\n\n"
         + "Example:\n"
         + "| Select From Main Menu | _Tools|Testing|MyTestTool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void selectFromMainMenu(final String menuPath) {
         windowKeywords.selectMainWindow();
         menuKeywords.selectFromMenu(menuPath);
@@ -45,6 +47,7 @@ public class MainMenuKeywords extends MenuSupport {
         + "This keyword will not work, for example, if the menu item opens a dialog.\n\n"
         + "Example:\n"
         + "| Select From Main Menu And Wait | _Tools|Testing|MyTestTool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void selectFromMainMenuAndWait(String menuPath) {
         windowKeywords.selectMainWindow();
         menuKeywords.selectFromMenuAndWait(menuPath);
@@ -55,6 +58,7 @@ public class MainMenuKeywords extends MenuSupport {
         + "Example:\n"
         + "| ${mainMenuItemName}= | Get Main Menu Item Name | _0_                   |\n"
         + "| Should Be Equal      | _File_                  | _${mainMenuItemName}_ |\n")
+    @ArgumentNames({"index"})
     public String getMainMenuItemName(String index) {
         if (!isIndex(index)) {
             throw new UnsupportedOperationException("The argument must be an index.");
@@ -62,24 +66,26 @@ public class MainMenuKeywords extends MenuSupport {
 
         return menubarOperator().getMenu(asIndex(index)).getText();
     }
-    
+
     @RobotKeyword("Fails if menu item doesn't exist in the window that was opened first.\n"
         + "Shortcut for:\n"
         + "| Select Window    | _0_ |\n"
         + "| Menu Item Should Exist | _Tools|Testing|MyTestTool_ |\n\n"
         + "Example:\n"
         + "| Main Menu Item Should Exist | _Tools|Testing|Test Tool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void mainMenuItemShouldExist(String menuPath) {
         windowKeywords.selectMainWindow();
         menuKeywords.menuItemShouldExist(menuPath);
     }
-    
+
     @RobotKeyword("Fails if menu item exists in the window that was opened first.\n"
         + "Shortcut for:\n"
         + "| Select Window    | _0_ |\n"
         + "| Menu Item Should Not Exist | _Tools|Testing|MyTestTool_ |\n\n"
         + "Example:\n"
         + "| Main Menu Item Should Not Exist | _Tools|Testing|Test Tool_ |\n")
+    @ArgumentNames({"menuPath"})
     public void mainMenuItemShouldNotExist(String menuPath) {
         windowKeywords.selectMainWindow();
         menuKeywords.menuItemShouldNotExist(menuPath);

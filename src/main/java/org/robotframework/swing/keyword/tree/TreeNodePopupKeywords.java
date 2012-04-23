@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -25,6 +25,7 @@ import junit.framework.Assert;
 
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.comparator.EqualsStringComparator;
@@ -39,6 +40,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
     @RobotKeyword("Selects an item from the tree node's popup menu.\n\n"
         + "Example:\n"
         + "| Select From Tree Node Popup Menu | _myTree_ | _Root|Folder_ | _New Folder_ | ")
+    @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void selectFromTreeNodePopupMenu(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
         popupOperator.pushMenu(menuPath, new EqualsStringComparator());
@@ -49,6 +51,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "Separator for items is '|'.\n\n"
         + "Example:\n"
         + "| Select From Tree Node Popup Menu In Separate Thread | _myTree_ | _Root|Folder_ | _New Folder_ | ")
+    @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void selectFromTreeNodePopupMenuInSeparateThread(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
         popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
@@ -61,16 +64,18 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "| Select Tree Node | _myTree_ | _Root|Folder1_ |\n"
         + "| Select Tree Node | _myTree_ | _Root|Folder2_ |\n"
         + "| Select From Popup Menu On Selected Tree Nodes | _myTree_ | _Remove_ | ")
+    @ArgumentNames({"identifier", "menuPath"})
     public void selectFromPopupMenuOnSelectedTreeNodes(String identifier, String menuPath) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperatorOnSelectedNodes();
         popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
         waitToAvoidInstability();
     }
-    
+
     @RobotKeyword("Fails if given popup menu item is disabled.\n\n"
         + "Examples:\n"
         + "| Tree Node Popup Menu Item Should Be Enabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
         + "| Tree Node Popup Menu Item Should Be Enabled | _0_ | _1_ | _New Folder_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeEnabled(String identifier, String nodeIdentifier, String menuPath) {
         boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);
         Assert.assertTrue("Menu item '" + menuPath + "' was disabled", menuItemIsEnabled);
@@ -80,11 +85,12 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "Examples:\n"
         + "| Tree Node Popup Menu Item Should Be Disabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
         + "| Tree Node Popup Menu Item Should Be Disabled | _0_      | _1_ | _New Folder_ |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeDisabled(String identifier, String nodeIdentifier, String menuPath) {
         boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);
         Assert.assertFalse("Menu item '" + menuPath + "' was enabled", menuItemIsEnabled);
     }
-    
+
     private boolean menuItemIsEnabled(String identifier, String nodeIdentifier, String menuPath) {
         try {
             return createPopupMenuItem(identifier, nodeIdentifier, menuPath).isEnabled();
@@ -101,12 +107,12 @@ public class TreeNodePopupKeywords extends TreeSupport {
         Component source = treeOperator(identifier).getSource();
         return createPopupMenuItemFinder(source).findMenu(nodeIdentifier, menuPath);
     }
-    
+
     ITreePopupMenuItemFinder createPopupMenuItemFinder(Component source) {
         return new TreePopupMenuItemFinder(source);
     }
-    
+
     void waitToAvoidInstability() {
-        new EventTool().waitNoEvent(300);   
+        new EventTool().waitNoEvent(300);
     }
 }

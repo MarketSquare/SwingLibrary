@@ -22,6 +22,7 @@ import junit.framework.Assert;
 
 import org.netbeans.jemmy.operators.JCheckBoxMenuItemOperator;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.keyword.window.WindowKeywords;
@@ -30,39 +31,43 @@ import org.robotframework.swing.menu.MenuSupport;
 @RobotKeywords
 public class MenuCheckboxKeywords extends MenuSupport {
     private WindowKeywords windowKeywords = new WindowKeywords();
-    
+
     @RobotKeyword("Fails if checkbox menu item is not checked in the opened window that was opened first.\n\n"
         + "Example:\n"
         + "| Main Menu Item Should Be Checked | _Tools|My Checkbox_ |\n")
+    @ArgumentNames({"menuPath"})
     public void mainMenuItemShouldBeChecked(String menuPath) {
         windowKeywords.selectMainWindow();
         menuItemShouldBeChecked(menuPath);
     }
-    
+
     @RobotKeyword("Fails if checkbox menu item is checked in the opened window that was opened first.\n\n"
         + "Example:\n"
         + "| Main Menu Item Should Not Be Checked | _Tools|My Checkbox_ |\n")
+    @ArgumentNames({"menuPath"})
     public void mainMenuItemShouldNotBeChecked(String menuPath) {
         windowKeywords.selectMainWindow();
         menuItemShouldNotBeChecked(menuPath);
     }
-    
+
     @RobotKeyword("Searches for an checkbox menu item from the menu of the currently selected window "
         + "and fails if it is not checked.\n\n"
         + "Example:\n"
         + "| Menu Item Should Be Checked | _Tools|My Checkbox_ |\n")
+    @ArgumentNames({"menuPath"})
     public void menuItemShouldBeChecked(String menuPath) {
         Assert.assertTrue("Menu item '" + menuPath + "' is not selected.", showMenuItem(menuPath).isSelected());
     }
-    
+
     @RobotKeyword("Searches for an checkbox menu item from the menu of the currently selected window "
         + "and fails if it is checked.\n\n"
         + "Example:\n"
         + "| Menu Item Should Not Be Checked | _Tools|My Checkbox_ |\n")
+    @ArgumentNames({"menuPath"})
     public void menuItemShouldNotBeChecked(String menuPath) {
         Assert.assertFalse("Menu item '" + menuPath + "' is selected.", showMenuItem(menuPath).isSelected());
     }
-    
+
     @Override
     protected JCheckBoxMenuItemOperator showMenuItem(String path) {
         JMenuItemOperator menuItemOperator = super.showMenuItem(path);
