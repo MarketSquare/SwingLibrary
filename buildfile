@@ -23,7 +23,7 @@ define PROJECT_NAME do
 end
 
 desc "Creates a jar distribution with dependencies"
-task :uberjar do
+task :uberjar => :clean do
   unless uptodate?(dist_jar, sources)
     main_project.package.invoke
     create_jar_with_dependencies
