@@ -12,6 +12,7 @@ import javax.swing.table.TableColumnModel;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
+
 import org.hamcrest.Matcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.jmock.Expectations;
@@ -25,16 +26,18 @@ import org.robotframework.swing.comparator.EqualsStringComparator;
 public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
     private String row = "2";
     private JTableOperator jTableOperator;
-    private Object cellValue = new Object();
     private Point coordinates = new Point(2, 3);
 
     public class Any {
         public void requiresExactMatchWhenComparesValues() {
             jTableOperator = mock(JTableOperator.class);
 
-            checking(new Expectations() {{
-                one(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).setComparator(
+                            with(any(EqualsStringComparator.class)));
+                }
+            });
 
             new TableOperator(jTableOperator);
         }
@@ -43,62 +46,78 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
     public class OperatingOnRowsAndColumn {
         public TableOperator create() {
             jTableOperator = mock(JTableOperator.class);
-            checking(new Expectations() {{
-                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
-            }});
+            checking(new Expectations() {
+                {
+                    ignoring(jTableOperator).setComparator(
+                            with(any(EqualsStringComparator.class)));
+                }
+            });
             return new TableOperator(jTableOperator);
         }
 
         public void clearsSelection() {
-            checking(new Expectations() {{
-                one(jTableOperator).clearSelection();
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).clearSelection();
+                }
+            });
 
             context.clearSelection();
         }
 
         public void findsCellRow() {
-            checking(new Expectations() {{
-                one(jTableOperator).findCellRow("someValue");
-                will(returnValue(3));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).findCellRow("someValue");
+                    will(returnValue(3));
+                }
+            });
 
             specify(context.findCellRow("someValue"), 3);
         }
 
         public void getsRowCount() {
-            checking(new Expectations() {{
-                one(jTableOperator).getRowCount();
-                will(returnValue(3));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).getRowCount();
+                    will(returnValue(3));
+                }
+            });
 
             specify(context.getRowCount(), 3);
         }
 
         public void getsColumnCount() {
-            checking(new Expectations() {{
-                one(jTableOperator).getColumnCount();
-                will(returnValue(3));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).getColumnCount();
+                    will(returnValue(3));
+                }
+            });
 
             specify(context.getColumnCount(), 3);
         }
 
         public void getsSource() {
             final Component source = dummy(Component.class);
-            checking(new Expectations() {{
-                one(jTableOperator).getSource();
-                will(returnValue(source));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).getSource();
+                    will(returnValue(source));
+                }
+            });
 
             specify(context.getSource(), source);
         }
 
         public void selectingNonexistentCellFails() {
-            checking(new Expectations() {{
-                one(jTableOperator).findCell(with(any(TableCellChooser.class)));
-                will(returnValue(new Point(-1, -1)));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).findCell(
+                            with(any(TableCellChooser.class)));
+                    will(returnValue(new Point(-1, -1)));
+                }
+            });
 
             specify(new Block() {
                 public void run() throws Throwable {
@@ -106,7 +125,6 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
                 }
             }, should.raise(InvalidCellException.class));
         }
-
 
         public void getsTableHeaders() {
             final JTableHeader tableHeader = mock(JTableHeader.class);
@@ -117,26 +135,31 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
                 final String header = "column" + i;
                 final TableColumn col = mock(TableColumn.class, header);
 
-                checking(new Expectations() {{
-                    one(col).getHeaderValue();
-                    will(returnValue(header));
-                }});
+                checking(new Expectations() {
+                    {
+                        one(col).getHeaderValue();
+                        will(returnValue(header));
+                    }
+                });
 
                 columnVector.add(col);
             }
 
             final Enumeration<TableColumn> columns = columnVector.elements();
 
-            checking(new Expectations() {{
-                one(jTableOperator).getTableHeader();
-                will(returnValue(tableHeader));
-                one(tableHeader).getColumnModel();
-                will(returnValue(columnModel));
-                one(columnModel).getColumns();
-                will(returnValue(columns));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).getTableHeader();
+                    will(returnValue(tableHeader));
+                    one(tableHeader).getColumnModel();
+                    will(returnValue(columnModel));
+                    one(columnModel).getColumns();
+                    will(returnValue(columns));
+                }
+            });
 
-            specify(context.getTableHeaders(), containsInOrder("column0", "column1", "column2"));
+            specify(context.getTableHeaders(),
+                    containsInOrder("column0", "column1", "column2"));
         }
     }
 
@@ -144,11 +167,16 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
         protected JTableOperator createMockJTableOperator() {
             column = "2";
             jTableOperator = mock(JTableOperator.class);
-            checking(new Expectations() {{
-                one(jTableOperator).findCell(with(instanceOf(ColumnIndexTableCellChooser.class)));
-                will(returnValue(coordinates));
-                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator)
+                            .findCell(
+                                    with(instanceOf(ColumnIndexTableCellChooser.class)));
+                    will(returnValue(coordinates));
+                    ignoring(jTableOperator).setComparator(
+                            with(any(EqualsStringComparator.class)));
+                }
+            });
 
             return jTableOperator;
         }
@@ -158,11 +186,15 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
         protected JTableOperator createMockJTableOperator() {
             column = "someColumn";
             jTableOperator = mock(JTableOperator.class);
-            checking(new Expectations() {{
-                one(jTableOperator).findCell(with(instanceOf(ColumnNameTableCellChooser.class)));
-                will(returnValue(coordinates));
-                ignoring(jTableOperator).setComparator(with(any(EqualsStringComparator.class)));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).findCell(
+                            with(instanceOf(ColumnNameTableCellChooser.class)));
+                    will(returnValue(coordinates));
+                    ignoring(jTableOperator).setComparator(
+                            with(any(EqualsStringComparator.class)));
+                }
+            });
 
             return jTableOperator;
         }
@@ -183,54 +215,73 @@ public class TableOperatorSpec extends MockSupportSpecification<TableOperator> {
         }
 
         public void checksCellIsSelected() {
-            checking(new Expectations() {{
-                one(jTableOperator).isCellSelected(coordinates.y, coordinates.x);
-                will(returnValue(true));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).isCellSelected(coordinates.y,
+                            coordinates.x);
+                    will(returnValue(true));
+                }
+            });
 
             specify(context.isCellSelected(row, column));
         }
 
         public void selectsCell() {
-            checking(new Expectations() {{
-                one(jTableOperator).selectCell(coordinates.y, coordinates.x);
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator)
+                            .selectCell(coordinates.y, coordinates.x);
+                }
+            });
 
             context.selectCell(row, column);
         }
 
         public void setsCellValue() {
             final Object newValue = new Object();
-            checking(new Expectations() {{
-                one(jTableOperator).setValueAt(newValue, coordinates.y, coordinates.x);
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).setValueAt(newValue, coordinates.y,
+                            coordinates.x);
+                }
+            });
 
             context.setCellValue(newValue, row, column);
         }
 
         public void typesIntoCell() {
             final Object newValue = new Object();
-            checking(new Expectations() {{
-                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, newValue);
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).changeCellObject(coordinates.y,
+                            coordinates.x, newValue);
+                    one(jTableOperator).getSource();
+                }
+            });
 
             context.typeIntoCell(newValue, row, column);
         }
 
         public void clearsCell() {
-            checking(new Expectations() {{
-                one(jTableOperator).changeCellObject(coordinates.y, coordinates.x, "");
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).setValueAt("", coordinates.y,
+                            coordinates.x);
+                }
+            });
 
             context.clearCell(row, column);
         }
 
         public void callsPopupOnCell() {
             final JPopupMenu popupMenu = dummy(JPopupMenu.class);
-            checking(new Expectations() {{
-                one(jTableOperator).callPopupOnCell(coordinates.y, coordinates.x);
-                will(returnValue(popupMenu));
-            }});
+            checking(new Expectations() {
+                {
+                    one(jTableOperator).callPopupOnCell(coordinates.y,
+                            coordinates.x);
+                    will(returnValue(popupMenu));
+                }
+            });
 
             specify(context.callPopupOnCell(row, column).getSource(), popupMenu);
         }

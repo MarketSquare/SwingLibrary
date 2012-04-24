@@ -19,6 +19,7 @@ package org.robotframework.swing.table;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -34,8 +35,10 @@ import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.util.PropertyExtractor;
+import org.robotframework.swing.util.SwingInvoker;
 
-public class TableOperator extends IdentifierSupport implements ComponentWrapper {
+public class TableOperator extends IdentifierSupport implements
+        ComponentWrapper {
     private final JTableOperator jTableOperator;
     private PropertyExtractor propertyExtractor = new PropertyExtractor();
     private CellValueExtractor cellValueExtractor;
@@ -72,33 +75,49 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
 
     public void addTableCellSelection(String row, String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
-        selectCellArea(coordinates.y, coordinates.y, coordinates.x, coordinates.x);
+        selectCellArea(coordinates.y, coordinates.y, coordinates.x,
+                coordinates.x);
     }
 
-    private void selectCellArea(int startRow, int endRow, int startColumn, int endColumn) {
+    private void selectCellArea(int startRow, int endRow, int startColumn,
+            int endColumn) {
         jTableOperator.setRowSelectionAllowed(true);
         jTableOperator.addRowSelectionInterval(startRow, endRow);
         jTableOperator.setColumnSelectionAllowed(true);
         jTableOperator.addColumnSelectionInterval(startColumn, endColumn);
     }
 
-    public void selectCellArea(String startRow, String endRow, String startColumn, String endColumn) {
-        selectCellArea(Integer.valueOf(startColumn), Integer.valueOf(endColumn), Integer.valueOf(startRow), Integer.valueOf(endRow));
+    public void selectCellArea(String startRow, String endRow,
+            String startColumn, String endColumn) {
+        selectCellArea(Integer.valueOf(startColumn),
+                Integer.valueOf(endColumn), Integer.valueOf(startRow),
+                Integer.valueOf(endRow));
     }
 
-    public void setCellValue(Object newValue, String row, String columnIdentifier) {
+    public void setCellValue(Object newValue, String row,
+            String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.setValueAt(newValue, coordinates.y, coordinates.x);
     }
 
-    public void typeIntoCell(Object newValue, String row, String columnIdentifier) {
+    public void typeIntoCell(Object newValue, String row,
+            String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
         jTableOperator.changeCellObject(coordinates.y, coordinates.x, newValue);
+        // See
+        // http://code.google.com/p/robotframework-swinglibrary/issues/detail?id=197
+        ensureEnterIsReleased();
+    }
+
+    private void ensureEnterIsReleased() {
+        final KeyEvent releaseEvent = new KeyEvent(jTableOperator.getSource(),
+                KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0,
+                KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
+        new SwingInvoker().invokeAndWait(releaseEvent);
     }
 
     public void clearCell(String row, String columnIdentifier) {
-        Point coordinates = findCell(row, columnIdentifier);
-        jTableOperator.changeCellObject(coordinates.y, coordinates.x, "");
+        setCellValue("", row, columnIdentifier);
     }
 
     public void clearSelection() {
@@ -120,7 +139,8 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     public int findCellRow(String text, String columnIdentifier) {
         int col = jTableOperator.findColumn(columnIdentifier);
         if (col == -1)
-            throw new RuntimeException("Column '" + columnIdentifier + " not found.");
+            throw new RuntimeException("Column '" + columnIdentifier
+                    + " not found.");
         return jTableOperator.findCellRow(text, col, 0);
     }
 
@@ -133,14 +153,18 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     public void callPopupMenuItemOnSelectedCells(String menuPath) {
         int selectedRow = jTableOperator.getSelectedRow();
         int selectedColumn = jTableOperator.getSelectedColumn();
-        JPopupMenuOperator menuOperator = new JPopupMenuOperator(jTableOperator.callPopupOnCell(selectedRow, selectedColumn));
-        JMenuItemOperator item = menuOperator.showMenuItem(menuPath, new EqualsStringComparator());
+        JPopupMenuOperator menuOperator = new JPopupMenuOperator(
+                jTableOperator.callPopupOnCell(selectedRow, selectedColumn));
+        JMenuItemOperator item = menuOperator.showMenuItem(menuPath,
+                new EqualsStringComparator());
         item.push();
     }
 
-    public JPopupMenuOperator callPopupOnCell(String row, String columnIdentifier) {
+    public JPopupMenuOperator callPopupOnCell(String row,
+            String columnIdentifier) {
         Point coordinates = findCell(row, columnIdentifier);
-        return new JPopupMenuOperator(jTableOperator.callPopupOnCell(coordinates.y, coordinates.x));
+        return new JPopupMenuOperator(jTableOperator.callPopupOnCell(
+                coordinates.y, coordinates.x));
     }
 
     public Component getSource() {
@@ -148,7 +172,8 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
     }
 
     public String[] getTableHeaders() {
-        Enumeration<TableColumn> columns = jTableOperator.getTableHeader().getColumnModel().getColumns();
+        Enumeration<TableColumn> columns = jTableOperator.getTableHeader()
+                .getColumnModel().getColumns();
         List<String> results = new ArrayList<String>();
         while (columns.hasMoreElements()) {
             TableColumn tableColumn = (TableColumn) columns.nextElement();
@@ -186,25 +211,27 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         return cell.x < 0 || cell.y < 0;
     }
 
-    protected TableCellChooser createCellChooser(int row, String columnIdentifier) {
+    protected TableCellChooser createCellChooser(int row,
+            String columnIdentifier) {
         if (isIndex(columnIdentifier)) {
             return new ColumnIndexTableCellChooser(row, columnIdentifier);
         }
         return new ColumnNameTableCellChooser(row, columnIdentifier);
     }
 
-    public Map<String, Object> getCellProperties(String row, String columnIdentifier) {
+    public Map<String, Object> getCellProperties(String row,
+            String columnIdentifier) {
         Point cell = findCell(row, columnIdentifier);
-        Component cellComponent = cellValueExtractor.getCellRendererComponent(cell.y, cell.x);
+        Component cellComponent = cellValueExtractor.getCellRendererComponent(
+                cell.y, cell.x);
         return propertyExtractor.extractProperties(cellComponent);
     }
 
-    public void clickOnCell(String rowNumber, String columnIdentifier, String clickCount, String button, String[] keyModifiers) {
+    public void clickOnCell(String rowNumber, String columnIdentifier,
+            String clickCount, String button, String[] keyModifiers) {
         Point cell = findCell(rowNumber, columnIdentifier);
-        jTableOperator.clickOnCell(cell.y,
-                cell.x,
-                Integer.parseInt(clickCount),
-                toInputEventMask(button),
+        jTableOperator.clickOnCell(cell.y, cell.x,
+                Integer.parseInt(clickCount), toInputEventMask(button),
                 toCombinedInputEventMasks(keyModifiers));
     }
 
@@ -212,8 +239,9 @@ public class TableOperator extends IdentifierSupport implements ComponentWrapper
         try {
             return InputEvent.class.getField(inputEventFieldName).getInt(null);
         } catch (NoSuchFieldException e) {
-            throw new IllegalArgumentException("No field name '" + inputEventFieldName + "' in class " +
-                    InputEvent.class.getName() + ".");
+            throw new IllegalArgumentException("No field name '"
+                    + inputEventFieldName + "' in class "
+                    + InputEvent.class.getName() + ".");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
