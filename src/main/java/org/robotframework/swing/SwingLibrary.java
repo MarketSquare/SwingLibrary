@@ -19,70 +19,80 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 public class SwingLibrary extends AnnotationLibrary {
+    {
+        // Disable log4j warnings caused by org.springframework.util.ClassUtils
+        Logger.getRootLogger().setLevel(Level.OFF);
+    }
     public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
     public static SwingLibrary instance;
-    private final AnnotationLibrary annotationLibrary = new AnnotationLibrary("org/robotframework/swing/keyword/**/*.class");
-    private static final String LIBRARY_DOCUMENTATION =
-            "SwingLibrary is a Robot Framework test library for testing Java Swing user interfaces.\n\n" +
-                    "It uses a tool called Jemmy (http://java.net/projects/jemmy/) internally to operate on Swing components.\n\n" +
-                    "*Getting Started*\n\n" +
-                    "First, the SwingLibrary needs to be taken into use in the settings table:\n\n\n" +
-                    "| *Settings * | *Value* |\n" +
-                    "| Library | SwingLibrary |\n\n" +
+    private final AnnotationLibrary annotationLibrary = new AnnotationLibrary(
+            "org/robotframework/swing/keyword/**/*.class");
+    private static final String LIBRARY_DOCUMENTATION = "SwingLibrary is a Robot Framework test library for testing Java Swing user interfaces.\n\n"
+            + "It uses a tool called Jemmy (http://java.net/projects/jemmy/) internally to operate on Swing components.\n\n"
+            + "*Getting Started*\n\n"
+            + "First, the SwingLibrary needs to be taken into use in the settings table:\n\n\n"
+            + "| *Settings * | *Value* |\n"
+            + "| Library | SwingLibrary |\n\n"
+            +
 
-            "The tested application can be started with keyword `Start Application`, using the name " +
-            "of the main application class as an argument:\n\n\n" +
-            "| *Test Case* | *Action* | *Argument* |\n"+
-            "| Start test  | Start Application | com.acme.TheApplication |\n" +
-            "|             | Select Window     | TheApplication Window   |\n" +
-            "|             | Push Button       | AcmeButton              |\n\n" +
-            "When the tests are executed, both the SwingLibrary and the application and all its dependencies " +
-            "need to be available in the CLASSPATH. Robot Framework needs to be started with `jybot` start script "+
-            "when using the SwingLibrary. In Windows, this can be done like:\n\n" +
-            "`set CLASSPATH=swinglibrary-<version>.jar;myApp.jar`\n\n" +
-            "`jybot my_test.txt`\n\n" +
-            "and in *nix like this:\n\n" +
-            "`CLASSPATH=swinglibrary-<version>.jar:myApp.jar jybot my_test.txt`\n\n" +
-            "*Contexts*\n\n" +
-            "Keywords that operate on a component always search for the component in some context, " +
-            "which has to explicitly set. " +
-            "Typical contexts are windows, dialogs and tabbed panes. " +
-            "After a context has been selected, all subsequent keywords search for components in that context " +
-            "until a new context is selected. Keywords that can be used to select a context are " +
-            "`Select Window`, `Select Dialog` and `Select Context`. For example:\n\n\n" +
-            "| *Test Case* | *Action* | *Argument* |\n"+
-            "| |  Select Window | My App |\n" +
-            "| | Select From Main Menu | File|Exit |\n" +
-            "| | Select Dialog | Confirm |\n" +
-            "| | Push Button   | No      |\n" +
-            "| | Select Window | My App  |\n\n\n" +
+            "The tested application can be started with keyword `Start Application`, using the name "
+            + "of the main application class as an argument:\n\n\n"
+            + "| *Test Case* | *Action* | *Argument* |\n"
+            + "| Start test  | Start Application | com.acme.TheApplication |\n"
+            + "|             | Select Window     | TheApplication Window   |\n"
+            + "|             | Push Button       | AcmeButton              |\n\n"
+            + "When the tests are executed, both the SwingLibrary and the application and all its dependencies "
+            + "need to be available in the CLASSPATH. Robot Framework needs to be started with `jybot` start script "
+            + "when using the SwingLibrary. In Windows, this can be done like:\n\n"
+            + "`set CLASSPATH=swinglibrary-<version>.jar;myApp.jar`\n\n"
+            + "`jybot my_test.txt`\n\n"
+            + "and in *nix like this:\n\n"
+            + "`CLASSPATH=swinglibrary-<version>.jar:myApp.jar jybot my_test.txt`\n\n"
+            + "*Contexts*\n\n"
+            + "Keywords that operate on a component always search for the component in some context, "
+            + "which has to explicitly set. "
+            + "Typical contexts are windows, dialogs and tabbed panes. "
+            + "After a context has been selected, all subsequent keywords search for components in that context "
+            + "until a new context is selected. Keywords that can be used to select a context are "
+            + "`Select Window`, `Select Dialog` and `Select Context`. For example:\n\n\n"
+            + "| *Test Case* | *Action* | *Argument* |\n"
+            + "| |  Select Window | My App |\n"
+            + "| | Select From Main Menu | File|Exit |\n"
+            + "| | Select Dialog | Confirm |\n"
+            + "| | Push Button   | No      |\n"
+            + "| | Select Window | My App  |\n\n\n"
+            +
 
-
-            "*Locating components*\n\n  " +
-            "Most of the keywords that operate on a visible component take an argument named `identifier`, " +
-            "which is used to locate the element. The first matching element is operated on, according to these rules: \n\n" +
-            "1. If the `identifier` is a number, it is used as a zero-based index for the particular component type in the current context. " +
-            "Using indices is, however, fragile and is strongly discouraged\n" +
-            "2. If the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n" +
-            "3. For components that have visible text (e.g. buttons), `identifier` is also matched against that.\n\n" +
-            "Keyword `List Components in Context` lists all components and their names and indices in a given context.";
-
+            "*Locating components*\n\n  "
+            + "Most of the keywords that operate on a visible component take an argument named `identifier`, "
+            + "which is used to locate the element. The first matching element is operated on, according to these rules: \n\n"
+            + "1. If the `identifier` is a number, it is used as a zero-based index for the particular component type in the current context. "
+            + "Using indices is, however, fragile and is strongly discouraged\n"
+            + "2. If the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n"
+            + "3. For components that have visible text (e.g. buttons), `identifier` is also matched against that.\n\n"
+            + "Keyword `List Components in Context` lists all components and their names and indices in a given context.";
 
     public SwingLibrary() {
-        this(Collections.<String>emptyList());
+        this(Collections.<String> emptyList());
     }
 
     protected SwingLibrary(final String keywordPattern) {
-        this(new ArrayList<String>() {{ add(keywordPattern); }});
+        this(new ArrayList<String>() {
+            {
+                add(keywordPattern);
+            }
+        });
     }
 
-    protected SwingLibrary(Collection<String>  keywordPatterns) {
+    protected SwingLibrary(Collection<String> keywordPatterns) {
         addKeywordPatterns(keywordPatterns);
         disableOutput();
         setDefaultTimeouts();
