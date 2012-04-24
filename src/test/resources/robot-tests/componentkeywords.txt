@@ -52,6 +52,12 @@ Doubleclick On Component
     ${text}=  getButtonText  ${buttonName}
     shouldBeEqual  Button Was Pushed2  ${text}
 
+Right Click on Component
+    [Setup]  resetButton
+    rightClickOnComponent    testButton
+    ${text}=  getButtonText  ${buttonName}
+    shouldBeEqual    Right Clicked    ${text}
+
 Get Tooltip Text
     ${tooltip}=  getToolTipText  testLabel
     shouldBeEqual  TEST LABEL  ${tooltip}

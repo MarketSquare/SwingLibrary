@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.keyword.component;
 
+import java.awt.event.InputEvent;
+
 import junit.framework.Assert;
 
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
@@ -31,61 +33,67 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RobotKeywords
 public class ComponentKeywords {
-    private IdentifierParsingOperatorFactory<ComponentOperator> operatorFactory = new ComponentOperatorFactory();
-    private IComponentConditionResolver componentExistenceResolver = new ComponentExistenceResolver(operatorFactory);
+    private final IdentifierParsingOperatorFactory<ComponentOperator> operatorFactory = new ComponentOperatorFactory();
+    private final IComponentConditionResolver componentExistenceResolver = new ComponentExistenceResolver(
+            operatorFactory);
 
     @RobotKeyword("Fails if component exists within current context.\n"
-        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
-        + "Example:\n"
-        + "| Component Should Not Exist | _myPanel_ |\n")
-    @ArgumentNames({"identifier"})
+            + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
+            + "Example:\n" + "| Component Should Not Exist | _myPanel_ |\n")
+    @ArgumentNames({ "identifier" })
     public void componentShouldNotExist(String identifier) {
-        Assert.assertFalse("Component '" + identifier + "' exists", componentExistenceResolver.satisfiesCondition(identifier));
+        Assert.assertFalse("Component '" + identifier + "' exists",
+                componentExistenceResolver.satisfiesCondition(identifier));
     }
 
     @RobotKeyword("Fails if component does not exist within current context.\n"
-        + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
-        + "Example:\n"
-        + "| Component Should Not Exist | _myPanel_ |\n")
-    @ArgumentNames({"identifier"})
+            + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
+            + "Example:\n" + "| Component Should Not Exist | _myPanel_ |\n")
+    @ArgumentNames({ "identifier" })
     public void componentShouldExist(String identifier) {
-        Assert.assertTrue("Component '" + identifier + "' does not exist", componentExistenceResolver.satisfiesCondition(identifier));
+        Assert.assertTrue("Component '" + identifier + "' does not exist",
+                componentExistenceResolver.satisfiesCondition(identifier));
     }
 
     @RobotKeyword("Clicks on a component.\n"
-        + "The number of clicks can be given as second argument.\n\n"
-        + "Example:\n"
-        + "| Click On Component | _myComponent_ |   | |\n"
-        + "| Click On Component | _myComponent_ | 2 | # double click |\n")
-    @ArgumentNames({"identifier", "times=1"})
+            + "The number of clicks can be given as second argument.\n\n"
+            + "Example:\n" + "| Click On Component | _myComponent_ |   | |\n"
+            + "| Click On Component | _myComponent_ | 2 | # double click |\n")
+    @ArgumentNames({ "identifier", "times=1" })
     public void clickOnComponent(String identifier, String[] times) {
         operator(identifier).clickMouse(getTimes(times));
     }
 
-    @RobotKeyword("Returns the component's tooltip text.\n\n"
-        + "Example:\n"
-        + "| ${tooltip}= | Get Tooltip Text | _saveButton_ |\n"
-        + "| Should Be Equal    | _Save_ | _${tooltip}_ |\n")
-    @ArgumentNames({"identifier"})
+    @RobotKeyword("Right clicks on a component.\n" + "Example:\n"
+            + "| Right Click On Component | _myComponent_ |   | |")
+    @ArgumentNames({ "identifier" })
+    public void rightClickOnComponent(String identifier) {
+        operator(identifier).clickMouse(1, InputEvent.BUTTON3_MASK);
+    }
+
+    @RobotKeyword("Returns the component's tooltip text.\n\n" + "Example:\n"
+            + "| ${tooltip}= | Get Tooltip Text | _saveButton_ |\n"
+            + "| Should Be Equal    | _Save_ | _${tooltip}_ |\n")
+    @ArgumentNames({ "identifier" })
     public String getTooltipText(String identifier) {
         return operator(identifier).getToolTipText();
     }
 
     @RobotKeyword("Sets focus to the component.\n"
-        + "Useful for example when sending keyboard events to a component.\n\n"
-        + "Example:\n"
-        + "| Set Focus To Component | _myTextField_ |           | |\n"
-        + "| Send Keyboard Event    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
-    @ArgumentNames({"identifier"})
+            + "Useful for example when sending keyboard events to a component.\n\n"
+            + "Example:\n"
+            + "| Set Focus To Component | _myTextField_ |           | |\n"
+            + "| Send Keyboard Event    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
+    @ArgumentNames({ "identifier" })
     public void focusToComponent(String identifier) {
         operator(identifier).getFocus();
     }
 
     @RobotKeyword("Selects an item from the components context popup menu.\n"
-        + "Does a right click on the component and selects the specified menu item from the popup menu.\n\n"
-        + "Example:\n"
-        + "| Select From Popup Menu | _myComponent_ | _Actions|Do something_ |\n")
-    @ArgumentNames({"identifier", "menuPath"})
+            + "Does a right click on the component and selects the specified menu item from the popup menu.\n\n"
+            + "Example:\n"
+            + "| Select From Popup Menu | _myComponent_ | _Actions|Do something_ |\n")
+    @ArgumentNames({ "identifier", "menuPath" })
     public void selectFromPopupMenu(String identifier, String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
         popup.pushMenuNoBlock(menuPath, new EqualsStringComparator());

@@ -45,6 +45,7 @@ public class TestApplication {
 
     public void runTestApplication() {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 createFrame();
                 createMainPanel();
@@ -83,6 +84,7 @@ public class TestApplication {
     @SuppressWarnings("serial")
     private void createFrame() {
         frame = new JFrame("Test App") {
+            @Override
             public Dimension getPreferredSize() {
                 return new Dimension(1000, 1000);
             }
@@ -96,89 +98,114 @@ public class TestApplication {
         panel.add(new TestTextField());
         panel.add(new TestButton());
         panel.add(new TestList());
-        panel.add(new TestList() {{
-            setName("listWithRenderer");
-            setCellRenderer(new DefaultListCellRenderer() {
-                public String getText() {
-                    return super.getText().toUpperCase();
-                }
-            });
-        }});
+        panel.add(new TestList() {
+            {
+                setName("listWithRenderer");
+                setCellRenderer(new DefaultListCellRenderer() {
+                    @Override
+                    public String getText() {
+                        return super.getText().toUpperCase();
+                    }
+                });
+            }
+        });
         panel.add(new TestCheckBox("Test Checkbox"));
         panel.add(new TestCheckBox("Test Checkbox 2"));
         panel.add(new TestCheckBox("Test Checkbox 3"));
         panel.add(new TestCheckBox("Test Checkbox 4"));
         panel.add(new TestComboBox());
-        panel.add(new TestComboBox() {{
-            setName("comboboxWithRenderer");
-            setRenderer(new DefaultListCellRenderer() {
-                public String getText() {
-                    return super.getText().toUpperCase();
-                }
-            });
-        }});
+        panel.add(new TestComboBox() {
+            {
+                setName("comboboxWithRenderer");
+                setRenderer(new DefaultListCellRenderer() {
+                    @Override
+                    public String getText() {
+                        return super.getText().toUpperCase();
+                    }
+                });
+            }
+        });
         final ContentChangingCombobox contentChangingComboBox = new ContentChangingCombobox();
-        panel.add(new JButton("Reset Content Changing Combobox") {{
-            setName("resetContentChangingComboBox");
-            addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    contentChangingComboBox.resetModel();
-                }
-            });
-        }});
+        panel.add(new JButton("Reset Content Changing Combobox") {
+            {
+                setName("resetContentChangingComboBox");
+                addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        contentChangingComboBox.resetModel();
+                    }
+                });
+            }
+        });
         panel.add(contentChangingComboBox);
-        
-        panel.add(new TestComboBox() {{
-        	setName("disabledComboBox");
-        	setEnabled(false);
-        }});
-        
+
+        panel.add(new TestComboBox() {
+            {
+                setName("disabledComboBox");
+                setEnabled(false);
+            }
+        });
+
         panel.add(new TestLabel());
 
         JTextField tableEventTextField = new JTextField("tableEventTextField");
         tableEventTextField.setName("tableEventTextField");
         tableEventTextField.setText("tableEventTextField");
-        panel.add(new TestTable("testTable", getTestTableData(), tableEventTextField));
-        panel.add(new TestTable("TableWithSingleValue", getFoobarTestTableData(), tableEventTextField));
+        panel.add(new TestTable("testTable", getTestTableData(),
+                tableEventTextField));
+        panel.add(new TestTable("TableWithSingleValue",
+                getFoobarTestTableData(), tableEventTextField));
 
         panel.add(new TestTree());
         panel.add(new TreeWithoutTreeNode());
         TestTextField tabButtonOutputTextField = new TestTextField();
         tabButtonOutputTextField.setName("tabButtonOutputTextField");
-        panel.add(new TestTabbedPane("testTabbedPane1", tabButtonOutputTextField));
-        panel.add(new TestTabbedPane("testTabbedPane2", tabButtonOutputTextField));
+        panel.add(new TestTabbedPane("testTabbedPane1",
+                tabButtonOutputTextField));
+        panel.add(new TestTabbedPane("testTabbedPane2",
+                tabButtonOutputTextField));
         panel.add(tabButtonOutputTextField);
         panel.add(new TestTextArea());
         panel.add(new TestRadioButton());
         panel.add(new TestToggleButton());
-        panel.add(new JButton("Open File Chooser") {{
-            setName("openFileChooser");
-            addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    new TestFileChooser().showSaveDialog(panel);
-                }
-            });
-        }});
+        panel.add(new JButton("Open File Chooser") {
+            {
+                setName("openFileChooser");
+                addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new TestFileChooser().showSaveDialog(panel);
+                    }
+                });
+            }
+        });
         panel.add(new TestEditorPane());
 
         panel.add(simpleTable());
         panel.add(tableEventTextField);
 
-        panel.add(new JTextField() {{
-            setName("disabledTextField");
-            setEnabled(false);
-            setPreferredSize(new Dimension(100, 30));
-        }});
-        panel.add(new JTextField() {{
-            setName("uneditableTextField");
-            setEditable(false);
-            setPreferredSize(new Dimension(100, 30));
-        }});
+        panel.add(new JTextField() {
+            {
+                setName("disabledTextField");
+                setEnabled(false);
+                setPreferredSize(new Dimension(100, 30));
+            }
+        });
+        panel.add(new JTextField() {
+            {
+                setName("uneditableTextField");
+                setEditable(false);
+                setPreferredSize(new Dimension(100, 30));
+            }
+        });
 
         panel.add(new TestSpinnerButton("testSpinner"));
-        List<String> weekDays = Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-        panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(weekDays)));
-        panel.add(new TestSpinnerButton("floatSpinner", new SpinnerNumberModel(77.7, 0.0, 1000.0, 0.1)));
+        List<String> weekDays = Arrays.asList("Sunday", "Monday", "Tuesday",
+                "Wednesday", "Thursday", "Friday", "Saturday");
+        panel.add(new TestSpinnerButton("stringSpinner", new SpinnerListModel(
+                weekDays)));
+        panel.add(new TestSpinnerButton("floatSpinner", new SpinnerNumberModel(
+                77.7, 0.0, 1000.0, 0.1)));
         panel.add(testSlider());
         panel.add(tableWithHeader());
     }
@@ -188,6 +215,7 @@ public class TestApplication {
         tableWithHeader.setName("tableWithHeader");
         JTableHeader tableHeader = tableWithHeader.getTableHeader();
         tableHeader.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent evt) {
                 JTable table = ((JTableHeader) evt.getSource()).getTable();
                 TableColumnModel colModel = table.getColumnModel();
@@ -211,32 +239,30 @@ public class TestApplication {
 
     private Object[][] getTestTableData() {
         Object[][] data = {
-                {"column one", "one/one", "two/one", "three/one", "four/one"},
-                {"column two", "one/two", "two/two", "three/two", "four/two"},
-                {"column three", "one/three", "two/three", "three/three", "four/three"},
-                {"column four", Boolean.TRUE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE}
-        };
+                { "column one", "one/one", "two/one", "three/one", "four/one" },
+                { "column two", "one/two", "two/two", "three/two", "four/two" },
+                { "column three", "one/three", "two/three", "three/three",
+                        "four/three" },
+                { "column four", Boolean.TRUE, Boolean.TRUE, Boolean.FALSE,
+                        Boolean.FALSE } };
         return data;
     }
 
     private Object[][] getFoobarTestTableData() {
-        Object[][] data = {
-                {"column one", "foo", "bar", "bar", "bar"},
-                {"column two", "bar", "foo", "bar", "bar"},
-                {"column three", "bar", "bar", "foo", "bar"},
-                {"column four", "bar", "bar", "bar", "foo"}
-        };
+        Object[][] data = { { "column one", "foo", "bar", "bar", "bar" },
+                { "column two", "bar", "foo", "bar", "bar" },
+                { "column three", "bar", "bar", "foo", "bar" },
+                { "column four", "bar", "bar", "bar", "foo" } };
         return data;
     }
 
     private JTable simpleTable() {
-        String[] colNames = {"first col", "second col"};
-        Object[][] data = {
-                {"fooness", "barness"},
-                {"quuxness", "lochness"},
-        };
+        String[] colNames = { "first col", "second col" };
+        Object[][] data = { { "fooness", "barness" },
+                { "quuxness", "lochness" }, };
         @SuppressWarnings("serial")
         JTable table = new JTable(data, colNames) {
+            @Override
             public boolean isCellEditable(int row, int column) {
                 if (column == 1)
                     return false;
@@ -253,7 +279,8 @@ public class TestApplication {
 class ContentChangingCombobox extends JComboBox implements ActionListener {
 
     private static final String REMOVABLE_ITEM = "Removable";
-    private static final String[] ITEMS = new String[]{"Foo", "Bar", "Quux", REMOVABLE_ITEM};
+    private static final String[] ITEMS = new String[] { "Foo", "Bar", "Quux",
+            REMOVABLE_ITEM };
 
     public ContentChangingCombobox() {
         setEditable(true);
@@ -288,15 +315,18 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
 @SuppressWarnings("serial")
 class PopupPanel extends JPanel {
     private final Operation showName = new Operation() {
+        @Override
         public void perform(Component operatedComponent) {
-            JOptionPane.showMessageDialog(operatedComponent, operatedComponent.getName());
+            JOptionPane.showMessageDialog(operatedComponent,
+                    operatedComponent.getName());
         }
     };
 
-    private ContextMenu popup = new ContextMenu() {{
-        add("Show name", showName);
-    }};
-
+    private final ContextMenu popup = new ContextMenu() {
+        {
+            add("Show name", showName);
+        }
+    };
 
     @Override
     public Component add(Component comp) {
@@ -316,6 +346,7 @@ class PopupPanel extends JPanel {
 
     private void addPopupToComponent(Component comp) {
         comp.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     popup.show((Component) e.getSource(), e.getX(), e.getY());
@@ -335,7 +366,9 @@ class CustomComboBoxRenderer extends JLabel implements ListCellRenderer {
         setVerticalAlignment(CENTER);
     }
 
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    @Override
+    public Component getListCellRendererComponent(JList list, Object value,
+            int index, boolean isSelected, boolean cellHasFocus) {
         if (isSelected) {
             setBackground(list.getSelectionBackground());
             setForeground(list.getSelectionForeground());
