@@ -25,26 +25,29 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 @RobotKeywords
 public class ApplicationLaunchingKeywords {
     @RobotKeyword("Launches application with the given arguments.\n\n"
-        + "Example:\n"
-        + "| Launch Application | _com.acme.myapplication.MyApp_ | _arg1_ | _arg2_ |\n")
-    @ArgumentNames({"className", "*args"})
-    public void launchApplication(String className, String[] args) throws Exception {
+            + "Example:\n"
+            + "| Launch Application | _com.acme.myapplication.MyApp_ | _arg1_ | _arg2_ |\n")
+    @ArgumentNames({ "className", "*args" })
+    public void launchApplication(String className, String[] args)
+            throws Exception {
         Method mainMethod = getMainMethod(className);
         mainMethod.invoke(null, new Object[] { args });
     }
 
     @RobotKeyword("Alias for `Launch Application` keyword\n")
-    @ArgumentNames({"className", "*args"})
-    public void startApplication(String className, String[] args) throws Exception {
+    @ArgumentNames({ "className", "*args" })
+    public void startApplication(String className, String[] args)
+            throws Exception {
         launchApplication(className, args);
     }
 
     @RobotKeyword("Launches application in a separate thread with the given arguments.\n"
-        + "This is useful if your application does something that blocks eg. opens up a dialog.\n\n"
-        + "Example:\n"
-        + "| Start Application In Separate Thread | _com.acme.myapplication.MyApp_ |\n")
-    @ArgumentNames({"className", "*args"})
-    public void startApplicationInSeparateThread(final String className, final String[] args) throws Exception {
+            + "This is useful if your application does something that blocks eg. opens up a dialog.\n\n"
+            + "Example:\n"
+            + "| Start Application In Separate Thread | _com.acme.myapplication.MyApp_ |\n")
+    @ArgumentNames({ "className", "*args" })
+    public void startApplicationInSeparateThread(final String className,
+            final String[] args) throws Exception {
         createThread(new Runnable() {
             public void run() {
                 try {
@@ -56,16 +59,25 @@ public class ApplicationLaunchingKeywords {
         }).start();
     }
 
+    @RobotKeyword("Set system property `name` to `value`\n"
+            + "Equal commmand line usage `-Dname=value`.")
+    @ArgumentNames({ "name", "value" })
+    public void setSystemProperty(String name, String value) {
+        System.setProperty(name, value);
+    }
+
     Thread createThread(Runnable runnable) {
         return new Thread(runnable);
     }
-    
-    private Method getMainMethod(String className) throws ClassNotFoundException {
+
+    private Method getMainMethod(String className)
+            throws ClassNotFoundException {
         Class<?> clss = Class.forName(className);
         try {
             return clss.getMethod("main", String[].class);
         } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Class '" + className + "' doesn't have a main method.");
+            throw new RuntimeException("Class '" + className
+                    + "' doesn't have a main method.");
         }
     }
 }

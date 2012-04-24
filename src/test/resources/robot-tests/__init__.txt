@@ -5,6 +5,7 @@ Force Tags      regression
 
 *** Keywords ***
 launchApplicationAndSetTimeouts
+    setSystemProperty    testApp.secret    Test Text Field
     startApplication  org.robotframework.swing.testapp.TestApplication
     selectMainWindow
     setJemmyTimeouts  1

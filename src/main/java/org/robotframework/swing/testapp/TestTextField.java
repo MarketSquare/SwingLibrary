@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 @WithPopup
 public class TestTextField extends JTextField {
     public TestTextField() {
-        super("Test Text Field");
+        super(System.getProperty("testApp.secret"));
         setName("testTextField");
         setPreferredSize(new Dimension(100, 30));
     }
