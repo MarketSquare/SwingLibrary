@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-
 package org.robotframework.swing.keyword.internalframe;
+
+import javax.swing.JInternalFrame;
 
 import junit.framework.Assert;
 
@@ -31,46 +32,51 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 @RobotKeywords
 public class InternalFrameKeywords {
     private IdentifierParsingOperatorFactory<InternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();
-    private IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(operatorFactory);
+    private IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(
+            operatorFactory);
 
     @RobotKeyword("Uses current context to search for an internal frame and closes it.\n\n"
-        + "Example:\n"
-        + "| Close Internal Frame  | _My Internal Frame_ |\n")
-    @ArgumentNames({"identifier"})
+            + "Example:\n"
+            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
     public void closeInternalFrame(String identifier) {
-        createOperator(identifier).close();
+        ((JInternalFrame) createOperator(identifier).getSource())
+                .doDefaultCloseAction();
     }
 
     @RobotKeyword("Fails if the internal frame doesn't exist in the current context.\n\n"
-        + "Example:\n"
-        + "| Internal Frame Should Exist | _My Internal Frame_ |\n")
-    @ArgumentNames({"identifier"})
+            + "Example:\n"
+            + "| Internal Frame Should Exist | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
     public void internalFrameShouldExist(String identifier) {
-        Assert.assertTrue("Internal frame '" + identifier + "' doesn't exist.", existenceResolver.satisfiesCondition(identifier));
+        Assert.assertTrue("Internal frame '" + identifier + "' doesn't exist.",
+                existenceResolver.satisfiesCondition(identifier));
     }
 
     @RobotKeyword("Fails if the internal frame exists in the current context.\n\n"
-        + "Example:\n"
-        + "| Internal Frame Should Not Exist | _My Internal Frame_ |\n")
-    @ArgumentNames({"identifier"})
+            + "Example:\n"
+            + "| Internal Frame Should Not Exist | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
     public void internalFrameShouldNotExist(String identifier) {
-        Assert.assertFalse("Internal frame '" + identifier + "' exists.", existenceResolver.satisfiesCondition(identifier));
+        Assert.assertFalse("Internal frame '" + identifier + "' exists.",
+                existenceResolver.satisfiesCondition(identifier));
     }
 
     @RobotKeyword("Fails if the internal frame is *not* open.\n\n"
-        + "Example:\n"
-        + "| Internal Frame Should Be Open | _My Internal Frame_ |\n")
-    @ArgumentNames({"identifier"})
+            + "Example:\n"
+            + "| Internal Frame Should Be Open | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
     public void internalFrameShouldBeOpen(String identifier) {
-        Assert.assertTrue("Internal frame '" + identifier + "' is not open.", createOperator(identifier).isVisible());
+        Assert.assertTrue("Internal frame '" + identifier + "' is not open.",
+                createOperator(identifier).isVisible());
     }
 
-    @RobotKeyword("Fails if the internal frame *is* open.\n\n"
-        + "Example:\n"
-        + "| Internal Frame Should Not Be Open | _My Internal Frame_ |\n")
-    @ArgumentNames({"identifier"})
+    @RobotKeyword("Fails if the internal frame *is* open.\n\n" + "Example:\n"
+            + "| Internal Frame Should Not Be Open | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
     public void internalFrameShouldNotBeOpen(String identifier) {
-        Assert.assertFalse("Internal frame '" + identifier + "' is open.", createOperator(identifier).isVisible());
+        Assert.assertFalse("Internal frame '" + identifier + "' is open.",
+                createOperator(identifier).isVisible());
     }
 
     private InternalFrameOperator createOperator(String identifier) {
