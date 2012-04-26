@@ -32,50 +32,52 @@ import org.robotframework.swing.window.FrameOperatorFactory;
 
 @RobotKeywords
 public class WindowKeywords extends AbstractContextVerifier {
-    private IdentifierParsingOperatorFactory<FrameOperator> operatorFactory = new FrameOperatorFactory();
+    private final IdentifierParsingOperatorFactory<FrameOperator> operatorFactory = new FrameOperatorFactory();
 
     public WindowKeywords() {
-        super("To use this keyword you must first select a window as context using the 'Select Window'-keyword.");
+        super(
+                "To use this keyword you must first select a window as context using the 'Select Window'-keyword.");
     }
 
     @RobotKeyword("Selects the window that was opened first as current context.\n\n"
-        + "Example:\n"
-        + "| Select Main Window |\n")
+            + "Example:\n" + "| Select Main Window |\n")
     public void selectMainWindow() {
         setContext(operatorFactory.createOperatorByIndex(0));
     }
 
     @RobotKeyword("Selects a window as current context.\n\n"
-        + "*N.B.* Regular expression can be used to select the window by prefixing the identifier with 'regexp='.\n"
-        + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
-        + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
-        + "Example:\n"
-        + "| Select Window | _Help_ |\n"
-        + "| Select Window | _regexp=^H.*_ | Selects a window starting with letter H. |\n")
-    @ArgumentNames({"identifier"})
+            + "*N.B.* Regular expression can be used to select the window by prefixing the identifier with 'regexp='.\n"
+            + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
+            + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
+            + "Example:\n"
+            + "| Select Window | _Help_ |\n"
+            + "| Select Window | _regexp=^H.*_ | Selects a window starting with letter H. |\n")
+    @ArgumentNames({ "identifier" })
     public void selectWindow(String identifier) {
-        setContext(operatorFactory.createOperator(identifier));
+        FrameOperator operator = operatorFactory.createOperator(identifier);
+        setContext(operator);
+        operator.getFocus();
     }
 
     @RobotKeyword("Closes a window.\n\n"
-        + "*N.B.* Regular expression can be used to close the window by prefixing the identifier with 'regexp='.\n"
-        + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
-        + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
-        + "Example:\n"
-        + "| Close Window | _Help_ |\n"
-        + "| Close Window | _regexp=^H.*_ | Closes a window starting with letter H. |\n")
-    @ArgumentNames({"identifier"})
+            + "*N.B.* Regular expression can be used to close the window by prefixing the identifier with 'regexp='.\n"
+            + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
+            + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
+            + "Example:\n"
+            + "| Close Window | _Help_ |\n"
+            + "| Close Window | _regexp=^H.*_ | Closes a window starting with letter H. |\n")
+    @ArgumentNames({ "identifier" })
     public void closeWindow(String identifier) {
-        FrameOperator frameOperator = operatorFactory.createOperator(identifier);
+        FrameOperator frameOperator = operatorFactory
+                .createOperator(identifier);
         frameOperator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frameOperator.close();
     }
 
     @RobotKeyword("Returns the title of the selected window.\n"
-        + "Assumes current context is window.\n\n"
-        + "Example:\n"
-        + "| ${title}=     | Get Selected Window Title |            |\n"
-        + "| Should Be Equal | _Help Contents_           | _${title}_ |\n")
+            + "Assumes current context is window.\n\n" + "Example:\n"
+            + "| ${title}=     | Get Selected Window Title |            |\n"
+            + "| Should Be Equal | _Help Contents_           | _${title}_ |\n")
     public String getSelectedWindowTitle() {
         return frameOperator().getTitle();
     }

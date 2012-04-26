@@ -10,17 +10,17 @@ import org.laughingpanda.beaninject.Inject;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.dialog.DialogOperator;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.factory.OperatorFactory;
-import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
-
 @RunWith(JDaveRunner.class)
-public class DialogKeywordsSpec extends MockSupportSpecification<DialogKeywords> {
-    private String dialogIdentifier = "someDialog";
+public class DialogKeywordsSpec extends
+        MockSupportSpecification<DialogKeywords> {
+    private final String dialogIdentifier = "someDialog";
 
     public class Any {
         public DialogKeywords create() {
@@ -32,15 +32,18 @@ public class DialogKeywordsSpec extends MockSupportSpecification<DialogKeywords>
         }
 
         public void hasOperatorFactory() throws Throwable {
-            specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
+            specify(context, satisfies(new FieldIsNotNullContract(
+                    "operatorFactory")));
         }
 
         public void hasDialogExistenceResolver() throws Throwable {
-            specify(context, satisfies(new FieldIsNotNullContract("dialogExistenceResolver")));
+            specify(context, satisfies(new FieldIsNotNullContract(
+                    "dialogExistenceResolver")));
         }
 
         public void hasSelectDialogKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("selectDialog")));
+            specify(context,
+                    satisfies(new RobotKeywordContract("selectDialog")));
         }
 
         public void hasCloseDialogKeyword() {
@@ -48,11 +51,13 @@ public class DialogKeywordsSpec extends MockSupportSpecification<DialogKeywords>
         }
 
         public void hasDialogShouldBeOpenKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("dialogShouldBeOpen")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "dialogShouldBeOpen")));
         }
 
         public void hasDialogShouldNotBeOpenKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("dialogShouldNotBeOpen")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "dialogShouldNotBeOpen")));
         }
     }
 
@@ -62,26 +67,37 @@ public class DialogKeywordsSpec extends MockSupportSpecification<DialogKeywords>
 
         public DialogKeywords create() {
             DialogKeywords dialogKeywords = new DialogKeywords();
-            operatorFactory = injectMockTo(dialogKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
+            operatorFactory = injectMockTo(dialogKeywords, "operatorFactory",
+                    IdentifierParsingOperatorFactory.class);
             containerOperator = mock(DialogOperator.class);
 
-            checking(new Expectations() {{
-                one(operatorFactory).createOperator(with(equal(dialogIdentifier)));
-                will(returnValue(containerOperator));
-            }});
+            checking(new Expectations() {
+                {
+                    one(operatorFactory).createOperator(
+                            with(equal(dialogIdentifier)));
+                    will(returnValue(containerOperator));
+                }
+            });
 
             return dialogKeywords;
         }
 
         public void selectsDialog() {
+            checking(new Expectations() {
+                {
+                    one(containerOperator).getFocus();
+                }
+            });
             context.selectDialog(dialogIdentifier);
             specify(Context.getContext(), must.equal(containerOperator));
         }
 
         public void closesDialog() {
-            checking(new Expectations() {{
-                one(containerOperator).close();
-            }});
+            checking(new Expectations() {
+                {
+                    one(containerOperator).close();
+                }
+            });
 
             context.closeDialog(dialogIdentifier);
         }
@@ -94,7 +110,8 @@ public class DialogKeywordsSpec extends MockSupportSpecification<DialogKeywords>
             DialogKeywords dialogKeywords = new DialogKeywords();
 
             conditionResolver = mock(IComponentConditionResolver.class);
-            Inject.field("dialogExistenceResolver").of(dialogKeywords).with(conditionResolver);
+            Inject.field("dialogExistenceResolver").of(dialogKeywords)
+                    .with(conditionResolver);
 
             return dialogKeywords;
         }
@@ -103,47 +120,61 @@ public class DialogKeywordsSpec extends MockSupportSpecification<DialogKeywords>
             setDialogIsOpen(true);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.dialogShouldBeOpen(dialogIdentifier);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
 
-        public void dialogShouldBeOpenFailsWhenDialogIsNotOpen() throws Throwable {
+        public void dialogShouldBeOpenFailsWhenDialogIsNotOpen()
+                throws Throwable {
             setDialogIsOpen(false);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.dialogShouldBeOpen(dialogIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Dialog '" + dialogIdentifier + "' is not open"));
+            },
+                    must.raiseExactly(AssertionFailedError.class, "Dialog '"
+                            + dialogIdentifier + "' is not open"));
         }
 
-        public void dialogShouldNotBeOpenPassesWhenDialogIsNotOpen() throws Throwable {
+        public void dialogShouldNotBeOpenPassesWhenDialogIsNotOpen()
+                throws Throwable {
             setDialogIsOpen(false);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.dialogShouldNotBeOpen(dialogIdentifier);
                 }
             }, must.not().raise(AssertionFailedError.class));
         }
 
-        public void dialogShouldNotBeOpenFailsWhenDialogIsOpen() throws Throwable {
+        public void dialogShouldNotBeOpenFailsWhenDialogIsOpen()
+                throws Throwable {
             setDialogIsOpen(true);
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.dialogShouldNotBeOpen(dialogIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Dialog '" + dialogIdentifier + "' is open"));
+            },
+                    must.raiseExactly(AssertionFailedError.class, "Dialog '"
+                            + dialogIdentifier + "' is open"));
         }
 
         private void setDialogIsOpen(final boolean dialogExists) {
-            checking(new Expectations() {{
-                one(conditionResolver).satisfiesCondition(with(equal(dialogIdentifier)));
-                will(returnValue(dialogExists));
-            }});
+            checking(new Expectations() {
+                {
+                    one(conditionResolver).satisfiesCondition(
+                            with(equal(dialogIdentifier)));
+                    will(returnValue(dialogExists));
+                }
+            });
         }
     }
 }

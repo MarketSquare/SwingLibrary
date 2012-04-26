@@ -10,15 +10,15 @@ import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
+import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.window.FrameOperator;
 
-
 @RunWith(JDaveRunner.class)
-public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords> {
-    private FrameOperator frameOperator = mock(FrameOperator.class);
+public class WindowKeywordsSpec extends
+        MockSupportSpecification<WindowKeywords> {
+    private final FrameOperator frameOperator = mock(FrameOperator.class);
 
     public class Any {
         public WindowKeywords create() {
@@ -30,15 +30,18 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
         }
 
         public void hasSelectMainWindowKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("selectMainWindow")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "selectMainWindow")));
         }
 
         public void hasSelectWindowKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("selectWindow")));
+            specify(context,
+                    satisfies(new RobotKeywordContract("selectWindow")));
         }
 
         public void hasGetSelectedWindowTitleKeyword() {
-            specify(context, satisfies(new RobotKeywordContract("getSelectedWindowTitle")));
+            specify(context, satisfies(new RobotKeywordContract(
+                    "getSelectedWindowTitle")));
         }
     }
 
@@ -48,11 +51,14 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
         }
 
         public void selectMainWindowSetsMainWindowAsContext() {
-            final IdentifierParsingOperatorFactory<?> operatorFactory = injectMockToContext("operatorFactory", IdentifierParsingOperatorFactory.class);
-            checking(new Expectations() {{
-                one(operatorFactory).createOperatorByIndex(0);
-                will(returnValue(frameOperator));
-            }});
+            final IdentifierParsingOperatorFactory<?> operatorFactory = injectMockToContext(
+                    "operatorFactory", IdentifierParsingOperatorFactory.class);
+            checking(new Expectations() {
+                {
+                    one(operatorFactory).createOperatorByIndex(0);
+                    will(returnValue(frameOperator));
+                }
+            });
 
             context.selectMainWindow();
             specify(Context.getContext(), must.equal(frameOperator));
@@ -61,7 +67,7 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
 
     public class OperatingOnWindows {
         private IdentifierParsingOperatorFactory<?> operatorFactory;
-        private String windowIdentifier = "title";
+        private final String windowIdentifier = "title";
 
         public WindowKeywords create() {
             WindowKeywords windowKeywords = new WindowKeywords();
@@ -74,25 +80,36 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
         }
 
         public void selectWindowSetsDesignatedWindowAsContext() {
+            checking(new Expectations() {
+                {
+                    one(frameOperator).getFocus();
+                }
+            });
             context.selectWindow(windowIdentifier);
             specify(Context.getContext(), must.equal(frameOperator));
         }
 
         public void closesWindow() {
-            checking(new Expectations() {{
-                one(frameOperator).setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                one(frameOperator).close();
-            }});
+            checking(new Expectations() {
+                {
+                    one(frameOperator).setDefaultCloseOperation(
+                            JFrame.DISPOSE_ON_CLOSE);
+                    one(frameOperator).close();
+                }
+            });
 
             context.closeWindow(windowIdentifier);
         }
 
         private void injectMockOperatorFactoryTo(WindowKeywords windowKeywords) {
-            operatorFactory = injectMockTo(windowKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
-            checking(new Expectations() {{
-                one(operatorFactory).createOperator(windowIdentifier);
-                will(returnValue(frameOperator));
-            }});
+            operatorFactory = injectMockTo(windowKeywords, "operatorFactory",
+                    IdentifierParsingOperatorFactory.class);
+            checking(new Expectations() {
+                {
+                    one(operatorFactory).createOperator(windowIdentifier);
+                    will(returnValue(frameOperator));
+                }
+            });
         }
     }
 
@@ -102,6 +119,7 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
         public WindowKeywords create() {
             verifyContextWasCalled = false;
             return new WindowKeywords() {
+                @Override
                 public void verifyContext() {
                     verifyContextWasCalled = true;
                 }
@@ -111,9 +129,12 @@ public class WindowKeywordsSpec extends MockSupportSpecification<WindowKeywords>
         public void getsSelectedWindowTitle() {
             Context.setContext(frameOperator);
             final String title = "Some Title";
-            checking(new Expectations() {{
-                one(frameOperator).getTitle(); will(returnValue(title));
-            }});
+            checking(new Expectations() {
+                {
+                    one(frameOperator).getTitle();
+                    will(returnValue(title));
+                }
+            });
 
             specify(context.getSelectedWindowTitle(), title);
             specify(verifyContextWasCalled);
