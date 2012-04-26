@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.keyword.internalframe;
 
+import java.beans.PropertyVetoException;
+
 import javax.swing.JInternalFrame;
 
 import junit.framework.Assert;
@@ -31,17 +33,62 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 
 @RobotKeywords
 public class InternalFrameKeywords {
-    private IdentifierParsingOperatorFactory<InternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();
-    private IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(
+    private final IdentifierParsingOperatorFactory<InternalFrameOperator> operatorFactory = new InternalFrameOperatorFactory();
+    private final IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(
             operatorFactory);
 
-    @RobotKeyword("Uses current context to search for an internal frame and closes it.\n\n"
-            + "Example:\n"
+    @RobotKeyword("Closes internal frame.\n\n" + "Example:\n" + "Example:\n"
             + "| Close Internal Frame  | _My Internal Frame_ |\n")
     @ArgumentNames({ "identifier" })
     public void closeInternalFrame(String identifier) {
         ((JInternalFrame) createOperator(identifier).getSource())
                 .doDefaultCloseAction();
+    }
+
+    @RobotKeyword("Iconifies internal frame.\n\n" + "Example:\n"
+            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
+    public void iconifyInternalFrame(String identifier) {
+        iconify(identifier, true);
+    }
+
+    @RobotKeyword("De-iconifies internal frame.\n\n" + "Example:\n"
+            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
+    public void deIconifyInternalFrame(String identifier) {
+        iconify(identifier, false);
+    }
+
+    private void iconify(String identifier, boolean shouldIconify) {
+        try {
+            ((JInternalFrame) createOperator(identifier).getSource())
+                    .setIcon(shouldIconify);
+        } catch (PropertyVetoException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @RobotKeyword("Maximizes internal frame.\n\n" + "Example:\n"
+            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
+    public void maximizeInternalFrame(String identifier) {
+        maximize(identifier, true);
+    }
+
+    @RobotKeyword("Minimizes internal.\n\n" + "Example:\n"
+            + "| Minimize Internal Frame  | _My Internal Frame_ |\n")
+    @ArgumentNames({ "identifier" })
+    public void minimizeInternalFrame(String identifier) {
+        maximize(identifier, false);
+    }
+
+    private void maximize(String identifier, boolean shouldMaximize) {
+        try {
+            ((JInternalFrame) createOperator(identifier).getSource())
+                    .setMaximum(shouldMaximize);
+        } catch (PropertyVetoException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @RobotKeyword("Fails if the internal frame doesn't exist in the current context.\n\n"

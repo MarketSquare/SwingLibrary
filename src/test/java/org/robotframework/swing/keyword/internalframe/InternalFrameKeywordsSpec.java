@@ -16,6 +16,8 @@
 
 package org.robotframework.swing.keyword.internalframe;
 
+import java.beans.PropertyVetoException;
+
 import javax.swing.JInternalFrame;
 
 import jdave.Block;
@@ -36,7 +38,7 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 @RunWith(JDaveRunner.class)
 public class InternalFrameKeywordsSpec extends
         MockSupportSpecification<InternalFrameKeywords> {
-    private String identifier = "someInternalFrame";
+    private final String identifier = "someInternalFrame";
 
     public class Any {
         public InternalFrameKeywords create() {
@@ -86,7 +88,7 @@ public class InternalFrameKeywordsSpec extends
     public class Operating {
         private OperatorFactory<InternalFrameOperator> operatorFactory;
         private InternalFrameOperator operator;
-        private JInternalFrame frame = mock(JInternalFrame.class);
+        private final JInternalFrame frame = mock(JInternalFrame.class);
 
         public InternalFrameKeywords create() {
             InternalFrameKeywords internalFrameKeywords = new InternalFrameKeywords();
@@ -105,6 +107,50 @@ public class InternalFrameKeywordsSpec extends
             context.closeInternalFrame(identifier);
         }
 
+        public void maximizesInternalFrame() throws PropertyVetoException {
+            checking(new Expectations() {
+                {
+                    one(operator).getSource();
+                    will(returnValue(frame));
+                    one(frame).setMaximum(true);
+                }
+            });
+            context.maximizeInternalFrame(identifier);
+        }
+
+        public void minimizesInternalFrame() throws PropertyVetoException {
+            checking(new Expectations() {
+                {
+                    one(operator).getSource();
+                    will(returnValue(frame));
+                    one(frame).setMaximum(false);
+                }
+            });
+            context.minimizeInternalFrame(identifier);
+        }
+
+        public void iconifiesInternalFrame() throws PropertyVetoException {
+            checking(new Expectations() {
+                {
+                    one(operator).getSource();
+                    will(returnValue(frame));
+                    one(frame).setIcon(true);
+                }
+            });
+            context.iconifyInternalFrame(identifier);
+        }
+
+        public void deIconifiesInternalFrame() throws PropertyVetoException {
+            checking(new Expectations() {
+                {
+                    one(operator).getSource();
+                    will(returnValue(frame));
+                    one(frame).setIcon(false);
+                }
+            });
+            context.deIconifyInternalFrame(identifier);
+        }
+
         public void shouldBeOpenPassesIfFrameIsOpen() throws Throwable {
             checking(new Expectations() {
                 {
@@ -114,6 +160,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldBeOpen(identifier);
                 }
@@ -129,6 +176,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldBeOpen(identifier);
                 }
@@ -146,6 +194,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldNotBeOpen(identifier);
                 }
@@ -161,6 +210,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldNotBeOpen(identifier);
                 }
@@ -203,6 +253,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldExist(identifier);
                 }
@@ -218,6 +269,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldExist(identifier);
                 }
@@ -235,6 +287,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldNotExist(identifier);
                 }
@@ -250,6 +303,7 @@ public class InternalFrameKeywordsSpec extends
             });
 
             specify(new Block() {
+                @Override
                 public void run() throws Throwable {
                     context.internalFrameShouldNotExist(identifier);
                 }
