@@ -37,7 +37,7 @@ public class DialogKeywords {
     private final IComponentConditionResolver dialogExistenceResolver = new ComponentExistenceResolver(
             operatorFactory);
 
-    @RobotKeyword("Selects a dialog as current context.\n\n"
+    @RobotKeyword("Selects a dialog as current context and sets focus to it.\n\n"
             + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with 'regexp='.\n"
             + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
             + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"

@@ -57,6 +57,7 @@ public class WindowKeywordsSpec extends
                 {
                     one(operatorFactory).createOperatorByIndex(0);
                     will(returnValue(frameOperator));
+                    one(frameOperator).getFocus();
                 }
             });
 
