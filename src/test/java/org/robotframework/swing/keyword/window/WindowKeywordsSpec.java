@@ -95,7 +95,8 @@ public class WindowKeywordsSpec extends
                 {
                     one(frameOperator).setDefaultCloseOperation(
                             JFrame.DISPOSE_ON_CLOSE);
-                    one(frameOperator).close();
+                    one(frameOperator).getSource();
+                    will(returnValue(new JFrame()));
                 }
             });
 

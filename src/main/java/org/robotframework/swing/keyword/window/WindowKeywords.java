@@ -30,6 +30,8 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.window.FrameOperator;
 import org.robotframework.swing.window.FrameOperatorFactory;
 
+import abbot.tester.WindowTester;
+
 @RobotKeywords
 public class WindowKeywords extends AbstractContextVerifier {
     private final IdentifierParsingOperatorFactory<FrameOperator> operatorFactory = new FrameOperatorFactory();
@@ -67,10 +69,9 @@ public class WindowKeywords extends AbstractContextVerifier {
             + "| Close Window | _regexp=^H.*_ | Closes a window starting with letter H. |\n")
     @ArgumentNames({ "identifier" })
     public void closeWindow(String identifier) {
-        FrameOperator frameOperator = operatorFactory
-                .createOperator(identifier);
-        frameOperator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frameOperator.close();
+        FrameOperator operator = operatorFactory.createOperator(identifier);
+        operator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        new WindowTester().actionClose(operator.getSource());
     }
 
     @RobotKeyword("Returns the title of the selected window.\n"
