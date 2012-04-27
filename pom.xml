@@ -79,14 +79,12 @@
       <version>1.0</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.robotframework</groupId>
       <artifactId>javatools-test</artifactId>
       <version>0.2</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
   <build>
     <plugins>
@@ -109,7 +107,21 @@
           </includes>
         </configuration>
         </plugin>
-
+      <plugin>
+        <groupId>com.googlecode.robotframework-maven-plugin</groupId>
+        <artifactId>robotframework-maven-plugin</artifactId>
+        <version>1.1.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <testCasesDirectory>${project.basedir}/src/test/resources/robot-tests</testCasesDirectory>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
