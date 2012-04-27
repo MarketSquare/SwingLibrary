@@ -19,7 +19,7 @@ package org.robotframework.swing.chooser;
 import java.awt.Component;
 
 import org.netbeans.jemmy.ComponentChooser;
-import org.springframework.util.ObjectUtils;
+import org.robotframework.swing.util.ObjectUtils;
 
 public class ByNameComponentChooser implements ComponentChooser {
     private final String componentName;
@@ -28,10 +28,12 @@ public class ByNameComponentChooser implements ComponentChooser {
         this.componentName = componentName;
     }
 
+    @Override
     public boolean checkComponent(Component comp) {
         return ObjectUtils.nullSafeEquals(comp.getName(), componentName);
     }
 
+    @Override
     public String getDescription() {
         return componentName;
     }

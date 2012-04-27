@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-
 package org.robotframework.swing.chooser;
 
 import java.awt.Component;
 
 import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.ComponentChooser;
-import org.springframework.util.ObjectUtils;
+import org.robotframework.swing.util.ObjectUtils;
 
 public class ByTitleComponentChooser implements ComponentChooser {
     private final String expectedTitle;
@@ -30,11 +29,14 @@ public class ByTitleComponentChooser implements ComponentChooser {
         this.expectedTitle = expectedTitle;
     }
 
+    @Override
     public boolean checkComponent(Component component) {
-        WithTitle withTitle = (WithTitle) Retrofit.partial(component, WithTitle.class);
+        WithTitle withTitle = (WithTitle) Retrofit.partial(component,
+                WithTitle.class);
         return ObjectUtils.nullSafeEquals(expectedTitle, withTitle.getTitle());
     }
 
+    @Override
     public String getDescription() {
         return expectedTitle;
     }

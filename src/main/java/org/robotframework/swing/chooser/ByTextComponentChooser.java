@@ -20,7 +20,7 @@ import java.awt.Component;
 
 import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.ComponentChooser;
-import org.springframework.util.ObjectUtils;
+import org.robotframework.swing.util.ObjectUtils;
 
 public class ByTextComponentChooser implements ComponentChooser {
     private final String expectedText;
@@ -29,11 +29,14 @@ public class ByTextComponentChooser implements ComponentChooser {
         this.expectedText = expectedText;
     }
 
+    @Override
     public boolean checkComponent(Component component) {
-        WithText withText = (WithText) Retrofit.partial(component, WithText.class);
+        WithText withText = (WithText) Retrofit.partial(component,
+                WithText.class);
         return ObjectUtils.nullSafeEquals(expectedText, withText.getText());
     }
 
+    @Override
     public String getDescription() {
         return expectedText;
     }

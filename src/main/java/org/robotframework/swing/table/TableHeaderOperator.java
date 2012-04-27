@@ -7,11 +7,11 @@ import javax.swing.table.TableColumn;
 
 import org.netbeans.jemmy.operators.JTableHeaderOperator;
 import org.robotframework.swing.common.IdentifierSupport;
-import org.springframework.util.ObjectUtils;
+import org.robotframework.swing.util.ObjectUtils;
 
 public class TableHeaderOperator extends IdentifierSupport {
 
-    private JTableHeaderOperator headerOperator;
+    private final JTableHeaderOperator headerOperator;
 
     public TableHeaderOperator(JTableHeaderOperator jTableHeaderOperator) {
         headerOperator = jTableHeaderOperator;
@@ -37,10 +37,11 @@ public class TableHeaderOperator extends IdentifierSupport {
 
     public int indexOfColumnLabel(String label) {
         Enumeration<TableColumn> columns = columns();
-        for (int i=0; columns.hasMoreElements(); i++)
+        for (int i = 0; columns.hasMoreElements(); i++)
             if (ObjectUtils.nullSafeEquals(nextHeaderValue(columns), label))
                 return i;
-        throw new RuntimeException("The specified column identifier '" + label + "' is invalid.");
+        throw new RuntimeException("The specified column identifier '" + label
+                + "' is invalid.");
     }
 
     public Object nextHeaderValue(Enumeration<TableColumn> columns) {
@@ -52,7 +53,8 @@ public class TableHeaderOperator extends IdentifierSupport {
     }
 
     private boolean validIndex(int index) {
-        return index >= 0 && index < headerOperator.getColumnModel().getColumnCount();
+        return index >= 0
+                && index < headerOperator.getColumnModel().getColumnCount();
     }
 
 }

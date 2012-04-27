@@ -27,7 +27,7 @@ import javax.swing.tree.TreePath;
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.javalib.util.ArrayUtil;
-import org.springframework.util.ObjectUtils;
+import org.robotframework.swing.util.ObjectUtils;
 
 public class TreePathWaitable implements Waitable {
     private final String path;
@@ -38,18 +38,20 @@ public class TreePathWaitable implements Waitable {
         this.path = path;
     }
 
+    @Override
     public Object actionProduced(Object ignoredHere) {
         return buildTreePath(parse(path));
     }
-    
+
+    @Override
     public String getDescription() {
         return "Building tree path for: " + path;
     }
-    
+
     private String[] parse(String path) {
         return removeRootIfNecessary(path.split("\\|"));
     }
-    
+
     private String[] removeRootIfNecessary(String[] nodeNames) {
         if (rootIsVisibleAndEqualsToRootIn(nodeNames)) {
             return removeRoot(nodeNames);
@@ -60,30 +62,32 @@ public class TreePathWaitable implements Waitable {
 
     private boolean rootIsVisibleAndEqualsToRootIn(String[] nodeNames) {
         String rootText = getNodeText(getRoot());
-        return rootIsVisible() && nodeNames.length > 0 && nodeNames[0].equals(rootText);
+        return rootIsVisible() && nodeNames.length > 0
+                && nodeNames[0].equals(rootText);
     }
 
     private String[] removeRoot(String[] nodeNames) {
         return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
     }
-    
+
     private TreePath buildTreePath(String[] nodeNames) {
         Object root = getRoot();
         TreePath treePathToNode = new TreePath(root);
         Iterator<Object> currentLevelChildren = getChildren(root);
         for (String nodeName : nodeNames) {
             boolean foundMatch = false;
-            
+
             while (currentLevelChildren.hasNext()) {
                 Object currentNode = currentLevelChildren.next();
                 if (nodeTextEquals(nodeName, currentNode)) {
                     currentLevelChildren = getChildren(currentNode);
-                    treePathToNode = treePathToNode.pathByAddingChild(currentNode);
+                    treePathToNode = treePathToNode
+                            .pathByAddingChild(currentNode);
                     foundMatch = true;
                     break;
                 }
             }
-            
+
             if (!foundMatch)
                 return null;
         }
@@ -94,14 +98,14 @@ public class TreePathWaitable implements Waitable {
         String nodeText = getNodeText(node);
         return ObjectUtils.nullSafeEquals(nodeText, nodeName);
     }
-    
+
     private String getNodeText(Object node) {
         JTree tree = (JTree) treeOperator.getSource();
         return new NodeTextExtractor(tree).getText(node, path);
     }
 
     private Object getRoot() {
-        return treeOperator.getModel().getRoot();   
+        return treeOperator.getModel().getRoot();
     }
 
     private boolean rootIsVisible() {

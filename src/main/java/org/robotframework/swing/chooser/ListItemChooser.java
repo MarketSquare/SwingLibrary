@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-
 package org.robotframework.swing.chooser;
 
 import org.netbeans.jemmy.operators.JListOperator;
-import org.springframework.util.ObjectUtils;
+import org.robotframework.swing.util.ObjectUtils;
 
-public class ListItemChooser implements org.netbeans.jemmy.operators.JListOperator.ListItemChooser {
+public class ListItemChooser implements
+        org.netbeans.jemmy.operators.JListOperator.ListItemChooser {
     private final String name;
 
     public ListItemChooser(String itemIdentifier) {
         this.name = itemIdentifier;
     }
 
+    @Override
     public boolean checkItem(JListOperator operator, int index) {
         String item = operator.getModel().getElementAt(index).toString();
         return ObjectUtils.nullSafeEquals(name, item);
     }
 
+    @Override
     public String getDescription() {
         return name;
     }
