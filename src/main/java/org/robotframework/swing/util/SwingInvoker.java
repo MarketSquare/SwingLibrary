@@ -22,7 +22,9 @@ public class SwingInvoker {
         try {
             SwingUtilities.invokeAndWait(runnable);
         } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
         } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
