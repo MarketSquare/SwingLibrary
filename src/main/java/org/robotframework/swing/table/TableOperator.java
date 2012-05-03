@@ -113,7 +113,7 @@ public class TableOperator extends IdentifierSupport implements
         final KeyEvent releaseEvent = new KeyEvent(jTableOperator.getSource(),
                 KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0,
                 KeyEvent.VK_ENTER, KeyEvent.CHAR_UNDEFINED);
-        new SwingInvoker().invokeAndWait(releaseEvent);
+        SwingInvoker.postEvent(releaseEvent);
     }
 
     public void clearCell(String row, String columnIdentifier) {

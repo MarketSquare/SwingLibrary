@@ -8,17 +8,22 @@ import javax.swing.SwingUtilities;
 
 public class SwingInvoker {
 
-    public void invokeAndWait(final AWTEvent event) {
+    public static void postEvent(final AWTEvent event) {
+        invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                Toolkit.getDefaultToolkit().getSystemEventQueue()
+                        .postEvent(event);
+            }
+        });
+    }
+
+    public static void invokeAndWait(final Runnable runnable) {
         try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
-                    Toolkit.getDefaultToolkit().getSystemEventQueue()
-                            .postEvent(event);
-                }
-            });
+            SwingUtilities.invokeAndWait(runnable);
         } catch (InvocationTargetException e) {
         } catch (InterruptedException e) {
         }
     }
+
 }
