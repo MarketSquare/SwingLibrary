@@ -11,6 +11,10 @@ Select Window By Title
     selectWindow  Test App
     contextIsMainWindow
 
+Select Window By Name
+    selectWindow  Main Frame
+    contextIsMainWindow
+
 Select Window By Title RegExp
     selectWindow  regexp=T.{2}t.*
     contextIsMainWindow
@@ -19,7 +23,7 @@ Select Window By Title Without RegExp Prefix Should Fail
     selectWindow  regexp=T.{2}t.*
     contextIsMainWindow
     selectEmptyContext
-    runKeywordAndExpectError  Frame with title "T.{2}t.*"  selectWindow  T.{2}t.*
+    runKeywordAndExpectError  Frame with name or title 'T.{2}t.*'  selectWindow  T.{2}t.*
 
 Select Window By Index
     selectWindow  0

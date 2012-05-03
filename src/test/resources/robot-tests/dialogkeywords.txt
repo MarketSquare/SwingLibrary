@@ -29,7 +29,7 @@ Select Dialog Using RegExp Without Prefix Should Fail
     ${context}=  getCurrentContextSourceAsString
     contains  ${context}  Dialog
     select main window
-    run keyword and expect error  Dialog with title "M.s{2}a.*  selectDialog  M.s{2}a.*
+    run keyword and expect error  Dialog with name or title 'M.s{2}a.*  selectDialog  M.s{2}a.*
     [Teardown]  closeTestDialog
 
 Close Dialog
