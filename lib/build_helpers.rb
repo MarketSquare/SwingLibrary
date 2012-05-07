@@ -34,7 +34,7 @@ module BuildHelpers
   def run_robot(args="")
     ENV['CLASSPATH'] = [dist_jar, Buildr.artifacts(ROBOT)].join(File::PATH_SEPARATOR)
     output_dir = get_output_dir
-    cmd = "java org.robotframework.RobotFramework --outputdir #{output_dir} --debugfile debug.txt #{args} " +  __('src/test/resources/robot-tests')
+    cmd = "java org.robotframework.RobotFramework --loglevel debug --outputdir #{output_dir} --debugfile debug.txt #{args} " +  __('src/test/resources/robot-tests')
     puts "running robot tests with command:\n#{cmd}"
     sh cmd
   end
