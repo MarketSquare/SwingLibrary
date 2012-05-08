@@ -3,7 +3,7 @@ require './lib/dependencies.rb'
 
 PROJECT_NAME   = 'swinglibrary'
 GROUP          = 'org.robotframework'
-VERSION_NUMBER = '1.2.1-SNAPSHOT'
+VERSION_NUMBER = '1.3'
 
 
 desc "Robot Framework test library for Swing GUI testing"
