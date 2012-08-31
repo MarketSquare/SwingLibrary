@@ -19,7 +19,7 @@ package org.robotframework.swing.keyword.checkbox;
 import java.awt.Container;
 import java.util.List;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;

@@ -1,6 +1,6 @@
 package org.robotframework.swing.keyword.spinner;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;

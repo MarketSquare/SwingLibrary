@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.tree;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -49,7 +48,7 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
                 public void run() throws Throwable {
                     context.treeNodeShouldBeSelected(treeIdentifier, nodeIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is not selected."));
+            }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' is not selected."));
         }
 
         public void treeNodeShouldNotBeSelectedPassesIfTreeNodeIsNotSelected() throws Throwable {
@@ -69,7 +68,7 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
                 public void run() throws Throwable {
                     context.treeNodeShouldNotBeSelected(treeIdentifier, nodeIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is selected."));
+            }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' is selected."));
         }
 
         private void setPathSelected(final boolean isSelected) {

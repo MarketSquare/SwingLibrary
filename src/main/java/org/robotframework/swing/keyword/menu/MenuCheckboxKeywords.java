@@ -18,7 +18,7 @@ package org.robotframework.swing.keyword.menu;
 
 import javax.swing.JCheckBoxMenuItem;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.netbeans.jemmy.operators.JCheckBoxMenuItemOperator;
 import org.netbeans.jemmy.operators.JMenuItemOperator;

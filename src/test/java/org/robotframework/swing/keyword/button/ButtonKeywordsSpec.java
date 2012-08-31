@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.button;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -99,7 +98,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
                 public void run() throws Throwable {
                     context.buttonShouldBeEnabled(buttonIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Button was disabled."));
+            }, must.raiseExactly(AssertionError.class, "Button was disabled."));
         }
 
         public void buttonShouldBeDisabledPassesIfButtonIsDisabled() throws Throwable {
@@ -121,7 +120,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
                 public void run() throws Throwable {
                     context.buttonShouldBeDisabled(buttonIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Button was enabled."));
+            }, must.raiseExactly(AssertionError.class, "Button was enabled."));
         }
 
         private void setButtonIsEnabled(final boolean b) {
@@ -155,7 +154,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
                 public void run() throws Throwable {
                     context.buttonShouldExist(buttonIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void buttonShouldExistFailsIfButtonDoesntExist() throws Throwable {
@@ -166,7 +165,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
                 public void run() throws Throwable {
                     context.buttonShouldExist(buttonIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Button '" + buttonIdentifier + "' doesn't exist"));
+            }, must.raiseExactly(AssertionError.class, "Button '" + buttonIdentifier + "' doesn't exist"));
         }
 
         public void buttonShouldNotExistPassesIfButtonDoesntExist() throws Throwable {
@@ -177,7 +176,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
                 public void run() throws Throwable {
                     context.buttonShouldNotExist(buttonIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void buttonShouldNotExistFailsIfButtonExists() {
@@ -188,7 +187,7 @@ public class ButtonKeywordsSpec extends MockSupportSpecification<ButtonKeywords>
                 public void run() throws Throwable {
                     context.buttonShouldNotExist(buttonIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Button '" + buttonIdentifier + "' exists"));
+            }, must.raiseExactly(AssertionError.class, "Button '" + buttonIdentifier + "' exists"));
         }
 
         private void setButtonExists(final boolean exists) {

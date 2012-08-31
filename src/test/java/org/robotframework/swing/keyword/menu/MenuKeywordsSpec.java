@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.menu;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -56,7 +55,7 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
         public void hasMenuItemShouldExistKeyword() {
             specify(context, satisfies(new RobotKeywordContract("menuItemShouldExist")));
         }
-        
+
         public void hasMenuItemShouldNotExistKeyword() {
             specify(context, satisfies(new RobotKeywordContract("menuItemShouldNotExist")));
         }
@@ -85,9 +84,9 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.selectFromMenu(menuPath);
                 }
-            }, should.raise(AssertionFailedError.class));
+            }, should.raise(AssertionError.class));
         }
-        
+
         public void selectsFromMenuAndWaits() {
             checking(new Expectations() {{
                 one(menuItemOperator).isEnabled(); will(returnValue(true));
@@ -100,20 +99,20 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
 
     public class CheckingMenuItemExistence {
         private IComponentConditionResolver menuExistenceResolver;
-        
+
         public MenuKeywords create() {
             menuExistenceResolver = mock(IComponentConditionResolver.class);
             menuBarOperator = mock(JMenuBarOperator.class);
-            
+
             checking(new Expectations() {{
                 one(menuBarOperator).pressMouse();
             }});
-            
+
             return new MenuKeywords() {
                 protected JMenuBarOperator menubarOperator() {
                     return menuBarOperator;
                 }
-                
+
                 IComponentConditionResolver createMenuItemExistenceResolver() {
                     return menuExistenceResolver;
                 }
@@ -130,7 +129,7 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldExist(menuPath);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void menuItemShouldExistFailsIfMenuItemDoesntExists() {
@@ -143,9 +142,9 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldExist(menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' does not exist."));
+            }, must.raiseExactly(AssertionError.class, "Menu item '" + menuPath + "' does not exist."));
         }
-        
+
         public void menuItemShouldNotExistPassesIfMenuItemDoesntExist() throws Throwable {
             checking(new Expectations() {{
                 one(menuExistenceResolver).satisfiesCondition(menuPath);
@@ -156,7 +155,7 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldNotExist(menuPath);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void menuItemShouldNotExistFailsIfMenuItemExists() {
@@ -169,10 +168,10 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldNotExist(menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' exists."));
+            }, must.raiseExactly(AssertionError.class, "Menu item '" + menuPath + "' exists."));
         }
     }
-    
+
     public class CheckingMenuItemState {
         public MenuSupport create() {
             MenuSupport menuKeywords = createMenuKeywordsWithMockInternals();
@@ -188,7 +187,7 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldBeEnabled(menuPath);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void menuItemShouldBeEnabledFailsIfMenuItemIsDisabled() throws Throwable {
@@ -200,7 +199,7 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldBeEnabled(menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' is disabled."));
+            }, must.raiseExactly(AssertionError.class, "Menu item '" + menuPath + "' is disabled."));
         }
 
         public void menuItemShouldNotBeEnabledPassesIfMenuItemIsDisabled() throws Throwable {
@@ -212,7 +211,7 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldNotBeEnabled(menuPath);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void menuItemShouldNotBeEnabledFailsIfMenuItemIsEnabled() throws Throwable {
@@ -224,9 +223,9 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
                 public void run() throws Throwable {
                     context.menuItemShouldNotBeEnabled(menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' is enabled."));
+            }, must.raiseExactly(AssertionError.class, "Menu item '" + menuPath + "' is enabled."));
         }
-        
+
         private void expectMenuToClose() {
             checking(new Expectations() {{
                 one(menuBarOperator).pressMouse();

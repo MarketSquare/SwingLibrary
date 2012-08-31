@@ -17,8 +17,7 @@
 
 package org.robotframework.swing.testkeyword;
 
-import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
+import org.junit.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -30,7 +29,7 @@ public class ApplicationLaunchingTestingKeywords {
     public void assertApplicationWasCalled() {
         Assert.assertTrue(true);
         if (!SomeApplication.wasCalled) {
-            throw new AssertionFailedError("Application was not called");
+            throw new AssertionError("Application was not called");
         }
     }
 

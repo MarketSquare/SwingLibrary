@@ -18,7 +18,7 @@ package org.robotframework.swing.context;
 
 import java.awt.Component;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 public abstract class AbstractContextVerifier implements ContextVerifier {
     private final String errorMessage;

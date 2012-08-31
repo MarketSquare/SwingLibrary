@@ -16,7 +16,7 @@
 
 package org.robotframework.swing.keyword.menu;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;

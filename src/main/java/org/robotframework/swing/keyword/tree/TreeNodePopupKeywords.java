@@ -21,7 +21,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JMenuItem;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;

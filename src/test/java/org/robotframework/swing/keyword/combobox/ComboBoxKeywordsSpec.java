@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.combobox;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -172,7 +171,7 @@ public class ComboBoxKeywordsSpec extends
                     context.comboBoxShouldBeEnabled(comboBoxIdentifier);
                 }
             },
-                    must.raiseExactly(AssertionFailedError.class, "Combobox '"
+                    must.raiseExactly(AssertionError.class, "Combobox '"
                             + comboBoxIdentifier + "' was disabled."));
         }
 
@@ -191,7 +190,7 @@ public class ComboBoxKeywordsSpec extends
                     context.comboBoxShouldBeDisabled(comboBoxIdentifier);
                 }
             },
-                    must.raiseExactly(AssertionFailedError.class, "Combobox '"
+                    must.raiseExactly(AssertionError.class, "Combobox '"
                             + comboBoxIdentifier + "' was enabled."));
         }
 

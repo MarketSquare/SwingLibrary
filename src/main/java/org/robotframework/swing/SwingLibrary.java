@@ -15,22 +15,16 @@
  */
 package org.robotframework.swing;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
 public class SwingLibrary extends AnnotationLibrary {
-    {
-        // Disable log4j warnings caused by org.springframework.util.ClassUtils
-        Logger.getRootLogger().setLevel(Level.OFF);
-    }
     public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
     public static SwingLibrary instance;
     private final AnnotationLibrary annotationLibrary = new AnnotationLibrary(

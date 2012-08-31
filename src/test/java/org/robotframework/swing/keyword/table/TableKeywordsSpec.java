@@ -6,7 +6,6 @@ import java.util.Map;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -306,7 +305,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellShouldBeEditable(tableIdentifier, row, columnIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void tableCellShouldBeEditableFailsWhenItIsNot() throws Throwable {
@@ -319,7 +318,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellShouldBeEditable(tableIdentifier, row, columnIdentifier);
                 }
-            }, must.raise(AssertionFailedError.class));
+            }, must.raise(AssertionError.class));
         }
 
         public void tableCellShouldBeSelectedPassesIfCellIsSelected() throws Throwable {
@@ -332,7 +331,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellShouldBeSelected(tableIdentifier, row, columnIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void tableCellShouldBeSelectedFailsIfCellIsNotSelected() throws Throwable {
@@ -345,7 +344,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellShouldBeSelected(tableIdentifier, row, columnIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Cell '" + row + "', '" + columnIdentifier + "' is not selected."));
+            }, must.raiseExactly(AssertionError.class, "Cell '" + row + "', '" + columnIdentifier + "' is not selected."));
         }
 
         public void tableCellShouldNotBeSelectedPassesIfCellIsNotSelected() throws Throwable {
@@ -358,7 +357,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellShouldNotBeSelected(tableIdentifier, row, columnIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void tableCellShouldNotBeSelectedFailsIfCellIsSelected() throws Throwable {
@@ -371,7 +370,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellShouldNotBeSelected(tableIdentifier, row, columnIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Cell '" + row + "', '" + columnIdentifier + "' is selected."));
+            }, must.raiseExactly(AssertionError.class, "Cell '" + row + "', '" + columnIdentifier + "' is selected."));
         }
 
         public void clearsTableCell() {
@@ -437,7 +436,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellPopupMenuShouldBeEnabled(tableIdentifier, row, columnIdentifier, menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, expectedMessage));
+            }, must.raiseExactly(AssertionError.class, expectedMessage));
         }
 
         public void tableCellPopupMenuShouldBeDisabledPassesWhenMenuItemIsDisabled() throws Throwable {
@@ -463,7 +462,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 public void run() throws Throwable {
                     context.tableCellPopupMenuShouldBeDisabled(tableIdentifier, row, columnIdentifier, menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, expectedMessage));
+            }, must.raiseExactly(AssertionError.class, expectedMessage));
         }
     }
 

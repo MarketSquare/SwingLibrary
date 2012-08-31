@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.spinner;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -136,7 +135,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 public void run() throws Throwable {
                     context.spinnerShouldExist(spinnerIdentifier);
                 }
-            }, should.not().raise(AssertionFailedError.class));
+            }, should.not().raise(AssertionError.class));
         }
 
         public void spinnerShouldExistFailsIfSpinnerDoesntExists() throws Throwable {
@@ -148,7 +147,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 public void run() throws Throwable {
                     context.spinnerShouldExist(spinnerIdentifier);
                 }
-            }, should.raiseExactly(AssertionFailedError.class, "Spinner '" + spinnerIdentifier + "' doesn't exist."));
+            }, should.raiseExactly(AssertionError.class, "Spinner '" + spinnerIdentifier + "' doesn't exist."));
         }
 
         public void spinnerShouldNotExistPassesIfSpinnerDoesntExist() throws Throwable {
@@ -160,7 +159,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 public void run() throws Throwable {
                     context.spinnerShouldNotExist(spinnerIdentifier);
                 }
-            }, should.not().raise(AssertionFailedError.class));
+            }, should.not().raise(AssertionError.class));
         }
 
         public void spinnerShouldNotExistFailsIfSpinnerExists() throws Throwable {
@@ -172,7 +171,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 public void run() throws Throwable {
                     context.spinnerShouldNotExist(spinnerIdentifier);
                 }
-            }, should.raiseExactly(AssertionFailedError.class, "Spinner '" + spinnerIdentifier + "' exists."));
+            }, should.raiseExactly(AssertionError.class, "Spinner '" + spinnerIdentifier + "' exists."));
         }
 
         private void injectMockExistenceResolver() {

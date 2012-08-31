@@ -16,7 +16,7 @@
 
 package org.robotframework.swing.keyword.dialog;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TimeoutExpiredException;

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -102,7 +101,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
                 public void run() throws Throwable {
                     context.allCheckboxesShouldBeChecked();
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Checkbox '" + checkboxText + "' is not checked."));
+            }, must.raiseExactly(AssertionError.class, "Checkbox '" + checkboxText + "' is not checked."));
         }
 
         public void allCheckboxesShouldBeUncheckedPassesIfAllCheckboxesAreUnchecked() throws Throwable {
@@ -126,7 +125,7 @@ public class CheckBoxListKeywordsSpec extends MockSupportSpecification<CheckBoxL
                 public void run() throws Throwable {
                     context.allCheckboxesShouldBeUnchecked();
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Checkbox '" + checkboxText + "' is checked."));
+            }, must.raiseExactly(AssertionError.class, "Checkbox '" + checkboxText + "' is checked."));
         }
 
         private void setCheckboxesAreSelected(final boolean b) {

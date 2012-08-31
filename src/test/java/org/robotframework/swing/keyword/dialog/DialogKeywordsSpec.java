@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.dialog;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -124,7 +123,7 @@ public class DialogKeywordsSpec extends
                 public void run() throws Throwable {
                     context.dialogShouldBeOpen(dialogIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void dialogShouldBeOpenFailsWhenDialogIsNotOpen()
@@ -137,7 +136,7 @@ public class DialogKeywordsSpec extends
                     context.dialogShouldBeOpen(dialogIdentifier);
                 }
             },
-                    must.raiseExactly(AssertionFailedError.class, "Dialog '"
+                    must.raiseExactly(AssertionError.class, "Dialog '"
                             + dialogIdentifier + "' is not open"));
         }
 
@@ -150,7 +149,7 @@ public class DialogKeywordsSpec extends
                 public void run() throws Throwable {
                     context.dialogShouldNotBeOpen(dialogIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void dialogShouldNotBeOpenFailsWhenDialogIsOpen()
@@ -163,7 +162,7 @@ public class DialogKeywordsSpec extends
                     context.dialogShouldNotBeOpen(dialogIdentifier);
                 }
             },
-                    must.raiseExactly(AssertionFailedError.class, "Dialog '"
+                    must.raiseExactly(AssertionError.class, "Dialog '"
                             + dialogIdentifier + "' is open"));
         }
 

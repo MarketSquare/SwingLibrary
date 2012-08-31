@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.textcomponent;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -41,11 +40,11 @@ public class TextComponentKeywordsSpec extends MockSupportSpecification<TextComp
         public void hasClearTextFieldKeyword() {
             specify(textFieldKeywords, satisfies(new RobotKeywordContract("clearTextField")));
         }
-        
+
         public void hasTextFieldShouldBeEnabledKeyword() {
             specify(textFieldKeywords, satisfies(new RobotKeywordContract("textFieldShouldBeEnabled")));
         }
-        
+
         public void hasTextFieldShouldBeDisabledKeyword() {
             specify(textFieldKeywords, satisfies(new RobotKeywordContract("textFieldShouldBeDisabled")));
         }
@@ -72,7 +71,7 @@ public class TextComponentKeywordsSpec extends MockSupportSpecification<TextComp
 
             context.insertIntoTextField(textFieldIdentifier, someText);
         }
-        
+
         public void insertsIntoDisabledTextFieldFails() {
             checking(new Expectations() {{
             	one(operator).isEditable(); will(returnValue(false));
@@ -108,53 +107,53 @@ public class TextComponentKeywordsSpec extends MockSupportSpecification<TextComp
 
             specify(context.getTextFieldValue(textFieldIdentifier), must.equal(someText));
         }
-        
+
         public void textFieldShouldBeEnabledPassesWhenFieldIsEnabled() throws Throwable {
             checking(new Expectations() {{
                 one(operator).isEnabled(); will(returnValue(true));
             }});
-            
+
             specify(new Block() {
                 public void run() throws Throwable {
                     context.textFieldShouldBeEnabled(textFieldIdentifier);
                 }
             }, must.not().raiseAnyException());
         }
-        
+
         public void textFieldShouldBeEnabledFailsWhenFieldIsDisabled() throws Throwable {
             checking(new Expectations() {{
                 one(operator).isEnabled(); will(returnValue(false));
             }});
-            
+
             specify(new Block() {
                 public void run() throws Throwable {
                     context.textFieldShouldBeEnabled(textFieldIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Textfield '" + textFieldIdentifier + "' is disabled."));
+            }, must.raiseExactly(AssertionError.class, "Textfield '" + textFieldIdentifier + "' is disabled."));
         }
-        
+
         public void textFieldShouldBeDisabledPassesWhenFieldIsDisabled() throws Throwable {
             checking(new Expectations() {{
                 one(operator).isEnabled(); will(returnValue(false));
             }});
-            
+
             specify(new Block() {
                 public void run() throws Throwable {
                     context.textFieldShouldBeDisabled(textFieldIdentifier);
                 }
             }, must.not().raiseAnyException());
         }
-        
+
         public void textFieldShouldBeDisabledFailsWhenFieldIsEnalbed() throws Throwable {
             checking(new Expectations() {{
                 one(operator).isEnabled(); will(returnValue(true));
             }});
-            
+
             specify(new Block() {
                 public void run() throws Throwable {
                     context.textFieldShouldBeDisabled(textFieldIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Textfield '" + textFieldIdentifier + "' is enabled."));
+            }, must.raiseExactly(AssertionError.class, "Textfield '" + textFieldIdentifier + "' is enabled."));
         }
 
         private void injectMockOperatorFactoryToTextFieldKeywords() {

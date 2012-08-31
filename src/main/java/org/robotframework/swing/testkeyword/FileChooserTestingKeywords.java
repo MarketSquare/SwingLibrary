@@ -15,7 +15,7 @@
  */
 package org.robotframework.swing.testkeyword;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;

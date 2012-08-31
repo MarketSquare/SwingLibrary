@@ -2,7 +2,7 @@ package org.robotframework.swing.testkeyword;
 
 import javax.swing.tree.TreePath;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;

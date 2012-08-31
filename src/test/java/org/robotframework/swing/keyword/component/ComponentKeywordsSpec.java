@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.component;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -46,19 +45,19 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
         public void hasComponentShouldExistKeyword() {
             specify(context, satisfies(new RobotKeywordContract("componentShouldExist")));
         }
-        
+
         public void hasClickOnComponentKeyword() {
             specify(context, satisfies(new RobotKeywordContract("clickOnComponent")));
         }
-        
+
         public void hasGetTooltipTextKeyword() {
             specify(context, satisfies(new RobotKeywordContract("getTooltipText")));
         }
-        
+
         public void hasSetFocusToComponentKeyword() {
             specify(context, satisfies(new RobotKeywordContract("focusToComponent")));
         }
-        
+
         public void hasSelectFromPopupMenuKeyword() {
             specify(context, satisfies(new RobotKeywordContract("selectFromPopupMenu")));
         }
@@ -76,53 +75,53 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
             }});
             return keywords;
         }
-        
+
         public void clicksOnComponent() {
             checking(new Expectations() {{
                 one(operator).clickMouse(1);
             }});
-            
+
             context.clickOnComponent(componentIdentifier, new String[0]);
         }
-        
+
         public void doubleclicksOnComponent() {
             checking(new Expectations() {{
                 one(operator).clickMouse(2);
             }});
-            
+
             context.clickOnComponent(componentIdentifier, new String[] { "2" });
         }
-        
-        
+
+
         public void getsTooltipText() {
             checking(new Expectations() {{
                 one(operator).getToolTipText(); will(returnValue("tooltip"));
             }});
-            
+
             specify(context.getTooltipText(componentIdentifier), "tooltip");
         }
-        
+
         public void focusesToComponent() {
             checking(new Expectations() {{
                 one(operator).getFocus();
             }});
-            
+
             context.focusToComponent(componentIdentifier);
         }
-        
+
         public void selectsFromPopupMenu() {
             final JPopupMenuOperator popupOperator = mock(JPopupMenuOperator.class);
             final String menuPath = "some|menu";
-            
+
             checking(new Expectations() {{
                 one(operator).invokePopup(); will(returnValue(popupOperator));
                 one(popupOperator).pushMenuNoBlock(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
             }});
-            
+
             context.selectFromPopupMenu(componentIdentifier, menuPath);
         }
     }
-    
+
     public class ResolvingExistence {
         private IComponentConditionResolver componentExistenceResolver;
         private ComponentKeywords componentKeywords;
@@ -132,7 +131,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
             injectMockComponentExistenceResolverToKeywords();
             return componentKeywords;
         }
-        
+
         public void componentShouldNotExistPassesIfComponentIsNotFound() throws Throwable {
             checking(new Expectations() {{
                 one(componentExistenceResolver).satisfiesCondition(componentIdentifier);
@@ -143,7 +142,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
                 public void run() throws Throwable {
                     context.componentShouldNotExist(componentIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void componentShouldNotExistFailsIfComponentIsFound() throws Throwable {
@@ -156,7 +155,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
                 public void run() throws Throwable {
                     context.componentShouldNotExist(componentIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Component '" + componentIdentifier + "' exists"));
+            }, must.raiseExactly(AssertionError.class, "Component '" + componentIdentifier + "' exists"));
         }
 
         public void componentShouldExistPassesIfComponentIsFound() throws Throwable {
@@ -169,7 +168,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
                 public void run() throws Throwable {
                     context.componentShouldExist(componentIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void componentShouldExistFailsIfComponentIsNotFound() {
@@ -182,7 +181,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
                 public void run() throws Throwable {
                     context.componentShouldExist(componentIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Component '" + componentIdentifier + "' does not exist"));
+            }, must.raiseExactly(AssertionError.class, "Component '" + componentIdentifier + "' does not exist"));
         }
 
         private void injectMockComponentExistenceResolverToKeywords() {

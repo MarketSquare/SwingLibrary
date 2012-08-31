@@ -18,7 +18,7 @@ package org.robotframework.swing.keyword.component;
 
 import java.awt.event.InputEvent;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;

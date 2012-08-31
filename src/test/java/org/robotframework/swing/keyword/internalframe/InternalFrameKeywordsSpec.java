@@ -22,7 +22,6 @@ import javax.swing.JInternalFrame;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -181,7 +180,7 @@ public class InternalFrameKeywordsSpec extends
                     context.internalFrameShouldBeOpen(identifier);
                 }
             },
-                    raiseExactly(AssertionFailedError.class, "Internal frame '"
+                    raiseExactly(AssertionError.class, "Internal frame '"
                             + identifier + "' is not open."));
         }
 
@@ -215,7 +214,7 @@ public class InternalFrameKeywordsSpec extends
                     context.internalFrameShouldNotBeOpen(identifier);
                 }
             },
-                    raiseExactly(AssertionFailedError.class, "Internal frame '"
+                    raiseExactly(AssertionError.class, "Internal frame '"
                             + identifier + "' is open."));
         }
 
@@ -274,7 +273,7 @@ public class InternalFrameKeywordsSpec extends
                     context.internalFrameShouldExist(identifier);
                 }
             },
-                    raiseExactly(AssertionFailedError.class, "Internal frame '"
+                    raiseExactly(AssertionError.class, "Internal frame '"
                             + identifier + "' doesn't exist."));
         }
 
@@ -308,7 +307,7 @@ public class InternalFrameKeywordsSpec extends
                     context.internalFrameShouldNotExist(identifier);
                 }
             },
-                    raiseExactly(AssertionFailedError.class, "Internal frame '"
+                    raiseExactly(AssertionError.class, "Internal frame '"
                             + identifier + "' exists."));
         }
     }

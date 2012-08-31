@@ -5,7 +5,6 @@ import java.awt.Container;
 
 import jdave.Block;
 import jdave.Specification;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.robotframework.swing.operator.ComponentWrapper;
@@ -23,7 +22,7 @@ public abstract class ContextVerifierSpecification<T extends ContextVerifier> ex
                 public void run() throws Throwable {
                     context.verifyContext();
                 }
-            }, must.raiseExactly(AssertionFailedError.class, getExpectedErrorMessage() + " Current context is java.awt.Container"));
+            }, must.raiseExactly(AssertionError.class, getExpectedErrorMessage() + " Current context is java.awt.Container"));
         }
 
         protected abstract ContextVerifier createVerifier();
@@ -38,7 +37,7 @@ public abstract class ContextVerifierSpecification<T extends ContextVerifier> ex
             public void run() throws Throwable {
                 context.verifyContext();
             }
-        }, must.not().raise(AssertionFailedError.class));
+        }, must.not().raise(AssertionError.class));
     }
 
     protected abstract String getExpectedErrorMessage();

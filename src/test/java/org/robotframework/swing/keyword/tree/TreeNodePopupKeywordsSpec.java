@@ -7,7 +7,6 @@ import javax.swing.JTree;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -49,11 +48,11 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
         public void hasTreeNodePopupMenuItemShouldBeDisabledKeyword() {
             specify(context, satisfies(new RobotKeywordContract("treeNodePopupMenuItemShouldBeDisabled")));
         }
-        
+
         public void hasSelectFromPopupMenuOnSelectedTreeNodesKeyword() {
             specify(context, satisfies(new RobotKeywordContract("selectFromPopupMenuOnSelectedTreeNodes")));
         }
-        
+
         public void hasOperatorFactory() {
             specify(context, satisfies(new FieldIsNotNullContract("operatorFactory")));
         }
@@ -86,10 +85,10 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
             context.selectFromTreeNodePopupMenuInSeparateThread(treeIdentifier, nodeIdentifier, menuPath);
         }
     }
-    
+
     public class InvokingPopupMenuActionsOnSelectedNodes {
         private boolean waitToAvoidInstabilityWasCalled;
-        
+
         public TreeNodePopupKeywords create() {
             waitToAvoidInstabilityWasCalled = false;
             TreeNodePopupKeywords treeKeywords = new TreeNodePopupKeywords() {
@@ -97,7 +96,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
                     waitToAvoidInstabilityWasCalled = true;
                 }
             };
-            
+
             TreeNodePopupKeywords treePopupKeywords = populateWithMockOperatorFactory(treeKeywords);
             popupMenuOperator = mock(JPopupMenuOperator.class);
             checking(new Expectations() {{
@@ -106,12 +105,12 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
             }});
             return treePopupKeywords;
         }
-        
+
         public void selectsFromPopupMenuOnSelectedTreeNodes() {
             checking(new Expectations() {{
                 one(popupMenuOperator).pushMenuNoBlock(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
             }});
-            
+
             context.selectFromPopupMenuOnSelectedTreeNodes(treeIdentifier, menuPath);
             specify(waitToAvoidInstabilityWasCalled);
         }
@@ -127,11 +126,11 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
                     return menuFinder;
                 }
             });
-            
+
             checking(new Expectations() {{
                 one(treeOperator).getSource(); will(returnValue(dummy(JTree.class)));
             }});
-            
+
             return treeKeywords;
         }
 
@@ -145,7 +144,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
                 public void run() throws Throwable {
                     context.treeNodePopupMenuItemShouldBeEnabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void treeNodePopupMenuItemShouldBeEnabledFailsIfMenuItemIsDisabled() throws Throwable {
@@ -157,7 +156,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
                 public void run() throws Throwable {
                     context.treeNodePopupMenuItemShouldBeEnabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' was disabled"));
+            }, must.raiseExactly(AssertionError.class, "Menu item '" + menuPath + "' was disabled"));
         }
 
         public void treeNodePopupMenuItemShouldBeDisabledPassesIfMenuItemIsDisabled() throws Throwable {
@@ -169,7 +168,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
                 public void run() throws Throwable {
                     context.treeNodePopupMenuItemShouldBeDisabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void treeNodePopupMenuItemShouldBeDisabledFailsIfMenuItemIsEnabled() throws Throwable {
@@ -181,7 +180,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
                 public void run() throws Throwable {
                     context.treeNodePopupMenuItemShouldBeDisabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Menu item '" + menuPath + "' was enabled"));
+            }, must.raiseExactly(AssertionError.class, "Menu item '" + menuPath + "' was enabled"));
         }
 
         private ITreePopupMenuItemFinder createMockMenuFinder() {

@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.tree;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -39,7 +38,7 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
 
         public TreeNodeExistenceKeywords create() {
             nodeExistenceResolver = mock(TreeNodeExistenceResolver.class);
-            
+
             return new TreeNodeExistenceKeywords() {
                 TreeNodeExistenceResolver createExistenceResolver(String identifier) {
                     return nodeExistenceResolver;
@@ -64,7 +63,7 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
                 public void run() throws Throwable {
                     context.treeNodeShouldExist(treeIdentifier, nodeIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' doesn't exist."));
+            }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' doesn't exist."));
         }
 
         public void treeNodeShouldNotExistFailsIfTreeNodeExists() throws Throwable {
@@ -85,7 +84,7 @@ public class TreeNodeExistenceKeywordsSpec extends MockSupportSpecification<Tree
                 public void run() throws Throwable {
                     context.treeNodeShouldNotExist(treeIdentifier, nodeIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' exists."));
+            }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' exists."));
         }
 
         private void setNodeFound(final boolean nodeFound) {

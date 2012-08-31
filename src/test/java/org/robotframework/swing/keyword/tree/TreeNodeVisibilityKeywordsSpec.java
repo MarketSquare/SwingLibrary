@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.tree;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -75,7 +74,7 @@ public class TreeNodeVisibilityKeywordsSpec extends TreeSpecification<TreeNodeVi
                 public void run() throws Throwable {
                     context.treeNodeShouldBeVisible(treeIdentifier, nodeIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is not visible."));
+            }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' is not visible."));
         }
 
         public void treeNodeShouldNotBeVisibleWithNodePathPassesIfTreeNodeIsNotVisible() throws Throwable {
@@ -95,12 +94,13 @@ public class TreeNodeVisibilityKeywordsSpec extends TreeSpecification<TreeNodeVi
                 public void run() throws Throwable {
                     context.treeNodeShouldNotBeVisible(treeIdentifier, nodeIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Tree node '" + nodeIdentifier + "' is visible."));
+            }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' is visible."));
         }
 
         private void setIsVisible(final boolean isVisible) {
             checking(new Expectations() {{
-                one(treeOperator).isVisible(nodeIdentifier); will(returnValue(isVisible));
+                one(treeOperator).isVisible(nodeIdentifier);
+                will(returnValue(isVisible));
             }});
         }
     }

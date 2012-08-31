@@ -2,7 +2,6 @@ package org.robotframework.swing.keyword.label;
 
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-import junit.framework.AssertionFailedError;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
@@ -41,7 +40,7 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
             specify(context, satisfies(new RobotKeywordContract("getLabelContent")));
         }
 
-        
+
         public void labelShouldBeEqualKeyword() {
             specify(context, satisfies(new RobotKeywordContract("labelTextShouldBe")));
         }
@@ -79,10 +78,10 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
             specify(context.getLabelContent(labelIdentifier), must.equal(labelText));
         }
     }
-    
+
     public class CheckingLabel {
         private LabelOperator labelOperator = mock(LabelOperator.class);
-        
+
         public LabelKeywords create() {
             LabelKeywords labelKeywords = new LabelKeywords();
             final OperatorFactory operatorFactory = injectMockTo(labelKeywords, "operatorFactory", IdentifierParsingOperatorFactory.class);
@@ -94,19 +93,19 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
 
             return labelKeywords;
         }
-    	
+
     	public void labelShouldBePassesWhenLabelIsEqual() throws Throwable {
             checking(new Expectations() {{
                 one(labelOperator).getText();
                 will(returnValue("My label!"));
             }});
-    		
+
     		specify(new Block() {
 				public void run() throws Throwable {
 					context.labelTextShouldBe(labelIdentifier, "My label!");
 				}
     		}, must.not().raiseAnyException());
-    				
+
     	}
 
     	public void labelShouldBeFailsWhenLabelIsUnEqual() {
@@ -114,18 +113,18 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
                 one(labelOperator).getText();
                 will(returnValue("My label!"));
             }});
-    		
+
     		specify(new Block() {
 				public void run() throws Throwable {
 					context.labelTextShouldBe(labelIdentifier, "Something else");
 				}
-    		}, must.raise(AssertionError.class, 
+    		}, must.raise(AssertionError.class,
     				"Expected label 'someLabel' value to be 'Something else', but was 'My label!'"));
-    	}    	
+    	}
     }
 
-    
-    
+
+
     public class CheckingConditions {
         private IComponentConditionResolver existenceResolver;
 
@@ -142,7 +141,7 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
                 public void run() throws Throwable {
                     context.labelShouldExist(labelIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void labelShouldExistFailsIfLabelDoesntExist() throws Throwable {
@@ -152,7 +151,7 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
                 public void run() throws Throwable {
                     context.labelShouldExist(labelIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Label '" + labelIdentifier + "' doesn't exist"));
+            }, must.raiseExactly(AssertionError.class, "Label '" + labelIdentifier + "' doesn't exist"));
         }
 
         public void labelShouldNotExistPassesIfLabelDoesntExist() throws Throwable {
@@ -162,7 +161,7 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
                 public void run() throws Throwable {
                     context.labelShouldNotExist(labelIdentifier);
                 }
-            }, must.not().raise(AssertionFailedError.class));
+            }, must.not().raise(AssertionError.class));
         }
 
         public void labelShouldNotExistFailsIfLabelExists() throws Throwable {
@@ -172,7 +171,7 @@ public class LabelKeywordsSpec extends MockSupportSpecification<LabelKeywords> {
                 public void run() throws Throwable {
                     context.labelShouldNotExist(labelIdentifier);
                 }
-            }, must.raiseExactly(AssertionFailedError.class, "Label '" + labelIdentifier + "' exists"));
+            }, must.raiseExactly(AssertionError.class, "Label '" + labelIdentifier + "' exists"));
         }
 
         private void setLabelExists(final boolean labelExists) {
