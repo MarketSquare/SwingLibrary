@@ -9,44 +9,9 @@ are located in `src/test/resources/robot-tests`
 Building
 ========
 
-SwingLibrary uses Apache Buildr__ as a build tool.
+SwingLibrary uses Apache Maven_ as a build tool.
 
-__ http://buildr.apache.org/
+__ http://maven.apache.org/
 
-For most of the tasks, we have custom tasks since the default tasks
-do not allow for enough customization. All artifacts are created in
-`target` directory.
-
-The tasks most important tasks are::
-
-  uberjar  # Builds swinglibrary-<version>.jar, including dependencies
-  robottest # Run all robot tests
-  robottest[--suite buttonkeywords] # Command line options to RF
-  libdoc # Builds documentation using lib/libdoc.py
-  demo # Packages demo in timestamped zip file
-  dist # Build uberjar, libdoc and demo
-
-Most complex of these task is the `uberjar`, since in addition to compilation
-it runs `jarjar` to prevent runtime clashes with the application under test.
-
-The `libdoc` task uses `paranamer` to inject parameter names to bytecode
-so that they are available to `libdoc.py`.
-
-
-Releasing
-=========
-
-To make a relase:
-
-  * Update correct versions to buildfile and pom.xml
-  * Commit::
-      git ci buildfile pom.xml -m 'Updated to version $version'
-  * Create tag::
-      git tag $version && git push --tags
-  * Create packages::
-      buildr clean dist
-  * Upload demo, doc and jar to Github
-  * Depoloy to Sonatype::
-      buildr deploy
-  * Close and release the staging repo according to
-    https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt
+`mvn package` packages SwingLibrary with dependencies.
+`mvn verify` runs Robot Framework tests.

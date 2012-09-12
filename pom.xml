@@ -54,7 +54,7 @@
     <dependency>
       <groupId>org.robotframework</groupId>
       <artifactId>javalib-core</artifactId>
-      <version>0.9.1</version>
+      <version>1.0.1</version>
     </dependency>
     <dependency>
       <groupId>jretrofit</groupId>
@@ -65,37 +65,6 @@
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
       <version>3.2</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.1</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.12</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-      <version>2.5.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-beans</artifactId>
-      <version>2.5.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>2.5.4</version>
     </dependency>
     <dependency>
       <groupId>com.thoughtworks.paranamer</groupId>
@@ -156,33 +125,78 @@
         </configuration>
         </plugin>
       <plugin>
-        <groupId>com.googlecode.robotframework-maven-plugin</groupId>
+        <groupId>org.robotframework</groupId>
         <artifactId>robotframework-maven-plugin</artifactId>
-        <version>1.1.2</version>
+        <version>1.0.0-SNAPSHOT</version>
         <executions>
           <execution>
             <goals>
-              <goal>run</goal>
+              <goal>acceptance-test</goal>
             </goals>
           </execution>
         </executions>
         <configuration>
           <testCasesDirectory>${project.basedir}/src/test/resources/robot-tests</testCasesDirectory>
+          <libdoc>
+            <outputFile>doc.html</outputFile>
+            <extraPathDirectories>
+              <extraPathDirectory>target/swinglibrary-1.2.1-SNAPSHOT.jar</extraPathDirectory>
+            </extraPathDirectories>
+            <libraryOrResourceFile>SwingLibrary</libraryOrResourceFile>
+          </libdoc>
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>1.6</version>
-        <configuration>
-          <!-- put your configurations here -->
-        </configuration>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>jarjar-maven-plugin</artifactId>
+        <version>1.5</version>
         <executions>
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>shade</goal>
+              <goal>jarjar</goal>
             </goals>
+            <configuration>
+              <includes>
+                <include>org.netbeans:jemmy</include>
+                <include>abbot:abbot</include>
+                <include>abbot:costello</include>
+                <include>junit:junit</include>
+                <include>jretrofit:jretrofit</include>
+                <include>commons-collections:commons-collections</include>
+                <include>com.thoughtworks.paranamer:paranamer</include>
+                <include>org.robotframework:javalib-core</include>
+              </includes>
+              <rules>
+                <rule>
+                  <pattern>org.netbeans.**</pattern>
+                  <result>org.robotframework.@0</result>
+                </rule>
+                <rule>
+                  <pattern>abbot.**</pattern>
+                  <result>org.robotframework.@0</result>
+                </rule>
+                <rule>
+                  <pattern>org.apache.commons.collections.**</pattern>
+                  <result>org.robotframework.@0</result>
+                </rule>
+                <rule>
+                  <pattern>com.thoughtworks.**</pattern>
+                  <result>org.robotframework.@0</result>
+                </rule>
+                <rule>
+                  <pattern>org.junit.**</pattern>
+                  <result>org.robotframework.@0</result>
+                </rule>
+                <rule>
+                  <pattern>org.laughingpanda.jretrofit.**</pattern>
+                  <result>org.robotframework.@0</result>
+                </rule>
+                <keep>
+                  <pattern>org.robotframework.**</pattern>
+                </keep>
+              </rules>
+            </configuration>
           </execution>
         </executions>
       </plugin>
