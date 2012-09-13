@@ -138,8 +138,8 @@
         </executions>
         <configuration>
           <testCasesDirectory>${project.basedir}/src/test/resources/robot-tests</testCasesDirectory>
+          <logLevel>DEBUG</logLevel>
           <libdoc>
-            <logLevel>DEBUG</logLevel>
             <outputFile>doc.html</outputFile>
             <extraPathDirectories>
               <extraPathDirectory>target/swinglibrary-1.2.1-SNAPSHOT.jar</extraPathDirectory>
