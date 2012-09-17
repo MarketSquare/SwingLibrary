@@ -68,10 +68,10 @@ public class SwingLibrary extends AnnotationLibrary {
             "*Locating components*\n\n  "
             + "Most of the keywords that operate on a visible component take an argument named `identifier`, "
             + "which is used to locate the element. The first matching element is operated on, according to these rules: \n\n"
-            + "1. If the `identifier` is a number, it is used as a zero-based index for the particular component type in the current context. "
+            + "- If the `identifier` is a number, it is used as a zero-based index for the particular component type in the current context. "
             + "Using indices is, however, fragile and is strongly discouraged\n"
-            + "2. If the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n"
-            + "3. For components that have visible text (e.g. buttons), `identifier` is also matched against that.\n\n"
+            + "- If the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n"
+            + "- For components that have visible text (e.g. buttons), `identifier` is also matched against that.\n\n"
             + "Keyword `List Components in Context` lists all components and their names and indices in a given context.";
 
     public SwingLibrary() {

@@ -137,7 +137,7 @@
       <plugin>
         <groupId>org.robotframework</groupId>
         <artifactId>robotframework-maven-plugin</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <executions>
           <execution>
             <goals>
@@ -150,9 +150,10 @@
           <testCasesDirectory>${project.basedir}/src/test/resources/robot-tests</testCasesDirectory>
           <logLevel>DEBUG</logLevel>
           <libdoc>
-            <outputFile>doc.html</outputFile>
+            <version>${project.version}</version>
+            <outputFile>SwingLibrary.html</outputFile>
             <extraPathDirectories>
-              <extraPathDirectory>target/swinglibrary-1.4.jar</extraPathDirectory>
+              <extraPathDirectory>target/swinglibrary-${project.version}.jar</extraPathDirectory>
             </extraPathDirectories>
             <libraryOrResourceFile>SwingLibrary</libraryOrResourceFile>
           </libdoc>
