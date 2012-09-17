@@ -151,7 +151,7 @@
           <logLevel>DEBUG</logLevel>
           <libdoc>
             <version>${project.version}</version>
-            <outputFile>SwingLibrary.html</outputFile>
+            <outputFile>SwingLibrary-${project.version}.html</outputFile>
             <extraPathDirectories>
               <extraPathDirectory>target/swinglibrary-${project.version}.jar</extraPathDirectory>
             </extraPathDirectories>

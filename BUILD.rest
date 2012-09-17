@@ -13,5 +13,15 @@ SwingLibrary uses Apache Maven_ as a build tool.
 
 __ http://maven.apache.org/
 
-`mvn package` packages SwingLibrary with dependencies.
-`mvn verify` runs Robot Framework tests.
+- `mvn package` packages SwingLibrary with dependencies.
+- `mvn verify` runs Robot Framework tests.
+
+Releasing
+=========
+
+- update release notes
+- `mvn robotframework:libdoc` generates library docs
+- `mvn deploy` deploys the library to maven central. See instructinos on Robot Framework releasing for the prerequisites.
+- upload jar and library docs to github downloads
+
+
