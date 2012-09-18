@@ -162,7 +162,7 @@
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>jarjar-maven-plugin</artifactId>
-        <version>1.5</version>
+        <version>1.6</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -175,9 +175,9 @@
                 <include>abbot:abbot</include>
                 <include>abbot:costello</include>
                 <include>junit:junit</include>
+                <include>gnu-regexp:gnu-regexp</include>
                 <include>jretrofit:jretrofit</include>
                 <include>commons-collections:commons-collections</include>
-                <include>com.thoughtworks.paranamer:paranamer</include>
                 <include>org.robotframework:javalib-core</include>
               </includes>
               <rules>
@@ -202,11 +202,18 @@
                   <result>org.robotframework.@0</result>
                 </rule>
                 <rule>
+                  <pattern>gnu.regexp.**</pattern>
+                  <result>org.robotframework.@0</result>
+                </rule>
+                <rule>
                   <pattern>org.laughingpanda.jretrofit.**</pattern>
                   <result>org.robotframework.@0</result>
                 </rule>
                 <keep>
                   <pattern>org.robotframework.**</pattern>
+                </keep>
+                <keep>
+                  <pattern>SwingLibrary</pattern>
                 </keep>
               </rules>
             </configuration>
