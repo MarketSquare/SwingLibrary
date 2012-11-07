@@ -16,6 +16,7 @@
 package org.robotframework.swing.testkeyword;
 
 import org.junit.Assert;
+import java.io.File;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -30,6 +31,9 @@ public class FileChooserTestingKeywords {
     
     @RobotKeyword
     public void selectedFileShouldBe(String expectedFile) {
-        Assert.assertEquals(expectedFile, TestFileChooser.selectedFilePath);
+        File expected = new File(expectedFile);
+        File selected = new File(TestFileChooser.selectedFilePath);
+        if (!expected.equals(selected))
+            throw new RuntimeException("Paths are not equal "+expected+" != "+selected);
     }
 }
