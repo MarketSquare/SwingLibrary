@@ -82,7 +82,7 @@ public class ComponentKeywords {
     @RobotKeyword("Sets focus to the component.\n"
             + "Useful for example when sending keyboard events to a component.\n\n"
             + "Example:\n"
-            + "| Set Focus To Component | _myTextField_ |           | |\n"
+            + "| Focus To Component     | _myTextField_ |           | |\n"
             + "| Send Keyboard Event    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
     @ArgumentNames({ "identifier" })
     public void focusToComponent(String identifier) {
