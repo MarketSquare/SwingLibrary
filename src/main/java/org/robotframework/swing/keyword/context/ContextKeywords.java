@@ -16,16 +16,19 @@
 
 package org.robotframework.swing.keyword.context;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
+import java.awt.*;
 import java.lang.reflect.Method;
 
+import org.apache.commons.collections.functors.FalsePredicate;
+import org.junit.Assert;
+import org.netbeans.jemmy.operators.Operator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.*;
 import org.robotframework.swing.factory.OperatorFactory;
+
+import javax.swing.*;
 
 @RobotKeywords
 public class ContextKeywords {
@@ -39,8 +42,9 @@ public class ContextKeywords {
         + "| Select Context | _myPanel_     | # Sets _'myPanel'_ as current context |\n")
     @ArgumentNames({"identifier"})
     public void selectContext(String identifier) {
-        Context.setContext(operatorFactory.createOperator(identifier));
-        contextVerifier.verifyContext();
+        ContainerOperator op = operatorFactory.createOperator(identifier);
+        verifyContext(op.getSource().getClass());
+        Context.setContext(op);
     }
 
     @RobotKeyword("Returns the component name in current context or title if window or dialog is selected.\n\n"
@@ -66,5 +70,20 @@ public class ContextKeywords {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+    }
+
+    private static void verifyContext(Class contextClass) {
+        Class<? extends Component>[] expectedClasses = new Class[] { Window.class, JPanel.class, Panel.class, JInternalFrame.class };
+        boolean assignable = false;
+        StringBuilder str = new StringBuilder();
+        for (Class<? extends Component> expectedClass : expectedClasses) {
+            assignable = assignable || expectedClass.isAssignableFrom(contextClass);
+            str.append(expectedClass.getName());
+            str.append(" ");
+        }
+
+        if (!assignable) {
+            Assert.fail("Invalid context " + contextClass.getName() + ". Should be one of (" + str + ")");
+        }
     }
 }
