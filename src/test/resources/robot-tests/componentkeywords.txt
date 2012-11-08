@@ -1,5 +1,6 @@
 *** Settings ***
 Library         TestSwingLibrary
+Variables       platform_info.py
 
 *** Variables ***
 ${textAreaName}  testTextArea
@@ -14,9 +15,9 @@ Sets Focus
     clearTextField  ${textAreaName}
     typeIntoTextfield  ${textFieldName}  copyPaste
     selectTextFieldContents  ${textFieldName}
-    sendKeyboardEvent  VK_C  CTRL_MASK
+    sendKeyboardEvent  VK_C  ${CTRL CMD}
     focusToComponent  ${textAreaName}
-    sendKeyboardEvent  VK_V  CTRL_MASK
+    sendKeyboardEvent  VK_V  ${CTRL CMD}
     ${textFieldContents}=  getTextFieldValue  ${textAreaName}
     shouldBeEqual  copyPaste  ${textFieldContents}
 
