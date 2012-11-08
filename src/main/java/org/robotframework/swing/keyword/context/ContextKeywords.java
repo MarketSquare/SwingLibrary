@@ -24,14 +24,13 @@ import java.lang.reflect.Method;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.swing.context.ContainerOperator;
-import org.robotframework.swing.context.ContainerOperatorFactory;
-import org.robotframework.swing.context.Context;
+import org.robotframework.swing.context.*;
 import org.robotframework.swing.factory.OperatorFactory;
 
 @RobotKeywords
 public class ContextKeywords {
     private OperatorFactory<ContainerOperator> operatorFactory = new ContainerOperatorFactory();
+    private ContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects a container as current context.\n"
         + "Requires that a parent context has been selected beforehand using `Select Window` or `Select Dialog`.\n\n"
@@ -41,6 +40,7 @@ public class ContextKeywords {
     @ArgumentNames({"identifier"})
     public void selectContext(String identifier) {
         Context.setContext(operatorFactory.createOperator(identifier));
+        contextVerifier.verifyContext();
     }
 
     @RobotKeyword("Returns the component name in current context or title if window or dialog is selected.\n\n"
