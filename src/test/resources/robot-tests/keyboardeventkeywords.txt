@@ -28,7 +28,7 @@ shouldInsertKeysToTextField
 
 clearAndSelectTextField
     clearTextField  ${textFieldName}
-    selectContext  ${textFieldName}
+    FocusToComponent  ${textFieldName}
 
 textFieldContentsShouldBe
     [Arguments]  ${expectedText}

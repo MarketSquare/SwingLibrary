@@ -13,6 +13,8 @@ import org.robotframework.swing.context.ContainerOperator;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.OperatorFactory;
 
+import javax.swing.*;
+
 
 @RunWith(JDaveRunner.class)
 public class ContextKeywordsSpec extends Specification<ContextKeywords> {
@@ -44,13 +46,15 @@ public class ContextKeywordsSpec extends Specification<ContextKeywords> {
 
         public void selectsContext() {
             final OperatorFactory operatorFactory = mock(OperatorFactory.class);
-            final ContainerOperator containerOperator = dummy(ContainerOperator.class);
+            final ContainerOperator containerOperator = mock(ContainerOperator.class);
 
             Inject.field("operatorFactory").of(context).with(operatorFactory);
-
             checking(new Expectations() {{
                 one(operatorFactory).createOperator(contextIdentifier);
                 will(returnValue(containerOperator));
+
+                one(containerOperator).getSource();
+                will(returnValue(new JPanel()));
             }});
 
             context.selectContext(contextIdentifier);
