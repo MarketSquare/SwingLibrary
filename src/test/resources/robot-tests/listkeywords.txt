@@ -50,6 +50,8 @@ Select From List By Name Not Found
     # Set Jemmy Timeout JListOperator.WaitFindItemIndexTimeout ${oldSetting}
 
 Select Multiple Items From List
+    [tags]        fails-on-osx
+    Comment    Selecting multiple list elements does not work on OSX. This seems to be a Jemmy bug.
     selectFromList  ${listName}  one  two  three
     allListItemsShouldBeSelected
 
