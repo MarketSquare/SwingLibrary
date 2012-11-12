@@ -1,0 +1,9 @@
+*** Settings ***
+Library    SwingLibrary
+
+
+*** Test Cases ***
+Start app and close it
+	Launch application    org.robotframework.swing.testapp.TestApplication
+	Select window		Test App
+	Close window		Test App

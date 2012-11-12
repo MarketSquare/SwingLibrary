@@ -67,7 +67,6 @@ Main Menu Item Should Not Be Selected
 Select From Popup Menu
     selectFromPopupMenu  testTextField  Show name
     selectDialog  Message
-    List components in context
     # On Linux and Windows testTextField index is 0, on OSX it is 1. Using label name is a workaround.
     ${labelContents}=  getLabelContent    OptionPane.label
     shouldBeEqual  testTextField  ${labelContents}

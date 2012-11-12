@@ -1,5 +1,6 @@
 *** Settings ***
 Suite Setup     launchApplicationAndSetTimeouts
+Suite teardown  closeWindow  Test App
 Library         SwingLibrary
 Force Tags      regression
 

@@ -36,11 +36,16 @@ Get Selected Window Title
 
 Close Window
     selectFromMainMenu  Test Menu|Show Test Window
+    Select Window       Test Window
     closeWindow  Test Window
+    Run keyword and expect error    Frame with name or title 'Test Window'     Select Window       Test Window
 
 Close Window With RegExp
     selectFromMainMenu  Test Menu|Show Test Window
-    closeWindow  regexp=T.{2}t.*
+    Select Window       Test Window
+    closeWindow  regexp=T.{2}t\\sW.*
+    Run keyword and expect error    *     Select Window       Test Window
+
 
 *** Keywords ***
 contextIsMainWindow
