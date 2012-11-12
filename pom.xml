@@ -170,7 +170,7 @@
               <goal>jarjar</goal>
             </goals>
             <configuration>
-              <output>target/swinglibrary-with-dependencies-${project.version}.jar</output>
+              <output>target/with-dependencies/swinglibrary-${project.version}.jar</output>
               <includes>
                 <include>org.netbeans:jemmy</include>
                 <include>abbot:abbot</include>
