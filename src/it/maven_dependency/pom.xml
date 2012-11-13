@@ -13,7 +13,7 @@
   <dependencies>
     <dependency>
       <groupId>org.robotframework</groupId>
-      <artifactId>SwingLibrary</artifactId>
+      <artifactId>swinglibrary</artifactId>
       <version>@project.version@</version>
     </dependency>
   </dependencies>
