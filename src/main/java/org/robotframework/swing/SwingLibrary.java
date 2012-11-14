@@ -53,7 +53,7 @@ public class SwingLibrary extends AnnotationLibrary {
             + "*Contexts*\n\n"
             + "Keywords that operate on a component always search for the component in some context, "
             + "which has to explicitly set. "
-            + "Allowed contexts are windows, dialogs, internal frames and tabbed panes. "
+            + "Allowed contexts are windows, dialogs, internal frames, and tabbed panes. "
             + "After a context has been selected, all subsequent keywords search for components in that context "
             + "until a new context is selected. Keywords that can be used to select a context are "
             + "`Select Window`, `Select Dialog` and `Select Context`. For example:\n\n\n"
