@@ -19,9 +19,8 @@ __ http://maven.apache.org/
 Releasing
 =========
 
-- update release notes
+- update `release notes <https://github.com/robotframework/SwingLibrary/wiki/Release-notes>`_
 - `mvn robotframework:libdoc` generates library docs
 - `mvn deploy` deploys the library to maven central. See instructinos on Robot Framework releasing for the prerequisites.
 - upload jar and library docs to github downloads
-
 
