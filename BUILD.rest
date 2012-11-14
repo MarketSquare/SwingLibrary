@@ -26,5 +26,8 @@ Releasing
 - `mvn deploy` deploys the library to maven central. See instructinos on Robot Framework releasing for the prerequisites.
 - Go to https://oss.sonatype.org/index.html#welcome, log in with Sonatype creadentials, find the staging repository and do close & release
 After that, the released jar is synced to Maven central within an hour.
-- upload jar and library docs to github downloads
+- create spec xml file
+  - CLASSPATH=$JAVA_HOME/lib:swinglibrary{VERSION}.jar jython /path/to/libdoc.py -f XML SwingLibrary SwingLibrary.xml
+- upload jar, library docs, and spec xml to github downloads
+
 
