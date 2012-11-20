@@ -41,10 +41,17 @@
     </repository>
   </repositories>
   <dependencies>
-    <dependency>
+  <!--<dependency>
       <groupId>org.netbeans</groupId>
       <artifactId>jemmy</artifactId>
       <version>2.2.7.5</version>
+    </dependency>-->
+    <dependency>
+      <groupId>org.netbeans</groupId>
+      <artifactId>jemmy</artifactId>
+      <version>2.3</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/jemmy-2.3.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>abbot</groupId>
@@ -221,6 +228,7 @@
           </execution>
         </executions>
       </plugin>
+      <!--
       <plugin>
         <artifactId>maven-invoker-plugin</artifactId>
         <version>1.7</version>
@@ -242,6 +250,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
