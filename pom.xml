@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.robotframework</groupId>
   <artifactId>swinglibrary</artifactId>
-  <version>1.5.0</version>
+  <version>1.5.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>swinglibrary</name>
   <description>A Robot Framework test library for Swing UI testing</description>
