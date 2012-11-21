@@ -208,6 +208,7 @@ public class TestApplication {
                 77.7, 0.0, 1000.0, 0.1)));
         panel.add(testSlider());
         panel.add(tableWithHeader());
+        panel.add(new TestScrollPane());
     }
 
     private Component tableWithHeader() {

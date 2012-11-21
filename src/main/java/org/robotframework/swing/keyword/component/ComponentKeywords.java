@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.keyword.component;
 
+import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 
 import org.junit.Assert;
@@ -97,6 +98,26 @@ public class ComponentKeywords {
     public void selectFromPopupMenu(String identifier, String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
         popup.pushMenuNoBlock(menuPath, new EqualsStringComparator());
+    }
+
+    @RobotKeyword("Checks that component is visible.")
+         @ArgumentNames({ "identifier"})
+         public void componentShouldBeVisible(String identifier) {
+        Rectangle visible = operator(identifier).getVisibleRect();
+        Assert.assertFalse(identifier + " is not visible", visible.isEmpty());
+    }
+
+    @RobotKeyword("Checks that component is not visible.")
+    @ArgumentNames({ "identifier"})
+    public void componentShouldNotBeVisible(String identifier) {
+        Rectangle visible = operator(identifier).getVisibleRect();
+        Assert.assertTrue(identifier + " is visible. Visible " + visible.toString(), visible.isEmpty());
+    }
+
+    @RobotKeyword("Scrolls component to view.\n")
+    @ArgumentNames({ "identifier"})
+    public void scrollComponentToView(String identifier) {
+        operator(identifier).scrollRectToVisible(new Rectangle(100, 100));
     }
 
     private ComponentOperator operator(String identifier) {

@@ -112,6 +112,13 @@ Get Combobox Values
     logMany  ${values}
     listsShouldBeEqual  ${expectedList}  ${values}
 
+Get Combobox Values out of view
+    ${expectedList}=  createList      combo_9  b  c
+    Component should not be visible   combo_9
+    ${values}=  getComboboxValues     combo_9
+    logMany  ${values}
+    listsShouldBeEqual  ${expectedList}  ${values}
+
 *** Keywords ***
 resetDropdownMenu
     selectFromDropdownMenu  ${comboboxIndex}  ${comboboxItem1}
