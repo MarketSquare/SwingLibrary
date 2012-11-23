@@ -143,7 +143,6 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Fails if the node has child nodes.\n"
-            + "Assumes current context is a tree.\n"
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
             + "Example:\n"
             + "| Tree Node Should Be Leaf | _myTree_ | _Root|Folder_ |\n")

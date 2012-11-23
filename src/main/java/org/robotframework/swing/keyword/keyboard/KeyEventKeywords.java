@@ -29,7 +29,7 @@ public class KeyEventKeywords {
     	+ "Keystroke codes must be one of the constants in _java.awt.event.KeyEvent_ starting with _VK__.\n"
     	+ "Constants from _java.awt.event.InputEvent_ can be used as optional modifiers.\n\n"
         + "Example with textfield:\n"
-        + "| Select Context        | _myTextfield_        |                      |\n"
+        + "| Focus To Component    | _myTextfield_        |                      |\n"
         + "| Send Keyboard Event   | _VK_S_               |                      |\n"
         + "| Send Keyboard Event   | _VK_O_               |                      |\n"
         + "| Send Keyboard Event   | _VK_M_               |                      |\n"

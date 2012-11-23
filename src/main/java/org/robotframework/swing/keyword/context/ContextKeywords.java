@@ -36,7 +36,7 @@ public class ContextKeywords {
     private ContextVerifier contextVerifier = new DefaultContextVerifier();
 
     @RobotKeyword("Selects a container as current context.\n"
-        + "Context has to be a window, dialog, internal frame or panel."
+        + "Context has to be a window, dialog, internal frame or panel. "
         + "Requires that a parent context has been selected beforehand using `Select Window` or `Select Dialog`.\n\n"
         + "Example:\n"
         + "| Select Window  | _Main Window_ | # Selects the 'parent context' |\n"
