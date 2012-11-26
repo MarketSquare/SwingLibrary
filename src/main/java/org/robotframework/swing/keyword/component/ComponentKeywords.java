@@ -100,21 +100,29 @@ public class ComponentKeywords {
         popup.pushMenuNoBlock(menuPath, new EqualsStringComparator());
     }
 
-    @RobotKeyword("Checks that component is visible.")
+    @RobotKeyword("Checks that component is visible.\n"
+            +"Even if one pixel of the component is visible, this keyword will pass.\n\n"
+            +"Example:\n"
+            + "| Component Should Be Visible | _myComponent_ |\n")
          @ArgumentNames({ "identifier"})
          public void componentShouldBeVisible(String identifier) {
         Rectangle visible = operator(identifier).getVisibleRect();
         Assert.assertFalse(identifier + " is not visible", visible.isEmpty());
     }
 
-    @RobotKeyword("Checks that component is not visible.")
+    @RobotKeyword("Checks that component is not visible.\n"
+            +"Fails if even one pixel of the component is visible.\n\n"
+            +"Example:\n"
+            + "| Component Should Not Be Visible | _myComponent_ |\n")
     @ArgumentNames({ "identifier"})
     public void componentShouldNotBeVisible(String identifier) {
         Rectangle visible = operator(identifier).getVisibleRect();
         Assert.assertTrue(identifier + " is visible. Visible " + visible.toString(), visible.isEmpty());
     }
 
-    @RobotKeyword("Scrolls component to view.\n")
+    @RobotKeyword("Scrolls component to view.\n"
+            +"Example:\n"
+            + "| Scroll Component To View | _myComponent_ |\n")
     @ArgumentNames({ "identifier"})
     public void scrollComponentToView(String identifier) {
         operator(identifier).scrollRectToVisible(new Rectangle(100, 100));
