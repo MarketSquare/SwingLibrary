@@ -138,7 +138,7 @@
       <plugin>
         <groupId>org.robotframework</groupId>
         <artifactId>robotframework-maven-plugin</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
         <executions>
           <execution>
             <goals>
@@ -146,18 +146,40 @@
               <goal>verify</goal>
             </goals>
           </execution>
+          <execution>
+            <id>xml-spec</id>
+            <phase>integration-test</phase>
+            <goals><goal>libdoc</goal></goals>
+            <configuration>
+              <libdoc>
+                <version>${project.version}</version>
+                <outputFile>SwingLibrary-${project.version}.xml</outputFile>
+                <extraPathDirectories>
+                  <extraPathDirectory>${project.build.directory}/swinglibrary-${project.version}.jar</extraPathDirectory>
+                </extraPathDirectories>
+                <libraryOrResourceFile>SwingLibrary</libraryOrResourceFile>
+              </libdoc>
+            </configuration>
+          </execution>
+          <execution>
+            <id>html-doc</id>
+            <phase>integration-test</phase>
+            <goals><goal>libdoc</goal></goals>
+            <configuration>
+              <libdoc>
+                <version>${project.version}</version>
+                <outputFile>SwingLibrary-${project.version}.html</outputFile>
+                <extraPathDirectories>
+                  <extraPathDirectory>${project.build.directory}/swinglibrary-${project.version}.jar</extraPathDirectory>
+                </extraPathDirectories>
+                <libraryOrResourceFile>SwingLibrary</libraryOrResourceFile>
+              </libdoc>
+            </configuration>
+          </execution>
         </executions>
         <configuration>
           <testCasesDirectory>${project.basedir}/src/test/resources/robot-tests</testCasesDirectory>
           <logLevel>DEBUG</logLevel>
-          <libdoc>
-            <version>${project.version}</version>
-            <outputFile>SwingLibrary-${project.version}.html</outputFile>
-            <extraPathDirectories>
-              <extraPathDirectory>target/swinglibrary-${project.version}.jar</extraPathDirectory>
-            </extraPathDirectories>
-            <libraryOrResourceFile>SwingLibrary</libraryOrResourceFile>
-          </libdoc>
         </configuration>
       </plugin>
       <plugin>
