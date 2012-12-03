@@ -1,6 +1,8 @@
 .idea
 .classpath
 .project
+*py.class
 swinglibrary.iml
-target
+target with spaces
 reports
+tmp
