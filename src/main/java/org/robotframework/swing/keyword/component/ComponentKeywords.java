@@ -120,7 +120,7 @@ public class ComponentKeywords {
         Assert.assertTrue(identifier + " is visible. Visible " + visible.toString(), visible.isEmpty());
     }
 
-    @RobotKeyword("Scrolls component to view.\n"
+    @RobotKeyword("Scrolls component to view.\n\n"
             +"Example:\n"
             + "| Scroll Component To View | _myComponent_ |\n")
     @ArgumentNames({ "identifier"})
