@@ -22,9 +22,9 @@ Releasing
 - update `release notes <https://github.com/robotframework/SwingLibrary/wiki/Release-notes>`_
 - update version number to pom.xml
 - create git tag for new version
-- `mvn deploy` deploys the library to maven central. See instructinos on Robot Framework releasing for the prerequisites.
-- Go to https://oss.sonatype.org/index.html#welcome, log in with Sonatype creadentials, find the staging repository and do close & release
+- `mvn deploy` deploys the library to maven central. See instructions on Robot Framework releasing for the prerequisites.
+- Go to https://oss.sonatype.org/index.html#welcome, log in with Sonatype credentials, find the staging repository and do close & release
 - XML-spec and library docs are generated automatically by integration-test phase.
-- upload jar, library docs, and spec xml to github downloads
+- upload jar, library docs, and spec xml to Github downloads
 
 
