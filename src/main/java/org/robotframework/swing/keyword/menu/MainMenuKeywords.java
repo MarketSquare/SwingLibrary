@@ -16,11 +16,15 @@
 
 package org.robotframework.swing.keyword.menu;
 
+import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.keyword.window.WindowKeywords;
 import org.robotframework.swing.menu.MenuSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RobotKeywords
 public class MainMenuKeywords extends MenuSupport {
@@ -65,6 +69,20 @@ public class MainMenuKeywords extends MenuSupport {
         }
 
         return menubarOperator().getMenu(asIndex(index)).getText();
+    }
+
+
+    @RobotKeyword("Selects all items from the menu of the window that was opened first and returns their names.\n\n"
+        + "Example:\n"
+        + "| @{mainMenuItemNames}= | Get Main Menu Item Names ||\n"
+        + "| Should Contain | _@{mainMenuItemNames}_ | _File_ |\n")
+    public List<String> getMainMenuItemNames() {
+        JMenuBarOperator mbo = menubarOperator();
+        List<String> returnable = new ArrayList<String>();
+        for (int index = 0; index < mbo.getMenuCount(); index++) {
+            returnable.add(mbo.getMenu(index).getText());
+        }
+        return returnable;
     }
 
     @RobotKeyword("Fails if menu item doesn't exist in the window that was opened first.\n"

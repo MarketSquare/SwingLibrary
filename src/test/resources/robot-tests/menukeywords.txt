@@ -52,6 +52,9 @@ Menu Item Should Be Disabled
 Get Main Menu Item Name
     mainMenuItemNameShouldBe  0  ${menuText}
 
+Get Main Menu Item Names
+    mainMenuItemNamesShouldContain  ${menuText}
+
 Main Menu Item Should Be Selected
     runKeywordAndExpectError  Menu item '${menuText}|${checkboxMenu}' is not selected.  mainMenuItemShouldBeChecked  ${menuText}|${checkboxMenu}
     selectFromMainMenuAndWait  ${menuText}|${checkboxMenu}
@@ -78,3 +81,7 @@ mainMenuItemNameShouldBe
     ${menuItemName}=  getMainMenuItemName  0
     shouldBeEqual  ${expectedName}  ${menuItemName}
 
+mainMenuItemNamesShouldContain
+    [Arguments]  ${expectedName}
+    @{menuItemNames}=  getMainMenuItemNames
+    shouldContain  @{menuItemNames}  ${expectedName}
