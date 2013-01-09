@@ -29,6 +29,7 @@ Menu Item Should Exist
     menuItemShouldExist  ${showDialog}
     runKeywordAndExpectError  Menu item 'unexisting|menu' does not exist.  menuItemShouldExist  unexisting|menu
 
+
 Menu Item Should Not Exist
     menuItemShouldNotExist  unexisting|menu
     runKeywordAndExpectError  Menu item '${showDialog}' exists.  menuItemShouldNotExist  ${showDialog}
@@ -48,6 +49,28 @@ Menu Item Should Be Enabled
 
 Menu Item Should Be Disabled
     menuItemShouldBeDisabled  ${disabledMenu}
+
+Menu Item Should Have Children
+    menuItemShouldHaveChildren  Test Menu2|Sub Menu1
+    runKeywordAndExpectError  Menu item 'Test Menu2|placeholder item 1' does not have children.  menuItemShouldHaveChildren  Test Menu2|placeholder item 1
+
+Menu Item Should Not Have Children
+    menuItemShouldNotHaveChildren  Test Menu2|placeholder item 1
+    runKeywordAndExpectError  Menu item 'Test Menu2|Sub Menu1' has children.  menuItemShouldNotHaveChildren  Test Menu2|Sub Menu1
+
+Get Menu Item Names
+    menuItemsShouldContain  Test Menu2|Sub Menu1  item 1
+    menuItemsShouldContain  Test Menu2|Sub Menu1  item 2
+    menuItemsShouldContain  Test Menu2|Sub Menu1  item 3
+    menuItemsShouldContain  Test Menu2  placeholder item 1
+    menuItemsShouldContain  Test Menu2  Sub Menu1
+    menuItemsShouldContain  Test Menu2  placeholder item 2
+
+Get Menu Item Names Failures
+    runKeywordAndExpectError  Menu item 'unexisting|menu' does not exist.
+    ...  getMenuItemNames  unexisting|menu
+    runKeywordAndExpectError  Menu item 'Test Menu2|Sub Menu1|item 3' does not have children.
+    ...  getMenuItemNames  Test Menu2|Sub Menu1|item 3
 
 Get Main Menu Item Name
     mainMenuItemNameShouldBe  0  ${menuText}
@@ -84,4 +107,9 @@ mainMenuItemNameShouldBe
 mainMenuItemNamesShouldContain
     [Arguments]  ${expectedName}
     @{menuItemNames}=  getMainMenuItemNames
-    shouldContain  @{menuItemNames}  ${expectedName}
+    shouldContain  ${menuItemNames}  ${expectedName}
+
+menuItemsShouldContain
+    [Arguments]  ${path}  ${item}
+    @{items}=  getMenuItemNames  ${path}
+    shouldContain  ${items}  ${item}

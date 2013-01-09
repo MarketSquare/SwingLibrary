@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -41,6 +41,10 @@ public class MenuSupport extends IdentifierSupport {
         menuItemOperator.grabFocus();
         waitToAvoidInstability();
         return menuItemOperator;
+    }
+
+    protected javax.swing.MenuElement[] getChildren(final String path) {
+        return menubarOperator().showMenuItem(path).getSubElements();
     }
 
     private void waitToAvoidInstability() {

@@ -56,8 +56,18 @@ public class TestMenuBar extends JMenuBar {
                     }};
                 }
             });
-            
+
             add(new JCheckBoxMenuItem("Test menu checkbox"));
+        }});
+        add(new TestMenu("Test Menu2") {{
+            add(new TestMenuItem("placeholder item 1") {});
+            add(new TestMenu("Sub Menu1") {{
+                add(new TestMenuItem("item 1") {});
+                add(new TestMenuItem("item 2") {});
+                add(new TestMenuItem("item 3") {});
+            }});
+            add(new TestMenuItem("placeholder item 2") {
+            });
         }});
     }
 
