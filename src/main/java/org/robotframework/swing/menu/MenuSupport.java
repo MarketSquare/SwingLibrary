@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,6 +24,10 @@ import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.Context;
 
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuSupport extends IdentifierSupport {
     private EventTool eventTool = new EventTool();
     private EqualsStringComparator comparator = new EqualsStringComparator();
@@ -41,6 +45,24 @@ public class MenuSupport extends IdentifierSupport {
         menuItemOperator.grabFocus();
         waitToAvoidInstability();
         return menuItemOperator;
+    }
+
+    protected List<JMenuItemOperator> getChildren(final String path) {
+        List<JMenuItemOperator>returnable = new ArrayList<JMenuItemOperator>();
+        for (MenuElement e : getSubElements(path)) {
+            if(JMenuItem.class.isAssignableFrom(e.getClass())) {
+                returnable.add(new JMenuItemOperator((JMenuItem)e));
+            }
+        }
+        return returnable;
+    }
+
+    private MenuElement[] getSubElements(String path) {
+        MenuElement[] subElements = menubarOperator().showMenuItem(path).getSubElements();
+        if (subElements.length == 0 || subElements[0].getSubElements().length == 0) {
+            throw new IllegalStateException();
+        }
+        return subElements[0].getSubElements();
     }
 
     private void waitToAvoidInstability() {

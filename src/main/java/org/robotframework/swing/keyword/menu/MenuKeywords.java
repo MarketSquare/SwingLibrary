@@ -22,13 +22,22 @@ import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.javalib.util.KeywordNameNormalizer;
 import org.robotframework.swing.arguments.ArgumentParser;
 import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.ComponentExistenceResolver;
+import org.robotframework.swing.util.ComponentHasChildrenResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RobotKeywords
 public class MenuKeywords extends MenuSupport {
+
+    private static KeywordNameNormalizer textNormalizer = new KeywordNameNormalizer();
+
     @RobotKeyword("Selects an item from the menu of the currently selected window.\n\n"
         + "Example:\n"
         + "| Select Window    | _My Application_           |\n"
@@ -95,8 +104,46 @@ public class MenuKeywords extends MenuSupport {
         Assert.assertFalse("Menu item '" + menuPath + "' exists.", menuExists(menuPath));
     }
 
+    @RobotKeyword("Fails if menu item does not have children.\n\n"
+        +"Example:\n"
+        +"| Menu Item Should Have Children | _Tools_ |\n")
+    public void menuItemShouldHaveChildren(String menuPath) {
+        Assert.assertTrue("Menu item '" + menuPath + "' does not have children.", menuHasChildren(menuPath));
+    }
+
+    @RobotKeyword("Fails if menu item does has children.\n\n"
+            +"Example:\n"
+            +"| Menu Item Should Not Have Children | _Tools_ |\n")
+    public void menuItemShouldNotHaveChildren(String menuPath) {
+        Assert.assertFalse("Menu item '" + menuPath + "' has children.", menuHasChildren(menuPath));
+    }
+
+    @RobotKeyword("Gets names of menus.\n\n"
+        + "Example:\n"
+        + "| @{menus} | Get Menu Item Names | _Tools|Testing_ |\n"
+        + "| Should Contain | ${menus} | _Test Tool_ |\n")
+    @ArgumentNames({"menuPath"})
+    public List<String> getMenuItemNames(String menuPath) {
+        List<String> returnable = new ArrayList<String>();
+        menuItemShouldExist(menuPath);
+        menuItemShouldHaveChildren(menuPath);
+        for (JMenuItemOperator mio : getChildren(menuPath)) {
+            returnable.add(mio.getText());
+        }
+        return returnable;
+    }
+
     private interface MenuAction<T> {
         T doWithMenuItem();
+    }
+
+    private Boolean menuHasChildren(final String menuPath) {
+        return getFromMenuItem(new MenuAction<Boolean>() {
+            public Boolean doWithMenuItem() {
+                IComponentConditionResolver hasChildrenResolver = createHasChildrenResolver();
+                return hasChildrenResolver.satisfiesCondition(menuPath);
+            }
+        });
     }
 
     private Boolean menuExists(final String menuPath) {
@@ -136,5 +183,14 @@ public class MenuKeywords extends MenuSupport {
         };
 
         return new ComponentExistenceResolver(menuItemOperatorFactory);
+    }
+
+    IComponentConditionResolver createHasChildrenResolver() {
+        ArgumentParser<List<JMenuItemOperator>> menuItemOperatorFactory = new ArgumentParser<List<JMenuItemOperator>>() {
+            public List<JMenuItemOperator> parseArgument(String menuPath) {
+                return getChildren(menuPath);
+            }
+        };
+        return new ComponentHasChildrenResolver(menuItemOperatorFactory);
     }
 }
