@@ -22,21 +22,17 @@ import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.javalib.util.KeywordNameNormalizer;
 import org.robotframework.swing.arguments.ArgumentParser;
 import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.ComponentHasChildrenResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @RobotKeywords
 public class MenuKeywords extends MenuSupport {
-
-    private static KeywordNameNormalizer textNormalizer = new KeywordNameNormalizer();
 
     @RobotKeyword("Selects an item from the menu of the currently selected window.\n\n"
         + "Example:\n"

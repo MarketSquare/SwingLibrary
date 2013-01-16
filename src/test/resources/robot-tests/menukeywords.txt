@@ -29,7 +29,6 @@ Menu Item Should Exist
     menuItemShouldExist  ${showDialog}
     runKeywordAndExpectError  Menu item 'unexisting|menu' does not exist.  menuItemShouldExist  unexisting|menu
 
-
 Menu Item Should Not Exist
     menuItemShouldNotExist  unexisting|menu
     runKeywordAndExpectError  Menu item '${showDialog}' exists.  menuItemShouldNotExist  ${showDialog}

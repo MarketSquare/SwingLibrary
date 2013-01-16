@@ -48,7 +48,7 @@ public class MenuSupport extends IdentifierSupport {
     }
 
     protected List<JMenuItemOperator> getChildren(final String path) {
-        List<JMenuItemOperator>returnable = new ArrayList<JMenuItemOperator>();
+        List<JMenuItemOperator> returnable = new ArrayList<JMenuItemOperator>();
         for (MenuElement e : getSubElements(path)) {
             if(JMenuItem.class.isAssignableFrom(e.getClass())) {
                 returnable.add(new JMenuItemOperator((JMenuItem)e));
