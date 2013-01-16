@@ -59,8 +59,8 @@ public class MenuSupport extends IdentifierSupport {
 
     private MenuElement[] getSubElements(String path) {
         MenuElement[] subElements = menubarOperator().showMenuItem(path).getSubElements();
-        if (subElements.length == 0 || subElements[0].getSubElements().length == 0) {
-            throw new IllegalStateException();
+        if (subElements.length == 0) {
+            return new MenuElement[0];
         }
         return subElements[0].getSubElements();
     }

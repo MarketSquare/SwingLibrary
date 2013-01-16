@@ -68,6 +68,7 @@ public class TestMenuBar extends JMenuBar {
             }});
             add(new TestMenuItem("placeholder item 2") {
             });
+            add(new TestMenu("empty menu") {});
         }});
     }
 

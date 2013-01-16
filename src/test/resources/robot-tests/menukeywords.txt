@@ -49,14 +49,6 @@ Menu Item Should Be Enabled
 Menu Item Should Be Disabled
     menuItemShouldBeDisabled  ${disabledMenu}
 
-Menu Item Should Have Children
-    menuItemShouldHaveChildren  Test Menu2|Sub Menu1
-    runKeywordAndExpectError  Menu item 'Test Menu2|placeholder item 1' does not have children.  menuItemShouldHaveChildren  Test Menu2|placeholder item 1
-
-Menu Item Should Not Have Children
-    menuItemShouldNotHaveChildren  Test Menu2|placeholder item 1
-    runKeywordAndExpectError  Menu item 'Test Menu2|Sub Menu1' has children.  menuItemShouldNotHaveChildren  Test Menu2|Sub Menu1
-
 Get Menu Item Names
     [Template]  menuItemsShouldContain
     Test Menu2|Sub Menu1  item 1
@@ -69,8 +61,10 @@ Get Menu Item Names
 Get Menu Item Names Failures
     runKeywordAndExpectError  Menu item 'unexisting|menu' does not exist.
     ...  getMenuItemNames  unexisting|menu
-    runKeywordAndExpectError  Menu item 'Test Menu2|Sub Menu1|item 3' does not have children.
-    ...  getMenuItemNames  Test Menu2|Sub Menu1|item 3
+    @{submenu}=   getMenuItemNames  Test Menu2|Sub Menu1|item 3
+    should be empty  ${submenu}
+    @{submenu}=   getMenuItemNames  Test Menu2|empty menu
+    should be empty  ${submenu}
 
 Get Main Menu Item Name
     mainMenuItemNameShouldBe  0  ${menuText}
