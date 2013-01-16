@@ -6,7 +6,9 @@ applications.  Usage instructions are in the Wiki__.
 
 __ https://github.com/robotframework/SwingLibrary/wiki
 
-Downloads are available at https://github.com/robotframework/SwingLibrary/downloads
+Downloads are available at http://code.google.com/p/robotframework-swinglibrary/downloads/list
+
+Keyword documentation for the latest version (1.5.2) are available at http://robotframework.github.com/SwingLibrary/SwingLibrary-1.5.2.html
 
 This project was originally hosted in `Google Code`__
 
