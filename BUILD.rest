@@ -15,6 +15,7 @@ __ http://maven.apache.org/
 
 - `mvn package` packages SwingLibrary with dependencies.
 - `mvn verify` runs Robot Framework tests.
+- `mvn package robotframework:libdoc` compiles the code and generates library documentation
 
 Releasing
 =========
