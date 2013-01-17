@@ -45,7 +45,7 @@ public class TestApplication {
 
     public void runTestApplication() {
         SwingUtilities.invokeLater(new Runnable() {
-            @Override
+                @Override
             public void run() {
                 createFrame();
                 createMainPanel();
@@ -239,22 +239,20 @@ public class TestApplication {
     }
 
     private Object[][] getTestTableData() {
-        Object[][] data = {
-                { "column one", "one/one", "two/one", "three/one", "four/one" },
-                { "column two", "one/two", "two/two", "three/two", "four/two" },
-                { "column three", "one/three", "two/three", "three/three",
-                        "four/three" },
-                { "column four", Boolean.TRUE, Boolean.TRUE, Boolean.FALSE,
-                        Boolean.FALSE } };
-        return data;
+        return new Object[][]{
+                {"column one", "one/one", "two/one", "three/one", "four/one"},
+                {"column two", "one/two", "two/two", "three/two", "four/two"},
+                {"column three", "one/three", "two/three", "three/three",
+                        "four/three"},
+                {"column four", Boolean.TRUE, Boolean.TRUE, Boolean.FALSE,
+                        Boolean.FALSE}};
     }
 
     private Object[][] getFoobarTestTableData() {
-        Object[][] data = { { "column one", "foo", "bar", "bar", "bar" },
+        return new Object[][] { { "column one", "foo", "bar", "bar", "bar" },
                 { "column two", "bar", "foo", "bar", "bar" },
                 { "column three", "bar", "bar", "foo", "bar" },
                 { "column four", "bar", "bar", "bar", "foo" } };
-        return data;
     }
 
     private JTable simpleTable() {
@@ -265,9 +263,7 @@ public class TestApplication {
         JTable table = new JTable(data, colNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (column == 1)
-                    return false;
-                return true;
+                return column != 1;
             }
         };
         table.setName("simpleTable");
@@ -300,7 +296,7 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
             ComboBoxModel model = getModel();
             for (int i = 0, size = model.getSize(); i < size; i++) {
                 String item = (String) model.getElementAt(i);
-                if (item != selected)
+                if (!item.equals(selected))
                     items.add(item);
             }
             setModel(new DefaultComboBoxModel(items.toArray()));

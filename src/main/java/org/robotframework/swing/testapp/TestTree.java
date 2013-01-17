@@ -17,13 +17,13 @@ import org.robotframework.javalib.util.KeywordNameNormalizer;
 public class TestTree extends JTree implements ActionListener {
     private static final String ROOT_NAME = "The Java Series";
     private String rootName = ROOT_NAME;
-    
+
     public TestTree() {
         this(new MyTreeNode(ROOT_NAME) {{
                 add(new DefaultMutableTreeNode("Books for Java Programmers") {{
-                        add(new MyTreeNode("The Java Tutorial: A Short Course on the Basics")); 
+                        add(new MyTreeNode("The Java Tutorial: A Short Course on the Basics"));
                         add(new MyTreeNode("The Java Tutorial Continued: The Rest of the JDK"));
-                        add(new MyTreeNode("The JFC Swing Tutorial: A Guide to Constructing GUIs"));       
+                        add(new MyTreeNode("The JFC Swing Tutorial: A Guide to Constructing GUIs"));
                 }});
 
                 add(new MyTreeNode("Books for Java Implementers") {{
@@ -42,20 +42,19 @@ public class TestTree extends JTree implements ActionListener {
     public TestTree(DefaultMutableTreeNode dmtn) {
         super(dmtn);
         setName("testTree");
-
         addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     new MyPopup().show((JComponent) e.getSource(), e.getX(), e.getY());
                 }
             }
-            
+
             public void mouseClicked(MouseEvent e) {
                 TestTreeResults.saveNodes(getSelectionPaths());
                 TestTreeResults.clickCount = e.getClickCount();
             }
         });
-        
+
         setCellRenderer(new DefaultTreeCellRenderer() {
             public String getText() {
                 String nodeText = super.getText();
@@ -71,7 +70,7 @@ public class TestTree extends JTree implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         createActionCommand(ae.getActionCommand()).perform();
     }
-    
+
     private ActionCommand createActionCommand(String command) {
         if (command.equals("insert")) {
             return insertChild;
@@ -97,7 +96,7 @@ public class TestTree extends JTree implements ActionListener {
             };
         }
     }
-    
+
     private abstract class ActionCommand {
         public void perform() {
             Delay.delay();
@@ -107,11 +106,11 @@ public class TestTree extends JTree implements ActionListener {
         }
 
         protected abstract void operate();
-        
+
         private void refresh() {
             ((DefaultTreeModel) getModel()).nodeStructureChanged(getLastPathComponent());
         }
-        
+
         protected DefaultMutableTreeNode getLastPathComponent() {
             TreePath selectionPath = getSelectionPath();
             if (selectionPath == null) {
@@ -120,13 +119,13 @@ public class TestTree extends JTree implements ActionListener {
             return (DefaultMutableTreeNode) selectionPath.getLastPathComponent();
         }
     }
-    
+
     private final ActionCommand insertChild = new ActionCommand() {
         protected void operate() {
             getLastPathComponent().add(new DefaultMutableTreeNode("child"));
         }
     };
-    
+
     private final ActionCommand removeSelected = new ActionCommand() {
         protected void operate() {
             TreePath[] selectionPaths = getSelectionPaths();
@@ -135,40 +134,40 @@ public class TestTree extends JTree implements ActionListener {
             }
         }
     };
-    
+
     private final ActionCommand showMessage = new ActionCommand() {
         protected void operate() {
             JOptionPane.showMessageDialog(TestTree.this, "This is an example message");
         }
     };
-    
+
     private final ActionCommand hideRoot = new ActionCommand() {
         protected void operate() {
             setRootVisible(false);
         }
     };
-    
+
     private final ActionCommand showRoot = new ActionCommand() {
         protected void operate() {
             setRootVisible(true);
         }
     };
-    
+
     private final ActionCommand saveNodes = new ActionCommand() {
         protected void operate() {
-            TestTreeResults.saveNodes(getSelectionPaths());    
+            TestTreeResults.saveNodes(getSelectionPaths());
         }
     };
-    
+
     private final ActionCommand removeRootName = new ActionCommand() {
         protected void operate() {
             rootName = "";
         }
     };
-    
+
     private final ActionCommand restoreRootName = new ActionCommand() {
         protected void operate() {
-            rootName = ROOT_NAME;    
+            rootName = ROOT_NAME;
         }
     };
 
@@ -181,7 +180,7 @@ public class TestTree extends JTree implements ActionListener {
             Delay.delay();
         }
     }
-    
+
     private class MyPopup extends JPopupMenu {
         public MyPopup() {
             add(new MenuItemWithCommand("Insert a child", "insert"));
@@ -201,27 +200,27 @@ public class TestTree extends JTree implements ActionListener {
                 }});
                 add(new JMenuItem("Enabled menuitem"));
             }});
-            
+
             setOpaque(true);
             setLightWeightPopupEnabled(true);
             setName("popupMenu");
         }
-        
+
         @Override
         public void show(Component invoker, int x, int y) {
             Delay.delay();
             super.show(invoker, x, y);
         }
     }
-    
+
     private static class MyTreeNode extends DefaultMutableTreeNode {
         public MyTreeNode(final String txt) {
             super(new Object() {
                 public String toString() {
                     return txt;
-                }   
+                }
             });
-            
+
             Delay.delay();
         }
     }
