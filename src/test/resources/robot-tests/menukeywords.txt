@@ -90,7 +90,30 @@ Select From Popup Menu
     # On Linux and Windows testTextField index is 0, on OSX it is 1. Using label name is a workaround.
     ${labelContents}=  getLabelContent    OptionPane.label
     shouldBeEqual  testTextField  ${labelContents}
-    [Teardown]  closeDialog  Message
+    [Teardown]  Run Keywords  closeDialog  Message  AND  Select main window
+
+Get Menu Items From Popup Menu
+    ${items}=  getMenuItemsFromPopupMenu  TableWithSingleValue  ${EMPTY}
+    Should contain  ${items}  Replace text
+    Should contain  ${items}  Disabled menuitem
+    Should contain  ${items}  Submenu
+    Should contain  ${items}  Replace text in selected
+
+Get Menu Items From Popup Menu's submenu
+    ${items}=  getMenuItemsFromPopupMenu  TableWithSingleValue  Submenu
+    Should contain  ${items}  Disabled menuitem
+    Should contain  ${items}  Enabled menuitem
+
+Get Menu Items From Popup Menu contains no sub items
+    ${items}=  getMenuItemsFromPopupMenu  TableWithSingleValue  Replace text
+    Should be empty  ${items}
+
+Get Menu Items From Popup Menu's submenu contains no sub items
+    ${items}=  getMenuItemsFromPopupMenu  TableWithSingleValue  Submenu|Enabled menuitem
+    Should be empty  ${items}
+
+Get Menu Items From Popup Menu fails with non existing menu item
+    runKeywordAndExpectError  Wait for "unexisting" subcomponent to be displayed  getMenuItemsFromPopupMenu  unexisting  ${EMPTY}
 
 *** Keywords ***
 mainMenuItemNameShouldBe

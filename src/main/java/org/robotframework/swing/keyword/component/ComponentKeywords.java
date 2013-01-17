@@ -18,10 +18,15 @@ package org.robotframework.swing.keyword.component;
 
 import java.awt.Rectangle;
 import java.awt.event.InputEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JMenuOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -31,6 +36,8 @@ import org.robotframework.swing.component.ComponentOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
+
+import javax.swing.*;
 
 @RobotKeywords
 public class ComponentKeywords {
@@ -98,6 +105,32 @@ public class ComponentKeywords {
     public void selectFromPopupMenu(String identifier, String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
         popup.pushMenuNoBlock(menuPath, new EqualsStringComparator());
+    }
+
+    @RobotKeyword("Gets item names from the components context popup menu.\n"
+            + "Does a right click on the component and retrieves the specified menu items from the popup menu.\n\n"
+            + "Example:\n")
+    @ArgumentNames({ "identifier", "menuPath" })
+    public List<String> getMenuItemsFromPopupMenu(String identifier, String menuPath) {
+        JPopupMenuOperator popup = operator(identifier).invokePopup();
+        List<String>returnable = new ArrayList<String>();
+        if(menuPath == null || menuPath.isEmpty()) {
+            for (MenuElement e : popup.getSubElements()) {
+                if(JMenuItem.class.isAssignableFrom(e.getClass())) {
+                    returnable.add(((JMenuItem)e).getText());
+                }
+            }
+        } else {
+            JMenuItemOperator subItem = popup.showMenuItem(menuPath);
+            if(subItem.getSubElements().length > 0) {
+                for (MenuElement e : subItem.getSubElements()[0].getSubElements()) {
+                    if(JMenuItem.class.isAssignableFrom(e.getClass())) {
+                        returnable.add(((JMenuItem)e).getText());
+                    }
+                }
+            }
+        }
+        return returnable;
     }
 
     @RobotKeyword("Checks that component is visible.\n"
