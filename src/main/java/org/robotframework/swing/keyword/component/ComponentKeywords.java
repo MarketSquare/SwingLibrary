@@ -16,17 +16,9 @@
 
 package org.robotframework.swing.keyword.component;
 
-import java.awt.Rectangle;
-import java.awt.event.InputEvent;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
-
 import org.netbeans.jemmy.operators.JMenuItemOperator;
-import org.netbeans.jemmy.operators.JMenuOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.netbeans.jemmy.operators.JTreeOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
@@ -38,6 +30,10 @@ import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 @RobotKeywords
 public class ComponentKeywords {
@@ -109,25 +105,25 @@ public class ComponentKeywords {
 
     @RobotKeyword("Gets item names from the components context popup menu.\n"
             + "Does a right click on the component and retrieves the specified menu items from the popup menu.\n\n"
-            + "Example:\n")
+            + "Example:\n"
+            + "| @{items}= | Get Menu Items From Popup Menu | _myComponent_ | _Actions_ |\n"
+            + "| Should Contain | ${items} | _Do something_ |")
     @ArgumentNames({ "identifier", "menuPath" })
-    public List<String> getMenuItemsFromPopupMenu(String identifier, String menuPath) {
+    public List<String> getMenuItemsFromPopupMenu(final String identifier, final String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
-        List<String>returnable = new ArrayList<String>();
         if(menuPath == null || menuPath.isEmpty()) {
-            for (MenuElement e : popup.getSubElements()) {
-                if(JMenuItem.class.isAssignableFrom(e.getClass())) {
-                    returnable.add(((JMenuItem)e).getText());
-                }
-            }
-        } else {
-            JMenuItemOperator subItem = popup.showMenuItem(menuPath);
-            if(subItem.getSubElements().length > 0) {
-                for (MenuElement e : subItem.getSubElements()[0].getSubElements()) {
-                    if(JMenuItem.class.isAssignableFrom(e.getClass())) {
-                        returnable.add(((JMenuItem)e).getText());
-                    }
-                }
+            return getParsedElements(popup.getSubElements());
+        }
+        JMenuItemOperator subItem = popup.showMenuItem(menuPath);
+        return subItem.getSubElements().length < 1 ? new ArrayList<String>() :
+                getParsedElements(subItem.getSubElements()[0].getSubElements());
+    }
+
+    private List<String> getParsedElements(MenuElement[] elements) {
+        List<String> returnable = new ArrayList<String>();
+        for (MenuElement e : elements) {
+            if(JMenuItem.class.isAssignableFrom(e.getClass())) {
+                returnable.add(((JMenuItem)e).getText());
             }
         }
         return returnable;
