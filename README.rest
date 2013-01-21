@@ -6,9 +6,13 @@ applications.  Usage instructions are in the Wiki__.
 
 __ https://github.com/robotframework/SwingLibrary/wiki
 
-Downloads are available at http://code.google.com/p/robotframework-swinglibrary/downloads/list
+Downloads are available at `Google Code`__ 
 
-Keyword documentation for the latest version (1.5.2) are available at http://robotframework.github.com/SwingLibrary/SwingLibrary-1.5.2.html
+__ http://code.google.com/p/robotframework-swinglibrary/downloads/list
+
+Keyword documentation for the latest version (1.5.2) are available `here`__
+
+__ http://robotframework.github.com/SwingLibrary/SwingLibrary-1.5.2.html
 
 This project was originally hosted in `Google Code`__
 
@@ -18,4 +22,6 @@ __ http://code.google.com/p/robotframework-swinglibrary/
 Building SwingLibrary
 ---------------------
 
-See BUILD.rest for development, build and release instructions.
+See `BUILD.rest`__ for development, build and release instructions.
+
+__ https://github.com/robotframework/SwingLibrary/blob/master/BUILD.rest
