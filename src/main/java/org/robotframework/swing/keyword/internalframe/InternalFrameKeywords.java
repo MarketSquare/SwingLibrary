@@ -132,8 +132,9 @@ public class InternalFrameKeywords {
     @RobotKeyword("Returns all frames that are open in the current context." + "\n\n"
             + "Returns empty list if the context is not selected.\n"
             + "Example:\n"
-            + "| ${frames}= | Get Internal Frames In Context |"
-            + "| Should Contain | ${frames} | testInternalFrame |")
+            + "| Select Main Window |\n"
+            + "| ${frames}= | Get Internal Frames In Context |\n"
+            + "| Should Contain | ${frames} | Test Internal Frame |\n")
     public List<String> getInternalFramesInContext() {
         ComponentWrapper operator = Context.getContext();
         return new InternalFrameIteratorForListing((Container) operator.getSource()).iterate();
