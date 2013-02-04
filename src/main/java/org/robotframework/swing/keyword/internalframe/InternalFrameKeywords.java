@@ -16,20 +16,23 @@
 
 package org.robotframework.swing.keyword.internalframe;
 
-import java.beans.PropertyVetoException;
-
-import javax.swing.JInternalFrame;
-
 import org.junit.Assert;
-
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.internalframe.InternalFrameIteratorForListing;
 import org.robotframework.swing.internalframe.InternalFrameOperator;
 import org.robotframework.swing.internalframe.InternalFrameOperatorFactory;
+import org.robotframework.swing.operator.ComponentWrapper;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
+
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyVetoException;
+import java.util.List;
 
 @RobotKeywords
 public class InternalFrameKeywords {
@@ -124,6 +127,16 @@ public class InternalFrameKeywords {
     public void internalFrameShouldNotBeOpen(String identifier) {
         Assert.assertFalse("Internal frame '" + identifier + "' is open.",
                 createOperator(identifier).isVisible());
+    }
+
+    @RobotKeyword("Returns all frames that are open in the current context." + "\n\n"
+            + "Returns empty list if the context is not selected.\n"
+            + "Example:\n"
+            + "| ${frames}= | Get Internal Frames In Context |"
+            + "| Should Contain | ${frames} | testInternalFrame |")
+    public List<String> getInternalFramesInContext() {
+        ComponentWrapper operator = Context.getContext();
+        return new InternalFrameIteratorForListing((Container) operator.getSource()).iterate();
     }
 
     private InternalFrameOperator createOperator(String identifier) {

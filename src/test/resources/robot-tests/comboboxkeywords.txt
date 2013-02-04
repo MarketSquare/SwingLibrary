@@ -27,7 +27,7 @@ Get Selected Item From Dropdown Menu By Name
     shouldBeEqual  ${comboboxItem1}  ${selectedItem}
 
 Get Selected Item From Disabled Combobox
-	${selectedItem}=  getSelectedItemFromComboBox  disabledComboBox
+    ${selectedItem}=  getSelectedItemFromComboBox  disabledComboBox
     shouldBeEqual  ${comboboxItem1}  ${selectedItem}
 
 Select From Combobox By Index

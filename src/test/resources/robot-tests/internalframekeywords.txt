@@ -47,6 +47,15 @@ Internal Frame Keywords Should Fail Context Is Not Correct
     runKeywordAndExpectError  *To use this keyword you must first select a correct context*  internalFrameShouldNotExist  someFrame
     [Teardown]  selectMainWindow
 
+Get Internal Frames In Context
+    ${frames}=  getInternalFramesInContext
+    lengthShouldBe  ${frames}  0
+    selectFromMainMenuAndWait  ${internalFrameMenu}
+    ${frames}=  getInternalFramesInContext
+    Length Should Be  ${frames}  1
+    shouldContain  ${frames}  Test Internal Frame
+    [Teardown]  closeInternalFrame  ${internalFrameTitle}
+
 *** Keywords ***
 openInternalFrame
     selectFromMainMenuAndWait  ${internalFrameMenu}
