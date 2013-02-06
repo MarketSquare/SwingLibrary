@@ -6,7 +6,11 @@ Library         org.robotframework.javalib.library.ClassPathLibrary  org/robotfr
 List Components In Context
     selectMainWindow
     ${output}=  recordStdout  listComponentsInContext
-    log  ${output}
     shouldContain  ${output}  0 org.robotframework.swing.testapp.TestApplication$2 0: Main Frame
     shouldContain  ${output}  5 org.robotframework.swing.testapp.TestTextField 0: testTextField
 
+Return Value Of List Components In Context Without Formatting
+    selectMainWindow
+    ${output}=  listComponentsInContext
+    shouldContain  ${output}  org.robotframework.swing.testapp.TestApplication$2
+    shouldNotContain  ${output}  0 org.robotframework.swing.testapp.TestApplication$2 0: Main Frame
