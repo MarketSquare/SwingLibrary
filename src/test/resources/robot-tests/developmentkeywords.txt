@@ -2,15 +2,26 @@
 Library         TestSwingLibrary
 Library         org.robotframework.javalib.library.ClassPathLibrary  org/robotframework/swing/**/*.class
 
+*** Variables ***
+${UNFORMATTED LINE}=          org.robotframework.swing.testapp.TestApplication$2
+${FORMATTED LINE}=            0 org.robotframework.swing.testapp.TestApplication$2 0: Main Frame
+${SECOND FORMATTED LINE}=     5 org.robotframework.swing.testapp.TestTextField 0: testTextField
+
+
 *** Test Cases ***
 List Components In Context
     selectMainWindow
     ${output}=  recordStdout  listComponentsInContext
-    shouldContain  ${output}  0 org.robotframework.swing.testapp.TestApplication$2 0: Main Frame
-    shouldContain  ${output}  5 org.robotframework.swing.testapp.TestTextField 0: testTextField
+    shouldContain  ${output}  ${FORMATTED LINE}
+    shouldContain  ${output}  ${SECOND FORMATTED LINE}
 
 Return Value Of List Components In Context Without Formatting
     selectMainWindow
     ${output}=  listComponentsInContext
-    shouldContain  ${output}  org.robotframework.swing.testapp.TestApplication$2
-    shouldNotContain  ${output}  0 org.robotframework.swing.testapp.TestApplication$2 0: Main Frame
+    shouldContain  ${output}  ${UNFORMATTED LINE}
+    shouldNotContain  ${output}  ${FORMATTED LINE}
+
+Return Value Of List Components In Context With Formatting
+    selectMainWindow
+    ${output}=  listComponentsInContext      FORMATTED
+    shouldContain  ${output}  ${FORMATTED LINE}

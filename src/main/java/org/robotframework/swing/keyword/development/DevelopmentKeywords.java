@@ -33,8 +33,16 @@ public class DevelopmentKeywords {
         + "Example:\n"
         + "| Select Main Window         |\n"
         + "| List Components In Context |\n")
-    public String listComponentsInContext() {
+    public String listComponentsInContext(String... args) {
         ComponentWrapper operator = Context.getContext();
-        return new ContainerIteratorForListing((Container) operator.getSource()).iterate().toString();
+        if (args.length == 0)
+            return new ContainerIteratorForListing((Container) operator.getSource()).iterate().toString();
+        else {
+            ContainerIteratorForListing cont = new ContainerIteratorForListing((Container) operator.getSource());
+            cont.iterate();
+            return cont.formatted;
+        }
+
     }
+
 }
