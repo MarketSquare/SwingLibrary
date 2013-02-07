@@ -137,7 +137,7 @@ public class InternalFrameKeywords {
             + "| Should Contain | ${frames} | Test Internal Frame |\n")
     public List<String> getInternalFramesInContext() {
         ComponentWrapper operator = Context.getContext();
-        return new InternalFrameIteratorForListing((Container) operator.getSource()).iterate();
+        return InternalFrameIteratorForListing.getFrameList((Container) operator.getSource());
     }
 
     private InternalFrameOperator createOperator(String identifier) {

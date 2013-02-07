@@ -36,11 +36,9 @@ public class DevelopmentKeywords {
     public String listComponentsInContext(String... args) {
         ComponentWrapper operator = Context.getContext();
         if (args.length == 0)
-            return new ContainerIteratorForListing((Container) operator.getSource()).iterate().toString();
+            return ContainerIteratorForListing.getComponentList((Container) operator.getSource()).toString();
         else {
-            ContainerIteratorForListing cont = new ContainerIteratorForListing((Container) operator.getSource());
-            cont.iterate();
-            return cont.formatted;
+            return ContainerIteratorForListing.getFormattedComponentList((Container) operator.getSource()).toString();
         }
 
     }
