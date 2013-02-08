@@ -50,14 +50,14 @@ public class WindowKeywords extends AbstractContextVerifier {
         setContext(operatorFactory.createOperatorByIndex(0));
     }
 
-    @RobotKeyword("Gets list of open window names.\n\n"
-            +"Logs the window names and titles in parenthesis.\n"
+    @RobotKeyword("Gets list of open window titles.\n\n"
+            +"Logs the window titles and names in parenthesis.\n"
             + "Example:\n" + "| List Windows |\n")
     public List<String> listWindows() {
         List<String> result = new ArrayList<String>();
         for (Frame frame: Frame.getFrames()) {
-            result.add(frame.getName());
-            System.out.println(frame.getName() + " (" + frame.getTitle() +")");
+            result.add(frame.getTitle());
+            System.out.println( frame.getTitle() + " (" + frame.getName() +")");
         }
         return result;
     }

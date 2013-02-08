@@ -38,8 +38,8 @@ List Windows
     selectFromMainMenu  Test Menu|Show Test Window
     Select Window       Test Window
     @{windows} =   List windows
-    Should be equal   @{windows}[0]    Main Frame
-    Should be equal   @{windows}[1]    testWindow
+    Should be equal   @{windows}[0]    Test App
+    Should be equal   @{windows}[1]    Test Window
     [teardown]   closeWindow  Test Window
 
 Close Window
