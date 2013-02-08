@@ -39,7 +39,6 @@ List Windows
     Select Window       Test Window
     @{windows} =   List windows
     Should be equal   @{windows}[0]    Test App
-    Should be equal   @{windows}[1]    Test Window
     [teardown]   closeWindow  Test Window
 
 Close Window
