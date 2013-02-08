@@ -35,8 +35,8 @@ public class ContainerIteratorForListing {
         level++;
         if (component instanceof Container) {
             Component[] subComponents = ((Container) component).getComponents();
-            for (int i = 0; i < subComponents.length; i++) {
-                processComponent(subComponents[i]);
+            for (Component subComponent: subComponents) {
+                processComponent(subComponent);
                 level--;
             }
         }
