@@ -34,6 +34,14 @@ Get Selected Window Title
     ${title}=  getSelectedWindowTitle
     shouldBeEqual  ${title}  Test App
 
+List Windows
+    selectFromMainMenu  Test Menu|Show Test Window
+    Select Window       Test Window
+    @{windows} =   List windows
+    Should be equal   @{windows}[0]    Main Frame
+    Should be equal   @{windows}[1]    testWindow
+    [teardown]   closeWindow  Test Window
+
 Close Window
     selectFromMainMenu  Test Menu|Show Test Window
     Select Window       Test Window

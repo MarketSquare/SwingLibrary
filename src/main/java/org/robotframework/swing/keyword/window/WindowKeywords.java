@@ -17,7 +17,10 @@
 package org.robotframework.swing.keyword.window;
 
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.Window;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -45,6 +48,18 @@ public class WindowKeywords extends AbstractContextVerifier {
             + "Example:\n" + "| Select Main Window |\n")
     public void selectMainWindow() {
         setContext(operatorFactory.createOperatorByIndex(0));
+    }
+
+    @RobotKeyword("Gets list of open window names.\n\n"
+            +"Logs the window names and titles in parenthesis.\n"
+            + "Example:\n" + "| List Windows |\n")
+    public List<String> listWindows() {
+        List<String> result = new ArrayList<String>();
+        for (Frame frame: Frame.getFrames()) {
+            result.add(frame.getName());
+            System.out.println(frame.getName() + " (" + frame.getTitle() +")");
+        }
+        return result;
     }
 
     @RobotKeyword("Selects a window as current context and sets focus to it.\n\n"
