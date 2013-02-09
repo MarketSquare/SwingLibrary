@@ -51,8 +51,9 @@ public class WindowKeywords extends AbstractContextVerifier {
     }
 
     @RobotKeyword("Gets list of open window titles.\n\n"
-            +"Logs the window titles and names in parenthesis.\n"
-            + "Example:\n" + "| List Windows |\n")
+            +"Logs the window titles and names in parenthesis.\n\n"
+            + "Example:\n"
+            + "| List Windows |\n")
     public List<String> listWindows() {
         List<String> result = new ArrayList<String>();
         for (Frame frame: Frame.getFrames()) {

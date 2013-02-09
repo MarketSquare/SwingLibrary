@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.keyword.development;
 
+import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.container.ContainerIteratorForListing;
@@ -27,15 +28,18 @@ import java.awt.*;
 @RobotKeywords
 public class DevelopmentKeywords {
 
-    @RobotKeyword("Prints components (their types and their internal names) from the selected context.\n"
+    @RobotKeyword("Prints components (their types and their internal names) from the selected context.\n\n"
+        + "By default returns the component names without formatting used in the printout. If given an argument, the return value will have the same formatting as the printout. "
         + "The internal name is set with component's setName method: http://java.sun.com/j2se/1.4.2/docs/api/java/awt/Component.html#setName(java.lang.String).\n"
         + "See keywords, `Select Window`, `Select Dialog` and `Select Context` for details about context.\n\n"
         + "Example:\n"
         + "| Select Main Window         |\n"
-        + "| List Components In Context |\n")
-    public String listComponentsInContext(String... args) {
+        + "| List Components In Context |\n"
+        + "| List Components In Context | formatted |\n")
+    @ArgumentNames({ "*formatted" })
+    public String listComponentsInContext(String... formatted) {
         ComponentWrapper operator = Context.getContext();
-        if (args.length == 0)
+        if (formatted.length == 0)
             return ContainerIteratorForListing.getComponentList((Container) operator.getSource()).toString();
         else {
             return ContainerIteratorForListing.getFormattedComponentList((Container) operator.getSource()).toString();
