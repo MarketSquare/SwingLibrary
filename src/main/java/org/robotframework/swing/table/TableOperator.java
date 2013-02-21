@@ -191,6 +191,15 @@ public class TableOperator extends IdentifierSupport implements
         return columnValues;
     }
 
+    public Object[] getRowValues(int row) {
+        Object[] rowValues = new Object[getColumnCount()];
+        for (int column = 0; column < rowValues.length; ++column) {
+            Point coordinates = findCell(row, column);
+            rowValues[column] = getValueAt(coordinates);
+        }
+        return rowValues;
+    }
+
     private Object getValueAt(Point coordinates) {
         return cellValueExtractor.textOf(coordinates.y, coordinates.x);
     }
@@ -205,6 +214,10 @@ public class TableOperator extends IdentifierSupport implements
         if (isInvalid(cell))
             throw new InvalidCellException(row, columnIdentifier);
         return cell;
+    }
+
+    protected Point findCell(int row, int column) {
+        return findCell(row, Integer.toString(column));
     }
 
     protected boolean isInvalid(Point cell) {
@@ -254,4 +267,6 @@ public class TableOperator extends IdentifierSupport implements
                 combinedInputEventMask |= toInputEventMask(modifierAsString);
         return combinedInputEventMask;
     }
+
+
 }

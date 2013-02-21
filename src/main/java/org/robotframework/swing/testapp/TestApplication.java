@@ -249,10 +249,10 @@ public class TestApplication {
     }
 
     private Object[][] getFoobarTestTableData() {
-        return new Object[][] { { "column one", "foo", "bar", "bar", "bar" },
-                { "column two", "bar", "foo", "bar", "bar" },
-                { "column three", "bar", "bar", "foo", "bar" },
-                { "column four", "bar", "bar", "bar", "foo" } };
+        return new Object[][] { { "column one", "foo", "bar", "bar", "bar 1" },
+                { "column two", "bar", "foo", "bar", "bar 2" },
+                { "column three", "bar", "bar", "foo", "bar 3" },
+                { "column four", "bar", "bar", "bar", "foo 4" } };
     }
 
     private JTable simpleTable() {

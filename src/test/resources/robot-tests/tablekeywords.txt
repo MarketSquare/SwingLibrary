@@ -145,8 +145,6 @@ Find Table Row With Column
     shouldBeEqualAsIntegers  2  ${row}
     ${row}=  findTableRow  TableWithSingleValue  foo  column two
     shouldBeEqualAsIntegers  1  ${row}
-    ${row}=  findTableRow  TableWithSingleValue  foo  column four
-    shouldBeEqualAsIntegers  3  ${row}
 
 Get Table Row Count By Index
     ${rowCount}=  getTableRowCount  0
@@ -204,8 +202,13 @@ Table Keywords Fail If Context Is Not Set
     [Teardown]  selectMainWindow
 
 Get Table Column Values
-    ${expectedValues}=  createList  bar  bar  foo  bar
+    ${expectedValues}=  createList  bar  bar  foo  bar 3
     ${values}=  getTableColumnValues  TableWithSingleValue  ${columnHeaderThree}
+    listsShouldBeEqual  ${expectedValues}  ${values}
+
+Get Table Row Values
+    ${expectedValues}=  createList  bar 1  bar 2  bar 3  foo 4
+    ${values}=  getTableRowValues  TableWithSingleValue  3
     listsShouldBeEqual  ${expectedValues}  ${values}
 
 Get Table Cell Properties
