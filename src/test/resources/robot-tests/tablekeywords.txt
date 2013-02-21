@@ -211,6 +211,13 @@ Get Table Row Values
     ${values}=  getTableRowValues  TableWithSingleValue  3
     listsShouldBeEqual  ${expectedValues}  ${values}
 
+Get Table Values
+    ${values}=  getTableValues  TableWithSingleValue
+    Should Be Equal  ${values[1][1]}   foo
+    Should Be Equal  ${values[3][2]}   bar 3
+    Should Be Equal  ${values[0][2]}   bar
+    Should Be Equal  ${values[3][3]}   foo 4
+
 Get Table Cell Properties
     ${color}=  getTableCellProperty  ${tableName}  2  2  background
     shouldBeEqualAsIntegers  255  ${color.getRed()}

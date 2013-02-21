@@ -200,6 +200,14 @@ public class TableOperator extends IdentifierSupport implements
         return rowValues;
     }
 
+    public Object[][] getTableValues() {
+        Object[][] tableValues = new Object[getRowCount()][];
+        for (int row = 0; row < tableValues.length; ++row) {
+            tableValues[row] = getRowValues(row);
+        }
+        return tableValues;
+    }
+
     private Object getValueAt(Point coordinates) {
         return cellValueExtractor.textOf(coordinates.y, coordinates.x);
     }

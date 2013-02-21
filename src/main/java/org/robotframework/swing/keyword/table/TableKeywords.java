@@ -258,6 +258,12 @@ public class TableKeywords extends IdentifierSupport {
         return createTableOperator(identifier).getRowValues(row);
     }
 
+    @RobotKeyword("")
+    @ArgumentNames({"identifier"})
+    public Object[][] getTableValues(String identifier) {
+        return createTableOperator(identifier).getTableValues();
+    }
+
     @RobotKeyword("Returns the property of the table cell.\n\n"
             + "Example:\n"
             + "| _${background}=_ | Get Table Cell Properties | _myTable_ | _1_ | _2_ | _background_ |\n"
