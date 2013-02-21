@@ -252,13 +252,19 @@ public class TableKeywords extends IdentifierSupport {
         return createTableOperator(identifier).getColumnValues(columnIdentifier);
     }
 
-    @RobotKeyword("")
+    @RobotKeyword("Returns a list containing all the values of a table row.\n\n"
+                + "Example:\n"
+                + "| _${rowValues}=_ | Get Table Row Values | _myTable_ | _2_ |\n"
+                + "| Should Contain  | _${expectedValue}_ | _${rowValues}_ |\n")
     @ArgumentNames({"identifier", "row"})
     public Object[] getTableRowValues(String identifier, int row) {
         return createTableOperator(identifier).getRowValues(row);
     }
 
-    @RobotKeyword("")
+    @RobotKeyword("Returns a list of table rows containing all the values of a table.\n\n"
+                + "Example:\n"
+                + "| _${tableValues}=_ | Get Table Values | _myTable_ | _rowThree_ |\n"
+                + "| Should Be Equal  | _${expectedValue}_ | _${tableValues[1][2]}_ |\n")
     @ArgumentNames({"identifier"})
     public Object[][] getTableValues(String identifier) {
         return createTableOperator(identifier).getTableValues();
