@@ -22,6 +22,7 @@ import java.awt.Container;
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
+import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
@@ -38,19 +39,24 @@ public class TabKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| Select Tab | _Customer Information_ |\n"
         + "| Select Tab | _Customer Information_ | _Customers_ |\n")
-    @ArgumentNames({"tabIdentifier", "*tabPaneIdentifier"})
-    public void selectTab(String tabIdentifier, String[] tabPaneIdentifier) {
+    @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})
+    public void selectTab(String tabIdentifier, String tabPaneIdentifier) {
         selectTheTab(tabIdentifier, tabPaneIdentifier);
     }
 
-    private Component selectTheTab(String tabIdentifier, String[] tabPaneIdentifier) {
+    @RobotKeywordOverload
+    public void selectTab(String tabIdentifier) {
+        selectTab(tabIdentifier, "");
+    }
+
+    private Component selectTheTab(String tabIdentifier, String tabPaneIdentifier) {
         if (notNullOrBlank(tabPaneIdentifier))
-            selectTabPane(tabPaneIdentifier[0]);
+            selectTabPane(tabPaneIdentifier);
         return selectTabPage(tabIdentifier);
     }
 
-    private boolean notNullOrBlank(String[] tabPaneIdentifier) {
-        return tabPaneIdentifier != null && tabPaneIdentifier.length > 0;
+    private boolean notNullOrBlank(String tabPaneIdentifier) {
+        return tabPaneIdentifier != null && !tabPaneIdentifier.isEmpty();
     }
 
     private Component selectTabPage(String tabIdentifier) {
@@ -68,14 +74,19 @@ public class TabKeywords extends IdentifierSupport {
         + "Example:\n"
         + "| Select Tab | _Customer Information_ |\n"
         + "| Select Tab | _Customer Information_ | _Customers_ |\n")
-    @ArgumentNames({"tabIdentifier", "*tabPaneIdentifier"})
-    public void selectTabAsContext(String tabIdentifier, String[] tabPaneIdentifier) {
+    @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})
+    public void selectTabAsContext(String tabIdentifier, String tabPaneIdentifier) {
         try {
             Component container = selectTheTab(tabIdentifier, tabPaneIdentifier);
             setAsContext((Container)container);
         } catch(Exception e) {
             throw new RuntimeException("Can't select tab: "+tabIdentifier+" because it doesn't contain any container.");
         }
+    }
+
+    @RobotKeywordOverload
+    public void selectTabAsContext(String tabIdentifier) {
+        selectTabAsContext(tabIdentifier, "");
     }
 
     private void setAsContext(Container container) {
