@@ -84,7 +84,7 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
                 one(listOperator).clickOnItem("someListItem", 1);
             }});
 
-            context.clickOnListItem(listIdentifier, "someListItem", new String[0]);
+            context.clickOnListItem(listIdentifier, "someListItem");
         }
                 
         public void clicksWithAlternativeClickCount() {
@@ -92,7 +92,7 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
                 one(listOperator).clickOnItem("3", 2);
             }});
             
-            context.clickOnListItem(listIdentifier, "3", new String[] { "2" });
+            context.clickOnListItem(listIdentifier, "3", 2);
         }
         
         public void selectsSingleItem() {

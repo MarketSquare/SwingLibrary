@@ -23,6 +23,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
+import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.factory.OperatorFactory;
@@ -85,10 +86,13 @@ public class ListKeywords extends IdentifierSupport {
             + "Default click count is one:\n"
             + "| Click On List Item | _myList_ | _myItem_ | _2_ | # doubleclicks on item |\n")
     @ArgumentNames({ "identifier", "listItemIdentifier", "clickCount=1" })
-    public void clickOnListItem(String identifier, String listItemIdentifier,
-            String[] clickCount) {
-        createOperator(identifier).clickOnItem(listItemIdentifier,
-                extractIntArgument(clickCount));
+    public void clickOnListItem(String identifier, String listItemIdentifier, int clickCount) {
+        createOperator(identifier).clickOnItem(listItemIdentifier, clickCount);
+    }
+
+    @RobotKeywordOverload
+    public void clickOnListItem(String identifier, String listItemIdentifier) {
+        clickOnListItem(identifier, listItemIdentifier, 1);
     }
 
     @RobotKeyword("Returns the item that's currently selected in the list.\n\n"
