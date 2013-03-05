@@ -81,7 +81,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
                 one(operator).clickMouse(1);
             }});
 
-            context.clickOnComponent(componentIdentifier, new String[0]);
+            context.clickOnComponent(componentIdentifier);
         }
 
         public void doubleclicksOnComponent() {
@@ -89,7 +89,7 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
                 one(operator).clickMouse(2);
             }});
 
-            context.clickOnComponent(componentIdentifier, new String[] { "2" });
+            context.clickOnComponent(componentIdentifier, 2);
         }
 
 

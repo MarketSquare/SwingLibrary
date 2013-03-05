@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.development;
 
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
+import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.container.ContainerIteratorForListing;
 import org.robotframework.swing.context.Context;
@@ -36,15 +37,20 @@ public class DevelopmentKeywords {
         + "| Select Main Window         |\n"
         + "| List Components In Context |\n"
         + "| List Components In Context | formatted |\n")
-    @ArgumentNames({ "*formatted" })
-    public String listComponentsInContext(String... formatted) {
+    @ArgumentNames({ "formatted=" })
+    public String listComponentsInContext(String formatted) {
         ComponentWrapper operator = Context.getContext();
-        if (formatted.length == 0)
+        if (formatted.isEmpty())
             return ContainerIteratorForListing.getComponentList((Container) operator.getSource()).toString();
         else {
             return ContainerIteratorForListing.getFormattedComponentList((Container) operator.getSource()).toString();
         }
 
+    }
+
+    @RobotKeywordOverload
+    public String listComponentsInContext() {
+        return listComponentsInContext("");
     }
 
 }

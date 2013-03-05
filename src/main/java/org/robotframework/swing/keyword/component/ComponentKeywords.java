@@ -21,6 +21,7 @@ import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
+import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.component.ComponentOperator;
@@ -64,8 +65,13 @@ public class ComponentKeywords {
             + "Example:\n" + "| Click On Component | _myComponent_ |   | |\n"
             + "| Click On Component | _myComponent_ | 2 | # double click |\n")
     @ArgumentNames({ "identifier", "times=1" })
-    public void clickOnComponent(String identifier, String[] times) {
-        operator(identifier).clickMouse(getTimes(times));
+    public void clickOnComponent(String identifier, int times) {
+        operator(identifier).clickMouse(times);
+    }
+
+    @RobotKeywordOverload
+    public void clickOnComponent(String identifier) {
+        clickOnComponent(identifier, 1);
     }
 
     @RobotKeyword("Right clicks on a component.\n" + "Example:\n"
