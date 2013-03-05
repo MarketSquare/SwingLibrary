@@ -71,7 +71,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 one(spinnerOperator).increase();
             }});
 
-            context.increaseSpinnerValue(spinnerIdentifier, new String[] {});
+            context.increaseSpinnerValue(spinnerIdentifier);
         }
 
         public void increaseSpinnerValueByDefinedAmount() {
@@ -79,7 +79,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 exactly(8).of(spinnerOperator).increase();
             }});
 
-            context.increaseSpinnerValue(spinnerIdentifier, new String[] { "8" });
+            context.increaseSpinnerValue(spinnerIdentifier, 8);
         }
 
         public void decreasesSpinnerValue() {
@@ -87,7 +87,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 one(spinnerOperator).decrease();
             }});
 
-            context.decreaseSpinnerValue(spinnerIdentifier, new String[] {});
+            context.decreaseSpinnerValue(spinnerIdentifier);
         }
 
         public void decreaseSpinnerValueByDefinedAmount() {
@@ -95,7 +95,7 @@ public class SpinnerKeywordsSpec extends MockSupportSpecification<SpinnerKeyword
                 exactly(8).of(spinnerOperator).decrease();
             }});
 
-            context.decreaseSpinnerValue(spinnerIdentifier, new String[] { "8" });
+            context.decreaseSpinnerValue(spinnerIdentifier, 8);
         }
 
         public void getsSpinnerValue() {

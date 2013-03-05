@@ -4,6 +4,7 @@ import org.junit.Assert;
 
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
+import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.spinner.SpinnerOperator;
@@ -38,12 +39,13 @@ public class SpinnerKeywords {
             + "| Increase Spinner Value | _mySpinner_ |   | # scrolls spinner button up a notch |\n"
             + "| Increase Spinner Value | _mySpinner_ | 4 | # scrolls spinner button up four notches |\n")
     @ArgumentNames({"identifier", "times=1"})
-    public void increaseSpinnerValue(String identifier, String[] times) {
-        increase(operatorFactory.createOperator(identifier), getNotches(times));
+    public void increaseSpinnerValue(String identifier, int times) {
+        increase(operatorFactory.createOperator(identifier), times);
     }
 
-    private int getNotches(String[] times) {
-    	return times.length == 0 ? 1 : Integer.parseInt(times[0]);
+    @RobotKeywordOverload
+    public void increaseSpinnerValue(String identifier) {
+        increaseSpinnerValue(identifier, 1);
     }
 
     private void increase(SpinnerOperator spinnerOperator, int numberOfIncreases) {
@@ -58,8 +60,13 @@ public class SpinnerKeywords {
             + "| Decrease Spinner Value | _mySpinner_ |   | # scrolls spinner button down a notch |\n"
             + "| Decrease Spinner Value | _mySpinner_ | 4 | # scrolls spinner button down four notches |\n")
     @ArgumentNames({"identifier", "times=1"})
-    public void decreaseSpinnerValue(String identifier, String[] times) {
-        decrease(operatorFactory.createOperator(identifier), getNotches(times));
+    public void decreaseSpinnerValue(String identifier, int times) {
+        decrease(operatorFactory.createOperator(identifier), times);
+    }
+
+    @RobotKeywordOverload
+    public void decreaseSpinnerValue(String identifier) {
+        decreaseSpinnerValue(identifier, 1);
     }
 
     private void decrease(SpinnerOperator spinnerOperator, int numberOfDecreases) {
