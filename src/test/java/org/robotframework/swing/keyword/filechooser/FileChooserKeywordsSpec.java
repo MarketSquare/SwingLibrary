@@ -36,7 +36,7 @@ public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChoose
     }
     
     public class ChoosingFiles {
-        private String[] fileName = new String[] { "elements.xml" };
+        private String fileName = "elements.xml";
         private JFileChooserOperator fileChooserOperator;
         private FileChooserKeywords fileChooserKeywords = new FileChooserKeywords();
         
@@ -62,7 +62,7 @@ public class FileChooserKeywordsSpec extends MockSupportSpecification<FileChoose
                 one(fileChooserOperator).approve();
             }});
             
-            context.chooseFromFileChooser(new String[0]);
+            context.chooseFromFileChooser();
         }
         
         public void cancelsFileSelection() {

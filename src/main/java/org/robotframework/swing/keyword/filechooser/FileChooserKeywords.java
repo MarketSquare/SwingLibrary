@@ -18,6 +18,7 @@ package org.robotframework.swing.keyword.filechooser;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
+import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.filechooser.FileChooserOperatorFactory;
 
@@ -31,13 +32,18 @@ public class FileChooserKeywords {
         + "Example:\n"
         + "| Push Button | _Open File_    |\n"
         + "| Choose From File Chooser | _/tmp/elements.xml_ |\n")
-    @ArgumentNames({"*fileName"})
-    public void chooseFromFileChooser(String[] fileName) {
-        if (fileName.length > 0) {
-            fileChooserOperator().chooseFile(fileName[0]);
+    @ArgumentNames({"fileName="})
+    public void chooseFromFileChooser(String fileName) {
+        if (!fileName.isEmpty()) {
+            fileChooserOperator().chooseFile(fileName);
         } else {
             fileChooserOperator().approve();
         }
+    }
+
+    @RobotKeywordOverload
+    public void chooseFromFileChooser() {
+        chooseFromFileChooser("");
     }
     
     @RobotKeyword("Cancels and closes file chooser.\n"
