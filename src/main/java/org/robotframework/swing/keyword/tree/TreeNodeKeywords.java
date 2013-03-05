@@ -26,6 +26,7 @@ import org.junit.Assert;
 
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
+import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreePathAction;
@@ -111,9 +112,14 @@ public class TreeNodeKeywords extends TreeSupport {
             + "An optional _click count_ parameter can be provided for example if a double click is required.\n"
             + "Default click count is one:\n"
             + "| Click On Tree Node | _myTree_ | _Root|Folder_ | _2_ | # doubleclicks on node |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "*clickCount"})
-    public void clickOnTreeNode(String identifier, String nodeIdentifier, String[] clickCount) {
-        treeOperator(identifier).clickOnNode(nodeIdentifier, extractIntArgument(clickCount));
+    @ArgumentNames({"identifier", "nodeIdentifier", "clickCount=1"})
+    public void clickOnTreeNode(String identifier, String nodeIdentifier, int clickCount) {
+        treeOperator(identifier).clickOnNode(nodeIdentifier, clickCount);
+    }
+
+    @RobotKeywordOverload
+    public void clickOnTreeNode(String identifier, String nodeIdentifier) {
+        clickOnTreeNode(identifier, nodeIdentifier, 1);
     }
 
     @RobotKeyword("Fails if the tree node is collapsed.\n\n"

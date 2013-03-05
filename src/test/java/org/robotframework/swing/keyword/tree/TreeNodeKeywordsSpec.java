@@ -106,8 +106,8 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 one(treeOperator).clickOnNode(nodePath, 1);
             }});
 
-            context.clickOnTreeNode(treeIdentifier, nodePath, new String[]{"2"});
-            context.clickOnTreeNode(treeIdentifier, nodePath, new String[0]);
+            context.clickOnTreeNode(treeIdentifier, nodePath, 2);
+            context.clickOnTreeNode(treeIdentifier, nodePath);
         }
 
         public void getsTreeNodeIndex() {
