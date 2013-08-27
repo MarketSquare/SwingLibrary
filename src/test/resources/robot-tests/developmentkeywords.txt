@@ -4,8 +4,8 @@ Library         org.robotframework.javalib.library.ClassPathLibrary  org/robotfr
 
 *** Variables ***
 ${UNFORMATTED LINE}=          org.robotframework.swing.testapp.TestApplication$2
-${FORMATTED LINE}=            0 org.robotframework.swing.testapp.TestApplication$2 0: Main Frame
-${SECOND FORMATTED LINE}=     5 org.robotframework.swing.testapp.TestTextField 0: testTextField
+${FORMATTED LINE}=            Level: 0 Component: org.robotframework.swing.testapp.TestApplication$2 Index: 0 Name: Main Frame
+${SECOND FORMATTED LINE}=     Level: 5 Component: org.robotframework.swing.testapp.TestTextField Index: 0 Name: testTextField
 
 
 *** Test Cases ***

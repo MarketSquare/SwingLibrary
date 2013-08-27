@@ -23,12 +23,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JTree;
 import javax.swing.JViewport;
 import javax.swing.table.JTableHeader;
+import javax.swing.text.JTextComponent;
 
 public class ComponentOccurences {
 
@@ -41,8 +40,7 @@ public class ComponentOccurences {
         put(JFileChooser.class, -1);
         put(JTable.class, -1);
         put(JList.class, -1);
-        put(JTextField.class, -1);
-        put(JTextArea.class, -1);
+        put(JTextComponent.class, -1);
         put(JTree.class, -1);
         put(JInternalFrame.class, -1);
         put(JFrame.class, -1);
@@ -60,7 +58,7 @@ public class ComponentOccurences {
         put(JScrollBar.class, -1);
         put(JTableHeader.class, -1);
     }};
-    
+
     public Integer countIndexOf(Component component) {
         for (Class<? extends Component> clazz: indexesByType.keySet()) {
             if (clazz.isInstance(component)) {

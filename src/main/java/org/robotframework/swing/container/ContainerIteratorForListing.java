@@ -44,8 +44,11 @@ public class ContainerIteratorForListing {
 
     private void operateOnComponent(Component component) {
         String componentName = componentToString(component);
-        String formattedName =spacesToFormatOutputAsTree(level) + level + " " + componentName + " " +
-                occurences.countIndexOf(component) + ": " + component.getName();
+        String formattedName =spacesToFormatOutputAsTree(level) +
+                " Level: " + level +
+                " Component: " + componentName +
+                " Index: " + occurences.countIndexOf(component) +
+                " Name: " + component.getName();
         formatted.add(formattedName);
         unformatted.add(componentName);
         System.out.println(formattedName);
