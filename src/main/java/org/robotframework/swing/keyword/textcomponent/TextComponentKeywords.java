@@ -36,13 +36,13 @@ public class TextComponentKeywords {
     public void insertIntoTextField(String identifier, String text) {
         TextComponentOperator operator = createOperator(identifier);
         if (notEditable(operator))
-        	throw new RuntimeException("Text field '" + identifier + "' is not editable.");
-    	operator.setText(text);
+            throw new RuntimeException("Text field '" + identifier + "' is not editable.");
+        operator.setText(text);
     }
 
-	private boolean notEditable(TextComponentOperator operator) {
-		return ! operator.isEditable() || ! operator.isEnabled();
-	}
+    private boolean notEditable(TextComponentOperator operator) {
+        return ! operator.isEditable() || ! operator.isEnabled();
+    }
 
     @RobotKeyword("Returns the value of a text component (e.g. text field, password field, text area).\n\n"
         + "Example:\n"
