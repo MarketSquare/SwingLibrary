@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,4 +19,6 @@ package org.robotframework.swing.arguments;
 public interface ArgumentHandler<T> {
     T indexArgument(int index);
     T nameArgument(String name);
+    T indexAWTArgument(int index);
+    T nameAWTArgument(String name);
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,11 +24,21 @@ import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 public class TextComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<TextComponentOperator> {
     @Override
     public TextComponentOperator createOperatorByIndex(int index) {
-        return new TextComponentOperator((ContainerOperator) Context.getContext(), index);
+        return new TextComponentOperator(new SwingTextComponentOperator((ContainerOperator) Context.getContext(), index));
     }
 
     @Override
     public TextComponentOperator createOperatorByName(String name) {
-        return new TextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+        return new TextComponentOperator(new SwingTextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
+    }
+
+    @Override
+    public TextComponentOperator indexAWTArgument(int index) {
+        return  new TextComponentOperator(new AWTTextComponentOperator((ContainerOperator) Context.getContext(), index));
+    }
+
+    @Override
+    public TextComponentOperator nameAWTArgument(String name) {
+        return new TextComponentOperator(new AWTTextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
     }
 }

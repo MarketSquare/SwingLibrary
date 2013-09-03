@@ -1,11 +1,6 @@
 package org.robotframework.swing.testapp;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -45,7 +40,6 @@ public class TestApplication {
 
     public void runTestApplication() {
         SwingUtilities.invokeLater(new Runnable() {
-                @Override
             public void run() {
                 createFrame();
                 createMainPanel();
@@ -130,7 +124,6 @@ public class TestApplication {
             {
                 setName("resetContentChangingComboBox");
                 addActionListener(new ActionListener() {
-                    @Override
                     public void actionPerformed(ActionEvent e) {
                         contentChangingComboBox.resetModel();
                     }
@@ -172,7 +165,6 @@ public class TestApplication {
             {
                 setName("openFileChooser");
                 addActionListener(new ActionListener() {
-                    @Override
                     public void actionPerformed(ActionEvent e) {
                         new TestFileChooser().showSaveDialog(panel);
                     }
@@ -183,7 +175,19 @@ public class TestApplication {
 
         panel.add(simpleTable());
         panel.add(tableEventTextField);
-
+        panel.add(new TextField() {
+            {
+                setName("awtTextField");
+                setPreferredSize(new Dimension(100, 30));
+            }
+        });
+        panel.add(new TextField() {
+            {
+                setName("awtDisabledTextField");
+                setPreferredSize(new Dimension(100, 30));
+                setEnabled(false);
+            }
+        });
         panel.add(new JTextField() {
             {
                 setName("disabledTextField");
@@ -312,7 +316,6 @@ class ContentChangingCombobox extends JComboBox implements ActionListener {
 @SuppressWarnings("serial")
 class PopupPanel extends JPanel {
     private final Operation showName = new Operation() {
-        @Override
         public void perform(Component operatedComponent) {
             JOptionPane.showMessageDialog(operatedComponent,
                     operatedComponent.getName());
@@ -363,7 +366,6 @@ class CustomComboBoxRenderer extends JLabel implements ListCellRenderer {
         setVerticalAlignment(CENTER);
     }
 
-    @Override
     public Component getListCellRendererComponent(JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (isSelected) {

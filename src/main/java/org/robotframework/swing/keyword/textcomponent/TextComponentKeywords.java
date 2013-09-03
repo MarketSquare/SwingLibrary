@@ -30,8 +30,10 @@ public class TextComponentKeywords {
     private OperatorFactory<TextComponentOperator> operatorFactory = new TextComponentOperatorFactory();
 
     @RobotKeyword("Inserts text into a text component (e.g. text field, password field, text area).\n\n"
+        + "It is possible to interact with AWT text components by prefixing the identifier with awt=\n\n"
         + "Example:\n"
-        + "| Insert Into Textfield | _nameTextField_ | _John Doe_ |\n")
+        + "| Insert Into Textfield | _nameTextField_ | _John Doe_ |\n"
+        + "| Insert Into Textfield | awt=street_address | Karaportti 3 |\n")
     @ArgumentNames({"identifier", "text"})
     public void insertIntoTextField(String identifier, String text) {
         TextComponentOperator operator = createOperator(identifier);
@@ -45,6 +47,7 @@ public class TextComponentKeywords {
     }
 
     @RobotKeyword("Returns the value of a text component (e.g. text field, password field, text area).\n\n"
+        + "It is possible to interact with AWT text components by prefixing the identifier with awt=\n\n"
         + "Example:\n"
         + "| ${textFieldValue}= | Get Textfield Value | _nameTextField_       |\n"
         + "| Should Be Equal    | _John Doe_          | _${textFieldValue}_ |\n")
@@ -56,22 +59,27 @@ public class TextComponentKeywords {
     @RobotKeyword("Types text into a text component (e.g. text field, password field, text area).\n"
         + "Same as `Insert Into Textfield` but sends real key events when setting text field contents.\n"
         + "Useful if application expects real keyboard events instead of only setting the text of the textfield.\n\n"
+        + "It is possible to interact with AWT text components by prefixing the identifier with awt=\n\n"
         + "Example:\n"
-        + "| Type Into Textfield | _nameTextField_ | _John Doe_ |\n")
+        + "| Type Into Textfield | _nameTextField_ | _John Doe_ |\n"
+        + "| Type Into Textfield | awt=street_address | Karaportti 3 |\n")
     @ArgumentNames({"identifier", "text"})
     public void typeIntoTextField(String identifier, String text) {
         createOperator(identifier).typeText(text);
     }
 
     @RobotKeyword("Clears contents of text component (e.g. text field, password field, text area).\n\n"
+        + "It is possible to interact with AWT text components by prefixing the identifier with awt=\n\n"
         + "Example:\n"
-        + "| Clear Textfield | _nameTextField_ |\n")
+        + "| Clear Textfield | _nameTextField_ |\n"
+        + "| Clear Textfield | awt=street_address |\n")
     @ArgumentNames({"identifier"})
     public void clearTextField(String identifier) {
         createOperator(identifier).clearText();
     }
 
     @RobotKeyword("Fails if text component (e.g. text field, password field, text area) is disabled.\n\n"
+        + "It is possible to interact with AWT text components by prefixing the identifier with awt=\n\n"
         + "Example:\n"
         + "| Textfield Should Be Enabled | _nameTextField_ |\n")
     @ArgumentNames({"identifier"})
@@ -80,6 +88,7 @@ public class TextComponentKeywords {
     }
 
     @RobotKeyword("Fails if text component (e.g. text field, password field, text area) is enabled.\n\n"
+        + "It is possible to interact with AWT text components by prefixing the identifier with awt=\n\n"
         + "Example:\n"
         + "| Textfield Should Be Disabled | _nameTextField_ |\n")
     @ArgumentNames({"identifier"})

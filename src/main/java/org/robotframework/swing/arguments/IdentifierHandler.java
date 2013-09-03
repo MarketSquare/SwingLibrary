@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,4 +23,11 @@ public abstract class IdentifierHandler<T> extends ArgumentParser<T> implements 
 
     public abstract T indexArgument(int index);
     public abstract T nameArgument(String name);
+    public T indexAWTArgument(int index) {
+        // TODO: Smarter exception type
+        throw new RuntimeException("AWT components are not supported by this keyword.");
+    }
+    public T nameAWTArgument(String name) {
+        throw new RuntimeException("AWT components are not supported by this keyword.");
+    }
 }

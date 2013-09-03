@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,6 +29,22 @@ public class ArgumentParser<T> {
     }
 
     public T parseArgument(String argument) {
+        if (argument.startsWith("awt="))
+            return parseAWTArgument(argument);
+        else
+            return parseSwingArgument(argument);
+    }
+
+    private T parseAWTArgument(String argument) {
+        argument = argument.substring(4);
+        try {
+            return argumentHandler.indexAWTArgument(Integer.parseInt(argument));
+        } catch(NumberFormatException e) {
+            return argumentHandler.nameAWTArgument(argument.toString());
+        }
+    }
+
+    private T parseSwingArgument(String argument) {
         try {
             return argumentHandler.indexArgument(Integer.parseInt(argument));
         } catch(NumberFormatException e) {

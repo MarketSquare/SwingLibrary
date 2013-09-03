@@ -69,6 +69,7 @@ public class SwingLibrary extends AnnotationLibrary {
             + "the current context. Using indices is, however, fragile and is strongly discouraged.\n"
             + "- If the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n"
             + "- For components that have visible text (e.g. buttons), `identifier` is also matched against that.\n"
+            + "- Text field keywords also support accessing awt-text fields by prefixing the identifier with awt=.\n"
             + "Keyword `List Components in Context` lists all components and their names and indices in a given context.\n"
 
             + "= Running keywords in separate threads =\n"

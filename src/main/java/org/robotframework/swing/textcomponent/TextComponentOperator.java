@@ -15,25 +15,103 @@
  */
 package org.robotframework.swing.textcomponent;
 
-import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.ContainerOperator;
-import org.netbeans.jemmy.operators.JTextComponentOperator;
-import org.robotframework.swing.operator.ComponentWrapper;
 
-public class TextComponentOperator extends JTextComponentOperator implements ComponentWrapper {
-    public TextComponentOperator(ContainerOperator container, int index) {
-        super(container, index);
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class TextComponentOperator  {
+
+
+    private final SwingTextComponentOperator swingOperator;
+    private final AWTTextComponentOperator awtOperator;
+
+    public TextComponentOperator(SwingTextComponentOperator swing) {
+        swingOperator = swing;
+        awtOperator = null;
     }
-    
-    public TextComponentOperator(ContainerOperator container, ComponentChooser chooser) {
-        super(container, chooser);
+
+    public TextComponentOperator(AWTTextComponentOperator awt) {
+        swingOperator = null;
+        awtOperator = awt;
     }
-    
-    /*
-     * We want to let the application do whatever it wants with the inputs the textfield receives. 
-     */
-    @Override
-    public boolean getVerification() {
-        return false;
+
+    public void setText(String text) {
+        if (swingOperator != null)
+            swingOperator.setText(text);
+        else
+            awtOperator.setText(text);
     }
+
+    public boolean isEditable() {
+        if (swingOperator != null)
+            return swingOperator.isEditable();
+        else
+            return awtOperator.isEditable();
+    }
+
+    public boolean isEnabled() {
+        if (swingOperator != null)
+            return swingOperator.isEnabled();
+        else
+            return awtOperator.isEnabled();
+    }
+
+    public void setEnabled(boolean enabled) {
+        if (swingOperator != null)
+            swingOperator.setEnabled(enabled);
+        else
+            awtOperator.setEnabled(enabled);
+    }
+
+    public String getText() {
+        if (swingOperator!=null)
+            return swingOperator.getText();
+        else
+            return awtOperator.getText();
+    }
+
+    public void typeText(String text) {
+        if (swingOperator!=null)
+            swingOperator.typeText(text);
+        else
+            awtOperator.typeText(text);
+    }
+
+    public void clearText() {
+        if (swingOperator!=null)
+            swingOperator.clearText();
+        else
+            awtOperator.clearText();
+    }
+
+    public void makeComponentVisible() {
+        if (swingOperator!=null)
+            swingOperator.makeComponentVisible();
+        else
+            awtOperator.makeComponentVisible();
+    }
+
+    public void selectAll() {
+        if (swingOperator!=null)
+            swingOperator.selectAll();
+        else
+            awtOperator.selectAll();
+    }
+
+    private Object operator;
+
+    public Object invoke(String methodName, Object... arguments) {
+        Class[] classes = new Class[arguments.length];
+        for (int i=0; i < classes.length; i++) {
+            classes[i] = arguments[i].getClass();
+        }
+        try {
+            Method m = operator.getClass().getMethod(methodName, classes);
+            return m.invoke(operator, new Object[] {});
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
