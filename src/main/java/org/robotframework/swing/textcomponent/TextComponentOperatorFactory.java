@@ -18,27 +18,34 @@ package org.robotframework.swing.textcomponent;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.robotframework.swing.chooser.ByNameComponentChooser;
+import org.robotframework.swing.common.ProxyHandler;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
+
 
 public class TextComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<TextComponentOperator> {
     @Override
     public TextComponentOperator createOperatorByIndex(int index) {
-        return new TextComponentOperator(new SwingTextComponentOperator((ContainerOperator) Context.getContext(), index));
+        return createProxy(new SwingTextComponentOperator((ContainerOperator) Context.getContext(), index));
     }
 
     @Override
     public TextComponentOperator createOperatorByName(String name) {
-        return new TextComponentOperator(new SwingTextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
+        return createProxy(new SwingTextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
     }
 
     @Override
     public TextComponentOperator indexAWTArgument(int index) {
-        return  new TextComponentOperator(new AWTTextComponentOperator((ContainerOperator) Context.getContext(), index));
+        return  createProxy(new AWTTextComponentOperator((ContainerOperator) Context.getContext(), index));
     }
 
     @Override
     public TextComponentOperator nameAWTArgument(String name) {
-        return new TextComponentOperator(new AWTTextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
+        return createProxy(new AWTTextComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name)));
+    }
+
+    private TextComponentOperator createProxy(Object operator) {
+        return (TextComponentOperator) ProxyHandler.createProxy(TextComponentOperator.class,
+                                                                operator);
     }
 }

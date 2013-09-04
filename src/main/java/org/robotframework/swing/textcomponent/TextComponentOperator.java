@@ -16,102 +16,25 @@
 package org.robotframework.swing.textcomponent;
 
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-public class TextComponentOperator  {
+public interface TextComponentOperator  {
 
 
-    private final SwingTextComponentOperator swingOperator;
-    private final AWTTextComponentOperator awtOperator;
+    public void setText(String text);
 
-    public TextComponentOperator(SwingTextComponentOperator swing) {
-        swingOperator = swing;
-        awtOperator = null;
-    }
+    public boolean isEditable();
 
-    public TextComponentOperator(AWTTextComponentOperator awt) {
-        swingOperator = null;
-        awtOperator = awt;
-    }
+    public boolean isEnabled();
 
-    public void setText(String text) {
-        if (swingOperator != null)
-            swingOperator.setText(text);
-        else
-            awtOperator.setText(text);
-    }
+    public void setEnabled(boolean enabled);
 
-    public boolean isEditable() {
-        if (swingOperator != null)
-            return swingOperator.isEditable();
-        else
-            return awtOperator.isEditable();
-    }
+    public String getText();
 
-    public boolean isEnabled() {
-        if (swingOperator != null)
-            return swingOperator.isEnabled();
-        else
-            return awtOperator.isEnabled();
-    }
+    public void typeText(String text);
 
-    public void setEnabled(boolean enabled) {
-        if (swingOperator != null)
-            swingOperator.setEnabled(enabled);
-        else
-            awtOperator.setEnabled(enabled);
-    }
+    public void clearText();
 
-    public String getText() {
-        if (swingOperator!=null)
-            return swingOperator.getText();
-        else
-            return awtOperator.getText();
-    }
+    public void makeComponentVisible();
 
-    public void typeText(String text) {
-        if (swingOperator!=null)
-            swingOperator.typeText(text);
-        else
-            awtOperator.typeText(text);
-    }
-
-    public void clearText() {
-        if (swingOperator!=null)
-            swingOperator.clearText();
-        else
-            awtOperator.clearText();
-    }
-
-    public void makeComponentVisible() {
-        if (swingOperator!=null)
-            swingOperator.makeComponentVisible();
-        else
-            awtOperator.makeComponentVisible();
-    }
-
-    public void selectAll() {
-        if (swingOperator!=null)
-            swingOperator.selectAll();
-        else
-            awtOperator.selectAll();
-    }
-
-    private Object operator;
-
-    public Object invoke(String methodName, Object... arguments) {
-        Class[] classes = new Class[arguments.length];
-        for (int i=0; i < classes.length; i++) {
-            classes[i] = arguments[i].getClass();
-        }
-        try {
-            Method m = operator.getClass().getMethod(methodName, classes);
-            return m.invoke(operator, new Object[] {});
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    public void selectAll();
 
 }
