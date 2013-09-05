@@ -10,9 +10,9 @@ Downloads are available at `Google Code`__
 
 __ http://code.google.com/p/robotframework-swinglibrary/downloads/list
 
-Keyword documentation for the latest version (1.6.0) are available `here`__
+Keyword documentation for the latest version (1.7.0) are available `here`__
 
-__ http://robotframework.github.com/SwingLibrary/SwingLibrary-1.6.0.html
+__ http://robotframework.github.com/SwingLibrary/SwingLibrary-1.7.0.html
 
 This project was originally hosted in `Google Code`__
 
