@@ -9,6 +9,12 @@ ${AWT ERR} =    AWT components are not supported by this keyword.
 Unsupported AWT operation fails
     Run keyword and expect error  ${AWT ERR}   Push button    awt=someButtom
 
+Clear AWT Text Field
+    Insert Into Text Field       awt=awtTextField    AWTName
+    Clear text field             awt=awtTextField
+    ${text}=        Get Text Field Value  awt=awtTextField
+    Should be empty  ${text}
+
 Insert Into AWT Text Field With Name
     Clear text field             awt=awtTextField
     Insert Into Text Field       awt=awtTextField    AWTName

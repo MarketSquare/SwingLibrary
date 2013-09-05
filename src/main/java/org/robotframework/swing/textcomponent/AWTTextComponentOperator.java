@@ -21,4 +21,13 @@ public class AWTTextComponentOperator extends org.netbeans.jemmy.operators.TextC
     public boolean getVerification() {
         return false;
     }
+
+    /**
+     * For whatever reason clearText fails on AWT component, if the component is not shown on screen.
+     * This is to work around that problem.
+     **/
+    @Override
+    public void clearText() {
+        super.setText("");
+    }
 }
