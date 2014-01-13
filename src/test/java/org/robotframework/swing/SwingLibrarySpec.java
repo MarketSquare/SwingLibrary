@@ -21,7 +21,7 @@ public class SwingLibrarySpec extends MockSupportSpecification<SwingLibrary> {
             specify(context.getKeywordNames(), must.not().contain("keywordThatShouldNotBeRegistered"));
         }
 
-        public void printsNothingToStandardOut() {
+        public void outputsAreNull() {
             specify(JemmyProperties.getCurrentOutput().getOutput(), must.equal(null));
             specify(JemmyProperties.getCurrentOutput().getErrput(), must.equal(null));
         }
@@ -33,7 +33,7 @@ public class SwingLibrarySpec extends MockSupportSpecification<SwingLibrary> {
             }
         }
     }
-    
+
     public class HandlingArguments {
         private AnnotationLibrary annotationLibrary;
         private String keywordName = "someKeyword";
@@ -48,12 +48,12 @@ public class SwingLibrarySpec extends MockSupportSpecification<SwingLibrary> {
             Object[] arrayArgument = new Object[] {  };
             Object[] actualArguments = new Object[] { new Integer(2), Boolean.TRUE, arrayArgument };
             final Object[] expectedArguments = new Object[] { "2", "true", arrayArgument };
-            
+
             checking(new Expectations() {{
                 one(annotationLibrary).runKeyword(keywordName, expectedArguments);
                 will(returnValue("something"));
             }});
-            
+
             specify(context.runKeyword(keywordName, actualArguments), "something");
         }
     }
