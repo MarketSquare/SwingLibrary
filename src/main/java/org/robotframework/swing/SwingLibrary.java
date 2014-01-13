@@ -76,7 +76,10 @@ public class SwingLibrary {
             + "= Running keywords in separate threads =\n"
             + "Some actions may cause dialogs or other components to pop up and the keyword would then not return until\n"
             + "the new dialog is closed. In these situations the keyword should be executed in a separate thread,\n"
-            + "`Run Keyword In Separate Thread` that test execution can continue.";
+            + "`Run Keyword In Separate Thread` that test execution can continue.\n"
+
+            + "= Logging =\n"
+            + "Starting from version 1.8.0, the internal logging of Jemmy is available on Robot logs, when using DEBUG log level.";
     public SwingLibrary() {
         this(Collections.<String> emptyList());
     }
