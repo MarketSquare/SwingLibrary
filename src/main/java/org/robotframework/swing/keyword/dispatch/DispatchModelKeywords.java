@@ -40,12 +40,13 @@ public class DispatchModelKeywords {
         }
     }
 
-    @RobotKeyword("Sets the jemmy dispatch model.\n"
-            + "Possible models are QUEUE, QUEUE_SHORTCUT, ROBOT, ROBOT_SMOOTH\n"
-            + "Returns the old dispatch model.\n\n"
+    @RobotKeyword("Sets the jemmy dispatching model.\n"
+            + "The event dispatching is explained in https://jemmy.java.net/tutorial.html#robot\n"
+            + "Possible models are QUEUE, QUEUE_SHORTCUT (default), ROBOT, ROBOT_SMOOTH.\n"
+            + "Returns the old dispatching model.\n\n"
             + "Example:\n"
             + "| Set Jemmy Dispatch Model | ROBOT |\n"
-            + "| ${old mode}= | Set Jemmy Dispatch Model | ROBOT_SMOOTH |\n")
+            + "| ${old model}= | Set Jemmy Dispatch Model | ROBOT_SMOOTH |\n")
     @ArgumentNames({"dispatch model"})
     public String setJemmyDispatchModel(String model) {
         DispatchModel oldModel = DispatchModel.fromInt(JemmyProperties.getCurrentDispatchingModel());
