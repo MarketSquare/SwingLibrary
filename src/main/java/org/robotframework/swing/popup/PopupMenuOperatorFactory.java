@@ -20,14 +20,13 @@ import java.awt.Point;
 
 import javax.swing.JPopupMenu;
 
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.ComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.robotframework.swing.util.SwingWaiter;
 
 public class PopupMenuOperatorFactory {
-    private EventTool eventTool = new EventTool();
     private PopupCaller popupCaller = new PopupCaller();
-    
+
     public JPopupMenuOperator createPopupOperator(ComponentOperator componentOperator) {
         Point pointToClick = getPointToClick(componentOperator);
         JPopupMenu popupMenu = callPopupOnComponent(componentOperator, pointToClick);
@@ -37,22 +36,18 @@ public class PopupMenuOperatorFactory {
     public JPopupMenuOperator createPopupOperator(JPopupMenu popupMenu) {
         JPopupMenuOperator popupMenuOperator = wrapWithOperator(popupMenu);
         popupMenuOperator.grabFocus();
-        waitToAvoidInstability();
+        SwingWaiter.waitToAvoidInstability(500);
         return popupMenuOperator;
     }
 
     public JPopupMenu callPopupOnComponent(ComponentOperator componentOperator, Point pointToClick) {
         return popupCaller.callPopupOnComponent(componentOperator, pointToClick);
     }
-    
-    protected void waitToAvoidInstability() {
-        eventTool.waitNoEvent(500);
-    }
-    
+
     JPopupMenuOperator wrapWithOperator(JPopupMenu popupMenu) {
         return new JPopupMenuOperator(popupMenu);
     }
-    
+
     private Point getPointToClick(ComponentOperator componentOperator) {
         int x = componentOperator.getCenterX();
         int y = componentOperator.getCenterY();

@@ -4,13 +4,13 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.common.TimeoutCopier;
 import org.robotframework.swing.common.TimeoutName;
 import org.robotframework.swing.operator.ComponentWrapper;
+import org.robotframework.swing.util.SwingWaiter;
 
 public class ComboBoxOperator extends IdentifierSupport implements
         ComponentWrapper {
@@ -141,13 +141,10 @@ public class ComboBoxOperator extends IdentifierSupport implements
                 return executeWhenComboBoxOpen();
             } finally {
                 comboboxOperator.hidePopup();
-                waitToAvoidInstability();
+                SwingWaiter.waitToAvoidInstability(200);
             }
         }
 
-        private void waitToAvoidInstability() {
-            new EventTool().waitNoEvent(200);
-        }
 
         protected abstract Object executeWhenComboBoxOpen();
     }

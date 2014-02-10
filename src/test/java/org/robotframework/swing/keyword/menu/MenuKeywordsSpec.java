@@ -5,7 +5,6 @@ import jdave.junit4.JDaveRunner;
 
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
@@ -30,10 +29,6 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
 
         public void isRobotKeywordAnnotated() {
             specify(context, satisfies(new RobotKeywordsContract()));
-        }
-
-        public void hasEventTool() {
-            specify(context, satisfies(new FieldIsNotNullContract("eventTool")));
         }
 
         public void hasSelectFromMenuKeyword() {
@@ -258,10 +253,9 @@ public class MenuKeywordsSpec extends MockSupportSpecification<MenuKeywords> {
             }
         };
         menuItemOperator = mock(JMenuItemOperator.class);
-        final EventTool eventTool = injectMockTo(menuKeywords, EventTool.class);
+
         checking(new Expectations() {{
             atLeast(1).of(menuBarOperator).showMenuItem(menuPath); will(returnValue(menuItemOperator));
-            atLeast(2).of(eventTool).waitNoEvent(with(equal(200L)));
 
             atLeast(1).of(menuItemOperator).setComparator(with(any(EqualsStringComparator.class)));
             atLeast(1).of(menuItemOperator).grabFocus();
