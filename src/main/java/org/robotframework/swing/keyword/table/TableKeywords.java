@@ -186,7 +186,7 @@ public class TableKeywords extends IdentifierSupport {
             + "| ${row}= | Find Table Row | _myTable_ | _Some Value_ | _Some Column_ | # Searches the _'Some Value'_ from the specified  _'Some Column'_  | \n")
     @ArgumentNames({"identifier", "text", "columnIdentifier="})
     public int findTableRow(String identifier, String text, String columnIdentifier) {
-        if (columnIdentifier != null && !columnIdentifier.isEmpty())
+        if (columnIdentifier != null && !"".equals(columnIdentifier))
             return createTableOperator(identifier).findCellRow(text, columnIdentifier);
         return createTableOperator(identifier).findCellRow(text);
     }

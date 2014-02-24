@@ -117,7 +117,7 @@ public class ComponentKeywords {
     @ArgumentNames({ "identifier", "menuPath" })
     public List<String> getMenuItemsFromPopupMenu(final String identifier, final String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
-        if(menuPath == null || menuPath.isEmpty()) {
+        if(menuPath == null || "".equals(menuPath)) {
             return getParsedElements(popup.getSubElements());
         }
         JMenuItemOperator subItem = popup.showMenuItem(menuPath);
