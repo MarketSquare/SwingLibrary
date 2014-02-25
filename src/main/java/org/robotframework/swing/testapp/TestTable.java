@@ -20,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import org.robotframework.javalib.util.ArrayUtil;
+
 @SuppressWarnings("serial")
 public class TestTable extends JScrollPane {
 
@@ -139,7 +141,7 @@ public class TestTable extends JScrollPane {
         public MyTabeModel(Object[][] data) {
             this.data = data;
             for (Object[] datarow : data)
-                addColumn(datarow[0], Arrays.copyOfRange(datarow, 1, datarow.length));
+                addColumn(datarow[0], ArrayUtil.copyOfRange(datarow, 1, datarow.length));
         }
 
         public Class<?> getColumnClass(int col) {

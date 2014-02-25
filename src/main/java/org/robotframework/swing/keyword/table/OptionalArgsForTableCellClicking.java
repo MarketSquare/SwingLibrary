@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.robotframework.javalib.util.ArrayUtil;
+
 public class OptionalArgsForTableCellClicking {
 
 	@SuppressWarnings("serial")
@@ -70,7 +72,7 @@ public class OptionalArgsForTableCellClicking {
     }
     
     private String[] getKeyModifiers() {
-    	return replaceAliasesIn(Arrays.copyOfRange(optionalArgs, 2, optionalArgs.length));
+    	return replaceAliasesIn(ArrayUtil.copyOfRange(optionalArgs, 2, optionalArgs.length));
     }
     
     private String[] replaceAliasesIn(String[] keyModifiers) {
