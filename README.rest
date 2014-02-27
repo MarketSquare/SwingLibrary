@@ -10,7 +10,7 @@ Downloads are available at `Google Code`__
 
 __ http://code.google.com/p/robotframework-swinglibrary/downloads/list
 
-Keyword documentation for the latest version (1.8.0) are available `here`__
+Keyword documentation for the latest version (1.9.0) are available `here`__
 
 __ http://robotframework.github.com/SwingLibrary/SwingLibrary-1.9.0.html
 
