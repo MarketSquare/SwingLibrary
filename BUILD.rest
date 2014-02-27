@@ -23,6 +23,9 @@ Releasing
 - update `release notes <https://github.com/robotframework/SwingLibrary/wiki/Release-notes>`_
 - update version number to pom.xml
 - create git tag for new version (git commit -am "version", git tag version, git push, git push --tags)
+- You need to have a pgp key (use gpg tool to generate this and deploy your public key to a key server)
+- You need to have sonatype user account (and most likely rights to do releases for org.robotframework)
+- You need to have your sonatype username and password in .m2/settings.xml for server id sonatype-nexus-staging 
 - `mvn deploy` deploys the library to maven central. See instructions on Robot Framework releasing for the prerequisites.
 - Go to https://oss.sonatype.org/index.html#welcome, log in with Sonatype credentials, find the staging repository and do close & release
 - XML-spec and library docs are generated automatically by integration-test phase.
