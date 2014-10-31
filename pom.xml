@@ -47,9 +47,9 @@
       <version>2.2.7.5</version>
     </dependency>
     <dependency>
-      <groupId>abbot</groupId>
+      <groupId>com.github.WojtekKowaluk</groupId>
       <artifactId>abbot</artifactId>
-      <version>1.0.2</version>
+      <version>1.2.0</version>
     </dependency>
     <dependency>
       <groupId>gnu-regexp</groupId>
@@ -88,9 +88,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>abbot</groupId>
+      <groupId>com.github.WojtekKowaluk</groupId>
       <artifactId>costello</artifactId>
-      <version>1.0.2</version>
+      <version>1.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -194,8 +194,8 @@
               <output>${project.build.directory}/with-dependencies/swinglibrary-${project.version}.jar</output>
               <includes>
                 <include>org.netbeans:jemmy</include>
-                <include>abbot:abbot</include>
-                <include>abbot:costello</include>
+                <include>com.github.WojtekKowaluk:abbot</include>
+                <include>com.github.WojtekKowaluk:costello</include>
                 <include>junit:junit</include>
                 <include>gnu-regexp:gnu-regexp</include>
                 <include>jretrofit:jretrofit</include>
@@ -208,7 +208,7 @@
                   <result>org.robotframework.@0</result>
                 </rule>
                 <rule>
-                  <pattern>abbot.**</pattern>
+                  <pattern>com.github.WojtekKowaluk.**</pattern>
                   <result>org.robotframework.@0</result>
                 </rule>
                 <rule>
