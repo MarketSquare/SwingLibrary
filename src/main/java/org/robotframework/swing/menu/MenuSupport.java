@@ -16,20 +16,19 @@
 
 package org.robotframework.swing.menu;
 
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JMenuBarOperator;
 import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.context.Context;
+import org.robotframework.swing.util.SwingWaiter;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MenuSupport extends IdentifierSupport {
-    private EventTool eventTool = new EventTool();
     private EqualsStringComparator comparator = new EqualsStringComparator();
 
     protected JMenuBarOperator menubarOperator() {
@@ -41,9 +40,9 @@ public class MenuSupport extends IdentifierSupport {
     protected JMenuItemOperator showMenuItem(final String path) {
         JMenuItemOperator menuItemOperator = menubarOperator().showMenuItem(path);
         menuItemOperator.setComparator(comparator);
-        waitToAvoidInstability();
+        SwingWaiter.waitToAvoidInstability(200);
         menuItemOperator.grabFocus();
-        waitToAvoidInstability();
+        SwingWaiter.waitToAvoidInstability(200);
         return menuItemOperator;
     }
 
@@ -63,9 +62,5 @@ public class MenuSupport extends IdentifierSupport {
             return new MenuElement[0];
         }
         return subElements[0].getSubElements();
-    }
-
-    private void waitToAvoidInstability() {
-        eventTool.waitNoEvent(200);
     }
 }

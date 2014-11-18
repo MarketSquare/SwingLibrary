@@ -18,6 +18,8 @@ package org.robotframework.swing;
 import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
+import org.robotframework.javalib.library.KeywordDocumentationRepository;
+import org.robotframework.javalib.library.RobotJavaLibrary;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 import org.robotframework.swing.util.StandardOutOutput;
 
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class SwingLibrary {
+public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLibrary {
     public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
     public static SwingLibrary instance;
     private final AnnotationLibrary annotationLibrary = new AnnotationLibrary(
@@ -105,20 +107,24 @@ public class SwingLibrary {
         }
     }
 
+    @Override
     public Object runKeyword(String keywordName, Object[] args) {
         return annotationLibrary.runKeyword(keywordName, toStrings(args));
     }
 
+    @Override
     public String[] getKeywordArguments(String keywordName) {
         return annotationLibrary.getKeywordArguments(keywordName);
     }
 
+    @Override
     public String getKeywordDocumentation(String keywordName) {
         if (keywordName.equals("__intro__"))
             return LIBRARY_DOCUMENTATION;
         return annotationLibrary.getKeywordDocumentation(keywordName);
     }
 
+    @Override
     public String[] getKeywordNames() {
         return annotationLibrary.getKeywordNames();
     }

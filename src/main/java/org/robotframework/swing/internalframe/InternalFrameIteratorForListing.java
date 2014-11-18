@@ -40,7 +40,7 @@ public class InternalFrameIteratorForListing{
 
     private String componentToString(Component component) {
         String title = ((JInternalFrame)component).getTitle();
-        if (!title.isEmpty())
+        if (!"".equals(title))
             return title;
         String componentString = component.toString();
         int indexToStartOfDetails = componentString.indexOf('[');

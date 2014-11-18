@@ -34,7 +34,7 @@ public class FileChooserKeywords {
         + "| Choose From File Chooser | _/tmp/elements.xml_ |\n")
     @ArgumentNames({"fileName="})
     public void chooseFromFileChooser(String fileName) {
-        if (!fileName.isEmpty()) {
+        if (!"".equals(fileName)) {
             fileChooserOperator().chooseFile(fileName);
         } else {
             fileChooserOperator().approve();

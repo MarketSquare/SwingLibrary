@@ -56,7 +56,7 @@ public class TabKeywords extends IdentifierSupport {
     }
 
     private boolean notNullOrBlank(String tabPaneIdentifier) {
-        return tabPaneIdentifier != null && !tabPaneIdentifier.isEmpty();
+        return tabPaneIdentifier != null && !"".equals(tabPaneIdentifier);
     }
 
     private Component selectTabPage(String tabIdentifier) {

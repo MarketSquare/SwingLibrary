@@ -86,36 +86,6 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
         }
     }
 
-    public class InvokingPopupMenuActionsOnSelectedNodes {
-        private boolean waitToAvoidInstabilityWasCalled;
-
-        public TreeNodePopupKeywords create() {
-            waitToAvoidInstabilityWasCalled = false;
-            TreeNodePopupKeywords treeKeywords = new TreeNodePopupKeywords() {
-                void waitToAvoidInstability() {
-                    waitToAvoidInstabilityWasCalled = true;
-                }
-            };
-
-            TreeNodePopupKeywords treePopupKeywords = populateWithMockOperatorFactory(treeKeywords);
-            popupMenuOperator = mock(JPopupMenuOperator.class);
-            checking(new Expectations() {{
-                one(treeOperator).createPopupOperatorOnSelectedNodes();
-                will(returnValue(popupMenuOperator));
-            }});
-            return treePopupKeywords;
-        }
-
-        public void selectsFromPopupMenuOnSelectedTreeNodes() {
-            checking(new Expectations() {{
-                one(popupMenuOperator).pushMenuNoBlock(with(equal(menuPath)), with(any(EqualsStringComparator.class)));
-            }});
-
-            context.selectFromPopupMenuOnSelectedTreeNodes(treeIdentifier, menuPath);
-            specify(waitToAvoidInstabilityWasCalled);
-        }
-    }
-
     public class CheckingConditions {
         private JMenuItem menuItem;
 

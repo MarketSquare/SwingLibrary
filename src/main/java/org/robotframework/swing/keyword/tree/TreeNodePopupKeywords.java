@@ -23,7 +23,6 @@ import javax.swing.JMenuItem;
 
 import org.junit.Assert;
 
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
@@ -34,6 +33,7 @@ import org.robotframework.swing.tree.TreePopupMenuItemFinder;
 import org.robotframework.swing.tree.TreeSupport;
 
 import abbot.tester.ComponentTester;
+import org.robotframework.swing.util.SwingWaiter;
 
 @RobotKeywords
 public class TreeNodePopupKeywords extends TreeSupport {
@@ -68,7 +68,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
     public void selectFromPopupMenuOnSelectedTreeNodes(String identifier, String menuPath) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperatorOnSelectedNodes();
         popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
-        waitToAvoidInstability();
+        SwingWaiter.waitToAvoidInstability(300);
     }
 
     @RobotKeyword("Fails if given popup menu item is disabled.\n\n"
@@ -112,7 +112,4 @@ public class TreeNodePopupKeywords extends TreeSupport {
         return new TreePopupMenuItemFinder(source);
     }
 
-    void waitToAvoidInstability() {
-        new EventTool().waitNoEvent(300);
-    }
 }

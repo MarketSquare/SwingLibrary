@@ -202,7 +202,6 @@ public class TestApplication {
                 setPreferredSize(new Dimension(100, 30));
             }
         });
-
         panel.add(new TestSpinnerButton("testSpinner"));
         List<String> weekDays = Arrays.asList("Sunday", "Monday", "Tuesday",
                 "Wednesday", "Thursday", "Friday", "Saturday");
@@ -213,6 +212,7 @@ public class TestApplication {
         panel.add(testSlider());
         panel.add(tableWithHeader());
         panel.add(new TestScrollPane());
+        panel.add(new TestFastUpdatingPane());
     }
 
     private Component tableWithHeader() {

@@ -40,7 +40,7 @@ public class DevelopmentKeywords {
     @ArgumentNames({ "formatted=" })
     public String listComponentsInContext(String formatted) {
         ComponentWrapper operator = Context.getContext();
-        if (formatted.isEmpty())
+        if ("".equals(formatted))
             return ContainerIteratorForListing.getComponentList((Container) operator.getSource()).toString();
         else {
             return ContainerIteratorForListing.getFormattedComponentList((Container) operator.getSource()).toString();
