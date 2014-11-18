@@ -92,8 +92,9 @@
     <dependency>
       <groupId>abbot</groupId>
       <artifactId>costello</artifactId>
-      <version>1.0.2</version>
-      <scope>test</scope>
+        <version>1.3.0</version>
+        <scope>system</scope>
+        <systemPath>${basedir}/ext-libs/costello-1.3.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>jdom</groupId>
