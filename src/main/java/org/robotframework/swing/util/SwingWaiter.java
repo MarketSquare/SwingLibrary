@@ -16,7 +16,7 @@ public class SwingWaiter {
 
     public static void waitToAvoidInstability(int time) {
         try {
-            eventTool.getTimeouts().setTimeout("EventTool.WaitNoEventTimeout", Math.max(1000, time));
+            eventTool.getTimeouts().setTimeout("EventTool.WaitNoEventTimeout", Math.min(1000, time));
             eventTool.waitNoEvent(time);
         } catch (TimeoutExpiredException e) {
             // Ignore
