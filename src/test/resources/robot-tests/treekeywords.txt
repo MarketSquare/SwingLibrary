@@ -1,5 +1,6 @@
 *** Settings ***
 Suite Setup     setTimeoutsAndDelays
+Suite teardown  setJemmyTimeouts    1
 Library         Collections
 Library         TestSwingLibrary
 
