@@ -22,7 +22,7 @@ public class CellValueExtractor {
     public String textOf(int row, int col) {
         try {
             Component cellRendererComponent = getCellRendererComponent(row, col);
-            if (isCheckboxRenderer(cellRendererComponent))
+            if (isButtonBasedRenderer(cellRendererComponent))
                 return new Boolean(((AbstractButton) cellRendererComponent).isSelected()).toString();
             return coerceToWithText(cellRendererComponent).getText();
         } catch (AllMethodsNotImplementedException e) {
@@ -39,9 +39,10 @@ public class CellValueExtractor {
         return getTableCellRendererComponentSmoothly(row, column, renderer, table, value, isSelected, hasFocus);
     }
 
-    private boolean isCheckboxRenderer(Component cellRendererComponent) {
+    private boolean isButtonBasedRenderer(Component cellRendererComponent) {
         TableCellRenderer defaultCheckboxRenderer = ((JTable) jTableOperator.getSource()).getDefaultRenderer(Boolean.class);
-        return (defaultCheckboxRenderer.getClass().isInstance(cellRendererComponent));
+        return (defaultCheckboxRenderer.getClass().isInstance(cellRendererComponent) &&
+                cellRendererComponent instanceof AbstractButton);
     }
 
     private WithText coerceToWithText(Object element) {
