@@ -136,11 +136,16 @@ public class ComboBoxOperator extends IdentifierSupport implements
 
     private abstract class ComboboxAction {
         public Object execute() {
+            boolean isOpenWhenWeStart = comboboxOperator.isPopupVisible();
             try {
-                comboboxOperator.pushComboButton();
+                if (!isOpenWhenWeStart) {
+                    comboboxOperator.pushComboButton();
+                }
                 return executeWhenComboBoxOpen();
             } finally {
-                comboboxOperator.hidePopup();
+                if (!isOpenWhenWeStart) {
+                    comboboxOperator.hidePopup();
+                }
                 SwingWaiter.waitToAvoidInstability(200);
             }
         }
