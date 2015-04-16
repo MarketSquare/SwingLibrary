@@ -170,23 +170,25 @@ public class ComponentKeywords {
     public String[] listComponentMethods(String identifier) {
         Class klass = operator(identifier).getSource().getClass();
         ArrayList<String> list = new ArrayList<String>();
-
         for (Method m : klass.getMethods()) {
-            String entry = "";
-            entry += m.getReturnType().getName() + " ";
-            entry += m.getName();
-            entry += "(";
-            Class[] args = m.getParameterTypes();
-            for (int i = 0; i < args.length; i++) {
-                entry += args[i].getName();
-                if (i != args.length - 1)
-                    entry += ", ";
-            }
-            entry += ")";
+            String entry = getMethodDescription(m);
             System.out.println(entry);
             list.add(entry);
         }
         return list.toArray(new String[list.size()]);
+    }
+
+    private String getMethodDescription(Method m) {
+        String entry = m.getReturnType().getName() + " ";
+        entry += m.getName();
+        entry += "(";
+        Class[] args = m.getParameterTypes();
+        for (int i = 0; i < args.length; i++) {
+            entry += args[i].getName();
+            if (i != args.length - 1)
+                entry += ", ";
+        }
+        return entry + ")";
     }
 
     private Method getMethodByNameAndArgumentCount(Class klass, String name, int argCount) {
