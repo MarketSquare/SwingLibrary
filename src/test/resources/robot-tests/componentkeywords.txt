@@ -1,5 +1,6 @@
 *** Settings ***
 Library         TestSwingLibrary
+Library         Collections
 Variables       platform_info.py
 
 *** Variables ***
@@ -62,6 +63,16 @@ Right Click on Component
 Get Tooltip Text
     ${tooltip}=  getToolTipText  testLabel
     shouldBeEqual  TEST LABEL  ${tooltip}
+
+List Component Methods
+    ${methods}=  listComponentMethods  ${buttonName}
+    listShouldContainValue  ${methods}  java.lang.String getToolTipText()
+
+Call Component Method
+   ${tooltipText}=  setVariable  tooltip test
+   callComponentMethod  ${buttonName}  setToolTipText  ${tooltipText}
+   ${tooltipValue}=  callComponentMethod  ${buttonName}  getToolTipText
+   Should Be Equal  ${tooltipText}  ${tooltipValue}
 
 *** Keywords ***
 resetButton

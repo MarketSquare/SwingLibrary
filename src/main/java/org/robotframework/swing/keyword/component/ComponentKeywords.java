@@ -23,6 +23,7 @@ import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.javalib.reflection.ArgumentConverter;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.component.ComponentOperator;
 import org.robotframework.swing.component.ComponentOperatorFactory;
@@ -33,7 +34,8 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
-import java.util.ArrayList;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.List;
 
 @RobotKeywords
@@ -162,6 +164,53 @@ public class ComponentKeywords {
     public void scrollComponentToView(String identifier) {
         operator(identifier).scrollRectToVisible(new Rectangle(100, 100));
     }
+
+    @RobotKeyword("List Component Methods")
+    @ArgumentNames({"identifier"})
+    public String[] listComponentMethods(String identifier) {
+        Class klass = operator(identifier).getSource().getClass();
+        ArrayList<String> list = new ArrayList<String>();
+
+        for (Method m : klass.getMethods()) {
+            String entry = "";
+            entry += m.getReturnType().getName() + " ";
+            entry += m.getName();
+            entry += "(";
+            Class[] args = m.getParameterTypes();
+            for (int i = 0; i < args.length; i++) {
+                entry += args[i].getName();
+                if (i != args.length - 1)
+                    entry += ", ";
+            }
+            entry += ")";
+            System.out.println(entry);
+            list.add(entry);
+        }
+        return list.toArray(new String[list.size()]);
+    }
+
+    private Method getMethodByNameAndArgumentCount(Class klass, String name, int argCount) {
+        for (Method m : klass.getMethods()) {
+            if (m.getName().equals(name) && m.getParameterTypes().length == argCount)
+                return m;
+        }
+        throw new RuntimeException(String.format("Method \"%s\" with %d argument(s) doesn't exist.", name, argCount));
+    }
+
+    @RobotKeyword("Call Component Method")
+    @ArgumentNames({"identifier", "method", "*args"})
+    public Object callComponentMethod(String identifier, String method, String[] args) {
+        Object component = operator(identifier).getSource();
+        Class klass = component.getClass();
+        Method m = getMethodByNameAndArgumentCount(klass, method, args.length);
+
+        try {
+            return m.invoke(component, new ArgumentConverter(m.getParameterTypes()).convertArguments(args));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     private ComponentOperator operator(String identifier) {
         return operatorFactory.createOperator(identifier);
