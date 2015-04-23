@@ -1,0 +1,11 @@
+*** Settings ***
+Test Setup      selectMainWindow
+Library         TestSwingLibrary
+
+*** Variables ***
+${tableName}  testTreeTable
+
+*** Test Cases ***
+Get Tree Table Value
+    ${cellValue}=  getTableCellValue  ${tableName}  0  0
+    shouldBeEqual  rootentry  ${cellValue}
