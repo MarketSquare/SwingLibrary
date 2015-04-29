@@ -25,6 +25,11 @@ Works With Real Keywords
     Wait Until Keyword Succeeds  10 seconds  1 second  dialogShouldBeOpen  Message
     [Teardown]  closeDialog  Message
 
+Run keywords with varargs
+    runKeywordInSeparateThread   callComponentMethod  testButton  getToolTipText
+    runKeywordInSeparateThread   callComponentMethod  testButton  getBaseline   10   10
+    runKeywordAndExpectError  Expected 2 or more but got 1 arguments.*  runKeywordInSeparateThread  callComponentMethod   foo
+
 *** Keywords ***
 Run In Separate Thread
     [Arguments]  ${keyword name}

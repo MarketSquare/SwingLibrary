@@ -33,7 +33,7 @@ import org.robotframework.swing.SwingLibrary;
 @RobotKeywords
 public class ThreadKeywords {
     private KeywordNameNormalizer normalizer = new KeywordNameNormalizer();
-    
+
     @RobotKeyword("Executes the given keyword with the given arguments in a separate thread.\n"
         + "Useful if the given keyword starts a process that stays running (e.g. opens a dialog) and doesn't return.\n"
         + "Known limitations:\n"
@@ -43,6 +43,7 @@ public class ThreadKeywords {
     @ArgumentNames({"keywordName", "*arguments"})
     public void runKeywordInSeparateThread(final String keywordName, final Object... arguments) {
         assertKeywordExists(keywordName);
+
         assertArgumentCountIsCorrect(keywordName, arguments);
         new Thread() {
             public void run() {
@@ -50,7 +51,7 @@ public class ThreadKeywords {
             }
         }.start();
     }
-    
+
     public String stringify(String keywordName, Object... arguments) {
         assertKeywordExists(keywordName);
         assertArgumentCountIsCorrect(keywordName, arguments);
@@ -61,8 +62,17 @@ public class ThreadKeywords {
         String[] keywordArguments = SwingLibrary.instance.getKeywordArguments(normalizer.normalize(keywordName));
         if (keywordArguments == null)
             return;
-        String errorMessage = "Expected " + keywordArguments.length + " but got " + arguments.length + " arguments.     ";
-        Assert.assertEquals(errorMessage, keywordArguments.length, arguments.length);
+        if (hasVarArgs(keywordArguments)) {
+            String errorMessage = "Expected " + (keywordArguments.length-1) + " or more but got " + arguments.length + " arguments.     ";
+            Assert.assertTrue(errorMessage, keywordArguments.length-1 <= arguments.length);
+        } else {
+            String errorMessage = "Expected " + keywordArguments.length + " but got " + arguments.length + " arguments.     ";
+            Assert.assertEquals(errorMessage, keywordArguments.length, arguments.length);
+        }
+    }
+
+    private boolean hasVarArgs(String[] keywordArguments) {
+        return keywordArguments.length > 0 && keywordArguments[keywordArguments.length-1].startsWith("*");
     }
 
     private void assertKeywordExists(final String keywordName) {
