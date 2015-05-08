@@ -199,7 +199,10 @@ public class ComponentKeywords {
         throw new RuntimeException(String.format("Method \"%s\" with %d argument(s) doesn't exist.", name, argCount));
     }
 
-    @RobotKeyword("Call Component Method")
+    @RobotKeyword("Calls a method from specified component.\n\n"
+                  + "Arguments are automatically converted if possible to type expected by the method.\n\n"
+                  + "Example:\n"
+                  + "| Call Component Method | buttonId | setToolTipText | new tooltip text |")
     @ArgumentNames({"identifier", "method", "*args"})
     public Object callComponentMethod(String identifier, String method, String[] args) {
         Object component = operator(identifier).getSource();
