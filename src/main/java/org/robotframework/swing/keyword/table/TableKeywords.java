@@ -274,7 +274,7 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns the property of the table cell.\n\n"
             + "Example:\n"
-            + "| _${background}=_ | Get Table Cell Properties | _myTable_ | _1_ | _2_ | _background_ |\n"
+            + "| _${background}=_ | Get Table Cell Property | _myTable_ | _1_ | _2_ | _background_ |\n"
             + "| Should Be Equal As Integers | _255_ | _${background.getRed()}_ | | | |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "propertyName"})
     public Object getTableCellProperty(String identifier, String row, String columnIdentifier, String propertyName) {

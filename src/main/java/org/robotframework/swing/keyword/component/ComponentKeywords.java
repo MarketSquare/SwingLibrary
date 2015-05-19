@@ -165,7 +165,11 @@ public class ComponentKeywords {
         operator(identifier).scrollRectToVisible(new Rectangle(100, 100));
     }
 
-    @RobotKeyword("List Component Methods")
+    @RobotKeyword("List methods of components object.\n"
+            +"When working with custom compoments you may use this keyword to discover mtethods you can call "
+            +"with Call Component Method keyword.\n\n"
+            +"Example:\n"
+            + "| List Component Methods | _myComponent_ |\n")
     @ArgumentNames({"identifier"})
     public String[] listComponentMethods(String identifier) {
         Class klass = operator(identifier).getSource().getClass();
