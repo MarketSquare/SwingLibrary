@@ -23,15 +23,18 @@ import org.netbeans.jemmy.ComponentChooser;
 public class ByNameOrTextComponentChooser implements ComponentChooser {
     private ComponentChooser byNameComponentChooser;
     private ComponentChooser byTextComponentChooser;
+    private ComponentChooser byTooltipComponentChooser;
 
     public ByNameOrTextComponentChooser(String expectedNameOrText) {
         byNameComponentChooser = new ByNameComponentChooser(expectedNameOrText);
         byTextComponentChooser = new ByTextComponentChooser(expectedNameOrText);
+        byTooltipComponentChooser = new ByTooltipComponentChooser(expectedNameOrText);
     }
 
     public boolean checkComponent(Component component) {
-        return byNameComponentChooser.checkComponent(component) ||
-               byTextComponentChooser.checkComponent(component);
+        return byNameComponentChooser.checkComponent(component)
+               || byTextComponentChooser.checkComponent(component)
+               || byTooltipComponentChooser.checkComponent(component);
     }
 
     public String getDescription() {
