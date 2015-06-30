@@ -247,7 +247,7 @@ public class TestApplication {
                 {"column one", "one/one", "two/one", "three/one", "four/one"},
                 {"column two", "one/two", "two/two", "three/two", "four/two"},
                 {"column three", "one/three", "two/three", "three/three",
-                        "four/three"},
+                        "four/three!!!"},
                 {"column four", Boolean.TRUE, Boolean.TRUE, Boolean.FALSE,
                         Boolean.FALSE}};
     }

@@ -16,6 +16,7 @@ import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.table.CellValueExtractor;
 import org.robotframework.swing.table.TableOperator;
 
 
@@ -128,7 +129,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
 
         public void getsSelectedTableCellValue() {
             checking(new Expectations() {{
-                one(tableOperator).getSelectedCellValue();
+                one(tableOperator).getSelectedCellValue(CellValueExtractor.TextSource.AUTO);
                 will(returnValue(cellValue));
             }});
 

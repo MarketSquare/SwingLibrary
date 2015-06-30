@@ -16,6 +16,7 @@
 
 package org.robotframework.swing.keyword.table;
 
+import java.awt.*;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -29,8 +30,10 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.table.CellValueExtractor;
 import org.robotframework.swing.table.TableOperator;
 import org.robotframework.swing.table.TableOperatorFactory;
+
 
 @RobotKeywords
 public class TableKeywords extends IdentifierSupport {
@@ -113,22 +116,49 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Returns cell's value from a table.\n\n"
-            + "Starting from SwingLibrary 1.1.4, value from cell rendered with check box is string true/false.\n\n"
+            + "Starting from SwingLibrary 1.1.4, value from cell rendered with check box is string true/false.\n"
+            + "Optional parameter _source_ allows to override text extraction strategy. "
+            + "Available values are _auto_ (default, will try to get text from cell component"
+            + "first and then from table model) and _model_ (will only try to get text from table model).\n\n"
             + "Example:\n"
             + "| ${cellValue}=   | Get Table Cell Value | _myTable_ | _0_            | _2_ |\n"
             + "| Should Be Equal | _tuesday_            |           | _${cellValue}_ |     |\n")
-    @ArgumentNames({"identifier", "row", "columnIdentifier"})
+    @ArgumentNames({"identifier", "row", "columnIdentifier", "source=auto"})
+    public String getTableCellValue(String identifier, String row, String columnIdentifier, String source) {
+        TableOperator operator = createTableOperator(identifier);
+        Component component = operator.getSource();
+        CellValueExtractor.TextSource textSource = textExtractionSourceFromText(source);
+        return operator.getCellValue(row, columnIdentifier, textSource);
+    }
+
+    private CellValueExtractor.TextSource textExtractionSourceFromText(String text) {
+        if (text.toLowerCase().equals("model"))
+            return CellValueExtractor.TextSource.MODEL;
+        else
+            return CellValueExtractor.TextSource.AUTO;
+    }
+
+    @RobotKeywordOverload
     public String getTableCellValue(String identifier, String row, String columnIdentifier) {
-        return createTableOperator(identifier).getCellValue(row, columnIdentifier).toString();
+        return getTableCellValue(identifier, row, columnIdentifier, "auto");
     }
 
     @RobotKeyword("Returns selected cell's value from a table.\n\n"
+            + "Optional parameter _source_ allows to override text extraction strategy. "
+            + "Available values are _auto_ (default, will try to get text from cell component"
+            + "first and then from table model) and _model_ (will only try to get text from table model).\n\n"
             + "Example:\n"
             + "| ${cellValue}=   | Get Selected Table Cell Value   | _myTable_      |\n"
             + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
-    @ArgumentNames({"identifier"})
+    @ArgumentNames({"identifier", "source=auto"})
+    public Object getSelectedTableCellValue(String identifier, String source) {
+        CellValueExtractor.TextSource textSource = textExtractionSourceFromText(source);
+        return createTableOperator(identifier).getSelectedCellValue(textSource).toString();
+    }
+
+    @RobotKeywordOverload
     public Object getSelectedTableCellValue(String identifier) {
-        return createTableOperator(identifier).getSelectedCellValue().toString();
+        return getSelectedTableCellValue(identifier, "auto");
     }
 
     @RobotKeyword("Sets cell value in a table.\n\n"

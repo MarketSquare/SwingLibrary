@@ -16,6 +16,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -65,6 +66,9 @@ public class TestTable extends JScrollPane {
             }
         });
 
+        TableColumn col2 = table.getColumnModel().getColumn(2);
+        col2.setCellRenderer(new CustomRenderer());
+
         return table;
     }
 
@@ -77,6 +81,16 @@ public class TestTable extends JScrollPane {
                                                        boolean hasFocus, int row, int column) {
             setSelectedIndex(row);
             return this;
+        }
+    }
+
+    static class CustomRenderer extends DefaultTableCellRenderer {
+        public void setValue(Object value) {
+            String s = value.toString();
+            if (s.equals("four/three!!!"))
+                setText("four/three");
+            else
+                setText(s);
         }
     }
 
