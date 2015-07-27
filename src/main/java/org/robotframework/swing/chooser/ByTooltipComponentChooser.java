@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,7 +21,6 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.robotframework.swing.util.ObjectUtils;
 
 import java.awt.*;
-import java.io.PrintWriter;
 
 public class ByTooltipComponentChooser implements ComponentChooser {
     private final String expectedText;
@@ -31,8 +30,7 @@ public class ByTooltipComponentChooser implements ComponentChooser {
     }
 
     @Override
-    public boolean checkComponent(Component component)
-    {
+    public boolean checkComponent(Component component) {
             WithTooltip withTooltip = (WithTooltip) Retrofit.partial(component,
                     WithTooltip.class);
             return ObjectUtils.nullSafeEquals(expectedText, withTooltip.getToolTipText());
