@@ -1,6 +1,6 @@
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -30,8 +30,7 @@ public class ByTextComponentChooser implements ComponentChooser {
     }
 
     @Override
-    public boolean checkComponent(Component component)
-    {
+    public boolean checkComponent(Component component) {
         WithText withText = (WithText) Retrofit.partial(component,
                 WithText.class);
         return ObjectUtils.nullSafeEquals(expectedText, withText.getText());
