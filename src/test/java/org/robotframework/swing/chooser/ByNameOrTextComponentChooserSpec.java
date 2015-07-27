@@ -46,6 +46,7 @@ public class ByNameOrTextComponentChooserSpec extends Specification<ByNameOrText
             checking(new Expectations() {{
                 one(component).getName(); will(returnValue(null));
                 one(component).getText(); will(returnValue(null));
+                one(component).getToolTipText(); will(returnValue(null));
             }});
 
             specify(context.checkComponent(component), must.equal(false));

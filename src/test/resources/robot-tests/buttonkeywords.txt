@@ -6,6 +6,7 @@ Library         TestSwingLibrary
 *** Variables ***
 ${buttonName}  testButton
 ${buttonText}  Test Button
+${toolTipText}  testToolTip
 ${buttonTextAfterPush}  Button Was Pushed1
 ${buttonIndex}  0
 
@@ -23,6 +24,9 @@ Button Should Exist By Internal Name
 
 Button Should Exist By Text
     buttonShouldExist  ${buttonText}
+
+Button Should Exist By ToolTip
+    buttonShouldExist  ${toolTipText}
 
 Button Should Exist Index
     buttonShouldExist  ${buttonIndex}

@@ -16,25 +16,26 @@
 
 package org.robotframework.swing.chooser;
 
-import java.awt.Component;
-
 import org.laughingpanda.jretrofit.Retrofit;
 import org.netbeans.jemmy.ComponentChooser;
 import org.robotframework.swing.util.ObjectUtils;
 
-public class ByTextComponentChooser implements ComponentChooser {
+import java.awt.*;
+import java.io.PrintWriter;
+
+public class ByTooltipComponentChooser implements ComponentChooser {
     private final String expectedText;
 
-    public ByTextComponentChooser(String expectedText) {
+    public ByTooltipComponentChooser(String expectedText) {
         this.expectedText = expectedText;
     }
 
     @Override
     public boolean checkComponent(Component component)
     {
-        WithText withText = (WithText) Retrofit.partial(component,
-                WithText.class);
-        return ObjectUtils.nullSafeEquals(expectedText, withText.getText());
+            WithTooltip withTooltip = (WithTooltip) Retrofit.partial(component,
+                    WithTooltip.class);
+            return ObjectUtils.nullSafeEquals(expectedText, withTooltip.getToolTipText());
     }
 
     @Override

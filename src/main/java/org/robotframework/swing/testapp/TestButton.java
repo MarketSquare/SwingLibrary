@@ -13,6 +13,7 @@ public class TestButton extends JButton {
     public TestButton() {
         super(INITIAL_TEXT);
         setName("testButton");
+        setToolTipText("testToolTip");
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
