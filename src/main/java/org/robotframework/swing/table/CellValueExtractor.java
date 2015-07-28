@@ -2,9 +2,9 @@ package org.robotframework.swing.table;
 
 import java.awt.Component;
 
-import javax.swing.AbstractButton;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.tree.TreePath;
 
 import org.laughingpanda.jretrofit.AllMethodsNotImplementedException;
 import org.laughingpanda.jretrofit.Retrofit;
@@ -24,6 +24,8 @@ public class CellValueExtractor {
             Component cellRendererComponent = getCellRendererComponent(row, col);
             if (isButtonBasedRenderer(cellRendererComponent))
                 return new Boolean(((AbstractButton) cellRendererComponent).isSelected()).toString();
+            if (JTree.class.isInstance(cellRendererComponent))
+                return getTreeRowValue((JTree) cellRendererComponent, row);
             return coerceToWithText(cellRendererComponent).getText();
         } catch (AllMethodsNotImplementedException e) {
             return wrapElementToWithText(row, col).getText();
@@ -66,5 +68,11 @@ public class CellValueExtractor {
                 return renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         }.invoke();
+    }
+
+    private String getTreeRowValue(JTree tree, int row) {
+        TreePath path = tree.getPathForRow(row);
+        Object node = path.getLastPathComponent();
+        return node.toString();
     }
 }

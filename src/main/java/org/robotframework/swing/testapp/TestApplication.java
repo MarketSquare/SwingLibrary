@@ -1,5 +1,8 @@
 package org.robotframework.swing.testapp;
 
+import org.robotframework.swing.testapp.treetable.JTreeTable;
+import org.robotframework.swing.testapp.treetable.MyTreeTableModel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,24 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.SpinnerListModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
@@ -213,6 +199,12 @@ public class TestApplication {
         panel.add(tableWithHeader());
         panel.add(new TestScrollPane());
         panel.add(new TestFastUpdatingPane());
+
+        MyTreeTableModel model = new MyTreeTableModel();
+        JTreeTable treeTable = new JTreeTable(model);
+        treeTable.setName("testTreeTable");
+
+        panel.add(new JScrollPane(treeTable));
     }
 
     private Component tableWithHeader() {
