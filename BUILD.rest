@@ -15,6 +15,7 @@ __ http://maven.apache.org/
 
 - `mvn package` packages SwingLibrary with dependencies.
 - `mvn verify` runs Robot Framework tests.
+- `mvn -Dsuites=tablekeywords -Dinvoker.skip=true verify` runs Robot Framework tests for a specific suite and skips the invoker tests. Also try `-Dtests=` option.
 - `mvn package robotframework:libdoc` compiles the code and generates library documentation
 - `mvn exec:java -Dexec.mainClass=org.robotframework.swing.testapp.TestApplication` starts the test app
 
@@ -23,13 +24,14 @@ Releasing
 
 - update `release notes <https://github.com/robotframework/SwingLibrary/wiki/Release-notes>`_
 - update version number to pom.xml
-- create git tag for new version (git commit -am "version", git tag version, git push, git push --tags)
+- create git tag for new version (git commit -am "x.x.x", git tag -a x.x.x, git push, git push --tags)
 - You need to have a pgp key (use gpg tool to generate this and deploy your public key to a key server)
-- You need to have sonatype user account (and most likely rights to do releases for org.robotframework)
+- You need to have sonatype user account (and rights to do releases for org.robotframework)
 - You need to have your sonatype username and password in .m2/settings.xml for server id sonatype-nexus-staging 
-- `mvn deploy` deploys the library to maven central. See instructions on Robot Framework releasing for the prerequisites.
+- `mvn deploy` deploys the library to maven central. You can skip tests with `-Dmaven.test.skip=true`.
 - Go to https://oss.sonatype.org/index.html#welcome, log in with Sonatype credentials, find the staging repository and do close & release
 - XML-spec and library docs are generated automatically by integration-test phase.
-- upload jar, library docs, and spec xml to Github releases
+- upload jar, library docs, and spec xml to Github releases.
+- Change to branch `gh-pages` and add documentation html. commit and push. Modify the README.rest in master to point to the latest version release and docs.
 
 
