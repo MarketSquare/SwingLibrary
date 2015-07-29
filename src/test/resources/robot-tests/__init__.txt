@@ -1,7 +1,7 @@
 *** Settings ***
 Suite Setup     launchApplicationAndSetTimeouts
 Suite teardown  closeWindow  Test App
-Library         SwingLibrary
+Library         TestSwingLibrary
 Force Tags      regression
 
 *** Keywords ***
@@ -10,4 +10,6 @@ launchApplicationAndSetTimeouts
     startApplication  org.robotframework.swing.testapp.TestApplication
     selectMainWindow
     setJemmyTimeouts  1
+    Set jemmy timeout  JMenuOperator.PushMenuTimeout    1
+    Set jemmy timeout  ComponentOperator.WaitStateTimeout   1
 
