@@ -118,7 +118,7 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Returns cell's value from a table.\n\n"
             + "Starting from SwingLibrary 1.1.4, value from cell rendered with check box is string true/false.\n"
             + "Optional parameter _source_ allows to override text extraction strategy. "
-            + "Available values are _auto_ (default, will try to get text from cell component"
+            + "Available values are _auto_ (default, will try to get text from cell component "
             + "first and then from table model) and _model_ (will only try to get text from table model).\n\n"
             + "Example:\n"
             + "| ${cellValue}=   | Get Table Cell Value | _myTable_ | _0_            | _2_ |\n"
@@ -145,7 +145,7 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns selected cell's value from a table.\n\n"
             + "Optional parameter _source_ allows to override text extraction strategy. "
-            + "Available values are _auto_ (default, will try to get text from cell component"
+            + "Available values are _auto_ (default, will try to get text from cell component "
             + "first and then from table model) and _model_ (will only try to get text from table model).\n\n"
             + "Example:\n"
             + "| ${cellValue}=   | Get Selected Table Cell Value   | _myTable_      |\n"
