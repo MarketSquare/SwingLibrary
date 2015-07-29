@@ -2,7 +2,7 @@ Sources
 =======
 
 Code is organized according to the Maven convention in `src/main/java` and
-`src/test/java`. In addition Robot Framework test cases for all the keywords
+``src/test/java``. In addition Robot Framework test cases for all the keywords
 are located in `src/test/resources/robot-tests`
 
 
