@@ -92,9 +92,18 @@ Get Selected Table Cell Value
     ${cellValue}=  getSelectedTableCellValue  ${tableName}
     shouldBeEqual  four/three  ${cellValue}
 
+Get Selected Table Cell Value From Model
+    selectTableCell  ${tableName}  3  2
+    ${cellValue}=  getSelectedTableCellValue  ${tableName}  source=MODEL
+    shouldBeEqual  four/three!!!  ${cellValue}
+
 Get Table Cell Value By Index
-    ${cellValue}=  getTableCellValue  ${tableName}  2  1
-    shouldBeEqual  three/two  ${cellValue}
+    ${cellValue}=  getTableCellValue  ${tableName}  3  2
+    shouldBeEqual  four/three  ${cellValue}
+
+Get Table Cell Value From Model By Index
+    ${cellValue}=  getTableCellValue  ${tableName}  3  2  source=MODEL
+    shouldBeEqual  four/three!!!  ${cellValue}
 
 Clear Table Cell
     clearTableCell  ${tableName}  2  1
@@ -131,13 +140,13 @@ Get Table Row Count By Name
 Find Table Row
     ${row}=  findTableRow  ${tableName}  one/one
     shouldBeEqualAsIntegers  0  ${row}
-    ${row}=  findTableRow  ${tableName}  four/three
+    ${row}=  findTableRow  ${tableName}  four/three!!!
     shouldBeEqualAsIntegers  3  ${row}
 
 Find Table Row With Column
     ${row}=  findTableRow  ${tableName}  one/one  column one
     shouldBeEqualAsIntegers  0  ${row}
-    ${row}=  findTableRow  ${tableName}  four/three  column three
+    ${row}=  findTableRow  ${tableName}  four/three!!!  column three
     shouldBeEqualAsIntegers  3  ${row}
     ${row}=  findTableRow  TableWithSingleValue  foo
     shouldBeEqualAsIntegers  0  ${row}

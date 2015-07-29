@@ -53,9 +53,9 @@ public class TableOperator extends IdentifierSupport implements
         return new TableHeaderOperator(jTableOperator.getHeaderOperator());
     }
 
-    public String getCellValue(String row, String columnIdentifier) {
+    public String getCellValue(String row, String columnIdentifier, CellValueExtractor.TextSource source) {
         Point cell = findCell(row, columnIdentifier);
-        return cellValueExtractor.textOf(cell.y, cell.x);
+        return cellValueExtractor.textOf(cell.y, cell.x, source);
     }
 
     public boolean isCellEditable(String row, String columnIdentifier) {
@@ -144,10 +144,14 @@ public class TableOperator extends IdentifierSupport implements
         return jTableOperator.findCellRow(text, col, 0);
     }
 
-    public Object getSelectedCellValue() {
+    public Object getSelectedCellValue(CellValueExtractor.TextSource source) {
         int selectedRow = jTableOperator.getSelectedRow();
         int selectedColumn = jTableOperator.getSelectedColumn();
-        return cellValueExtractor.textOf(selectedRow, selectedColumn);
+        return cellValueExtractor.textOf(selectedRow, selectedColumn, source);
+    }
+
+    public Object getSelectedCellValue() {
+        return getSelectedCellValue(CellValueExtractor.TextSource.AUTO);
     }
 
     public void callPopupMenuItemOnSelectedCells(String menuPath) {
