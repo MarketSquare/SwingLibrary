@@ -4,7 +4,7 @@ Library         TestSwingLibrary
 
 *** Variables ***
 ${textFieldName}  testTextField
-${testText}  someText
+${testText}  Rf
 ${tableName}  testTable
 
 *** Test Cases ***
@@ -16,14 +16,8 @@ Send Key Event Keyword Sends Key Events
 *** Keywords ***
 shouldInsertKeysToTextField
     clearAndSelectTextField
-    sendKeyboardEvent  VK_S
-    sendKeyboardEvent  VK_O
-    sendKeyboardEvent  VK_M
-    sendKeyboardEvent  VK_E
-    sendKeyboardEvent  VK_T  SHIFT_MASK
-    sendKeyboardEvent  VK_E
-    sendKeyboardEvent  VK_X
-    sendKeyboardEvent  VK_T
+    sendKeyboardEvent  VK_R  SHIFT_MASK
+    sendKeyboardEvent  VK_F
     textFieldContentsShouldBe  ${testText}
 
 clearAndSelectTextField
@@ -39,7 +33,6 @@ textFieldContentsShouldBe
 shouldSwitchCellsWithTabs
     selectTableCell  ${tableName}  0  0
     tableCellShouldBeSelected  ${tableName}  0  0
-    sleep  5
     sendKeyboardEvent  VK_TAB
     tableCellShouldBeSelected  ${tableName}  0  1
     sendKeyboardEvent  VK_TAB  SHIFT_MASK
