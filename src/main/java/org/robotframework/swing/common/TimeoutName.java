@@ -4,6 +4,7 @@ public class TimeoutName {
     public static final String J_COMBOBOX_OPERATOR_WAIT_GET_SELECTED_ITEM_TIMEOUT = "JComboboxOperator.WaitGetSelectedItemTimeout";
     public static final String J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT = "JListOperator.WaitFindItemIndexTimeout";
     public static final String COMPONENT_OPERATOR_WAIT_STATE_TIMEOUT = "ComponentOperator.WaitStateTimeout";
+    public static final String COMPONENT_OPERATOR_WAIT_COMPONENT_ENABLED_TIMEOUT = "ComponentOperator.WaitComponentEnabledTimeout";
     public static final String J_TREE_OPERATOR_WAIT_NODE_VISIBLE_TIMEOUT = "JTreeOperator.WaitNodeVisibleTimeout";
     public static final String J_TREE_OPERATOR_WAIT_NEXT_NODE_TIMEOUT = "JTreeOperator.WaitNextNodeTimeout";
     public static final String J_TREE_OPERATOR_WAIT_NODE_EXPANDED_TIMEOUT = "JTreeOperator.WaitNodeExpandedTimeout";
