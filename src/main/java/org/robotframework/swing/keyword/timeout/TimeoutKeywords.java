@@ -60,6 +60,7 @@ public class TimeoutKeywords {
         + "| "+TimeoutName.FRAME_WAITER_WAIT_FRAME_TIMEOUT+" | Time to wait frame displayed |\n"
         + "| "+TimeoutName.WINDOW_WAITER_WAIT_WINDOW_TIMEOUT+" | Time to wait window displayed |\n"
         + "| "+TimeoutName.COMPONENT_OPERATOR_WAIT_COMPONENT_TIMEOUT+" | Time to wait component displayed |\n"
+        + "| "+TimeoutName.COMPONENT_OPERATOR_WAIT_COMPONENT_ENABLED_TIMEOUT+" | Time to wait component enabled |\n"
         + "| "+TimeoutName.COMPONENT_OPERATOR_WAIT_STATE_TIMEOUT+" | Used for example in combobox selection |\n"
         + "| "+TimeoutName.J_COMBOBOX_OPERATOR_WAIT_GET_SELECTED_ITEM_TIMEOUT+" | Time to wait for combobox selected item fetching |\n"
         + "| "+TimeoutName.J_COMBO_BOX_OPERATOR_WAIT_LIST_TIMEOUT+" | Time to wait list opened | \n"

@@ -10,6 +10,5 @@ launchApplicationAndSetTimeouts
     startApplication  org.robotframework.swing.testapp.TestApplication
     selectMainWindow
     setJemmyTimeouts  1
-    Set jemmy timeout  JMenuOperator.PushMenuTimeout    1
-    Set jemmy timeout  ComponentOperator.WaitStateTimeout   1
+
 
