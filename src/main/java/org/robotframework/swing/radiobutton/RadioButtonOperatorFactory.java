@@ -17,7 +17,7 @@
 
 package org.robotframework.swing.radiobutton;
 
-import org.laughingpanda.jretrofit.Retrofit;
+import org.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.robotframework.swing.button.AbstractButtonOperator;
@@ -35,7 +35,7 @@ public class RadioButtonOperatorFactory extends DefaultContextVerifyingOperatorF
     public AbstractButtonOperator createOperatorByName(String name) {
         return coerceToRadioButtonOperator(new JRadioButtonOperator((ContainerOperator) Context.getContext(), new ByNameOrTextComponentChooser(name)));
     }
-    
+
     private AbstractButtonOperator coerceToRadioButtonOperator(JRadioButtonOperator radioButtonOperator) {
         return (AbstractButtonOperator) Retrofit.partial(radioButtonOperator, AbstractButtonOperator.class);
     }

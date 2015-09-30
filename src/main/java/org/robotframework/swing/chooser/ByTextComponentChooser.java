@@ -18,7 +18,7 @@ package org.robotframework.swing.chooser;
 
 import java.awt.Component;
 
-import org.laughingpanda.jretrofit.Retrofit;
+import org.jretrofit.Retrofit;
 import org.netbeans.jemmy.ComponentChooser;
 import org.robotframework.swing.util.ObjectUtils;
 

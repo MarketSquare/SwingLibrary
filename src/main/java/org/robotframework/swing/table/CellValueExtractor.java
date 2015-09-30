@@ -6,8 +6,8 @@ import javax.swing.AbstractButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-import org.laughingpanda.jretrofit.AllMethodsNotImplementedException;
-import org.laughingpanda.jretrofit.Retrofit;
+import org.jretrofit.AllMethodsNotImplementedException;
+import org.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.robotframework.swing.chooser.WithText;
 import org.robotframework.swing.common.SmoothInvoker;

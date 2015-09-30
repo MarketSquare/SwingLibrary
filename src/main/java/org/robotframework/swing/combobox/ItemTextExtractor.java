@@ -23,8 +23,8 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.laughingpanda.jretrofit.AllMethodsNotImplementedException;
-import org.laughingpanda.jretrofit.Retrofit;
+import org.jretrofit.AllMethodsNotImplementedException;
+import org.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.robotframework.swing.chooser.WithText;
 import org.robotframework.swing.common.SmoothInvoker;
@@ -39,12 +39,12 @@ public class ItemTextExtractor {
     public int itemCount() {
         return comboboxModel().getSize();
     }
-    
+
     public String getTextFromRenderedComponent(int itemIndex) {
         WithText textElement = getComponentWithText(itemIndex);
         return textElement.getText();
     }
-    
+
     private ComboBoxModel comboboxModel() {
         return comboboxOperator.getModel();
     }
@@ -56,21 +56,21 @@ public class ItemTextExtractor {
             return wrapElementToWithText(itemIndex);
         }
     }
-    
+
     private Component getRenderedComponent(final int itemIndex) {
         final JList popupList = comboboxOperator.waitList();
         final Object element = comboboxModel().getElementAt(itemIndex);
         final boolean isSelected = comboboxOperator.getSelectedIndex() == itemIndex;
         final boolean hasFocus = comboboxOperator.hasFocus();
         final ListCellRenderer cellRenderer = comboboxOperator.getRenderer();
-        
+
         return new SmoothInvoker<Component>() {
             public Object work() {
                 return cellRenderer.getListCellRendererComponent(popupList, element, itemIndex, isSelected, hasFocus);
             }
         }.invoke();
-    }    
-    
+    }
+
     private WithText coerceToWithText(Object element) {
         return (WithText) Retrofit.complete(element, WithText.class);
     }

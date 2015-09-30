@@ -1,6 +1,6 @@
 package org.robotframework.swing.togglebutton;
 
-import org.laughingpanda.jretrofit.Retrofit;
+import org.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.robotframework.swing.button.AbstractButtonOperator;

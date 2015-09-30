@@ -4,8 +4,8 @@ import java.awt.Component;
 
 import javax.swing.ListModel;
 
-import org.laughingpanda.jretrofit.AllMethodsNotImplementedException;
-import org.laughingpanda.jretrofit.Retrofit;
+import org.jretrofit.AllMethodsNotImplementedException;
+import org.jretrofit.Retrofit;
 import org.netbeans.jemmy.operators.JListOperator;
 import org.robotframework.swing.chooser.WithText;
 import org.robotframework.swing.common.SmoothInvoker;
@@ -13,7 +13,7 @@ import org.robotframework.swing.common.SmoothInvoker;
 public class CellTextExtractor {
 
     private JListOperator jListOperator;
-    
+
     public CellTextExtractor(JListOperator jListOperator) {
         this.jListOperator = jListOperator;
     }
@@ -40,11 +40,11 @@ public class CellTextExtractor {
             return wrapElementToWithText(itemIndex);
         }
     }
-    
+
     private WithText coerceToWithText(Object element) {
         return (WithText) Retrofit.complete(element, WithText.class);
     }
-    
+
     private Component getRenderedComponent(final int itemIndex) {
         final boolean isSelected = jListOperator.getSelectedIndex() == itemIndex;
         final boolean hasFocus = jListOperator.hasFocus();
@@ -53,8 +53,8 @@ public class CellTextExtractor {
                 return jListOperator.getRenderedComponent(itemIndex, isSelected, hasFocus);
             }
         }.invoke();
-    } 
-    
+    }
+
     private WithText wrapElementToWithText(final int itemIndex) {
         return new WithText() {
             public String getText() {
