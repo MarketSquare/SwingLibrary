@@ -170,6 +170,9 @@
         <configuration>
           <testCasesDirectory>${project.basedir}/src/test/resources/robot-tests</testCasesDirectory>
           <logLevel>DEBUG</logLevel>
+          <nonCriticalTags>
+            <nonCriticalTag>non-critical</nonCriticalTag>
+          </nonCriticalTags>
           <libdoc>
               <version>${project.version}</version>
               <outputFile>SwingLibrary-${project.version}.html</outputFile>

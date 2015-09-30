@@ -2,6 +2,7 @@
 Test Setup      clearSelectionFromList  ${listIndex}
 Library         TestSwingLibrary
 Library         Collections
+Variables       platform_info.py
 
 *** Variables ***
 ${listName}  testList
@@ -41,17 +42,11 @@ Select From List By Name
     listSelectionShouldBe  ${listName}  three
 
 Select From List By Name Not Found
-    # ${oldSetting}= Set Jemmy Timeout JListOperator.WaitFindItemIndexTimeout 3
-    # ${start}= Get Time epoch
-    ${err}=  Run Keyword And Expect Error  *  selectFromList  ${listName}  horse
-    # ${end}= Get Time epoch
-    # Should Be True ${end} - ${start} >= 3
-    # Should Start With ${err} Couldn't find item:
-    # Set Jemmy Timeout JListOperator.WaitFindItemIndexTimeout ${oldSetting}
+    runKeywordAndExpectError  Couldn't find text 'horse'  selectFromList  ${listName}  horse
 
 Select Multiple Items From List
-    [tags]        fails-on-osx
     Comment    Selecting multiple list elements does not work on OSX. This seems to be a Jemmy bug.
+    Run keyword if   $is_osx  Set tags  non-critical
     selectFromList  ${listName}  one  two  three
     allListItemsShouldBeSelected
 
