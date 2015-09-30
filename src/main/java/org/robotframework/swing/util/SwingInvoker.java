@@ -22,7 +22,8 @@ public class SwingInvoker {
         try {
             SwingUtilities.invokeAndWait(runnable);
         } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
+            Throwable cause = e.getCause();
+            throw new RuntimeException(cause != null ? cause.getMessage() : e.getMessage(), e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
