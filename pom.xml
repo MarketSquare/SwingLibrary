@@ -8,7 +8,7 @@
   </parent>
   <groupId>org.robotframework</groupId>
   <artifactId>swinglibrary</artifactId>
-  <version>1.9.4</version>
+  <version>1.9.5</version>
   <packaging>jar</packaging>
   <name>swinglibrary</name>
   <description>A Robot Framework test library for Swing UI testing</description>
@@ -100,9 +100,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>beaninject</groupId>
+      <groupId>com.github.lkoskela</groupId>
       <artifactId>beaninject</artifactId>
-      <version>0.3</version>
+      <version>0.9</version>
       <scope>test</scope>
     </dependency>
     <dependency>
