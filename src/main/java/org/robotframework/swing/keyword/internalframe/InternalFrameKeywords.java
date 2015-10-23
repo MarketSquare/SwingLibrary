@@ -72,7 +72,7 @@ public class InternalFrameKeywords {
     }
 
     @RobotKeyword("Maximizes internal frame.\n\n" + "Example:\n"
-            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+            + "| Maximize Internal Frame  | _My Internal Frame_ |\n")
     @ArgumentNames({ "identifier" })
     public void maximizeInternalFrame(String identifier) {
         maximize(identifier, true);
