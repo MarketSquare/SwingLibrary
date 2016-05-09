@@ -173,6 +173,7 @@ public class ComponentKeywords {
     @ArgumentNames({"identifier"})
     public String[] listComponentMethods(String identifier) {
         Class klass = operator(identifier).getSource().getClass();
+        System.out.println("*INFO*");
         ArrayList<String> list = new ArrayList<String>();
         for (Method m : klass.getMethods()) {
             String entry = getMethodDescription(m);
