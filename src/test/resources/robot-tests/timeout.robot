@@ -10,6 +10,13 @@ Set Jemmy Timeout
     ${elapsedTime}=  runKeywordAndMeasureTime  dialogShouldNotBeOpen  Nonexistent Dialog
     elapsedTimeWasLessThanLimit  ${elapsedTime}  ${tolerance}
 
+Set Jemmy Timeout Units
+    setJemmyTimeout  DialogWaiter.WaitDialogTimeout  2
+    ${prevms}=  setJemmyTimeout  DialogWaiter.WaitDialogTimeout  3000 ms
+    shouldBeEqualAsIntegers  ${prevms}  2000
+    ${prev}=  setJemmyTimeout  DialogWaiter.WaitDialogTimeout  4
+    shouldBeEqualAsIntegers  ${prev}  3
+
 *** Keywords ***
 runKeywordAndMeasureTime  [Arguments]  ${keyword}  @{arguments}
     ${startTime}=   getTime  epoch
