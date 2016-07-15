@@ -42,18 +42,29 @@ public class TimeoutKeywords {
     @RobotKeyword("Sets the jemmy timeout used for waiting a component to appear.\n"
         + "Timeout names are listed here: http://jemmy.java.net/OperatorsEnvironment.html#timeouts\n"
         + "Returns the old timeout setting value.\n\n"
+        + "This keyword by default takes timeout value is seconds, "
+        + "you can however suffix it with `ms` to provide it in milliseconds.\n"
+        + "Return value will always be in units you used for the argument.\n\n"
         + "Example:\n"
         + "| Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n"
         + "| ${oldSetting}= | Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n")
-    @ArgumentNames({"timeoutName", "timeoutInSeconds"})
-    public long setJemmyTimeout(String timeoutName, String timeoutInSeconds) {
+    @ArgumentNames({"timeoutName", "timeout"})
+    public long setJemmyTimeout(String timeoutName, String timeout) {
+        long multiplier = 1000;
+        if (timeout.endsWith("ms")) {
+            timeout = timeout.replace("ms", "");
+            timeout = timeout.trim();
+            multiplier = 1;
+        }
         long oldTimeout = JemmyProperties.getCurrentTimeout(timeoutName);
-        JemmyProperties.setCurrentTimeout(timeoutName, parseMillis(timeoutInSeconds));
-        return (oldTimeout/1000);
+        JemmyProperties.setCurrentTimeout(timeoutName, parseMillis(timeout, multiplier));
+        return (oldTimeout/multiplier);
     }
 
     @RobotKeyword("Sets all relevant jemmy timeouts. \n"
         + "By default they are all set to 5 seconds.\n\n"
+        + "This keyword by default takes timeout value is seconds, "
+        + "you can however suffix it with `ms` to provide it in milliseconds.\n\n"
         + "List of all the timeouts this keywords sets:\n"
         + "| *Timeout Name* | *Description* |\n"
         + "| "+TimeoutName.DIALOG_WAITER_WAIT_DIALOG_TIMEOUT+" | Time to wait dialog displayed |\n"
@@ -71,14 +82,20 @@ public class TimeoutKeywords {
         + "| "+TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT+" | Time to wait for list item to appear |\n\n"
         + "Example:\n"
         + "| Set Jemmy Timeouts | 3 |\n")
-    @ArgumentNames({"timeoutInSeconds"})
-    public void setJemmyTimeouts(String timeoutInSeconds) {
-        for (String timeout : JEMMY_TIMEOUTS) {
-            JemmyProperties.setCurrentTimeout(timeout, parseMillis(timeoutInSeconds));
+    @ArgumentNames({"timeout"})
+    public void setJemmyTimeouts(String timeout) {
+        long multiplier = 1000;
+        if (timeout.endsWith("ms")) {
+            timeout = timeout.replace("ms", "");
+            timeout = timeout.trim();
+            multiplier = 1;
+        }
+        for (String timeoutType : JEMMY_TIMEOUTS) {
+            JemmyProperties.setCurrentTimeout(timeoutType, parseMillis(timeout, multiplier));
         }
     }
 
-    private long parseMillis(String timeoutInSeconds) {
-        return Long.parseLong(timeoutInSeconds) * 1000;
+    private long parseMillis(String timeout, long multiplier) {
+        return Long.parseLong(timeout) * multiplier;
     }
 }
