@@ -166,19 +166,25 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("List methods of components object.\n"
-            +"When working with custom compoments you may use this keyword to discover mtethods you can call "
+            +"When working with custom components you may use this keyword to discover methods you can call "
             +"with Call Component Method keyword.\n\n"
             +"Example:\n"
             + "| List Component Methods | _myComponent_ |\n")
     @ArgumentNames({"identifier"})
     public String[] listComponentMethods(String identifier) {
         Class klass = operator(identifier).getSource().getClass();
-        System.out.println("*INFO*");
         ArrayList<String> list = new ArrayList<String>();
-        for (Method m : klass.getMethods()) {
-            String entry = getMethodDescription(m);
-            System.out.println(entry);
-            list.add(entry);
+        System.out.println("*INFO*");
+        while (klass != null) {
+            String name = String.format("*%s*", klass.getName());
+            System.out.println(name);
+            list.add(name);
+            for (Method m : klass.getDeclaredMethods()) {
+                String entry = getMethodDescription(m);
+                System.out.println(entry);
+                list.add(entry);
+            }
+            klass = klass.getSuperclass();
         }
         return list.toArray(new String[list.size()]);
     }
