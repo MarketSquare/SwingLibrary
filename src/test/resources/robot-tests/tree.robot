@@ -207,7 +207,6 @@ Get Node Items From Tree Popup Menu
     ${popupMenuItems}=  getNodeItemsFromTreePopupMenu  ${treeName}  ${leafNodePath}  Submenu
     ${expectedMenuItems}=  createList  Disabled menuitem  Enabled menuitem
     listsShouldBeEqual  ${expectedMenuItems}  ${popupMenuItems}
-    log  ${popupMenuItems}
 
 Get Tree Node Child Names
     [Setup]  resetNodes
