@@ -33,7 +33,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreePathAction;
 import org.robotframework.swing.tree.TreeSupport;
-import org.robotframework.swing.util.PopupMenuUtils;
+import org.robotframework.swing.util.ComponentUtils;
 
 @RobotKeywords
 public class TreeNodeKeywords extends TreeSupport {
@@ -119,11 +119,11 @@ public class TreeNodeKeywords extends TreeSupport {
         JPopupMenuOperator popupMenuOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
 
         if (menuPath == null || menuPath.isEmpty()) {
-            return PopupMenuUtils.getParsedElements(popupMenuOperator.getSubElements());
+            return ComponentUtils.getParsedElements(popupMenuOperator.getSubElements());
         } else {
             JMenuItemOperator subItem = popupMenuOperator.showMenuItem(menuPath);
             return subItem.getSubElements().length < 1 ? new ArrayList<String>() :
-                    PopupMenuUtils.getParsedElements(subItem.getSubElements()[0].getSubElements());
+                    ComponentUtils.getParsedElements(subItem.getSubElements()[0].getSubElements());
         }
     }
 

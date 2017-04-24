@@ -1,9 +1,3 @@
-package org.robotframework.swing.util;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-
 /*
  * Copyright 2008-2011 Nokia Siemens Networks Oyj
  *
@@ -20,7 +14,14 @@ import java.util.List;
  * limitations under the License.
  */
 
-public class PopupMenuUtils {
+package org.robotframework.swing.util;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class ComponentUtils {
     public static List<String> getParsedElements(MenuElement[] elements) {
         List<String> returnable = new ArrayList<String>();
         for (MenuElement e : elements) {

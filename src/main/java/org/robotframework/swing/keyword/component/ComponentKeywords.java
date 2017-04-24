@@ -28,12 +28,10 @@ import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.component.ComponentOperator;
 import org.robotframework.swing.component.ComponentOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
-import org.robotframework.swing.menu.MenuSupport;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
-import org.robotframework.swing.util.PopupMenuUtils;
+import org.robotframework.swing.util.ComponentUtils;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.lang.reflect.Method;
@@ -122,11 +120,11 @@ public class ComponentKeywords {
     public List<String> getMenuItemsFromPopupMenu(final String identifier, final String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
         if (menuPath == null || "".equals(menuPath)) {
-            return PopupMenuUtils.getParsedElements(popup.getSubElements());
+            return ComponentUtils.getParsedElements(popup.getSubElements());
         }
         JMenuItemOperator subItem = popup.showMenuItem(menuPath);
         return subItem.getSubElements().length < 1 ? new ArrayList<String>() :
-                PopupMenuUtils.getParsedElements(subItem.getSubElements()[0].getSubElements());
+                ComponentUtils.getParsedElements(subItem.getSubElements()[0].getSubElements());
     }
 
     @RobotKeyword("Checks that component is visible.\n"
