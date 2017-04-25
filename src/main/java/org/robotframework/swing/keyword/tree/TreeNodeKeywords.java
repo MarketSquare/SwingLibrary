@@ -24,6 +24,8 @@ import javax.swing.tree.TreePath;
 
 import org.junit.Assert;
 
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywordOverload;
@@ -31,6 +33,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreePathAction;
 import org.robotframework.swing.tree.TreeSupport;
+import org.robotframework.swing.util.ComponentUtils;
 
 @RobotKeywords
 public class TreeNodeKeywords extends TreeSupport {
@@ -102,6 +105,25 @@ public class TreeNodeKeywords extends TreeSupport {
         treeOperator.addSelection(nodeIdentifier);
         for (String node : additionalNodeIdentifiers) {
             treeOperator.addSelection(node);
+        }
+    }
+
+    @RobotKeyword("Gets item names from the node context popup menu.\n"
+            + "Clears earlier selections.\n"
+            + "If several nodes have the same path then *only the first* menu item names of those nodes are returned.\n\n"
+            + "Example:\n"
+            + "| @{items}= | Get Node Items From Tree Popup Menu | _myTree_ | _Root|Folder_ | _Actions_ |\n"
+            + "| Should Contain | ${items} | _Do something_ |")
+    @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
+    public List<String> getNodeItemsFromTreePopupMenu(String identifier, String nodeIdentifier, String menuPath) {
+        JPopupMenuOperator popupMenuOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
+
+        if (menuPath == null || menuPath.isEmpty()) {
+            return ComponentUtils.getParsedElements(popupMenuOperator.getSubElements());
+        } else {
+            JMenuItemOperator subItem = popupMenuOperator.showMenuItem(menuPath);
+            return subItem.getSubElements().length < 1 ? new ArrayList<String>() :
+                    ComponentUtils.getParsedElements(subItem.getSubElements()[0].getSubElements());
         }
     }
 

@@ -30,8 +30,8 @@ import org.robotframework.swing.component.ComponentOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
+import org.robotframework.swing.util.ComponentUtils;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.lang.reflect.Method;
@@ -119,22 +119,12 @@ public class ComponentKeywords {
     @ArgumentNames({ "identifier", "menuPath" })
     public List<String> getMenuItemsFromPopupMenu(final String identifier, final String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
-        if(menuPath == null || "".equals(menuPath)) {
-            return getParsedElements(popup.getSubElements());
+        if (menuPath == null || "".equals(menuPath)) {
+            return ComponentUtils.getParsedElements(popup.getSubElements());
         }
         JMenuItemOperator subItem = popup.showMenuItem(menuPath);
         return subItem.getSubElements().length < 1 ? new ArrayList<String>() :
-                getParsedElements(subItem.getSubElements()[0].getSubElements());
-    }
-
-    private List<String> getParsedElements(MenuElement[] elements) {
-        List<String> returnable = new ArrayList<String>();
-        for (MenuElement e : elements) {
-            if(JMenuItem.class.isAssignableFrom(e.getClass())) {
-                returnable.add(((JMenuItem)e).getText());
-            }
-        }
-        return returnable;
+                ComponentUtils.getParsedElements(subItem.getSubElements()[0].getSubElements());
     }
 
     @RobotKeyword("Checks that component is visible.\n"

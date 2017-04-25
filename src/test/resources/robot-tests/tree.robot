@@ -202,6 +202,12 @@ Get Tree Node Count Returns The Count Of All Visible Nodes
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
     shouldBeEqualAsIntegers  2  ${visibleNodes}
 
+Get Node Items From Tree Popup Menu
+    [Setup]  resetNodes
+    ${popupMenuItems}=  getNodeItemsFromTreePopupMenu  ${treeName}  ${leafNodePath}  Submenu
+    ${expectedMenuItems}=  createList  Disabled menuitem  Enabled menuitem
+    listsShouldBeEqual  ${expectedMenuItems}  ${popupMenuItems}
+
 Get Tree Node Child Names
     [Setup]  resetNodes
     ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}
