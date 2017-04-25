@@ -198,6 +198,7 @@
               <includes>
                 <include>org.netbeans:jemmy</include>
                 <include>abbot:abbot</include>
+                <include>abbot:costello</include>
                 <include>junit:junit</include>
                 <include>gnu-regexp:gnu-regexp</include>
                 <include>org.jretrofit:jretrofit</include>
