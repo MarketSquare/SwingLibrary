@@ -26,7 +26,7 @@ public class KeyEventKeywords {
     private KeyEventSender keyEventSender = new KeyEventSender();
     
     @RobotKeyword("Sends keystrokes to the currently selected component.\n"
-    	+ "Keystroke codes must be one of the constants in _java.awt.event.KeyEvent_ starting with _VK__.\n"
+    	+ "Keystroke codes must be one of the mappings in _abbot.tester.KeyStrokeMap_ (https://sourceforge.net/p/abbot/svn/1214/tree/trunk/abbot/src/abbot/tester/KeyStrokeMap.java#l110).\n"
     	+ "Constants from _java.awt.event.InputEvent_ can be used as optional modifiers.\n\n"
         + "Example with textfield:\n"
         + "| Focus To Component    | _myTextfield_        |                      |\n"
