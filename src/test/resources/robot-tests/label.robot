@@ -12,6 +12,9 @@ Label Should Exist By Index
 
 Label Should Exist By Name
     labelShouldExist  ${labelName}
+    
+Label Should Exist By Text
+	labelShouldExist  ${labelContent}
 
 Label Should Exist Fails If Label Doesn't Exist
     runKeywordAndExpectError  *Label 'unexistingLabel' doesn't exist*  labelShouldExist  unexistingLabel
@@ -21,9 +24,15 @@ Label Should Not Exist By Index
 
 Label Should Not Exist By Name
     labelShouldNotExist  UnexistingLabel
+    
+Label Should Not Exist By Text
+	labelShouldNotExist  UnexistingLabel
 
 Label Should Not Exist Fails If Label Exists
     runKeywordAndExpectError  *Label '${labelName}' exists*  labelShouldNotExist  ${labelName}
+
+Label Should Not Exist By Text Fails If Label Exists
+    runKeywordAndExpectError  *Label '${labelContent}' exists*  labelShouldNotExist  ${labelContent}
 
 Get Label Content By Name
     ${retrievedContent}=  getLabelContent  ${labelName}
