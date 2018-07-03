@@ -17,7 +17,7 @@
 package org.robotframework.swing.label;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.robotframework.swing.chooser.ByNameComponentChooser;
+import org.robotframework.swing.chooser.ByNameOrTextComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 
@@ -27,6 +27,6 @@ public class LabelOperatorFactory extends DefaultContextVerifyingOperatorFactory
     }
 
     public LabelOperator createOperatorByName(String name) {
-        return new LabelOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+        return new LabelOperator((ContainerOperator) Context.getContext(), new ByNameOrTextComponentChooser(name));
     }
 }
