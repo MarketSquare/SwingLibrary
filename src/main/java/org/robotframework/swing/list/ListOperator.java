@@ -102,7 +102,7 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
 		ListModel model = jListOperator.getModel();
 		List<String> items = new ArrayList<String>();
 		for (int i = 0, itemCount = model.getSize(); i < itemCount; i++)
-			items.add((String)model.getElementAt(i));
+			items.add(String.valueOf(model.getElementAt(i)));
 		return items;
 	}
 }
