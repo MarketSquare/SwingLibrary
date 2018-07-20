@@ -22,6 +22,7 @@ import java.awt.Window;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.JLayer;
 
 public class DefaultContextVerifier extends AbstractContextVerifier {
     static final String ERROR_MESSAGE = "To use this keyword you must first select a correct context. Please see e.g. \"Select Dialog\" -keyword.";
@@ -33,6 +34,6 @@ public class DefaultContextVerifier extends AbstractContextVerifier {
     @SuppressWarnings("unchecked")
     @Override
     protected Class<? extends Component>[] getExpectedClasses() {
-        return new Class[] { Window.class, JPanel.class, Panel.class, JInternalFrame.class };
+        return new Class[] { Window.class, JPanel.class, Panel.class, JInternalFrame.class, JLayer.class };
     }
 }

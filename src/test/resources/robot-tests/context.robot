@@ -6,6 +6,7 @@ ${panelName}  Main Panel
 ${dialogMenu2}  Test Menu|Show Non-Modal Dialog
 ${dialogTitle2}  Non-modal Dialog
 ${textFieldName}  testTextField
+${jLayerName}  jLayerComponent
 
 *** Test Cases ***
 Select Context
@@ -16,7 +17,7 @@ Select Context
 
 Select Invalid Context should fail
     Select And Assert Main Window
-    Run keyword and expect error    Invalid context *. Should be one of (java.awt.Window javax.swing.JPanel java.awt.Panel javax.swing.JInternalFrame )    selectContext    ${textFieldName}
+    Run keyword and expect error    Invalid context *. Should be one of (java.awt.Window javax.swing.JPanel java.awt.Panel javax.swing.JInternalFrame javax.swing.JLayer )    selectContext    ${textFieldName}
 
 Get Current Context With Panels
     Select And Assert Main Window
@@ -45,6 +46,14 @@ Get Current Context With Dialog
     ${title}=  getCurrentContext
     Should Be Equal  ${dialogTitle2}  ${title}
     [Teardown]  closeDialog  ${dialogTitle2}
+
+Get Current Context With JLayer
+    Select And Assert Main Window
+    selectContext  ${jLayerName}
+    ${contextName}=  getCurrentContext
+    Should Be Equal  ${contextName}  ${jLayerName}
+    ${contextAsString}=  getCurrentContextSourceAsString
+    shouldContain  ${contextAsString}  ${jLayerName}
 
 *** Keywords ***
 Select And Assert Main Window
