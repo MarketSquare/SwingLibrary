@@ -39,8 +39,8 @@ public class ContextKeywords {
         + "Context has to be a window, dialog, internal frame or panel. "
         + "Requires that a parent context has been selected beforehand using `Select Window` or `Select Dialog`.\n\n"
         + "Example:\n"
-        + "| Select Window  | _Main Window_ | # Selects the 'parent context' |\n"
-        + "| Select Context | _myPanel_     | # Sets _'myPanel'_ as current context |\n")
+        + "| `Select Window`  | Main Window | # Selects the 'parent context' |\n"
+        + "| `Select Context` | myPanel     | # Sets 'myPanel' as current context |\n")
     @ArgumentNames({"identifier"})
     public void selectContext(String identifier) {
         ContainerOperator op = operatorFactory.createOperator(identifier);
@@ -50,7 +50,7 @@ public class ContextKeywords {
 
     @RobotKeyword("Returns the component name in current context or title if window or dialog is selected.\n\n"
     	+ "Example:\n"
-    	+ "| ${context}= | Get Current Context | # Sets the identifier of the current context to a variable |\n")
+    	+ "| ${context}= | `Get Current Context` | # Sets the identifier of the current context to a variable |\n")
     public String getCurrentContext() {
 		Component component = Context.getContext()
 		                             .getSource();

@@ -34,7 +34,7 @@ public class MenuCheckboxKeywords extends MenuSupport {
 
     @RobotKeyword("Fails if checkbox menu item is not checked in the opened window that was opened first.\n\n"
         + "Example:\n"
-        + "| Main Menu Item Should Be Checked | _Tools|My Checkbox_ |\n")
+        + "| `Main Menu Item Should Be Checked` | Tools|My Checkbox |\n")
     @ArgumentNames({"menuPath"})
     public void mainMenuItemShouldBeChecked(String menuPath) {
         windowKeywords.selectMainWindow();
@@ -43,7 +43,7 @@ public class MenuCheckboxKeywords extends MenuSupport {
 
     @RobotKeyword("Fails if checkbox menu item is checked in the opened window that was opened first.\n\n"
         + "Example:\n"
-        + "| Main Menu Item Should Not Be Checked | _Tools|My Checkbox_ |\n")
+        + "| `Main Menu Item Should Not Be Checked` | Tools|My Checkbox |\n")
     @ArgumentNames({"menuPath"})
     public void mainMenuItemShouldNotBeChecked(String menuPath) {
         windowKeywords.selectMainWindow();
@@ -53,7 +53,7 @@ public class MenuCheckboxKeywords extends MenuSupport {
     @RobotKeyword("Searches for an checkbox menu item from the menu of the currently selected window "
         + "and fails if it is not checked.\n\n"
         + "Example:\n"
-        + "| Menu Item Should Be Checked | _Tools|My Checkbox_ |\n")
+        + "| `Menu Item Should Be Checked` | Tools|My Checkbox |\n")
     @ArgumentNames({"menuPath"})
     public void menuItemShouldBeChecked(String menuPath) {
         Assert.assertTrue("Menu item '" + menuPath + "' is not selected.", showMenuItem(menuPath).isSelected());
@@ -62,7 +62,7 @@ public class MenuCheckboxKeywords extends MenuSupport {
     @RobotKeyword("Searches for an checkbox menu item from the menu of the currently selected window "
         + "and fails if it is checked.\n\n"
         + "Example:\n"
-        + "| Menu Item Should Not Be Checked | _Tools|My Checkbox_ |\n")
+        + "| `Menu Item Should Not Be Checked` | Tools|My Checkbox |\n")
     @ArgumentNames({"menuPath"})
     public void menuItemShouldNotBeChecked(String menuPath) {
         Assert.assertFalse("Menu item '" + menuPath + "' is selected.", showMenuItem(menuPath).isSelected());

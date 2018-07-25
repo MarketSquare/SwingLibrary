@@ -37,8 +37,8 @@ public class TabKeywords extends IdentifierSupport {
     @RobotKeyword("Selects a tab.\n"
         + "The optional tab pane identifier can be provided, otherwise the first matching tab is selected.\n\n"
         + "Example:\n"
-        + "| Select Tab | _Customer Information_ |\n"
-        + "| Select Tab | _Customer Information_ | _Customers_ |\n")
+        + "| `Select Tab` | Customer Information |\n"
+        + "| `Select Tab` | Customer Information | Customers |\n")
     @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})
     public void selectTab(String tabIdentifier, String tabPaneIdentifier) {
         selectTheTab(tabIdentifier, tabPaneIdentifier);
@@ -72,8 +72,8 @@ public class TabKeywords extends IdentifierSupport {
     @RobotKeyword("Selects a tab and sets it as the context.\n"
         + "The optional tab pane identifier can be provided, otherwise the first matching tab is selected.\n\n"
         + "Example:\n"
-        + "| Select Tab | _Customer Information_ |\n"
-        + "| Select Tab | _Customer Information_ | _Customers_ |\n")
+        + "| `Select Tab` | Customer Information |\n"
+        + "| `Select Tab` | Customer Information | Customers |\n")
     @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})
     public void selectTabAsContext(String tabIdentifier, String tabPaneIdentifier) {
         try {
@@ -98,8 +98,8 @@ public class TabKeywords extends IdentifierSupport {
         + "Expects that only one tab pane exists in the current context.\n"
         + "If you need to operate on a different tab pane use `Select Tab Pane` keyword first.\n\n"
         + "Example:\n"
-        + "| ${currentTab}= | Get Selected Tab Label |\n"
-        + "| Should Be Equal | _Customer Information_ | ${currentTab} |\n")
+        + "| ${currentTab}= | `Get Selected Tab Label` |\n"
+        + "| `Should Be Equal` | Customer Information | ${currentTab} |\n")
     public String getSelectedTabLabel() {
         JTabbedPaneOperator paneOperator = createTabPane();
         return paneOperator.getTitleAt(paneOperator.getSelectedIndex());
@@ -108,8 +108,8 @@ public class TabKeywords extends IdentifierSupport {
     @RobotKeyword("Sets a tab pane as the current context.\n"
         + "Useful if you have several tab panes in the window.\n\n"
         + "Example:\n"
-        + "| Select Tab Pane | _Other Tab Pane_ |\n"
-        + "| Select Tab | _Customer Information_ |\n")
+        + "| `Select Tab Pane` | Other Tab Pane |\n"
+        + "| `Select Tab` | Customer Information |\n")
     @ArgumentNames({"tabPaneIdentifier"})
     public void selectTabPane(String tabPaneIdentifier) {
         TabbedPaneOperator operator = paneOperatorFactory.createOperator(tabPaneIdentifier);

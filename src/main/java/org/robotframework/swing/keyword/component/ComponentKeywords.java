@@ -46,7 +46,7 @@ public class ComponentKeywords {
 
     @RobotKeyword("Fails if component exists within current context.\n"
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
-            + "Example:\n" + "| Component Should Not Exist | _myPanel_ |\n")
+            + "Example:\n" + "| `Component Should Not Exist` | myPanel |\n")
     @ArgumentNames({ "identifier" })
     public void componentShouldNotExist(String identifier) {
         Assert.assertFalse("Component '" + identifier + "' exists",
@@ -55,7 +55,7 @@ public class ComponentKeywords {
 
     @RobotKeyword("Fails if component does not exist within current context.\n"
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
-            + "Example:\n" + "| Component Should Not Exist | _myPanel_ |\n")
+            + "Example:\n" + "| `Component Should Not Exist` | myPanel |\n")
     @ArgumentNames({ "identifier" })
     public void componentShouldExist(String identifier) {
         Assert.assertTrue("Component '" + identifier + "' does not exist",
@@ -64,8 +64,8 @@ public class ComponentKeywords {
 
     @RobotKeyword("Clicks on a component.\n"
             + "The number of clicks can be given as second argument.\n\n"
-            + "Example:\n" + "| Click On Component | _myComponent_ |   | |\n"
-            + "| Click On Component | _myComponent_ | 2 | # double click |\n")
+            + "Example:\n" + "| `Click On Component` | myComponent |   | |\n"
+            + "| `Click On Component` | myComponent | 2 | # double click |\n")
     @ArgumentNames({ "identifier", "times=1" })
     public void clickOnComponent(String identifier, int times) {
         operator(identifier).clickMouse(times);
@@ -76,16 +76,16 @@ public class ComponentKeywords {
         clickOnComponent(identifier, 1);
     }
 
-    @RobotKeyword("Right clicks on a component.\n" + "Example:\n"
-            + "| Right Click On Component | _myComponent_ |   | |")
+    @RobotKeyword("Right clicks on a component.\n\n" + "Example:\n"
+            + "| `Right Click On Component` | myComponent |")
     @ArgumentNames({ "identifier" })
     public void rightClickOnComponent(String identifier) {
         operator(identifier).clickMouse(1, InputEvent.BUTTON3_MASK);
     }
 
     @RobotKeyword("Returns the component's tooltip text.\n\n" + "Example:\n"
-            + "| ${tooltip}= | Get Tooltip Text | _saveButton_ |\n"
-            + "| Should Be Equal    | _Save_ | _${tooltip}_ |\n")
+            + "| ${tooltip}= | `Get Tooltip Text` | saveButton |\n"
+            + "| `Should Be Equal`    | Save | ${tooltip} |\n")
     @ArgumentNames({ "identifier" })
     public String getTooltipText(String identifier) {
         return operator(identifier).getToolTipText();
@@ -94,8 +94,8 @@ public class ComponentKeywords {
     @RobotKeyword("Sets focus to the component.\n"
             + "Useful for example when sending keyboard events to a component.\n\n"
             + "Example:\n"
-            + "| Focus To Component     | _myTextField_ |           | |\n"
-            + "| Send Keyboard Event    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
+            + "| `Focus To Component`     | myTextField |           | |\n"
+            + "| `Send Keyboard Event`    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
     @ArgumentNames({ "identifier" })
     public void focusToComponent(String identifier) {
         operator(identifier).getFocus();
@@ -104,7 +104,7 @@ public class ComponentKeywords {
     @RobotKeyword("Selects an item from the components context popup menu.\n"
             + "Does a right click on the component and selects the specified menu item from the popup menu.\n\n"
             + "Example:\n"
-            + "| Select From Popup Menu | _myComponent_ | _Actions|Do something_ |\n")
+            + "| `Select From Popup Menu` | myComponent | Actions | Do something |\n")
     @ArgumentNames({ "identifier", "menuPath" })
     public void selectFromPopupMenu(String identifier, String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
@@ -114,8 +114,8 @@ public class ComponentKeywords {
     @RobotKeyword("Gets item names from the components context popup menu.\n"
             + "Does a right click on the component and retrieves the specified menu items from the popup menu.\n\n"
             + "Example:\n"
-            + "| @{items}= | Get Menu Items From Popup Menu | _myComponent_ | _Actions_ |\n"
-            + "| Should Contain | ${items} | _Do something_ |")
+            + "| @{items}= | `Get Menu Items From Popup Menu` | myComponent | Actions |\n"
+            + "| `Should Contain` | ${items} | Do something |")
     @ArgumentNames({ "identifier", "menuPath" })
     public List<String> getMenuItemsFromPopupMenu(final String identifier, final String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
@@ -130,7 +130,7 @@ public class ComponentKeywords {
     @RobotKeyword("Checks that component is visible.\n"
             +"Even if one pixel of the component is visible, this keyword will pass.\n\n"
             +"Example:\n"
-            + "| Component Should Be Visible | _myComponent_ |\n")
+            + "| `Component Should Be Visible` | myComponent |\n")
          @ArgumentNames({ "identifier"})
          public void componentShouldBeVisible(String identifier) {
         Rectangle visible = operator(identifier).getVisibleRect();
@@ -140,7 +140,7 @@ public class ComponentKeywords {
     @RobotKeyword("Checks that component is not visible.\n"
             +"Fails if even one pixel of the component is visible.\n\n"
             +"Example:\n"
-            + "| Component Should Not Be Visible | _myComponent_ |\n")
+            + "| `Component Should Not Be Visible` | myComponent |\n")
     @ArgumentNames({ "identifier"})
     public void componentShouldNotBeVisible(String identifier) {
         Rectangle visible = operator(identifier).getVisibleRect();
@@ -149,7 +149,7 @@ public class ComponentKeywords {
 
     @RobotKeyword("Scrolls component to view.\n\n"
             +"Example:\n"
-            + "| Scroll Component To View | _myComponent_ |\n")
+            + "| `Scroll Component To View` | myComponent |\n")
     @ArgumentNames({ "identifier"})
     public void scrollComponentToView(String identifier) {
         operator(identifier).scrollRectToVisible(new Rectangle(100, 100));
@@ -157,9 +157,9 @@ public class ComponentKeywords {
 
     @RobotKeyword("List methods of components object.\n"
             +"When working with custom components you may use this keyword to discover methods you can call "
-            +"with Call Component Method keyword.\n\n"
+            +"with `Call Component Method` keyword.\n\n"
             +"Example:\n"
-            + "| List Component Methods | _myComponent_ |\n")
+            + "| `List Component Methods` | myComponent |\n")
     @ArgumentNames({"identifier"})
     public String[] listComponentMethods(String identifier) {
         Class klass = operator(identifier).getSource().getClass();
@@ -203,7 +203,7 @@ public class ComponentKeywords {
     @RobotKeyword("Calls a method from specified component.\n\n"
                   + "Arguments are automatically converted if possible to type expected by the method.\n\n"
                   + "Example:\n"
-                  + "| Call Component Method | buttonId | setToolTipText | new tooltip text |")
+                  + "| `Call Component Method` | buttonId | setToolTipText | new tooltip text |")
     @ArgumentNames({"identifier", "method", "*args"})
     public Object callComponentMethod(String identifier, String method, String[] args) {
         Object component = operator(identifier).getSource();

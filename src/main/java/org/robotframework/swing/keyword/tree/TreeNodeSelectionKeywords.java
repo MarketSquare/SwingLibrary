@@ -27,7 +27,7 @@ import org.robotframework.swing.tree.TreeSupport;
 public class TreeNodeSelectionKeywords extends TreeSupport {
     @RobotKeyword("Fails if the tree node is not selected.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Selected | _myTree_ | _Root|Folder_ |\n")
+        + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier) {
         boolean isSelected = treeOperator(identifier).isPathSelected(nodeIdentifier);
@@ -36,7 +36,7 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if the tree node is selected.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Selected | _myTree_ | _Root|Folder_ |\n")
+        + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier) {
         boolean isSelected = treeOperator(identifier).isPathSelected(nodeIdentifier);

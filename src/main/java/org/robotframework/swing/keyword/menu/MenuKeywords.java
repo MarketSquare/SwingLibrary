@@ -35,8 +35,8 @@ public class MenuKeywords extends MenuSupport {
 
     @RobotKeyword("Selects an item from the menu of the currently selected window.\n\n"
         + "Example:\n"
-        + "| Select Window    | _My Application_           |\n"
-        + "| Select From Menu | _Tools|Testing|MyTestTool_ |\n")
+        + "| `Select Window`    | My Application           |\n"
+        + "| `Select From Menu` | Tools|Testing|MyTestTool |\n")
     @ArgumentNames({"menuPath"})
     public void selectFromMenu(String menuPath) {
         JMenuItemOperator operator = showMenuItem(menuPath);
@@ -48,8 +48,8 @@ public class MenuKeywords extends MenuSupport {
         + "and waits for action to finish.\n"
         + "This keyword will not work, for example, if the menu item opens a dialog.\n\n"
         + "Example:\n"
-        + "| Select Window             | _My Application_           |\n"
-        + "| Select From Menu And Wait | _Tools|Testing|MyTestTool_ |\n")
+        + "| `Select Window`             | My Application           |\n"
+        + "| `Select From Menu And Wait` | Tools|Testing|MyTestTool |\n")
     @ArgumentNames({"menuPath"})
     public void selectFromMenuAndWait(String menuPath) {
         JMenuItemOperator operator = showMenuItem(menuPath);
@@ -60,8 +60,8 @@ public class MenuKeywords extends MenuSupport {
     @RobotKeyword("Searches for an menu item from the menu of the currently selected window "
         + "and fails if it is disabled.\n\n"
         + "Example:\n"
-        + "| Select Window               | _My Application_           |\n"
-        + "| Menu Item Should Be Enabled | _Tools|Testing|MyTestTool_ |\n")
+        + "| `Select Window`               | My Application           |\n"
+        + "| `Menu Item Should Be Enabled` | Tools|Testing|MyTestTool |\n")
     @ArgumentNames({"menuPath"})
     public void menuItemShouldBeEnabled(String menuPath) {
         Assert.assertTrue("Menu item '" + menuPath + "' is disabled.", menuIsEnabled(menuPath));
@@ -70,8 +70,8 @@ public class MenuKeywords extends MenuSupport {
     @RobotKeyword("Searches for an menu item from the menu of the currently selected window "
         + "and fails if it is enabled.\n\n"
         + "Example:\n"
-        + "| Select Window                   | _My Application_           |\n"
-        + "| Menu Item Should Not Be Enabled | _Tools|Testing|MyTestTool_ |\n")
+        + "| `Select Window`                   | My Application           |\n"
+        + "| `Menu Item Should Not Be Enabled` | Tools|Testing|MyTestTool |\n")
     @ArgumentNames({"menuPath"})
     public void menuItemShouldNotBeEnabled(String menuPath) {
         Assert.assertFalse("Menu item '" + menuPath + "' is enabled.", menuIsEnabled(menuPath));
@@ -85,7 +85,7 @@ public class MenuKeywords extends MenuSupport {
 
     @RobotKeyword("Fails if menu item doesn't exist.\n\n"
         + "Example:\n"
-        + "| Menu Item Should Exist | _Tools|Testing|Test Tool_ |\n")
+        + "| `Menu Item Should Exist` | Tools|Testing|Test Tool |\n")
     @ArgumentNames({"menuPath"})
     public void menuItemShouldExist(String menuPath) {
         Assert.assertTrue("Menu item '" + menuPath + "' does not exist.", menuExists(menuPath));
@@ -93,19 +93,19 @@ public class MenuKeywords extends MenuSupport {
 
     @RobotKeyword("Fails if menu item exists.\n\n"
         + "Example:\n"
-        + "| Menu Item Should Not Exist | _Tools|Testing|Test Tool_ |\n")
+        + "| `Menu Item Should Not Exist` | Tools|Testing|Test Tool |\n")
     @ArgumentNames({"menuPath"})
     public void menuItemShouldNotExist(String menuPath) {
         Assert.assertFalse("Menu item '" + menuPath + "' exists.", menuExists(menuPath));
     }
 
     @RobotKeyword("Gets names of menu items.\n\n"
-        + "Returns empty list if menu item has no children\n"
+        + "Returns empty list if menu item has no children.\n\n"
         + "Example:\n"
-        + "| @{menus} | Get Menu Item Names | _Tools|Testing_ |\n"
-        + "| Should Contain | ${menus} | _Test Tool_ |\n"
-        + "| @{empty} | Get Menu Item Names | _Tools|empty_ |\n"
-        + "| Should Be Empty | ${empty} |\n")
+        + "| @{menus} | `Get Menu Item Names` | Tools|Testing |\n"
+        + "| `Should Contain` | ${menus} | Test Tool |\n"
+        + "| @{empty} | `Get Menu Item Names` | Tools|empty |\n"
+        + "| `Should Be Empty` | ${empty} |\n")
     @ArgumentNames({"menuPath"})
     public List<String> getMenuItemNames(String menuPath) {
         List<String> returnable = new ArrayList<String>();

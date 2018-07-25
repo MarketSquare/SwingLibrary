@@ -30,8 +30,8 @@ public class FileChooserKeywords {
         + "An optional file name can be provided, which is inserted to the file name textfield.\n"
         + "Expects the file chooser to be open.\n\n"
         + "Example:\n"
-        + "| Push Button | _Open File_    |\n"
-        + "| Choose From File Chooser | _/tmp/elements.xml_ |\n")
+        + "| `Push Button` | Open File    |\n"
+        + "| `Choose From File Chooser` | /tmp/elements.xml |\n")
     @ArgumentNames({"fileName="})
     public void chooseFromFileChooser(String fileName) {
         if (!"".equals(fileName)) {
@@ -49,8 +49,8 @@ public class FileChooserKeywords {
     @RobotKeyword("Cancels and closes file chooser.\n"
         + "Expects the file chooser to be open.\n\n"
         + "Example:\n"
-        + "| Push Button         | _Open File_ |\n"
-        + "| Cancel File Chooser |             |\n")
+        + "| `Push Button`         | Open File |\n"
+        + "| `Cancel File Chooser` |             |\n")
     public void cancelFileChooser() {
         fileChooserOperator().cancelSelection();
     }

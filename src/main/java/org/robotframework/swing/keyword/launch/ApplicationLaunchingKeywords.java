@@ -26,7 +26,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 public class ApplicationLaunchingKeywords {
     @RobotKeyword("Launches application with the given arguments.\n\n"
             + "Example:\n"
-            + "| Launch Application | _com.acme.myapplication.MyApp_ | _arg1_ | _arg2_ |\n")
+            + "| `Launch Application` | com.acme.myapplication.MyApp | arg1 | arg2 |\n")
     @ArgumentNames({ "className", "*args" })
     public void launchApplication(String className, String[] args)
             throws Exception {
@@ -42,9 +42,9 @@ public class ApplicationLaunchingKeywords {
     }
 
     @RobotKeyword("Launches application in a separate thread with the given arguments.\n"
-            + "This is useful if your application does something that blocks eg. opens up a dialog.\n\n"
+            + "This is useful if your application does something that blocks e.g. opens up a dialog.\n\n"
             + "Example:\n"
-            + "| Start Application In Separate Thread | _com.acme.myapplication.MyApp_ |\n")
+            + "| `Start Application In Separate Thread` | com.acme.myapplication.MyApp |\n")
     @ArgumentNames({ "className", "*args" })
     public void startApplicationInSeparateThread(final String className,
             final String[] args) throws Exception {

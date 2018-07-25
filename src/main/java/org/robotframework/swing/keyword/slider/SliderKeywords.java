@@ -18,7 +18,7 @@ public class SliderKeywords {
 
     @RobotKeyword("Fails if slider does not exist within current context.\n\n"
             + "Example:\n"
-            + "| Slider Should Exist | _mySlider_ |\n")
+            + "| `Slider Should Exist` | mySlider |\n")
     @ArgumentNames({"identifier"})
     public void sliderShouldExist(String identifier) {
         Assert.assertTrue("Slider '" + identifier + "' doesn't exist.", existenceResolver.satisfiesCondition(identifier));
@@ -26,7 +26,7 @@ public class SliderKeywords {
 
     @RobotKeyword("Fails if slider exists within current context.\n\n"
             + "Example:\n"
-            + "| Slider Should Not Exist | _mySlider_ |\n")
+            + "| `Slider Should Not Exist` | mySlider |\n")
     @ArgumentNames({"identifier"})
     public void sliderShouldNotExist(String identifier) {
         Assert.assertFalse("Slider '" + identifier + "' exists.", existenceResolver.satisfiesCondition(identifier));
@@ -35,8 +35,8 @@ public class SliderKeywords {
     @RobotKeyword("Uses current context to search for a slider and when found, "
             + "returns its current value.\n\n"
             + "Example:\n"
-            + "| ${sliderValue}=  | Get Slider Value | _mySlider_    |\n"
-            + "| Should Be Equal As Integers | _12_     | _${sliderValue}_ |\n")
+            + "| ${sliderValue}=  | Get Slider Value | mySlider    |\n"
+            + "| `Should Be Equal As Integers` | 12     | ${sliderValue} |\n")
     @ArgumentNames({"identifier"})
     public Object getSliderValue(String identifier) {
         return sliderOperator(identifier).getValue();
@@ -48,7 +48,7 @@ public class SliderKeywords {
 
     @RobotKeyword("Sets the value for the slider found from the current context.\n\n"
             + "Example:\n"
-            + "| Set Slider Value | _mySlider_  | _7_  |\n")
+            + "| `Set Slider Value` | mySlider  | 7  |\n")
     @ArgumentNames({"identifier", "value"})
     public void setSliderValue(String identifier, String value) {
         sliderOperator(identifier).setValue(Integer.parseInt(value));

@@ -38,12 +38,11 @@ public class DialogKeywords {
             operatorFactory);
 
     @RobotKeyword("Selects a dialog as current context and sets focus to it.\n\n"
-            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with 'regexp='.\n"
-            + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
-            + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
-            + "Example:\n"
-            + "| Select Dialog  | _About_ |\n"
-            + "| Select Dialog  | _regexp=^A.*_ | Selects a dialog starting with 'A' | \n")
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
+            + "Examples:\n"
+            + "| `Select Dialog`  | About |\n"
+            + "| `Select Dialog`  | regexp=^A.* | Selects a dialog starting with 'A' | \n")
     @ArgumentNames({ "identifier" })
     public void selectDialog(String identifier) {
         DialogOperator operator = operatorFactory.createOperator(identifier);
@@ -52,18 +51,18 @@ public class DialogKeywords {
     }
 
     @RobotKeyword("Closes a dialog.\n\n"
-            + "*N.B.* Regular expression can be used to close the dialog by prefixing the identifier with 'regexp='.\n"
-            + "Please see more about regexp usage at `Select Dialog` keyword.\n\n"
-            + "Example:\n"
-            + "| Close Dialog | _About_ |\n"
-            + "| Close Dialog  | _regexp=^A.*_ | Closes a dialog starting with 'A' | \n")
+            + "*N.B.* Regular expression can be used to close the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
+            + "Examples:\n"
+            + "| `Close Dialog` | About |\n"
+            + "| `Close Dialog`  | regexp=^A.* | Closes a dialog starting with 'A' | \n")
     @ArgumentNames({ "identifier" })
     public void closeDialog(String identifier) {
         operatorFactory.createOperator(identifier).close();
     }
 
     @RobotKeyword("Fails if the dialog is not open.\n\n" + "Example:\n"
-            + "| Dialog Should Be Open | _About_ |\n")
+            + "| `Dialog Should Be Open` | About |\n")
     @ArgumentNames({ "identifier" })
     public void dialogShouldBeOpen(String identifier) {
         Assert.assertTrue("Dialog '" + identifier + "' is not open",
@@ -72,8 +71,8 @@ public class DialogKeywords {
 
     @RobotKeyword("Fails if the dialog is open.\n"
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`.\n\n"
-            + "Example:\n" + "| Set Jemmy Timeouts | _2_ |\n"
-            + "| Dialog Should Not Be Open | _About_ |\n")
+            + "Example:\n" + "| `Set Jemmy Timeouts` | 2 |\n"
+            + "| `Dialog Should Not Be Open` | About |\n")
     @ArgumentNames({ "identifier" })
     public void dialogShouldNotBeOpen(String identifier) {
         Assert.assertFalse("Dialog '" + identifier + "' is open",

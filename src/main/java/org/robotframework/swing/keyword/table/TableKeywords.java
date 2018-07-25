@@ -40,9 +40,9 @@ public class TableKeywords extends IdentifierSupport {
     private final OperatorFactory<TableOperator> operatorFactory = new TableOperatorFactory();
 
     @RobotKeyword("Selects a cell in a table.\n\n"
-            + "Example:\n"
-            + "| Select Table Cell | _myTable_ | _0_ | _2_       | # Selects cell from first row and third column |\n"
-            + "| Select Table Cell | _myTable_ | _1_ | _Keyword_ | # Selects cell from second row and column with header 'Keyword' |\n")
+            + "Examples:\n"
+            + "| `Select Table Cell` | myTable | 0 | 2       | # Selects cell from first row and third column |\n"
+            + "| `Select Table Cell` | myTable | 1 | Keyword | # Selects cell from second row and column with header 'Keyword' |\n")
     @ArgumentNames({"identifier", "row", "cellIdentifier"})
     public void selectTableCell(String identifier, String row, String cellIdentifier) {
         createTableOperator(identifier).selectCell(row, cellIdentifier);
@@ -50,9 +50,9 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Selects a cell in a table and adds it to the selection.\n"
             + "Does not clear earlier selections.\n\n"
-            + "Example:\n"
-            + "| Select Table Cell | _myTable_ | _0_ | _2_       | # Selects cell from first row and third column |\n"
-            + "| Select Table Cell | _myTable_ | _1_ | _Keyword_ | # Selects cell from second row and column with header 'Keyword' |\n")
+            + "Examples:\n"
+            + "| `Select Table Cell` | myTable | 0 | 2       | # Selects cell from first row and third column |\n"
+            + "| `Select Table Cell` | myTable | 1 | Keyword | # Selects cell from second row and column with header 'Keyword' |\n")
     @ArgumentNames({"identifier", "row", "cellIdentifier"})
     public void addTableCellSelection(String identifier, String row, String cellIdentifier) {
         createTableOperator(identifier).addTableCellSelection(row, cellIdentifier);
@@ -61,7 +61,7 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Selects a cell area in a table.\n"
             + "Does not clear earlier selections.\n\n"
             + "Example:\n"
-            + "| Select Table Cell Area | _myTable_ | _0_ | _2_ | _0_ | _2_ | # Selects cells from first to third row and first to third column |\n")
+            + "| `Select Table Cell Area` | myTable | 0 | 2 | 0 | 2 | # Selects cells from first to third row and first to third column |\n")
     @ArgumentNames({"identifier", "startRow", "endRow", "startColumn", "endColumn"})
     public void selectTableCellArea(String identifier, String startRow, String endRow, String startColumn, String endColumn) {
         createTableOperator(identifier).selectCellArea(startRow, endRow, startColumn, endColumn);
@@ -69,16 +69,16 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Clears selection from a table.\n\n"
             + "Example:\n"
-            + "| Clear Table Selection | _myTable_ |\n")
+            + "| `Clear Table Selection` | myTable |\n")
     @ArgumentNames({"identifier"})
     public void clearTableSelection(String identifier) {
         createTableOperator(identifier).clearSelection();
     }
 
     @RobotKeyword("Fails if given table cell is not editable in a table.\n\n"
-            + "Example:\n"
-            + "| Table Cell Should Be Editable | _myTable_ | _0_ | _2_       |\n"
-            + "| Table Cell Should Be Editable | _myTable_ | _1_ | _Keyword_ |\n")
+            + "Examples:\n"
+            + "| `Table Cell Should Be Editable` | myTable | 0 | 2       |\n"
+            + "| `Table Cell Should Be Editable` | myTable | 1 | Keyword |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier"})
     public void tableCellShouldBeEditable(String identifier, String row, String columnIdentifier) {
         TableOperator tableOperator = createTableOperator(identifier);
@@ -86,9 +86,9 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Fails if given table cell is editable in a table.\n\n"
-            + "Example:\n"
-            + "| Table Cell Should Not Be Editable | _myTable_ | _0_ | _2_       |\n"
-            + "| Table Cell Should Not Be Editable | _myTable_ | _1_ | _Keyword_ |\n")
+            + "Examples:\n"
+            + "| `Table Cell Should Not Be Editable` | myTable | 0 | 2       |\n"
+            + "| `Table Cell Should Not Be Editable` | myTable | 1 | Keyword |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier"})
     public void tableCellShouldNotBeEditable(String identifier, String row, String columnIdentifier) {
         TableOperator tableOperator = createTableOperator(identifier);
@@ -96,9 +96,9 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Fails if given table cell is not selected in a table.\n\n"
-            + "Example:\n"
-            + "| Table Cell Should Be Selected | _myTable_ | _0_ | _2_       |\n"
-            + "| Table Cell Should Be Selected | _myTable_ | _1_ | _Keyword_ |\n")
+            + "Examples:\n"
+            + "| `Table Cell Should Be Selected` | myTable | 0 | 2       |\n"
+            + "| `Table Cell Should Be Selected` | myTable | 1 | Keyword |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier"})
     public void tableCellShouldBeSelected(String identifier, String row, String columnIdentifier) {
         TableOperator tableOperator = createTableOperator(identifier);
@@ -106,9 +106,9 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Fails if given table cell is selected in a table.\n\n"
-            + "Example:\n"
-            + "| Table Cell Should Be Selected | _myTable_ | _0_ | _2_       |\n"
-            + "| Table Cell Should Be Selected | _myTable_ | _1_ | _Keyword_ |\n")
+            + "Examples:\n"
+            + "| `Table Cell Should Be Selected` | myTable | 0 | 2       |\n"
+            + "| `Table Cell Should Be Selected` | myTable | 1 | Keyword |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier"})
     public void tableCellShouldNotBeSelected(String identifier, String row, String columnIdentifier) {
         TableOperator tableOperator = createTableOperator(identifier);
@@ -116,13 +116,13 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Returns cell's value from a table.\n\n"
-            + "Starting from SwingLibrary 1.1.4, value from cell rendered with check box is string true/false.\n"
-            + "Optional parameter _source_ allows to override text extraction strategy. "
-            + "Available values are _auto_ (default, will try to get text from cell component "
-            + "first and then from table model) and _model_ (will only try to get text from table model).\n\n"
+            + "The value from cell rendered with check box is a true/false string.\n"
+            + "Optional parameter ``source`` allows to override text extraction strategy. "
+            + "Available values are ``auto`` (default, will try to get text from cell component "
+            + "first and then from table model) and ``model`` (will only try to get text from table model).\n\n"
             + "Example:\n"
-            + "| ${cellValue}=   | Get Table Cell Value | _myTable_ | _0_            | _2_ |\n"
-            + "| Should Be Equal | _tuesday_            |           | _${cellValue}_ |     |\n")
+            + "| ${cellValue}=     | `Get Table Cell Value` | myTable | 0            | 2 |\n"
+            + "| `Should Be Equal` | tuesday                |         | ${cellValue} |   |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "source=auto"})
     public String getTableCellValue(String identifier, String row, String columnIdentifier, String source) {
         TableOperator operator = createTableOperator(identifier);
@@ -144,12 +144,12 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Returns selected cell's value from a table.\n\n"
-            + "Optional parameter _source_ allows to override text extraction strategy. "
-            + "Available values are _auto_ (default, will try to get text from cell component "
-            + "first and then from table model) and _model_ (will only try to get text from table model).\n\n"
+            + "Optional parameter ``source`` allows to override text extraction strategy. "
+            + "Available values are ``auto`` (default, will try to get text from cell component "
+            + "first and then from table model) and ``model`` (will only try to get text from table model).\n\n"
             + "Example:\n"
-            + "| ${cellValue}=   | Get Selected Table Cell Value   | _myTable_      |\n"
-            + "| Should Be Equal | _tuesday_                       | _${cellValue}_ |\n")
+            + "| ${cellValue}=   | `Get Selected Table Cell Value`   | myTable      |\n"
+            + "| `Should Be Equal` | tuesday                         | ${cellValue} |\n")
     @ArgumentNames({"identifier", "source=auto"})
     public Object getSelectedTableCellValue(String identifier, String source) {
         CellValueExtractor.TextSource textSource = textExtractionSourceFromText(source);
@@ -163,7 +163,7 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Sets cell value in a table.\n\n"
             + "Example:\n"
-            + "| Set Table Cell Value | _1_ | _2_ | _New value_ |\n")
+            + "| `Set Table Cell Value` | 1 | 2 | New value |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "newValue"})
     public void setTableCellValue(String identifier, String row, String columnIdentifier, String newValue) {
         TableOperator tableOperator = createTableOperator(identifier);
@@ -175,7 +175,7 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Types a string into a table cell.\n"
             + "Uses real keyboard events, this is useful when processing need to be triggered by input events.\n\n"
             + "Example:\n"
-            + "| Type Into Table Cell | _1_ | _2_ | _New value_ |\n")
+            + "| `Type Into Table Cell` | 1 | 2 | New value |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "newValue"})
     public void typeIntoTableCell(String identifier, String row, String columnIdentifier, String newValue) {
         TableOperator tableOperator = createTableOperator(identifier);
@@ -184,8 +184,8 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns the number of columns from a table.\n\n"
             + "Example:\n"
-            + "| ${columnCount}= | Get Table Column Count | _myTable_ |\n"
-            + "| Should Be Equal As Integers | _4_ | _${columnCount}_ |\n")
+            + "| ${columnCount}= | `Get Table Column Count` | myTable |\n"
+            + "| `Should Be Equal As Integers` | 4 | ${columnCount} |\n")
     @ArgumentNames({"identifier"})
     public int getTableColumnCount(String identifier) {
         return createTableOperator(identifier).getColumnCount();
@@ -193,8 +193,8 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns the number of rows from a table.\n\n"
             + "Example:\n"
-            + "| ${rowCount}= | Get Table Row Count | _myTable_ |\n"
-            + "| Should Be Equal As Integers | _4_ | _${rowCount}_ |\n")
+            + "| ${rowCount}= | `Get Table Row Count` | myTable |\n"
+            + "| `Should Be Equal As Integers` | 4 | ${rowCount} |\n")
     @ArgumentNames({"identifier"})
     public int getTableRowCount(String identifier) {
         return createTableOperator(identifier).getRowCount();
@@ -202,18 +202,18 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Clears table cell contents.\n\n"
             + "Example:\n"
-            + "| Clear Table Cell Value | _myTable_ | _1_ | _2_ |\n")
+            + "| `Clear Table Cell` | myTable | 1 | 2 |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier"})
     public void clearTableCell(String identifier, String row, String columnIdentifier) {
         createTableOperator(identifier).clearCell(row, columnIdentifier);
     }
 
-    @RobotKeyword("Finds the first row index that has a cell  that contains the given _text_.\n"
+    @RobotKeyword("Finds the first row index that has a cell  that contains the given text.\n"
             + "This is useful when we want to operate on cells which location can change.\n\n"
             + "Example:\n"
-            + "| ${row}= | Find Table Row | _myTable_ | _Some Value_ |\n"
-            + "| Select From Table Cell Popup Menu | _myTable_ | _${row}_ | _2_ | _Activate_ |\n"
-            + "| ${row}= | Find Table Row | _myTable_ | _Some Value_ | _Some Column_ | # Searches the _'Some Value'_ from the specified  _'Some Column'_  | \n")
+            + "| ${row}= | `Find Table Row` | myTable | Some Value |\n"
+            + "| `Select From Table Cell Popup Menu` | myTable | ${row} | 2 | Activate |\n"
+            + "| ${row}= | `Find Table Row` | myTable | Some Value | Some Column | # Searches the 'Some Value' from the specified  'Some Column'  | \n")
     @ArgumentNames({"identifier", "text", "columnIdentifier="})
     public int findTableRow(String identifier, String text, String columnIdentifier) {
         if (columnIdentifier != null && !"".equals(columnIdentifier))
@@ -227,9 +227,9 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Selects an item from a table cell popup.\n"
-            + "Separator for items is '|'.\n\n"
+            + "Separator for items is ``|``.\n\n"
             + "Example:\n"
-            + "| Select From Table Cell Popup Menu | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ | ")
+            + "| `Select From Table Cell Popup Menu` | myTable | 1 | 3 | Cell Actions|Clear Cell Value | ")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "menuPath"})
     public void selectFromTableCellPopupMenu(String identifier, String row, String columnIdentifier, String menuPath) {
         JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
@@ -237,18 +237,18 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Selects an item from a table cell popup on the table cells that are selected.\n"
-            + "Separator for items is '|'.\n\n"
+            + "Separator for items is ``|``.\n\n"
             + "Example:\n"
-            + "| Select From Table Cell Popup Menu On Selected Cells | _myTable_ | _Cell Actions|Clear Cell Value_ | ")
+            + "| `Select From Table Cell Popup Menu On Selected Cells` | myTable | Cell Actions|Clear Cell Value | ")
     @ArgumentNames({"identifier", "menuPath"})
     public void selectFromTableCellPopupMenuOnSelectedCells(String identifier, String menuPath) {
         createTableOperator(identifier).callPopupMenuItemOnSelectedCells(menuPath);
     }
 
     @RobotKeyword("Fails if the given table cell popup menu is disabled.\n"
-            + "Separator for items is '|'.\n\n"
+            + "Separator for items is ``|``.\n\n"
             + "Example:\n"
-            + "| Table Cell Popup Menu Should Be Enabled | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ |\n")
+            + "| `Table Cell Popup Menu Should Be Enabled` | myTable | 1 | 3 | Cell Actions|Clear Cell Value |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "menuPath"})
     public void tableCellPopupMenuShouldBeEnabled(String identifier, String row, String columnIdentifier, String menuPath) {
         JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
@@ -257,9 +257,9 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Fails if the given table cell popup menu is enabled.\n"
-            + "Separator for items is '|'.\n\n"
+            + "Separator for items is ``|``.\n\n"
             + "Example:\n"
-            + "| Table Cell Popup Menu Should Be Disabled | _myTable_ | _1_ | _3_ | _Cell Actions|Clear Cell Value_ |\n")
+            + "| `Table Cell Popup Menu Should Be Disabled` | myTable | 1 | 3 | Cell Actions|Clear Cell Value |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "menuPath"})
     public void tableCellPopupMenuShouldBeDisabled(String identifier, String row, String columnIdentifier, String menuPath) {
         JMenuItemOperator menuItem = getPopupMenuItem(identifier, row, columnIdentifier, menuPath);
@@ -269,7 +269,7 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns table's header names.\n\n"
             + "Example:\n"
-            + "| @{headers}= | Get Table Headers | _myTable_ |\n")
+            + "| @{headers}= | `Get Table Headers` | myTable |\n")
     @ArgumentNames({"identifier"})
     public String[] getTableHeaders(String identifier) {
         return createTableOperator(identifier).getTableHeaders();
@@ -277,8 +277,8 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns a list containing all the values of a table column.\n\n"
             + "Example:\n"
-            + "| _${columnValues}=_ | Get Table Column Values | _myTable_ | _columnTwo_ |\n"
-            + "| Should Contain  | _${expectedValue}_ | _${columnValues}_ |\n")
+            + "| ${columnValues}=  | `Get Table Column Values` | myTable | columnTwo |\n"
+            + "| `Should Contain`  | ${expectedValue}  | ${columnValues} |\n")
     @ArgumentNames({"identifier", "columnIdentifier"})
     public Object[] getTableColumnValues(String identifier, String columnIdentifier) {
         return createTableOperator(identifier).getColumnValues(columnIdentifier);
@@ -286,8 +286,8 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns a list containing all the values of a table row.\n\n"
                 + "Example:\n"
-                + "| _${rowValues}=_ | Get Table Row Values | _myTable_ | _2_ |\n"
-                + "| Should Contain  | _${expectedValue}_ | _${rowValues}_ |\n")
+                + "| ${rowValues}= | `Get Table Row Values` | myTable | 2 |\n"
+                + "| `Should Contain`  | ${expectedValue} | ${rowValues} |\n")
     @ArgumentNames({"identifier", "row"})
     public Object[] getTableRowValues(String identifier, int row) {
         return createTableOperator(identifier).getRowValues(row);
@@ -295,8 +295,8 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns a list of table rows containing all the values of a table.\n\n"
                 + "Example:\n"
-                + "| _${tableValues}=_ | Get Table Values | _myTable_ | _rowThree_ |\n"
-                + "| Should Be Equal  | _${expectedValue}_ | _${tableValues[1][2]}_ |\n")
+                + "| ${tableValues}= | `Get Table Values` | myTable | rowThree |\n"
+                + "| `Should Be Equal`  | ${expectedValue} | ${tableValues[1][2]} |\n")
     @ArgumentNames({"identifier"})
     public Object[][] getTableValues(String identifier) {
         return createTableOperator(identifier).getTableValues();
@@ -304,8 +304,8 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Returns the property of the table cell.\n\n"
             + "Example:\n"
-            + "| _${background}=_ | Get Table Cell Property | _myTable_ | _1_ | _2_ | _background_ |\n"
-            + "| Should Be Equal As Integers | _255_ | _${background.getRed()}_ | | | |\n")
+            + "| ${background}= | `Get Table Cell Property` | myTable | 1 | 2 | background |\n"
+            + "| `Should Be Equal As Integers` | 255 | ${background.getRed()} | | | |\n")
     @ArgumentNames({"identifier", "row", "columnIdentifier", "propertyName"})
     public Object getTableCellProperty(String identifier, String row, String columnIdentifier, String propertyName) {
         Map<String, Object> properties = createTableOperator(identifier).getCellProperties(row, columnIdentifier);
@@ -323,15 +323,15 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Clicks on a cell in a table, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
-            + "The codes used for mouse button and key modifiers are the field names from java.awt.event.InputEvent."
-            + "For example BUTTON1_MASK, CTRL_MASK, ALT_MASK, ALT_GRAPH_MASK, SHIFT_MASK, and META_MASK.\n\n"
-            + "Note! Some keys have more convinient case insensitive aliases that can be used: LEFT BUTTON, RIGHT BUTTON, SHIFT, "
-            + "CTRL, ALT, META\n\n"
+            + "The codes used for mouse button and key modifiers are the field names from ``java.awt.event.InputEvent``. "
+            + "For example: ``BUTTON1_MASK``, ``CTRL_MASK``, ``ALT_MASK``, ``ALT_GRAPH_MASK``, ``SHIFT_MASK``, and ``META_MASK``.\n\n"
+            + "*Note:* Some keys have more convinient case insensitive aliases that can be used: ``LEFT BUTTON``, ``RIGHT BUTTON``, ``SHIFT``, "
+            + "``CTRL``, ``ALT``, ``META``\n\n"
             + "Examples:\n"
-            + "| Click On Table Cell | _myTable_ | _0_ | _2_ | # Double clicks with mouse button 2 on the cell in the first row and third column... |\n"
-            + "| ... | _2_ | _RIGHT BUTTON_ | _ALT_ | # ... while holding down the ALT key |\n"
-            + "| Click On Table Cell | _myTable_ | _1_ | _Header_ | # Single click on the cell in the second row and column with header 'Header'... |\n"
-            + "| ... | _1_ | _BUTTON1_MASK_ | _CTRL_MASK_ | _SHIFT_MASK_ | # ... while holding down the CTRL and SHIFT keys |\n")
+            + "| `Click On Table Cell`  | myTable | 0 | 2 | # Double clicks with mouse button 2 on the cell in the first row and third column... |\n"
+            + "| ... | 2 | RIGHT BUTTON | ALT | # ... while holding down the ALT key |\n"
+            + "| `Click On Table Cell`  | myTable | 1 | Header | # Single click on the cell in the second row and column with header 'Header'... |\n"
+            + "| ... | 1 | BUTTON1_MASK | CTRL_MASK | SHIFT_MASK | # ... while holding down the CTRL and SHIFT keys |\n")
     @ArgumentNames({"identifier", "row", "column", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings"})
     public void clickOnTableCell(final String identifier, final String row, final String column, final String[] optionalArgs) {
         OptionalArgsForTableCellClicking optArgs = new OptionalArgsForTableCellClicking(optionalArgs);
@@ -343,10 +343,10 @@ public class TableKeywords extends IdentifierSupport {
     }
 
     @RobotKeyword("Clicks on table header of the given column.\n\n"
-            + "Column can be identified either by index or by column title. Indexes start at 0\n"
+            + "Column can be identified either by index or by column title. Indexes start at 0.\n\n"
             + "Examples:\n"
-            + "| Click Table Header | myTable | 2 | # Click the third column |\n"
-            + "| Click Table Header | myTable | amount | # Click the column that has title 'amount' |")
+            + "| `Click Table Header` | myTable | 2 | # Click the third column |\n"
+            + "| `Click Table Header` | myTable | amount | # Click the column that has title 'amount' |")
     @ArgumentNames({"identifier", "columnIdentifier"})
     public void clickTableHeader(String tableIdentifier, String columnIdentifier) {
         createTableOperator(tableIdentifier).headerOperator().clickColumn(columnIdentifier);

@@ -35,8 +35,8 @@ public class LabelKeywords {
     @RobotKeyword("Returns the text displayed on a label.\n"
         + "Assumes that the label exists in the current context.\n\n"
         + "Example:\n"
-        + "| ${labelText}=   | Get Label Content | _addressLabel_    |\n"
-        + "| Should Be Equal | _Address:_        | _${labelText}_ |\n")
+        + "| ${labelText}=     | `Get Label Content` | addressLabel |\n"
+        + "| `Should Be Equal` | Address:            | ${labelText} |\n")
     @ArgumentNames({"identifier"})
     public String getLabelContent(String identifier) {
         return createOperator(identifier).getText();
@@ -44,7 +44,7 @@ public class LabelKeywords {
 
     @RobotKeyword("Fails if label does not exist within current context.\n\n"
         + "Example:\n"
-        + "| Label Should Exist | _myLabel_ |\n")
+        + "| `Label Should Exist` | myLabel |\n")
     @ArgumentNames({"identifier"})
     public void labelShouldExist(String identifier) {
         Assert.assertTrue("Label '" + identifier + "' doesn't exist", labelExistenceResolver.satisfiesCondition(identifier));
@@ -53,8 +53,8 @@ public class LabelKeywords {
     @RobotKeyword("Fails if label exists within current context.\n"
         + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`.\n\n"
         + "Example:\n"
-        + "| Set Jemmy Timeouts     | _1_ |\n"
-        + "| Label Should Not Exist | _myLabel_ |\n")
+        + "| `Set Jemmy Timeouts`     | 1 |\n"
+        + "| `Label Should Not Exist` | myLabel |\n")
     @ArgumentNames({"identifier"})
     public void labelShouldNotExist(String identifier) {
         Assert.assertFalse("Label '" + identifier + "' exists", labelExistenceResolver.satisfiesCondition(identifier));
@@ -63,7 +63,7 @@ public class LabelKeywords {
     @RobotKeyword("Checks the equality of given text and the text displayed on a label.\n"
         + "Assumes that the label exists in the current context.\n\n"
         + "Example:\n"
-        + "| Label Text Should Be | _addressLabel_ | _Address:_ |\n")
+        + "| `Label Text Should Be` | addressLabel | Address: |\n")
     @ArgumentNames({"identifier", "expected"})
     public void labelTextShouldBe(String identifier, String expected) {
         String actual = createOperator(identifier).getText();

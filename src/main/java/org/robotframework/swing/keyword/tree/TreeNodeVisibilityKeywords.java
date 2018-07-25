@@ -27,7 +27,7 @@ import org.robotframework.swing.tree.TreeSupport;
 public class TreeNodeVisibilityKeywords extends TreeSupport {
     @RobotKeyword("Fails if the tree node is not visible.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Be Visible | _myTree_ | _Root|Folder_ |\n")
+        + "| `Tree Node Should Be Visible` | myTree | Root|Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldBeVisible(String identifier, String nodePath) {
         Assert.assertTrue("Tree node '" + nodePath + "' is not visible.", isVisible(identifier, nodePath));
@@ -35,7 +35,7 @@ public class TreeNodeVisibilityKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if the tree node is visible.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Not Be Visible | _myTree_ | _Root|Folder_ |\n")
+        + "| `Tree Node Should Not Be Visible` | myTree | Root|Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldNotBeVisible(String identifier, String nodePath) {
         Assert.assertFalse("Tree node '" + nodePath + "' is visible.", isVisible(identifier, nodePath));
