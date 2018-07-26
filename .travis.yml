@@ -1,0 +1,11 @@
+language: java
+sudo: false
+dist: trusty
+jdk: oraclejdk8
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+install:
+  - mvn clean package -Dmaven.test.skip=true
+script:
+  - mvn clean verify
