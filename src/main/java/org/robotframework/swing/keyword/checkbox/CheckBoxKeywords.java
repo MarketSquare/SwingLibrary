@@ -31,7 +31,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Uses current context to search for a checkbox and when found, checks it.\n\n"
         + "Example:\n"
-        + "| `Check Checkbox` | My Checkbox |\n")
+        + "| `Check Check Box` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void checkCheckBox(String identifier) {
         createOperator(identifier).changeSelection(true);
@@ -39,7 +39,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Uses current context to search for a checkbox and when found, unchecks it.\n\n"
         + "Example:\n"
-        + "| `Uncheck Checkbox` | My Checkbox |\n")
+        + "| `Uncheck Check Box` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void uncheckCheckBox(String identifier) {
         createOperator(identifier).changeSelection(false);

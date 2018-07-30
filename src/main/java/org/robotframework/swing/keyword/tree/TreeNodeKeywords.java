@@ -46,7 +46,7 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Collapses a node in a tree.\n\n"
-            + "See `Expand Tree Node` for information about ``nodeIdentifier``.\n"
+            + "See `Expand Tree Node` for information about ``nodeIdentifier``.\n\n"
             + "Examples:\n"
             + "| `Collapse Tree Node` | myTree | Root|Folder |\n"
             + "| `Collapse Tree Node` | myTree | 3 |\n")
@@ -56,7 +56,7 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Expands a node in a tree.\n\n"
-            + "``nodeIdentifier`` can be either tree path (i.e visible labels of nodes to be expanded), "
+            + "Argument ``nodeIdentifier`` can be either tree path (i.e visible labels of nodes to be expanded), "
             + "or index of the expanded node element. Nested structures can only be expanded "
             + "using the tree path syntax.\n\nExamples:\n"
             + "| `Expand Tree Node` | myTree | Root|Folder |\n"

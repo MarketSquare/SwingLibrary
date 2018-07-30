@@ -36,7 +36,7 @@ public class TabKeywords extends IdentifierSupport {
 
     @RobotKeyword("Selects a tab.\n"
         + "The optional tab pane identifier can be provided, otherwise the first matching tab is selected.\n\n"
-        + "Example:\n"
+        + "Examples:\n"
         + "| `Select Tab` | Customer Information |\n"
         + "| `Select Tab` | Customer Information | Customers |\n")
     @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})
@@ -71,7 +71,7 @@ public class TabKeywords extends IdentifierSupport {
 
     @RobotKeyword("Selects a tab and sets it as the context.\n"
         + "The optional tab pane identifier can be provided, otherwise the first matching tab is selected.\n\n"
-        + "Example:\n"
+        + "Examples:\n"
         + "| `Select Tab` | Customer Information |\n"
         + "| `Select Tab` | Customer Information | Customers |\n")
     @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})

@@ -210,7 +210,7 @@ public class TableKeywords extends IdentifierSupport {
 
     @RobotKeyword("Finds the first row index that has a cell  that contains the given text.\n"
             + "This is useful when we want to operate on cells which location can change.\n\n"
-            + "Example:\n"
+            + "Examples:\n"
             + "| ${row}= | `Find Table Row` | myTable | Some Value |\n"
             + "| `Select From Table Cell Popup Menu` | myTable | ${row} | 2 | Activate |\n"
             + "| ${row}= | `Find Table Row` | myTable | Some Value | Some Column | # Searches the 'Some Value' from the specified  'Some Column'  | \n")

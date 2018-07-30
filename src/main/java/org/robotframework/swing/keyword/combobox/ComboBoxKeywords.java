@@ -58,7 +58,7 @@ public class ComboBoxKeywords {
             && verifySelection[0] != null && verifySelection[0].length() > 0;
     }
 
-    @RobotKeyword("Alias for `Select From Combo Box` keyword.\n")
+    @RobotKeyword("Alias for `Select From Combobox` keyword.\n")
     @ArgumentNames({"menuIdentifier", "menuItemIdentifier", "*verificationDisabled"})
     public void selectFromDropdownMenu(String menuIdentifier, String menuItemIdentifier, String[] verificationDisabled) {
         selectFromComboBox(menuIdentifier, menuItemIdentifier, verificationDisabled);

@@ -64,7 +64,7 @@ public class ComponentKeywords {
 
     @RobotKeyword("Clicks on a component.\n"
             + "The number of clicks can be given as second argument.\n\n"
-            + "Example:\n" + "| `Click On Component` | myComponent |   | |\n"
+            + "Examples:\n" + "| `Click On Component` | myComponent |   | |\n"
             + "| `Click On Component` | myComponent | 2 | # double click |\n")
     @ArgumentNames({ "identifier", "times=1" })
     public void clickOnComponent(String identifier, int times) {

@@ -101,7 +101,7 @@ public class MenuKeywords extends MenuSupport {
 
     @RobotKeyword("Gets names of menu items.\n\n"
         + "Returns empty list if menu item has no children.\n\n"
-        + "Example:\n"
+        + "Examples:\n"
         + "| @{menus} | `Get Menu Item Names` | Tools|Testing |\n"
         + "| `Should Contain` | ${menus} | Test Tool |\n"
         + "| @{empty} | `Get Menu Item Names` | Tools|empty |\n"

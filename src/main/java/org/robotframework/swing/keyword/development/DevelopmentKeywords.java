@@ -33,7 +33,7 @@ public class DevelopmentKeywords {
         + "By default returns the component names without formatting used in the printout. If given an argument, the return value will have the same formatting as the printout. "
         + "The internal name is set with component's ``setName`` method: https://docs.oracle.com/javase/7/docs/api/java/awt/Component.html#setName(java.lang.String).\n"
         + "See keywords, `Select Window`, `Select Dialog` and `Select Context` for details about context.\n\n"
-        + "Example:\n"
+        + "Examples:\n"
         + "| `Select Main Window`         |\n"
         + "| `List Components In Context` |\n"
         + "| `List Components In Context` | formatted |\n")
