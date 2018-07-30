@@ -29,6 +29,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+import javax.swing.plaf.LayerUI;
+import javax.swing.JLayer;
 
 public class TestApplication {
     private JPanel panel;
@@ -213,6 +215,16 @@ public class TestApplication {
         panel.add(tableWithHeader());
         panel.add(new TestScrollPane());
         panel.add(new TestFastUpdatingPane());
+
+        JTextField jLayerTextField = new JTextField() {
+            {
+                setPreferredSize(new Dimension(100, 30));
+            }
+        };
+        LayerUI layerUI = new LayerUI();
+        JLayer jLayer = new JLayer(jLayerTextField, layerUI);
+        jLayer.setName("jLayerComponent");
+        panel.add(jLayer);
     }
 
     private Component tableWithHeader() {

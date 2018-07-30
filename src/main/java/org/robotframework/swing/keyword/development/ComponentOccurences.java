@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JMenuBar;
@@ -48,6 +49,7 @@ public class ComponentOccurences {
         put(JComboBox.class, -1);
         put(JSpinner.class, -1);
         put(JLabel.class, -1);
+        put(JLayer.class, -1);
         put(JTabbedPane.class, -1);
         put(JRootPane.class, -1);
         put(JLayeredPane.class, -1);

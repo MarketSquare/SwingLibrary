@@ -74,7 +74,8 @@ public class ContextKeywords {
     }
 
     private static void verifyContext(Class contextClass) {
-        Class<? extends Component>[] expectedClasses = new Class[] { Window.class, JPanel.class, Panel.class, JInternalFrame.class };
+        Class<? extends Component>[] expectedClasses = new Class[] { Window.class, JPanel.class, Panel.class,
+                JInternalFrame.class, JLayer.class };
         boolean assignable = false;
         StringBuilder str = new StringBuilder();
         for (Class<? extends Component> expectedClass : expectedClasses) {
