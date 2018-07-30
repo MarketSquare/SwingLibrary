@@ -29,7 +29,7 @@ import org.robotframework.swing.tree.TreeSupport;
 public class TreeNodeExistenceKeywords extends TreeSupport {
     @RobotKeyword("Fails if the tree node does not exist.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Exist | _myTree_ | _Root|Folder_ |\n")
+        + "| `Tree Node Should Exist` | myTree | Root|Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldExist(String identifier, String nodeIdentifier) {
         boolean treeNodeExists = createExistenceResolver(identifier).treeNodeExists(nodeIdentifier);
@@ -38,7 +38,7 @@ public class TreeNodeExistenceKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if the tree node exists.\n\n"
         + "Example:\n"
-        + "| Tree Node Should Not Exist | _myTree_ | _Root|Folder_ |\n")
+        + "| `Tree Node Should Not Exist` | myTree | Root|Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier"})
     public void treeNodeShouldNotExist(String identifier, String nodeIdentifier) {
         boolean treeNodeExists = createExistenceResolver(identifier).treeNodeExists(nodeIdentifier);

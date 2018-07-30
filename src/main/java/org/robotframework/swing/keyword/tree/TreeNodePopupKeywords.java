@@ -39,7 +39,7 @@ import org.robotframework.swing.util.SwingWaiter;
 public class TreeNodePopupKeywords extends TreeSupport {
     @RobotKeyword("Selects an item from the tree node's popup menu.\n\n"
         + "Example:\n"
-        + "| Select From Tree Node Popup Menu | _myTree_ | _Root|Folder_ | _New Folder_ | ")
+        + "| `Select From Tree Node Popup Menu` | myTree | Root|Folder | New Folder | ")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void selectFromTreeNodePopupMenu(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
@@ -48,9 +48,9 @@ public class TreeNodePopupKeywords extends TreeSupport {
 
     @RobotKeyword("Selects an item from the tree node's popup menu and does not wait for a result.\n"
         + "Needed if the action starts a process that stays running (e.g. opens a dialog) and the above keyword doesn't return.\n"
-        + "Separator for items is '|'.\n\n"
+        + "Separator for items is ``|``.\n\n"
         + "Example:\n"
-        + "| Select From Tree Node Popup Menu In Separate Thread | _myTree_ | _Root|Folder_ | _New Folder_ | ")
+        + "| `Select From Tree Node Popup Menu In Separate Thread` | myTree | Root|Folder | New Folder | ")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void selectFromTreeNodePopupMenuInSeparateThread(String identifier, String nodeIdentifier, String menuPath) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
@@ -59,11 +59,11 @@ public class TreeNodePopupKeywords extends TreeSupport {
 
     @RobotKeyword("Invokes a menu action on all the selected tree nodes.\n"
     	+ "Does not wait for a result.\n"
-        + "Separator for items is '|'.\n\n"
+        + "Separator for items is ``|``.\n\n"
         + "Examples:\n"
-        + "| Select Tree Node | _myTree_ | _Root|Folder1_ |\n"
-        + "| Select Tree Node | _myTree_ | _Root|Folder2_ |\n"
-        + "| Select From Popup Menu On Selected Tree Nodes | _myTree_ | _Remove_ | ")
+        + "| `Select Tree Node` | myTree | Root|Folder1 |\n"
+        + "| `Select Tree Node` | myTree | Root|Folder2 |\n"
+        + "| `Select From Popup Menu On Selected Tree Nodes` | myTree | Remove | ")
     @ArgumentNames({"identifier", "menuPath"})
     public void selectFromPopupMenuOnSelectedTreeNodes(String identifier, String menuPath) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperatorOnSelectedNodes();
@@ -73,8 +73,8 @@ public class TreeNodePopupKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if given popup menu item is disabled.\n\n"
         + "Examples:\n"
-        + "| Tree Node Popup Menu Item Should Be Enabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
-        + "| Tree Node Popup Menu Item Should Be Enabled | _0_ | _1_ | _New Folder_ |\n")
+        + "| `Tree Node Popup Menu Item Should Be Enabled` | myTree | Root|Folder | New Folder |\n"
+        + "| `Tree Node Popup Menu Item Should Be Enabled` | 0 | 1 | New Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeEnabled(String identifier, String nodeIdentifier, String menuPath) {
         boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);
@@ -83,8 +83,8 @@ public class TreeNodePopupKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if given popup menu item is enabled.\n\n"
         + "Examples:\n"
-        + "| Tree Node Popup Menu Item Should Be Disabled | _myTree_ | _Root|Folder_ | _New Folder_ |\n"
-        + "| Tree Node Popup Menu Item Should Be Disabled | _0_      | _1_ | _New Folder_ |\n")
+        + "| `Tree Node Popup Menu Item Should Be Disabled` | myTree | Root|Folder | New Folder |\n"
+        + "| `Tree Node Popup Menu Item Should Be Disabled` | 0      | 1 | New Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeDisabled(String identifier, String nodeIdentifier, String menuPath) {
         boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);

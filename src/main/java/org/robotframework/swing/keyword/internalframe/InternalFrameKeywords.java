@@ -40,8 +40,8 @@ public class InternalFrameKeywords {
     private final IComponentConditionResolver existenceResolver = new ComponentExistenceResolver(
             operatorFactory);
 
-    @RobotKeyword("Closes internal frame.\n\n" + "Example:\n" + "Example:\n"
-            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+    @RobotKeyword("Closes internal frame.\n\n" + "Example:\n"
+            + "| `Close Internal Frame`  | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void closeInternalFrame(String identifier) {
         ((JInternalFrame) createOperator(identifier).getSource())
@@ -49,14 +49,14 @@ public class InternalFrameKeywords {
     }
 
     @RobotKeyword("Iconifies internal frame.\n\n" + "Example:\n"
-            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+            + "| `Close Internal Frame`  | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void iconifyInternalFrame(String identifier) {
         iconify(identifier, true);
     }
 
     @RobotKeyword("De-iconifies internal frame.\n\n" + "Example:\n"
-            + "| Close Internal Frame  | _My Internal Frame_ |\n")
+            + "| `Close Internal Frame`  | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void deIconifyInternalFrame(String identifier) {
         iconify(identifier, false);
@@ -72,14 +72,14 @@ public class InternalFrameKeywords {
     }
 
     @RobotKeyword("Maximizes internal frame.\n\n" + "Example:\n"
-            + "| Maximize Internal Frame  | _My Internal Frame_ |\n")
+            + "| `Maximize Internal Frame`  | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void maximizeInternalFrame(String identifier) {
         maximize(identifier, true);
     }
 
     @RobotKeyword("Minimizes internal.\n\n" + "Example:\n"
-            + "| Minimize Internal Frame  | _My Internal Frame_ |\n")
+            + "| `Minimize Internal Frame`  | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void minimizeInternalFrame(String identifier) {
         maximize(identifier, false);
@@ -96,7 +96,7 @@ public class InternalFrameKeywords {
 
     @RobotKeyword("Fails if the internal frame doesn't exist in the current context.\n\n"
             + "Example:\n"
-            + "| Internal Frame Should Exist | _My Internal Frame_ |\n")
+            + "| `Internal Frame Should Exist` | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void internalFrameShouldExist(String identifier) {
         Assert.assertTrue("Internal frame '" + identifier + "' doesn't exist.",
@@ -105,7 +105,7 @@ public class InternalFrameKeywords {
 
     @RobotKeyword("Fails if the internal frame exists in the current context.\n\n"
             + "Example:\n"
-            + "| Internal Frame Should Not Exist | _My Internal Frame_ |\n")
+            + "| `Internal Frame Should Not Exist` | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void internalFrameShouldNotExist(String identifier) {
         Assert.assertFalse("Internal frame '" + identifier + "' exists.",
@@ -114,7 +114,7 @@ public class InternalFrameKeywords {
 
     @RobotKeyword("Fails if the internal frame is *not* open.\n\n"
             + "Example:\n"
-            + "| Internal Frame Should Be Open | _My Internal Frame_ |\n")
+            + "| `Internal Frame Should Be Open` | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void internalFrameShouldBeOpen(String identifier) {
         Assert.assertTrue("Internal frame '" + identifier + "' is not open.",
@@ -122,7 +122,7 @@ public class InternalFrameKeywords {
     }
 
     @RobotKeyword("Fails if the internal frame *is* open.\n\n" + "Example:\n"
-            + "| Internal Frame Should Not Be Open | _My Internal Frame_ |\n")
+            + "| `Internal Frame Should Not Be Open` | My Internal Frame |\n")
     @ArgumentNames({ "identifier" })
     public void internalFrameShouldNotBeOpen(String identifier) {
         Assert.assertFalse("Internal frame '" + identifier + "' is open.",
@@ -130,11 +130,11 @@ public class InternalFrameKeywords {
     }
 
     @RobotKeyword("Returns all frames that are open in the current context." + "\n\n"
-            + "Returns empty list if the context is not selected.\n"
+            + "Returns empty list if the context is not selected.\n\n"
             + "Example:\n"
-            + "| Select Main Window |\n"
-            + "| ${frames}= | Get Internal Frames In Context |\n"
-            + "| Should Contain | ${frames} | Test Internal Frame |\n")
+            + "| `Select Main Window` |\n"
+            + "| ${frames}= | `Get Internal Frames In Context` |\n"
+            + "| `Should Contain` | ${frames} | Test Internal Frame |\n")
     public List<String> getInternalFramesInContext() {
         ComponentWrapper operator = Context.getContext();
         return InternalFrameIteratorForListing.getFrameList((Container) operator.getSource());

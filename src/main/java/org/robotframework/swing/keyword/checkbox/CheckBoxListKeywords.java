@@ -39,8 +39,8 @@ public class CheckBoxListKeywords {
 
     @RobotKeyword("Checks all checkboxes in current context.\n\n"
         + "Example:\n"
-        + "| Select Context | _My Checkbox Panel_ |\n"
-        + "| Check All Checkboxes | |\n")
+        + "| `Select Context` | My Checkbox Panel |\n"
+        + "| `Check All Checkboxes` | |\n")
     public void checkAllCheckboxes() {
         foreachCheckBox(new CheckBoxAction() {
             public void operateOnCheckBox(JCheckBoxOperator operator) {
@@ -51,8 +51,8 @@ public class CheckBoxListKeywords {
 
     @RobotKeyword("Unchecks all checkboxes in current context.\n\n"
         + "Example:\n"
-        + "| Select Context | _My Checkbox Panel_ |\n"
-        + "| Uncheck All Checkboxes | |\n")
+        + "| `Select Context` | My Checkbox Panel |\n"
+        + "| `Uncheck All Checkboxes` | |\n")
     public void uncheckAllCheckboxes() {
         foreachCheckBox(new CheckBoxAction() {
             public void operateOnCheckBox(JCheckBoxOperator operator) {
@@ -63,8 +63,8 @@ public class CheckBoxListKeywords {
 
     @RobotKeyword("Fails if any checkbox in current context is not checked.\n\n"
         + "Example:\n"
-        + "| Select Context | _My Checkbox Panel_ |\n"
-        + "| All Checkboxes Should Be Checked | |\n")
+        + "| `Select Context` | My Checkbox Panel |\n"
+        + "| `All Checkboxes Should Be Checked` | |\n")
     public void allCheckboxesShouldBeChecked() {
         foreachCheckBox(new CheckBoxAction() {
             public void operateOnCheckBox(JCheckBoxOperator operator) {
@@ -75,8 +75,8 @@ public class CheckBoxListKeywords {
 
     @RobotKeyword("Fails if any checkbox in current context is checked.\n\n"
         + "Example:\n"
-        + "| Select Context | _My Checkbox Panel_ |\n"
-        + "| All Checkboxes Should Be Unchecked | |\n")
+        + "| `Select Context` | My Checkbox Panel |\n"
+        + "| `All Checkboxes Should Be Unchecked` | |\n")
     public void allCheckboxesShouldBeUnchecked() {
         foreachCheckBox(new CheckBoxAction() {
             public void operateOnCheckBox(JCheckBoxOperator operator) {

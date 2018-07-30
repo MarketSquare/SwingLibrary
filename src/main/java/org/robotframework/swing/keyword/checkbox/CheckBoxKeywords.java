@@ -31,7 +31,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Uses current context to search for a checkbox and when found, checks it.\n\n"
         + "Example:\n"
-        + "| Check Checkbox | _My Checkbox_ |\n")
+        + "| `Check Check Box` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void checkCheckBox(String identifier) {
         createOperator(identifier).changeSelection(true);
@@ -39,7 +39,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Uses current context to search for a checkbox and when found, unchecks it.\n\n"
         + "Example:\n"
-        + "| Uncheck Checkbox | _My Checkbox_ |\n")
+        + "| `Uncheck Check Box` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void uncheckCheckBox(String identifier) {
         createOperator(identifier).changeSelection(false);
@@ -47,7 +47,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Fails if checkbox is not checked.\n\n"
         + "Example:\n"
-        + "| Check Box Should Be Checked | _My Checkbox_ |\n")
+        + "| `Check Box Should Be Checked` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void checkBoxShouldBeChecked(String identifier) {
         Assert.assertTrue(createOperator(identifier).isSelected());
@@ -55,7 +55,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Fails if checkbox is checked.\n\n"
         + "Example:\n"
-        + "| Check Box Should Be Unchecked | _My Checkbox_ |\n")
+        + "| `Check Box Should Be Unchecked` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void checkBoxShouldBeUnchecked(String identifier) {
         Assert.assertFalse(createOperator(identifier).isSelected());
@@ -63,7 +63,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Fails if checkbox is disabled.\n\n"
         + "Example:\n"
-        + "| Check Box Should Be Enabled | _My Checkbox_ |\n")
+        + "| `Check Box Should Be Enabled` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void checkBoxShouldBeEnabled(String identifier) {
         Assert.assertTrue("Checkbox '" + identifier + "' is disabled.", createOperator(identifier).isEnabled());
@@ -71,7 +71,7 @@ public class CheckBoxKeywords {
 
     @RobotKeyword("Fails if checkbox is enabled.\n\n"
         + "Example:\n"
-        + "| Check Box Should Be Disabled | _My Checkbox_ |\n")
+        + "| `Check Box Should Be Disabled` | My Checkbox |\n")
     @ArgumentNames({"identifier"})
     public void checkBoxShouldBeDisabled(String identifier) {
         Assert.assertFalse("Checkbox '" + identifier + "' is enabled.", createOperator(identifier).isEnabled());

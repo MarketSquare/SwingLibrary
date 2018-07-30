@@ -29,18 +29,18 @@ import org.robotframework.swing.togglebutton.ToggleButtonOperatorFactory;
 public class ToggleButtonKeywords {
     private OperatorFactory<AbstractButtonOperator> operatorFactory = new ToggleButtonOperatorFactory();
 
-    @RobotKeyword("Fails if togglebutton is not selected.\n\n"
+    @RobotKeyword("Fails if toggle button is not selected.\n\n"
         + "Example:\n"
-        + "| Toggle Button Should Be Selected | _My Toggle Button_ |\n")
+        + "| `Toggle Button Should Be Selected` | My Toggle Button |\n")
     @ArgumentNames({"identifier"})
     public void toggleButtonShouldBeSelected(String identifier) {
         boolean isSelected = createOperator(identifier).isSelected();
         Assert.assertTrue("Toggle Button '" + identifier + "' is not selected.", isSelected);
     }
 
-    @RobotKeyword("Fails if togglebutton is selected.\n\n"
+    @RobotKeyword("Fails if toggle button is selected.\n\n"
         + "Example:\n"
-        + "| Toggle Button Should Not Be Selected | _My Toggle Button_ |\n")
+        + "| `Toggle Button Should Not Be Selected` | My Toggle Button |\n")
     @ArgumentNames({"identifier"})
     public void toggleButtonShouldNotBeSelected(String identifier) {
         boolean isSelected = createOperator(identifier).isSelected();
@@ -49,7 +49,7 @@ public class ToggleButtonKeywords {
 
     @RobotKeyword("Uses current context to search for a button and when found, pushes it.\n\n"
         + "Example:\n"
-        + "| Push Toggle Button | _Activated_ |\n")
+        + "| `Push Toggle Button` | Activated |\n")
     @ArgumentNames({"identifier"})
     public void pushToggleButton(String identifier) {
         createOperator(identifier).push();

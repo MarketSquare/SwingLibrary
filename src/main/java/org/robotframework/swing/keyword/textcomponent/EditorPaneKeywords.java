@@ -31,7 +31,7 @@ public class EditorPaneKeywords {
     @RobotKeyword("Clicks on a hyperlink in a JEditorPane.\n"
         + "Fails if the link is not found.\n\n"
         + "Example:\n"
-        + "| Click Hyperlink | _myEditor_ | _Network Elements_ |\n")
+        + "| `Click Hyperlink` | myEditor | Network Elements |\n")
     @ArgumentNames({"identifier", "linkText"})
     public void clickHyperLink(String identifier, String linkText) {
         operatorFactory.createOperator(identifier).activateHyperLink(linkText);

@@ -31,7 +31,7 @@ public class RadioButtonKeywords {
 
     @RobotKeyword("Uses current context to search for a radiobutton and when found, pushes it.\n\n"
         + "Example:\n"
-        + "| Select Radio Button | _My Radio Button_ |\n")
+        + "| `Select Radio Button` | My Radio Button |\n")
     @ArgumentNames({"identifier"})
     public void pushRadioButton(String identifier) {
         createOperator(identifier).push();
@@ -45,7 +45,7 @@ public class RadioButtonKeywords {
 
     @RobotKeyword("Fails if radiobutton is not selected.\n\n"
         + "Example:\n"
-        + "| Radio Button Should Be Selected | _My Radio Button_ |\n")
+        + "| `Radio Button Should Be Selected` | My Radio Button |\n")
     @ArgumentNames({"identifier"})
     public void radioButtonShouldBeSelected(String identifier) {
         boolean isSelected = createOperator(identifier).isSelected();
@@ -54,25 +54,25 @@ public class RadioButtonKeywords {
 
     @RobotKeyword("Fails if radiobutton is selected.\n\n"
         + "Example:\n"
-        + "| Radio Button Should Not Be Selected | _My Radio Button_ |\n")
+        + "| `Radio Button Should Not Be Selected` | My Radio Button |\n")
     @ArgumentNames({"identifier"})
     public void radioButtonShouldNotBeSelected(String identifier) {
         boolean isSelected = createOperator(identifier).isSelected();
         Assert.assertFalse("Radio Button '" + identifier + "' is selected.", isSelected);
     }
 
-    @RobotKeyword("Fails if radiobutton is disabled.\n\n"
+    @RobotKeyword("Fails if radio button is disabled.\n\n"
         + "Example:\n"
-        + "| Radio Button Should Be Enabled | _My Radio Button_ |\n")
+        + "| `Radio Button Should Be Enabled` | My Radio Button |\n")
     @ArgumentNames({"identifier"})
     public void radioButtonShouldBeEnabled(String identifier) {
         boolean isEnabled = createOperator(identifier).isEnabled();
         Assert.assertTrue("Radio Button '" + identifier + "' is disabled.", isEnabled);
     }
 
-    @RobotKeyword("Fails if radiobutton is enabled.\n\n"
+    @RobotKeyword("Fails if radio button is enabled.\n\n"
         + "Example:\n"
-        + "| Radio Button Should Be Disabled | _My Radio Button_ |\n")
+        + "| `Radio Button Should Be Disabled` | My Radio Button |\n")
     @ArgumentNames({"identifier"})
     public void radioButtonShouldBeDisabled(String identifier) {
         boolean isEnabled = createOperator(identifier).isEnabled();

@@ -45,7 +45,7 @@ public class WindowKeywords extends AbstractContextVerifier {
     }
 
     @RobotKeyword("Selects the window that was opened first as current context.\n\n"
-            + "Example:\n" + "| Select Main Window |\n")
+            + "Example:\n" + "| `Select Main Window` |\n")
     public void selectMainWindow() {
         setContext(operatorFactory.createOperatorByIndex(0));
     }
@@ -53,7 +53,7 @@ public class WindowKeywords extends AbstractContextVerifier {
     @RobotKeyword("Gets list of open window titles.\n\n"
             +"Logs the window titles and names in parenthesis.\n\n"
             + "Example:\n"
-            + "| List Windows |\n")
+            + "| `List Windows` |\n")
     public List<String> listWindows() {
         List<String> result = new ArrayList<String>();
         for (Frame frame: Frame.getFrames()) {
@@ -64,12 +64,11 @@ public class WindowKeywords extends AbstractContextVerifier {
     }
 
     @RobotKeyword("Selects a window as current context and sets focus to it.\n\n"
-            + "*N.B.* Regular expression can be used to select the window by prefixing the identifier with 'regexp='.\n"
-            + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
-            + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
-            + "Example:\n"
-            + "| Select Window | _Help_ |\n"
-            + "| Select Window | _regexp=^H.*_ | Selects a window starting with letter H. |\n")
+            + "*N.B.* Regular expression can be used to select the window by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
+            + "Examples:\n"
+            + "| `Select Window` | Help |\n"
+            + "| `Select Window` | regexp=^H.* | Selects a window starting with letter H. |\n")
     @ArgumentNames({ "identifier" })
     public void selectWindow(String identifier) {
         FrameOperator operator = operatorFactory.createOperator(identifier);
@@ -77,12 +76,11 @@ public class WindowKeywords extends AbstractContextVerifier {
     }
 
     @RobotKeyword("Closes a window.\n\n"
-            + "*N.B.* Regular expression can be used to close the window by prefixing the identifier with 'regexp='.\n"
-            + "Please learn more about java reqular expressions at http://java.sun.com/docs/books/tutorial/essential/regex/ \n "
-            + "and patterns http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html \n\n"
-            + "Example:\n"
-            + "| Close Window | _Help_ |\n"
-            + "| Close Window | _regexp=^H.*_ | Closes a window starting with letter H. |\n")
+            + "*N.B.* Regular expression can be used to close the window by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
+            + "Examples:\n"
+            + "| `Close Window` | Help |\n"
+            + "| `Close Window` | regexp=^H.* | Closes a window starting with letter H. |\n")
     @ArgumentNames({ "identifier" })
     public void closeWindow(String identifier) {
         FrameOperator operator = operatorFactory.createOperator(identifier);
@@ -92,8 +90,8 @@ public class WindowKeywords extends AbstractContextVerifier {
 
     @RobotKeyword("Returns the title of the selected window.\n"
             + "Assumes current context is window.\n\n" + "Example:\n"
-            + "| ${title}=     | Get Selected Window Title |            |\n"
-            + "| Should Be Equal | _Help Contents_           | _${title}_ |\n")
+            + "| ${title}=         | `Get Selected Window Title` |          |\n"
+            + "| `Should Be Equal` | Help Contents               | ${title} |\n")
     public String getSelectedWindowTitle() {
         return frameOperator().getTitle();
     }

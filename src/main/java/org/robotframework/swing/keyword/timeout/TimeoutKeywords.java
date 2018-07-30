@@ -43,11 +43,11 @@ public class TimeoutKeywords {
         + "Timeout names are listed here: http://jemmy.java.net/OperatorsEnvironment.html#timeouts\n"
         + "Returns the old timeout setting value.\n\n"
         + "This keyword by default takes timeout value is seconds, "
-        + "you can however suffix it with `ms` to provide it in milliseconds.\n"
+        + "you can however suffix it with ``ms`` to provide it in milliseconds.\n"
         + "Return value will always be in units you used for the argument.\n\n"
         + "Example:\n"
-        + "| Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n"
-        + "| ${oldSetting}= | Set Jemmy Timeout | DialogWaiter.WaitDialogTimeout | 3 |\n")
+        + "| `Set Jemmy Timeout` | DialogWaiter.WaitDialogTimeout | 3 |\n"
+        + "| ${oldSetting}= | `Set Jemmy Timeout` | DialogWaiter.WaitDialogTimeout | 3 |\n")
     @ArgumentNames({"timeoutName", "timeout"})
     public long setJemmyTimeout(String timeoutName, String timeout) {
         long multiplier = 1000;
@@ -64,7 +64,7 @@ public class TimeoutKeywords {
     @RobotKeyword("Sets all relevant jemmy timeouts. \n"
         + "By default they are all set to 5 seconds.\n\n"
         + "This keyword by default takes timeout value is seconds, "
-        + "you can however suffix it with `ms` to provide it in milliseconds.\n\n"
+        + "you can however suffix it with ``ms`` to provide it in milliseconds.\n\n"
         + "List of all the timeouts this keywords sets:\n"
         + "| *Timeout Name* | *Description* |\n"
         + "| "+TimeoutName.DIALOG_WAITER_WAIT_DIALOG_TIMEOUT+" | Time to wait dialog displayed |\n"
@@ -81,7 +81,7 @@ public class TimeoutKeywords {
         + "| "+TimeoutName.J_TREE_OPERATOR_WAIT_NODE_VISIBLE_TIMEOUT+" | Time to wait node visible |\n"
         + "| "+TimeoutName.J_LIST_OPERATOR_WAIT_FIND_ITEM_INDEX_TIMEOUT+" | Time to wait for list item to appear |\n\n"
         + "Example:\n"
-        + "| Set Jemmy Timeouts | 3 |\n")
+        + "| `Set Jemmy Timeouts` | 3 |\n")
     @ArgumentNames({"timeout"})
     public void setJemmyTimeouts(String timeout) {
         long multiplier = 1000;

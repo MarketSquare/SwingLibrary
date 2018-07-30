@@ -35,7 +35,7 @@ public class ButtonKeywords {
 
     @RobotKeyword("Uses current context to search for a button and when found, pushes it.\n\n"
             + "Example:\n"
-            + "| Push Button | _OK_ |\n")
+            + "| `Push Button` | OK |\n")
     @ArgumentNames({"identifier"})
     public void pushButton(String identifier) {
         new ButtonOperatorWrapper(createOperator(identifier)).push();
@@ -44,8 +44,8 @@ public class ButtonKeywords {
     @RobotKeyword("Uses current context to search for a button and when found, "
             + "returns the text it is labeled with.\n\n"
             + "Example:\n"
-            + "| ${buttonText}=  | Get Button Text | _myButton_    |\n"
-            + "| Should Be Equal | _My Button_     | _${buttonText}_ |\n")
+            + "| ${buttonText}=    | `Get Button Text` | myButton      |\n"
+            + "| `Should Be Equal` | My Button         | ${buttonText} |\n")
     @ArgumentNames({"identifier"})
     public String getButtonText(String identifier) {
         return createOperator(identifier).getText();
@@ -53,7 +53,7 @@ public class ButtonKeywords {
 
     @RobotKeyword("Fails if button does not exist within current context.\n\n"
             + "Example:\n"
-            + "| Button Should Exist | _OK_ |\n")
+            + "| `Button Should Exist` | OK |\n")
     @ArgumentNames({"identifier"})
     public void buttonShouldExist(String identifier) {
         Assert.assertTrue("Button '" + identifier + "' doesn't exist", buttonExists(identifier));
@@ -62,24 +62,24 @@ public class ButtonKeywords {
     @RobotKeyword("Fails if button exists within current context.\n"
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`.\n\n"
             + "Example:\n"
-            + "| Set Jemmy Timeouts      | _1_  |\n"
-            + "| Button Should Not Exist | _OK_ |\n")
+            + "| `Set Jemmy Timeouts`      | 1  |\n"
+            + "| `Button Should Not Exist` | OK |\n")
     @ArgumentNames({"identifier"})
     public void buttonShouldNotExist(String identifier) {
         Assert.assertFalse("Button '" + identifier + "' exists", buttonExists(identifier));
     }
 
-    @RobotKeyword("Fails if button is disabled\n\n"
+    @RobotKeyword("Fails if button is disabled.\n\n"
             + "Example:\n"
-            + "| Button Should Be Enabled | _OK_ |\n")
+            + "| `Button Should Be Enabled` | OK |\n")
     @ArgumentNames({"identifier"})
     public void buttonShouldBeEnabled(String identifier) {
         Assert.assertTrue("Button was disabled.", createOperator(identifier).isEnabled());
     }
 
-    @RobotKeyword("Fails if button is enabled\n\n"
+    @RobotKeyword("Fails if button is enabled.\n\n"
             + "Example:\n"
-            + "| Button Should Be Disabled | _OK_ |\n")
+            + "| `Button Should Be Disabled` | OK |\n")
     @ArgumentNames({"identifier"})
     public void buttonShouldBeDisabled(String identifier) {
         Assert.assertFalse("Button was enabled.", createOperator(identifier).isEnabled());

@@ -33,29 +33,34 @@ public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLi
     private final AnnotationLibrary annotationLibrary = new AnnotationLibrary(
             "org/robotframework/swing/keyword/**/*.class");
     private static final String LIBRARY_DOCUMENTATION = "SwingLibrary is a Robot Framework test library for testing Java Swing user interfaces.\n\n"
-            + "It uses a tool called [http://java.net/projects/jemmy/|Jemmy] internally to operate on Swing components.\n"
+            + "This document explains how to use keywords provided by SwingLibrary. For information about installation, support, and more please visit the "
+            + "[https://github.com/robotframework/SwingLibrary|project page]."
+            + "For more information about Robot Framework, see http://robotframework.org.\n\n"
+            + "Internally, SwingLibrary uses a tool called [http://java.net/projects/jemmy/|Jemmy] to operate on Swing components.\n"
             + "= Getting Started =\n"
-            + "First, the SwingLibrary needs to be taken into use in the settings table:\n"
+            + "SwingLibrary only runs under Jython. For using SwingLibrary keywords with Python, check out "
+            + "[https://github.com/robotframework/remoteswinglibrary | RemoteSwingLibrary]. "
+            + "Before using it, both the SwingLibrary and the application and all its dependencies need to be available in the CLASSPATH.\n\n"
+            + "In Windows, this can be done like:\n\n"
+            + "``set CLASSPATH=swinglibrary-<version>.jar;myApp.jar``\n\n"
+            + "and in Unix based OS like this:\n\n"
+            + "``CLASSPATH=swinglibrary-<version>.jar:myApp.jar``\n\n"
+            + "When writing the tests, the SwingLibrary needs to be taken into use in the settings table:\n"
             + "| *Settings * | *Value* |\n"
             + "| Library | SwingLibrary |\n"
-
+            + ""
             + "The tested application can be started with keyword `Start Application`, using the name "
             + "of the main application class as an argument:\n"
             + "| `Start Application` | com.acme.TheApplication |\n"
             + "| `Select Window`     | TheApplication Window   |\n"
             + "| `Push Button`       | AcmeButton              |\n"
-            + "When the tests are executed, both the SwingLibrary and the application and all its dependencies "
-            + "need to be available in the CLASSPATH. Robot Framework needs to be started with `jybot` start script "
-            + "when using the SwingLibrary. In Windows, this can be done like:\n"
-            + "| set CLASSPATH=swinglibrary-<version>.jar;myApp.jar\n"
-            + "| jybot my_test.txt\n"
-            + "and in *nix like this:\n"
-            + "| CLASSPATH=swinglibrary-<version>.jar:myApp.jar jybot my_test.txt\n"
+            + "To run the test with Robot Framework, use the following command: \n\n"
+            + "``jython -m robot my_test.robot``\n"
 
             + "= Contexts =\n"
             + "Keywords that operate on a component always search for the component in some context, "
             + "which has to explicitly set. "
-            + "Allowed contexts are windows, dialogs, internal frames, and tabbed panes. "
+            + "Allowed contexts are windows, dialogs, internal frames, tabbed panes and layers. "
             + "After a context has been selected, all subsequent keywords search for components in that context "
             + "until a new context is selected. Keywords that can be used to select a context are "
             + "`Select Window`, `Select Dialog` and `Select Context`. For example:\n"
@@ -66,13 +71,13 @@ public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLi
             + "| `Select Window` | My App  |\n"
 
             + "= Locating components =\n"
-            + "Most of the keywords that operate on a visible component take an argument named `identifier`, "
+            + "Most of the keywords that operate on a visible component take an argument named ``identifier``, "
             + "which is used to locate the element. The first matching element is operated on, according to these rules:\n"
-            + "- If the `identifier` is a number, it is used as a zero-based index for the particular component type in "
+            + "- If the ``identifier`` is a number, it is used as a zero-based index for the particular component type in "
             + "the current context. Using indices is, however, fragile and is strongly discouraged.\n"
-            + "- If the `identifier` matches to internal name of a component (set using `setName` method in Java code), that component is chosen.\n"
-            + "- For components that have visible text (e.g. buttons), `identifier` is also matched against that.\n"
-            + "- Text field keywords also support accessing awt-text fields by prefixing the identifier with awt=.\n"
+            + "- If the ``identifier`` matches to internal name of a component (set using ``setName`` method in Java code), that component is chosen.\n"
+            + "- For components that have visible text (e.g. buttons), ``identifier`` is also matched against that.\n"
+            + "- Text field keywords also support accessing awt-text fields by prefixing the identifier with ``awt=``.\n"
             + "Keyword `List Components in Context` lists all components and their names and indices in a given context.\n"
 
             + "= Running keywords in separate threads =\n"
@@ -81,7 +86,10 @@ public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLi
             + "`Run Keyword In Separate Thread` that test execution can continue.\n"
 
             + "= Logging =\n"
-            + "Starting from version 1.8.0, the internal logging of Jemmy is available on Robot logs, when using DEBUG log level.";
+            + "The internal logging of Jemmy is available on Robot logs, when using ``DEBUG`` log level.\n"
+
+            + "= Regular expressions =\n"
+            + "More information about Java regular expressions and patterns can be found here: http://java.sun.com/docs/books/tutorial/essential/regex/ and here: http://java.sun.com/javase/7/docs/api/java/util/regex/Pattern.html";
     public SwingLibrary() {
         this(Collections.<String> emptyList());
     }
