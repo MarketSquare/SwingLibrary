@@ -13,21 +13,21 @@ Select Dialog
     [Setup]  openTestDialog
     selectDialog  ${dialogTitle}
     ${context}=  getCurrentContextSourceAsString
-    contains  ${context}  Dialog
+    shouldContain  ${context}  Dialog
     [Teardown]  closeTestDialog
 
 Select Dialog Using RegExp
     [Setup]  openTestDialog
     selectDialog  regexp=M.s{2}a.*
     ${context}=  getCurrentContextSourceAsString
-    contains  ${context}  Dialog
+    shouldContain  ${context}  Dialog
     [Teardown]  closeTestDialog
 
 Select Dialog Using RegExp Without Prefix Should Fail
     [Setup]  openTestDialog
     selectDialog  regexp=M.s{2}a.*
     ${context}=  getCurrentContextSourceAsString
-    contains  ${context}  Dialog
+    shouldContain  ${context}  Dialog
     select main window
     run keyword and expect error  Dialog with name or title 'M.s{2}a.*  selectDialog  M.s{2}a.*
     [Teardown]  closeTestDialog
