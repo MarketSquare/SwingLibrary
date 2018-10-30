@@ -1,7 +1,5 @@
 language: java
-
 sudo: false
-
 dist: trusty
 
 jdk:
@@ -9,11 +7,19 @@ jdk:
   - openjdk8
 
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
 install:
   - mvn clean package -Dmaven.test.skip=true
 
 script:
   - mvn clean verify
+
+deploy:
+  provider: releases
+  api_key:
+    secure: W/L4qmFwnwm2pxW872k9B528jKtfJ/OrnRBGMeeyBvN4fIFoqeBJ+xVrxnSuPl/H5WrM/VOx4UemdQrCzhjgYkWCBBOjy8CkFI0n8ubLkVSV6xA+BGNX5IlfbZ24AhtUa9QtWWouQpRzDP0HdK9sCLHiAWqVvtVdi5x8irNoOaExOOHIbwbMRkEV/XznSfcPxY2VTDI74nwF27ufxhHBZoIIPR+otpW5tMsdQKVoLGwB7UehXRWu8Nk8bY7nzgV9xAE/ph0bAa+XLzi4YB3iDxmiRLbNkFuFVfd58oWdNfAU8a2yr/nuYVOcMb3zEMPMS9D0d2D9MlD8dBGuw/0q7fftUyQeER6dI42T1cSVtniQ/BTcVO2TL080HWdjbBloZBcFhoQ7NBDsdzRcyYlKVMh8EkC1ynldh7Vx9cByg+qrgbKE941++2OgTL+0DcAu6/8+7Q2RZXuBbZuwwOGgNbylO5MsVQdsQZTXJ5aDDfwavaheNgaKVq5dH4vUdKfFpaAr9955JFjgRS4G6Cynt8z08XzxmQ6lbGOGBG2g+QQPeE52i3nRclc8JS4IdaO0zzBJU55DxJ4CXd2EmuHhUY6P7cM/XHpjK5XnFyfTgLaHc/hn5QMi5bDX0hySKUxD4rB1+fr0qeUU5I4i0p7yNeZDJTI+4UOboVJe+0O0J60=
+  file: ./target with spaces/with-dependencies/swinglibrary-*.jar
+  on:
+    repo: madworx/SwingLibrary
