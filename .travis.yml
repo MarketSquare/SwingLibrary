@@ -17,7 +17,8 @@ install:
   - mvn -Dmaven.test.skip=true clean package
 
 script:
-  - mvn verify -Dmaven.test.skip=true -Dgpg.skip=true install
+  - mvn clean verify 
+  - mvn -Dmaven.test.skip=true -Dgpg.skip=true install
 
 deploy:
   provider: releases
