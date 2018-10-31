@@ -9,9 +9,9 @@ applications.  Usage instructions are in the Wiki__.
 
 __ https://github.com/robotframework/SwingLibrary/wiki
 
-Downloads are available at `Releases 1.9.8`__ 
+Downloads are available at `Releases`__
 
-__ https://github.com/robotframework/SwingLibrary/releases/tag/1.9.8
+__ https://github.com/madworx/SwingLibrary/releases
 
 Keyword documentation for the latest version (1.9.8) are available `here`__
 
