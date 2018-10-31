@@ -10,16 +10,14 @@ jdk:
   - openjdk8
 
 before_script:
-  - sudo apt-get update && sudo apt-get install -y twm
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - sleep 5 ; twm &
 
 install:
   - mvn -Dmaven.test.skip=true clean package
 
 script:
-  - mvn -Dgpg.skip clean verify install
+  - mvn clean verify
 
 deploy:
   provider: releases
