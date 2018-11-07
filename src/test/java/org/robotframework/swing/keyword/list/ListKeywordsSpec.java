@@ -52,6 +52,10 @@ public class ListKeywordsSpec extends MockSupportSpecification<ListKeywords> {
         public void hasClickOnListItemKeyword() {
             specify(context, satisfies(new RobotKeywordContract("clickOnListItem")));
         }
+        
+        public void hasSelectFromListItemPopupMenuKeyword() {
+            specify(context, satisfies(new RobotKeywordContract("selectFromListItemPopupMenu")));
+        }
     }
 
     public class Operating {

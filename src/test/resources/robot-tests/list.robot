@@ -97,6 +97,12 @@ List Should Not Contain
     List Should Not Contain  ${listName}  missing element
     runKeywordAndExpectError  List ${listName} contains one  List Should Not Contain  ${listName}  one
 
+Select From List Item Popup Menu
+    selectFromListItemPopupMenu  ${listName}  three  Show name
+    dialogShouldBeOpen  Message
+    selectDialog  Message
+    pushButton  OK
+
 *** Keywords ***
 listSelectionShouldBe
     [Arguments]  ${listIndex}  ${expectedValue}
