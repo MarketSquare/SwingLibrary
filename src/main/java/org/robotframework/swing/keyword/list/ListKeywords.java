@@ -159,7 +159,7 @@ public class ListKeywords extends IdentifierSupport {
     }
     
     private JMenuItemOperator getPopupMenuItem(String identifier, String listItemIdentifier, String menuPath) {
-   	    ListOperator listOperator = createOperator(identifier);
+        ListOperator listOperator = createOperator(identifier);
         JPopupMenuOperator popupMenuOperator = listOperator.callPopupOnListItem(listItemIdentifier);
         return popupMenuOperator.showMenuItem(menuPath, new EqualsStringComparator());
     }   
