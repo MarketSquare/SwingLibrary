@@ -99,9 +99,10 @@ List Should Not Contain
 
 Select From List Item Popup Menu
     selectFromListItemPopupMenu  ${listName}  three  Show name
-    dialogShouldBeOpen  Message
     selectDialog  Message
-    pushButton  OK
+    ${labelContents}=  getLabelContent    OptionPane.label
+    shouldBeEqual  ${listName}  ${labelContents}
+    [Teardown]  Run Keywords  closeDialog  Message  AND  selectMainWindow
 
 *** Keywords ***
 listSelectionShouldBe
