@@ -75,6 +75,31 @@ public class WindowKeywords extends AbstractContextVerifier {
         setContext(operator);
     }
 
+    @RobotKeyword("Sets a window size.\n\n"
+            + "Examples:\n"
+            + "| `Set Window Size` | Help | 800 | 600 | # Re-sizes the Help window to 800 px width and 600 px height. |\n")
+    @ArgumentNames({ "identifier", "width", "height" })
+    public void setWindowSize(String identifier, String width, String height) {
+        FrameOperator operator = operatorFactory.createOperator(identifier);
+        setContext(operator);
+        operator.resize(Integer.parseInt(width), Integer.parseInt(height));
+    }
+
+    @RobotKeyword("Returns a list containing the width and the height of the window.\n\n"
+            + "Examples:\n"
+            + "| ${size} | `Get Window Size` | Help | # Gets the size of the Help window. |\n"
+            + "| `Should Be Equal As Integers` | ${size[0]} | 800 |\n"
+            + "| `Should Be Equal As Integers` | ${size[1]} | 600 |\n")
+    @ArgumentNames({ "identifier" })
+    public List<String> getWindowSize(String identifier) {
+        FrameOperator operator = operatorFactory.createOperator(identifier);
+        setContext(operator);
+        List<String> result = new ArrayList<String>();
+        result.add(String.valueOf(operator.getWidth()));
+        result.add(String.valueOf(operator.getHeight()));
+        return result;
+    }
+
     @RobotKeyword("Closes a window.\n\n"
             + "*N.B.* Regular expression can be used to close the window by prefixing the identifier with ``regexp=``.\n"
             + "See more details in `Regular expressions` section.\n\n"
