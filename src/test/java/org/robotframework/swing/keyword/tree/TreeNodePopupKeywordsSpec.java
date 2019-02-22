@@ -1,21 +1,15 @@
 package org.robotframework.swing.keyword.tree;
 
-import java.awt.Component;
-
-import javax.swing.JMenuItem;
-import javax.swing.JTree;
-
 import jdave.Block;
 import jdave.junit4.JDaveRunner;
-
 import org.jmock.Expectations;
 import org.junit.runner.RunWith;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.jdave.contract.FieldIsNotNullContract;
 import org.robotframework.jdave.contract.RobotKeywordContract;
 import org.robotframework.jdave.contract.RobotKeywordsContract;
 import org.robotframework.swing.comparator.EqualsStringComparator;
-import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
 
 
 @RunWith(JDaveRunner.class)
@@ -23,6 +17,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
     private String nodeIdentifier = "some|path";
     private String menuPath = "some|menu";
     private JPopupMenuOperator popupMenuOperator;
+    private JMenuItemOperator menuItemOperator;
 
     public class Any {
         public TreeNodePopupKeywords create() {
@@ -87,27 +82,25 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
     }
 
     public class CheckingConditions {
-        private JMenuItem menuItem;
+        private String menuPath = "some|path";
 
         public TreeNodePopupKeywords create() {
-            final ITreePopupMenuItemFinder menuFinder = createMockMenuFinder();
-            TreeNodePopupKeywords treeKeywords = populateWithMockOperatorFactory(new TreeNodePopupKeywords() {
-                ITreePopupMenuItemFinder createPopupMenuItemFinder(Component source) {
-                    return menuFinder;
-                }
-            });
-
+            TreeNodePopupKeywords treeKeywords = populateWithMockOperatorFactory(new TreeNodePopupKeywords());
+            popupMenuOperator = mock(JPopupMenuOperator.class);
+            menuItemOperator = mock(JMenuItemOperator.class);
             checking(new Expectations() {{
-                one(treeOperator).getSource(); will(returnValue(dummy(JTree.class)));
+                atLeast(1).of(popupMenuOperator).showMenuItem(menuPath); will(returnValue(menuItemOperator));
+                atLeast(1).of(popupMenuOperator).setComparator(with(any(EqualsStringComparator.class)));
+                one(treeOperator).createPopupOperator(nodeIdentifier);will(returnValue(popupMenuOperator));
             }});
 
             return treeKeywords;
         }
 
-
         public void treeNodePopupMenuItemShouldBeEnabledPassesIfMenuItemIsEnabled() throws Throwable {
             checking(new Expectations() {{
-                one(menuItem).isEnabled(); will(returnValue(true));
+                one(menuItemOperator).isEnabled(); will(returnValue(true));
+                one(popupMenuOperator).setVisible(false);
             }});
 
             specify(new Block() {
@@ -119,7 +112,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
 
         public void treeNodePopupMenuItemShouldBeEnabledFailsIfMenuItemIsDisabled() throws Throwable {
             checking(new Expectations() {{
-                one(menuItem).isEnabled(); will(returnValue(false));
+                one(menuItemOperator).isEnabled(); will(returnValue(false));
             }});
 
             specify(new Block() {
@@ -131,7 +124,8 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
 
         public void treeNodePopupMenuItemShouldBeDisabledPassesIfMenuItemIsDisabled() throws Throwable {
             checking(new Expectations() {{
-                one(menuItem).isEnabled(); will(returnValue(false));
+                one(menuItemOperator).isEnabled(); will(returnValue(false));
+                one(popupMenuOperator).setVisible(false);
             }});
 
             specify(new Block() {
@@ -143,7 +137,7 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
 
         public void treeNodePopupMenuItemShouldBeDisabledFailsIfMenuItemIsEnabled() throws Throwable {
             checking(new Expectations() {{
-                one(menuItem).isEnabled(); will(returnValue(true));
+                one(menuItemOperator).isEnabled(); will(returnValue(true));
             }});
 
             specify(new Block() {
@@ -151,16 +145,6 @@ public class TreeNodePopupKeywordsSpec extends TreeSpecification<TreeNodePopupKe
                     context.treeNodePopupMenuItemShouldBeDisabled(treeIdentifier, nodeIdentifier, menuPath);
                 }
             }, must.raiseExactly(AssertionError.class, "Menu item '" + menuPath + "' was enabled"));
-        }
-
-        private ITreePopupMenuItemFinder createMockMenuFinder() {
-            final ITreePopupMenuItemFinder popupMenuItemFinder = mock(ITreePopupMenuItemFinder.class);
-            menuItem = mock(JMenuItem.class);
-            checking(new Expectations() {{
-                one(popupMenuItemFinder).findMenu(nodeIdentifier, menuPath);
-                will(returnValue(menuItem));
-            }});
-            return popupMenuItemFinder;
         }
     }
 }
