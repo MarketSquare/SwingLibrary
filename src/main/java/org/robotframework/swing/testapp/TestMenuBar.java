@@ -58,6 +58,7 @@ public class TestMenuBar extends JMenuBar {
             });
 
             add(new JCheckBoxMenuItem("Test menu checkbox"));
+            add(new TestMenuItem("Menu Item").setDisabled());
         }});
         add(new TestMenu("Test Menu2") {{
             add(new TestMenuItem("placeholder item 1") {});
