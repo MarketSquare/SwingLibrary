@@ -19,7 +19,6 @@ package org.robotframework.swing.tab;
 import javax.swing.JTabbedPane;
 
 import org.netbeans.jemmy.operators.ContainerOperator;
-import org.robotframework.swing.chooser.ByNameComponentChooser;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.context.ContextVerifier;
 import org.robotframework.swing.context.DefaultContextVerifier;
@@ -44,7 +43,7 @@ public class TabPaneOperatorFactory extends IdentifierParsingOperatorFactory<Tab
 
     @Override
     public TabbedPaneOperator createOperatorByName(String name) {
-        return new TabbedPaneOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+        return TabbedPaneOperator.newOperatorFor(name);
     }
 
     public TabbedPaneOperator createOperatorFromContext() {

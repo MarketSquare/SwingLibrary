@@ -59,6 +59,15 @@ Tab Keywords Should Fail Context Is Not Correct
     runKeywordAndExpectError  *To use this keyword you must first select a correct context*  selectTabPane  0
     [Teardown]  selectMainWindow
 
+Select Tab With Regexp
+    selectTabPane  regexp=.*TabbedPane1
+    tabPaneShouldBeSelected  ${firstTabPane}
+    selectTabAsContext  regexp=.*ab3
+    tabShouldBeSelected  ${firstTabPane}  3
+    selectTab  regexp=t.?b2
+    ${selectedTabLabel}=  getSelectedTabLabel
+    shouldBeEqual  tab2  ${selectedTabLabel}
+
 *** Keywords ***
 tabShouldBeSelected_old
     [Arguments]  ${expectedTab}
