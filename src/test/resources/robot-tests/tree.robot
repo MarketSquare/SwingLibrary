@@ -32,7 +32,7 @@ Expand Node By Name
     collapseTreeNode  ${treeName}  ${anotherNodePath}
     collapseTreeNode  ${treeName}  ${rootNode}
 
-Expand Node By Name with jemmy timeout
+Expand Node By Name With Jemmy Timeout
     expandTreeNode  ${treeName}  ${rootNode}
     expandTreeNode  ${treeName}  ${anotherNodePath}
     treeNodeShouldBeExpanded  ${treeName}  ${anotherNodePath}  4
@@ -48,7 +48,7 @@ Collapse Node By Index
     collapseTreeNode  ${treeName}  ${nodeIndex}
     collapseTreeNode  ${treeName}  0
 
-Collapse Node By Index with jemmy timeout
+Collapse Node By Index With Jemmy Timeout
     expandTreeNode  ${treeName}  0
     expandTreeNode  ${treeName}  ${nodeIndex}
     treeNodeShouldBeExpanded  ${treeName}  ${nodeIndex}  4
@@ -74,7 +74,7 @@ Tree Node Should Be Expanded
     treeNodeShouldBeExpanded  ${treeName}  0
     treeNodeShouldBeExpanded  ${treeName}  ${rootNode}
 
-Tree Node Should Be Expanded with jemmy timeout
+Tree Node Should Be Expanded With Jemmy Timeout
     expandTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldBeExpanded  ${treeName}  0  3
     treeNodeShouldBeExpanded  ${treeName}  ${rootNode}  3
@@ -91,7 +91,7 @@ Select Tree Node By Name
     treeNodeShouldBeSelected  ${treeName}  ${rootNode}
     [Teardown]  unselectTreeNode  ${treeName}  ${rootNode}
 
-Select Tree Node By Name with jemmy timeout
+Select Tree Node By Name With Jemmy Timeout
     clearTreeSelection  ${treeName}
     selectTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldBeSelected  ${treeName}  ${rootNode}  4
@@ -114,13 +114,13 @@ Unselect Tree Node By Index
     unselectTreeNode  ${treeName}  0
     treeNodeShouldNotBeSelected  ${treeName}  0
 
-Unselect Tree Node By name
+Unselect Tree Node By Name
     clearTreeSelection  ${treeName}
     selectTreeNode  ${treeName}  ${rootNode}
     unselectTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldNotBeSelected  ${treeName}  ${rootNode}
 
-Unselect Tree Node By name with jemmy timeout
+Unselect Tree Node By Name With Jemmy Timeout
     clearTreeSelection  ${treeName}
     selectTreeNode  ${treeName}  ${rootNode}
     unselectTreeNode  ${treeName}  ${rootNode}
@@ -153,7 +153,7 @@ Select From Tree Node Popup Menu In Separate Thread
 
 Tree Node Should Be Visible
     expandAllTreeNodes  ${treeName}
-    treeNodeShouldBeVisible  ${treeName}  ${rootNode}  6000 ms
+    treeNodeShouldBeVisible  ${treeName}  ${rootNode}
     treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}
     treeNodeShouldBeVisible  ${treeName}  ${leafNodePath}
     collapseTreeNode  ${treeName}  ${rootNode}
@@ -167,6 +167,15 @@ Tree Node Should Not Be Visible
     expandAllTreeNodes  ${treeName}
     runKeywordAndExpectError  Tree node '${anotherNodePath}' is visible.  treeNodeShouldNotBeVisible  ${treeName}  ${anotherNodePath}
     runKeywordAndExpectError  Tree node '${leafNodePath}' is visible.  treeNodeShouldNotBeVisible  ${treeName}  ${leafNodePath}
+
+Tree Node Should Be Visible With Jemmy Timeout
+    expandAllTreeNodes  ${treeName}
+    treeNodeShouldBeVisible  ${treeName}  ${rootNode}  6000 ms
+    treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}
+    treeNodeShouldBeVisible  ${treeName}  ${leafNodePath}
+    collapseTreeNode  ${treeName}  ${rootNode}
+    runKeywordAndExpectError  Tree node '${anotherNodePath}' is not visible.  treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}
+    runKeywordAndExpectError  Tree node '${leafNodePath}' is not visible.  treeNodeShouldBeVisible  ${treeName}  ${leafNodePath}
 
 Tree Node Should Be Leaf AND Tree Node Should Not Be Leaf
     expandTreeNode  ${treeName}  ${rootNode}

@@ -34,12 +34,12 @@ import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreePathAction;
 import org.robotframework.swing.tree.TreeSupport;
 import org.robotframework.swing.util.ComponentUtils;
-import  org.robotframework.swing.keyword.timeout.TimeoutKeywords;
+import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
 @RobotKeywords
 public class TreeNodeKeywords extends TreeSupport {
     public TimeoutKeywords timeout = new TimeoutKeywords();
-    long old_time= 0;
+    long old_time = 0;
 
     @RobotKeyword("Clears selections from a tree.\n\n"
             + "Example:\n"
@@ -149,53 +149,51 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Fails if the tree node is collapsed.\n"
-            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Optionally, you can set jemmy timeout, default value being None. It will automatically select the right timeout.\n"
             + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Expanded` | myTree | Root|Folder |\n"
             + "| `Tree Node Should Be Expanded` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
+    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout="})
     public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier, String jemmy_timeout) {
-        if(jemmy_timeout != null) {
+        if (jemmy_timeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmy_timeout);
         }
         try {
             boolean isExpanded = treeOperator(identifier).isExpanded(nodeIdentifier);
             Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not expanded.", isExpanded);
-        }
-        finally {
+        } finally {
             if (jemmy_timeout != null) timeout.setJemmyTimeout("", Long.toString(old_time));
         }
     }
 
     @RobotKeywordOverload
     public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier) {
-        treeNodeShouldBeExpanded(identifier, nodeIdentifier, "5");
+        treeNodeShouldBeExpanded(identifier, nodeIdentifier, "None");
     }
 
     @RobotKeyword("Fails if the tree node is expanded.\n"
-            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Optionally, you can set jemmy timeout, default value being None. It will automatically select the right timeout.\n"
             + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Collapsed` | myTree | Root|Folder |\n"
             + "| `Tree Node Should Be Collapsed` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
+    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout="})
     public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier, String jemmy_timeout) {
-        if(jemmy_timeout != null) {
+        if (jemmy_timeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmy_timeout);
         }
         try {
             boolean isCollapsed = treeOperator(identifier).isCollapsed(nodeIdentifier);
             Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not collapsed.", isCollapsed);
-        }
-        finally {
-            if(jemmy_timeout != null) timeout.setJemmyTimeout("",Long.toString(old_time));
+        } finally {
+            if (jemmy_timeout != null) timeout.setJemmyTimeout("", Long.toString(old_time));
         }
     }
 
     @RobotKeywordOverload
     public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier) {
-        treeNodeShouldBeCollapsed(identifier, nodeIdentifier, "5");
+        treeNodeShouldBeCollapsed(identifier, nodeIdentifier, "None");
     }
 
     @RobotKeyword("Sets a tree node as unselected.\n\n"
@@ -207,53 +205,51 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Fails if the node has child nodes.\n"
-            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Optionally, you can set jemmy timeout, default value being None. It will automatically select the right timeout.\n"
             + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Leaf` | myTree | Root|Folder |\n"
             + "| `Tree Node Should Be Leaf` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
-    public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier , String jemmy_timeout) {
-        if(jemmy_timeout != null) {
+    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout="})
+    public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier, String jemmy_timeout) {
+        if (jemmy_timeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmy_timeout);
         }
         try {
             boolean isLeaf = treeOperator(identifier).isLeaf(nodeIdentifier);
             Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", isLeaf);
-        }
-        finally {
-            if(jemmy_timeout != null) timeout.setJemmyTimeout("",Long.toString(old_time));
+        } finally {
+            if (jemmy_timeout != null) timeout.setJemmyTimeout("", Long.toString(old_time));
         }
     }
 
     @RobotKeywordOverload
     public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier) {
-        treeNodeShouldBeLeaf(identifier, nodeIdentifier, "5");
+        treeNodeShouldBeLeaf(identifier, nodeIdentifier, "None");
     }
 
     @RobotKeyword("Fails if the node doesn't have child nodes.\n"
-            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Optionally, you can set jemmy timeout, default value being None. It will automatically select the right timeout.\n"
             + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Not Be Leaf` | myTree | Root|Folder |\n"
             + "| `Tree Node Should Not Be Leaf` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_time=5"})
+    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_time="})
     public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier, String jemmy_timeout) {
-        if(jemmy_timeout != null) {
+        if (jemmy_timeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmy_timeout);
         }
         try {
             boolean isLeaf = treeOperator(identifier).isLeaf(nodeIdentifier);
             Assert.assertFalse("Tree node '" + nodeIdentifier + "' is leaf.", isLeaf);
-        }
-        finally {
-            if(jemmy_timeout != null) timeout.setJemmyTimeout("",Long.toString(old_time));
+        } finally {
+            if (jemmy_timeout != null) timeout.setJemmyTimeout("", Long.toString(old_time));
         }
     }
 
     @RobotKeywordOverload
     public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier) {
-        treeNodeShouldNotBeLeaf(identifier, nodeIdentifier, "5");
+        treeNodeShouldNotBeLeaf(identifier, nodeIdentifier, "None");
     }
 
     @RobotKeyword("Returns the count of all visible nodes.\n\n"
