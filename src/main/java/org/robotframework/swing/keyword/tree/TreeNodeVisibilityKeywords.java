@@ -32,11 +32,11 @@ public class TreeNodeVisibilityKeywords extends TreeSupport {
     long old_time= 0;
 
     @RobotKeyword("Fails if the tree node is not visible.\n"
-        + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
-        + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
-        + "Example:\n"
-        + "| `Tree Node Should Be Visible` | myTree | Root|Folder |\n"
-        + "| `Tree Node Should Be Visible` | myTree | Root|Folder | 4 |\n")
+            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
+            + "Example:\n"
+            + "| `Tree Node Should Be Visible` | myTree | Root|Folder |\n"
+            + "| `Tree Node Should Be Visible` | myTree | Root|Folder | 4 |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
     public void treeNodeShouldBeVisible(String identifier, String nodePath, String jemmy_timeout) {
         if(jemmy_timeout != null) {
@@ -56,11 +56,11 @@ public class TreeNodeVisibilityKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Fails if the tree node is visible.\n"
-        + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
-        + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
-        + "Example:\n"
-        + "| `Tree Node Should Not Be Visible` | myTree | Root|Folder |\n"
-        + "| `Tree Node Should Not Be Visible` | myTree | Root|Folder | 4 |\n")
+            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
+            + "Example:\n"
+            + "| `Tree Node Should Not Be Visible` | myTree | Root|Folder |\n"
+            + "| `Tree Node Should Not Be Visible` | myTree | Root|Folder | 4 |\n")
 
     @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
     public void treeNodeShouldNotBeVisible(String identifier, String nodePath, String jemmy_timeout) {

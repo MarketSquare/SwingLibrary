@@ -31,11 +31,11 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
     long old_time= 0;
 
     @RobotKeyword("Fails if the tree node is not selected.\n"
-        + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
-        + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
-        + "Example:\n"
-        + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n"
-        + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n")
+            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
+            + "Example:\n"
+            + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n"
+            + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
     public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier, String jemmy_timeout) {
         if(jemmy_timeout != null) {
@@ -56,11 +56,11 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Fails if the tree node is selected.\n"
-        + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
-        + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
-        + "Example:\n"
-        + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n"
-        + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n")
+            + "Optionally, you can set jemmy timeout, default value being 5. It will automatically select the right timeout.\n"
+            + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
+            + "Example:\n"
+            + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n"
+            + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
     public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier, String jemmy_timeout) {
         if(jemmy_timeout != null) {
