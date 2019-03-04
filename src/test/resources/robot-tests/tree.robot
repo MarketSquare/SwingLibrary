@@ -32,12 +32,28 @@ Expand Node By Name
     collapseTreeNode  ${treeName}  ${anotherNodePath}
     collapseTreeNode  ${treeName}  ${rootNode}
 
+Expand Node By Name with jemmy timeout
+    expandTreeNode  ${treeName}  ${rootNode}
+    expandTreeNode  ${treeName}  ${anotherNodePath}
+    treeNodeShouldBeExpanded  ${treeName}  ${anotherNodePath}  4
+    collapseTreeNode  ${treeName}  ${anotherNodePath}
+    collapseTreeNode  ${treeName}  ${rootNode}
+
 Collapse Node By Index
     expandTreeNode  ${treeName}  0
     expandTreeNode  ${treeName}  ${nodeIndex}
     treeNodeShouldBeExpanded  ${treeName}  ${nodeIndex}
     collapseTreeNode  ${treeName}  ${nodeIndex}
     treeNodeShouldBeCollapsed  ${treeName}  ${nodeIndex}
+    collapseTreeNode  ${treeName}  ${nodeIndex}
+    collapseTreeNode  ${treeName}  0
+
+Collapse Node By Index with jemmy timeout
+    expandTreeNode  ${treeName}  0
+    expandTreeNode  ${treeName}  ${nodeIndex}
+    treeNodeShouldBeExpanded  ${treeName}  ${nodeIndex}  4
+    collapseTreeNode  ${treeName}  ${nodeIndex}
+    treeNodeShouldBeCollapsed  ${treeName}  ${nodeIndex}  4
     collapseTreeNode  ${treeName}  ${nodeIndex}
     collapseTreeNode  ${treeName}  0
 
@@ -58,6 +74,11 @@ Tree Node Should Be Expanded
     treeNodeShouldBeExpanded  ${treeName}  0
     treeNodeShouldBeExpanded  ${treeName}  ${rootNode}
 
+Tree Node Should Be Expanded with jemmy timeout
+    expandTreeNode  ${treeName}  ${rootNode}
+    treeNodeShouldBeExpanded  ${treeName}  0  3
+    treeNodeShouldBeExpanded  ${treeName}  ${rootNode}  3
+
 Select Tree Node By Index
     clearTreeSelection  ${treeName}
     selectTreeNode  ${treeName}  0
@@ -68,6 +89,12 @@ Select Tree Node By Name
     clearTreeSelection  ${treeName}
     selectTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldBeSelected  ${treeName}  ${rootNode}
+    [Teardown]  unselectTreeNode  ${treeName}  ${rootNode}
+
+Select Tree Node By Name with jemmy timeout
+    clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${rootNode}
+    treeNodeShouldBeSelected  ${treeName}  ${rootNode}  4
     [Teardown]  unselectTreeNode  ${treeName}  ${rootNode}
 
 Select Tree Node Should Work With Nodes Other Than javax.swing.tree.TreeNode
@@ -92,6 +119,12 @@ Unselect Tree Node By name
     selectTreeNode  ${treeName}  ${rootNode}
     unselectTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldNotBeSelected  ${treeName}  ${rootNode}
+
+Unselect Tree Node By name with jemmy timeout
+    clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${rootNode}
+    unselectTreeNode  ${treeName}  ${rootNode}
+    treeNodeShouldNotBeSelected  ${treeName}  ${rootNode}  3
 
 Tree Node Should Be Selected AND Tree Node Should Not Be Selected
     clearTreeSelection  ${treeName}
@@ -120,7 +153,7 @@ Select From Tree Node Popup Menu In Separate Thread
 
 Tree Node Should Be Visible
     expandAllTreeNodes  ${treeName}
-    treeNodeShouldBeVisible  ${treeName}  ${rootNode}
+    treeNodeShouldBeVisible  ${treeName}  ${rootNode}  6000 ms
     treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}
     treeNodeShouldBeVisible  ${treeName}  ${leafNodePath}
     collapseTreeNode  ${treeName}  ${rootNode}
