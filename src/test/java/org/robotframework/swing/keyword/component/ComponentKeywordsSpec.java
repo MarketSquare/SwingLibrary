@@ -78,18 +78,26 @@ public class ComponentKeywordsSpec extends MockSupportSpecification<ComponentKey
 
         public void clicksOnComponent() {
             checking(new Expectations() {{
-                one(operator).clickMouse(1);
+                one(operator).clickOnComponent("1", "BUTTON1_MASK", new String[0]);
             }});
 
-            context.clickOnComponent(componentIdentifier);
+            context.clickOnComponent(componentIdentifier, new String[0]);
         }
 
         public void doubleclicksOnComponent() {
             checking(new Expectations() {{
-                one(operator).clickMouse(2);
+                one(operator).clickOnComponent("2", "BUTTON1_MASK", new String[0]);
             }});
 
-            context.clickOnComponent(componentIdentifier, 2);
+            context.clickOnComponent(componentIdentifier, new String[] {"2"});
+        }
+
+        public void clicksOnComponentWithKeyAliases() {
+            checking(new Expectations() {{
+                one(operator).clickOnComponent("2", "BUTTON1_MASK", new String[] {"SHIFT_MASK"});
+            }});
+
+            context.clickOnComponent(componentIdentifier, new String[] {"2", "BUTTON1_MASK", "SHIFT"});
         }
 
 

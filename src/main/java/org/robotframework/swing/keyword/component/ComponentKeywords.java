@@ -28,6 +28,7 @@ import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.component.ComponentOperator;
 import org.robotframework.swing.component.ComponentOperatorFactory;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.keyword.utils.OptionalArgsForTableCellAndComponentClicking;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 import org.robotframework.swing.util.ComponentUtils;
@@ -62,18 +63,21 @@ public class ComponentKeywords {
                 componentExistenceResolver.satisfiesCondition(identifier));
     }
 
-    @RobotKeyword("Clicks on a component.\n"
-            + "The number of clicks can be given as second argument.\n\n"
-            + "Examples:\n" + "| `Click On Component` | myComponent |   | |\n"
-            + "| `Click On Component` | myComponent | 2 | # double click |\n")
-    @ArgumentNames({ "identifier", "times=1" })
-    public void clickOnComponent(String identifier, int times) {
-        operator(identifier).clickMouse(times);
-    }
-
-    @RobotKeywordOverload
-    public void clickOnComponent(String identifier) {
-        clickOnComponent(identifier, 1);
+    @RobotKeyword("Clicks on a component, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
+            + "The codes used for mouse button and key modifiers are the field names from ``java.awt.event.InputEvent``. "
+            + "For example: ``BUTTON1_MASK``, ``CTRL_MASK``, ``ALT_MASK``, ``ALT_GRAPH_MASK``, ``SHIFT_MASK``, and ``META_MASK``.\n\n"
+            + "*Note:* Some keys have more convinient case insensitive aliases that can be used: ``LEFT BUTTON``, ``RIGHT BUTTON``, ``SHIFT``, "
+            + "``CTRL``, ``ALT``, ``META``\n\n"
+            + "Examples:\n"
+            + "| `Click On Component`  | myComponent | # Double clicks with mouse button 2 on the component ... |\n"
+            + "| ... | 2 | RIGHT BUTTON | ALT | # ... while holding down the ALT key |\n")
+    @ArgumentNames({ "identifier", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings" })
+    public void clickOnComponent(String identifier, String[] optionalArgs) {
+        OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(optionalArgs);
+        operator(identifier).clickOnComponent(
+                optArgs.clickCount(),
+                optArgs.button(),
+                optArgs.keyModifiers());
     }
 
     @RobotKeyword("Right clicks on a component.\n\n" + "Example:\n"
