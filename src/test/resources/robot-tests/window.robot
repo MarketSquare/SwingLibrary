@@ -41,6 +41,14 @@ List Windows
     Should be equal   @{windows}[0]    Test App
     [teardown]   closeWindow  Test Window
 
+Resize Window
+    ${initial_size}  Get Window Size  Test App
+    Set Window Size  Test App  1280  720
+    ${resized_size}  Get Window Size  Test App
+    Should Be Equal As Integers  ${resized_size[0]}  1280
+    Should Be Equal As Integers  ${resized_size[1]}  720
+    [Teardown]  Set Window Size  Test App  ${initial_size[0]}  ${initial_size[1]}
+
 Close Window
     selectFromMainMenu  Test Menu|Show Test Window
     Select Window       Test Window

@@ -90,6 +90,29 @@ public class WindowKeywordsSpec extends
             specify(Context.getContext(), must.equal(frameOperator));
         }
 
+        public void setSize() {
+            checking(new Expectations() {
+                {
+                    one(frameOperator).getFocus();
+                    one(frameOperator).resize(800,600);
+                }
+            });
+            context.setWindowSize(windowIdentifier, "800", "600");
+        }
+
+        public void getSize() {
+            checking(new Expectations() {
+                {
+                    one(frameOperator).getFocus();
+                    one(frameOperator).getWidth();will(returnValue(800));
+                    one(frameOperator).getHeight();will(returnValue(600));
+                }
+            });
+            java.util.List<String> size = context.getWindowSize(windowIdentifier);
+            specify(size.get(0), "800");
+            specify(size.get(1), "600");
+        }
+
         public void closesWindow() {
             checking(new Expectations() {
                 {
