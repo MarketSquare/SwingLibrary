@@ -187,7 +187,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeExpanded(treeIdentifier, nodePath);
+                    context.treeNodeShouldBeExpanded(treeIdentifier, nodePath, "6");
                 }
             }, must.not().raise(Exception.class));
         }
@@ -226,7 +226,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeCollapsed(treeIdentifier, nodePath);
+                    context.treeNodeShouldBeCollapsed(treeIdentifier, nodePath, "6");
                 }
             }, must.raiseExactly(AssertionError.class, "Tree node '" + nodePath + "' is not collapsed."));
         }
@@ -252,7 +252,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeLeaf(treeIdentifier, nodePath);
+                    context.treeNodeShouldBeLeaf(treeIdentifier, nodePath, "1");
                 }
             }, must.raiseExactly(AssertionError.class, "Tree node '" + nodePath + "' is not leaf."));
         }
@@ -278,7 +278,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldNotBeLeaf(treeIdentifier, nodePath);
+                    context.treeNodeShouldNotBeLeaf(treeIdentifier, nodePath, "4");
                 }
             }, must.raiseExactly(AssertionError.class, "Tree node '" + nodePath + "' is leaf."));
         }
