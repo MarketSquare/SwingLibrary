@@ -105,11 +105,11 @@ public class TreeNodeKeywords extends TreeSupport {
             + "| `Select Tree Node` | myTree | Root|Folder | Root|Folder2 | Root|Folder3 |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "*additionalNodeIdentifiers"})
     public void selectTreeNode(String identifier, String nodeIdentifier, String[] additionalNodeIdentifiers) {
-        TreeOperator treeOperator = treeOperator(identifier);
-        treeOperator.addSelection(nodeIdentifier);
-        for (String node : additionalNodeIdentifiers) {
-            treeOperator.addSelection(node);
-        }
+            TreeOperator treeOperator = treeOperator(identifier);
+            treeOperator.addSelection(nodeIdentifier);
+            for (String node : additionalNodeIdentifiers) {
+                treeOperator.addSelection(node);
+            }
     }
 
     @RobotKeyword("Gets item names from the node context popup menu.\n"
