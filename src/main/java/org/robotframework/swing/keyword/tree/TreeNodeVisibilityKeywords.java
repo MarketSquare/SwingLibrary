@@ -33,19 +33,19 @@ public class TreeNodeVisibilityKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if the tree node is not visible.\n"
             + "Optionally, you can set jemmy timeout, default value being None. It will automatically select the right timeout.\n"
-            + "See `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
+            + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Visible` | myTree | Root|Folder |\n"
             + "| `Tree Node Should Be Visible` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout="})
-    public void treeNodeShouldBeVisible(String identifier, String nodePath, String jemmyTimeout) {
-        if (jemmyTimeout != "None") {
-            old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", jemmyTimeout);
+    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout="})
+    public void treeNodeShouldBeVisible(String identifier, String nodePath, String jemmy_timeout) {
+        if (jemmy_timeout != "None") {
+            old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", jemmy_timeout);
         }
         try {
             Assert.assertTrue("Tree node '" + nodePath + "' is not visible.", isVisible(identifier, nodePath));
         } finally {
-            if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", Long.toString(old_time));
+            if (jemmy_timeout != null) timeout.setJemmyTimeout("", Long.toString(old_time));
         }
     }
 
@@ -56,20 +56,20 @@ public class TreeNodeVisibilityKeywords extends TreeSupport {
 
     @RobotKeyword("Fails if the tree node is visible.\n"
             + "Optionally, you can set jemmy timeout, default value being None. It will automatically select the right timeout.\n"
-            + "See `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
+            + "Take a look at `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Not Be Visible` | myTree | Root|Folder |\n"
             + "| `Tree Node Should Not Be Visible` | myTree | Root|Folder | 4 |\n")
 
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout=5"})
-    public void treeNodeShouldNotBeVisible(String identifier, String nodePath, String jemmyTimeout) {
-        if (jemmyTimeout != "None") {
-            old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", jemmyTimeout);
+    @ArgumentNames({"identifier", "nodeIdentifier", "jemmy_timeout=5"})
+    public void treeNodeShouldNotBeVisible(String identifier, String nodePath, String jemmy_timeout) {
+        if (jemmy_timeout != "None") {
+            old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", jemmy_timeout);
         }
         try {
             Assert.assertFalse("Tree node '" + nodePath + "' is visible.", isVisible(identifier, nodePath));
         } finally {
-            if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", Long.toString(old_time));
+            if (jemmy_timeout != null) timeout.setJemmyTimeout("", Long.toString(old_time));
         }
     }
 
