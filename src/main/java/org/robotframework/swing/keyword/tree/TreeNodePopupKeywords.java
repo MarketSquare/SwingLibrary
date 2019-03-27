@@ -16,23 +16,13 @@
 
 package org.robotframework.swing.keyword.tree;
 
-import java.awt.Component;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JMenuItem;
-
 import org.junit.Assert;
-
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.comparator.EqualsStringComparator;
-import org.robotframework.swing.tree.ITreePopupMenuItemFinder;
-import org.robotframework.swing.tree.TreePopupMenuItemFinder;
 import org.robotframework.swing.tree.TreeSupport;
-
-import abbot.tester.ComponentTester;
 import org.robotframework.swing.util.SwingWaiter;
 
 @RobotKeywords
@@ -77,8 +67,11 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "| `Tree Node Popup Menu Item Should Be Enabled` | 0 | 1 | New Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeEnabled(String identifier, String nodeIdentifier, String menuPath) {
-        boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);
+        JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
+        popupOperator.setComparator(new EqualsStringComparator());
+        boolean menuItemIsEnabled = popupOperator.showMenuItem(menuPath).isEnabled();
         Assert.assertTrue("Menu item '" + menuPath + "' was disabled", menuItemIsEnabled);
+        popupOperator.setVisible(false);
     }
 
     @RobotKeyword("Fails if given popup menu item is enabled.\n\n"
@@ -87,29 +80,10 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "| `Tree Node Popup Menu Item Should Be Disabled` | 0      | 1 | New Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeDisabled(String identifier, String nodeIdentifier, String menuPath) {
-        boolean menuItemIsEnabled = menuItemIsEnabled(identifier, nodeIdentifier, menuPath);
+        JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
+        popupOperator.setComparator(new EqualsStringComparator());
+        boolean menuItemIsEnabled = popupOperator.showMenuItem(menuPath).isEnabled();
         Assert.assertFalse("Menu item '" + menuPath + "' was enabled", menuItemIsEnabled);
+        popupOperator.setVisible(false);
     }
-
-    private boolean menuItemIsEnabled(String identifier, String nodeIdentifier, String menuPath) {
-        try {
-            return createPopupMenuItem(identifier, nodeIdentifier, menuPath).isEnabled();
-        } finally {
-            closePopup();
-        }
-    }
-
-    private void closePopup() {
-        new ComponentTester().actionKeyStroke(KeyEvent.VK_ESCAPE);
-    }
-
-    private JMenuItem createPopupMenuItem(String identifier, String nodeIdentifier, String menuPath) {
-        Component source = treeOperator(identifier).getSource();
-        return createPopupMenuItemFinder(source).findMenu(nodeIdentifier, menuPath);
-    }
-
-    ITreePopupMenuItemFinder createPopupMenuItemFinder(Component source) {
-        return new TreePopupMenuItemFinder(source);
-    }
-
 }

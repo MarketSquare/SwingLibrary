@@ -315,6 +315,13 @@ Tree Keywords Fail If Context Is Not Correct
     keywordShouldFailBecauseContextIsIllegal  getTreeNodeLabel  ${treeName}  0
     [Teardown]  selectMainWindow
 
+Tree Item With Same Name As Menu Item Enablement Status
+    [Tags]  display-required
+    menuItemShouldBeDisabled  Test Menu|Menu Item
+    selectMainWindow
+    treeNodePopupMenuItemShouldBeEnabled  ${treeName}  ${rootNode}  Menu Item
+    popupMenuShouldNotBeDisplayed
+
 *** Keywords ***
 keywordShouldFailBecauseContextIsIllegal
     [Arguments]  ${keyword}  @{arguments}

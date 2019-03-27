@@ -200,6 +200,7 @@ public class TestTree extends JTree implements ActionListener {
                 }});
                 add(new JMenuItem("Enabled menuitem"));
             }});
+            add(new JMenuItem("Menu Item"));
 
             setOpaque(true);
             setLightWeightPopupEnabled(true);
