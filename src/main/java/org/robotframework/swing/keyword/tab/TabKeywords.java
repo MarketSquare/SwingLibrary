@@ -20,10 +20,12 @@ import java.awt.Component;
 import java.awt.Container;
 
 import org.netbeans.jemmy.operators.JTabbedPaneOperator;
+import org.netbeans.jemmy.util.RegExComparator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
+import org.robotframework.swing.common.Identifier;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.tab.TabOperator;
@@ -36,9 +38,12 @@ public class TabKeywords extends IdentifierSupport {
 
     @RobotKeyword("Selects a tab.\n"
         + "The optional tab pane identifier can be provided, otherwise the first matching tab is selected.\n\n"
+        + "*N.B.* Regular expression can be used to select the tab pane or/and page by prefixing the identifiers with ``regexp=``.\n"
+        + "See more details in `Regular expressions` section.\n\n"
         + "Examples:\n"
         + "| `Select Tab` | Customer Information |\n"
-        + "| `Select Tab` | Customer Information | Customers |\n")
+        + "| `Select Tab` | Customer Information | Customers |\n"
+        + "| `Select Tab` | regexp=^A.* | regexp=^B.* | Selects a tab page starting with 'A' from a tab pane starting with 'B' | \n")
     @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})
     public void selectTab(String tabIdentifier, String tabPaneIdentifier) {
         selectTheTab(tabIdentifier, tabPaneIdentifier);
@@ -60,6 +65,10 @@ public class TabKeywords extends IdentifierSupport {
     }
 
     private Component selectTabPage(String tabIdentifier) {
+        Identifier id = new Identifier(tabIdentifier);
+        if (id.isRegExp()) {
+            return createTabPane().selectPage(id.asString(), new RegExComparator());
+        }
         return createTabPane().selectPage(indexOfTab(tabIdentifier));
     }
 
@@ -71,9 +80,13 @@ public class TabKeywords extends IdentifierSupport {
 
     @RobotKeyword("Selects a tab and sets it as the context.\n"
         + "The optional tab pane identifier can be provided, otherwise the first matching tab is selected.\n\n"
+        + "*N.B.* Regular expression can be used to select the tab pane or/and page by prefixing the identifiers with ``regexp=``.\n"
+        + "See more details in `Regular expressions` section.\n\n"
         + "Examples:\n"
-        + "| `Select Tab` | Customer Information |\n"
-        + "| `Select Tab` | Customer Information | Customers |\n")
+        + "| `Select Tab As Context` | Customer Information |\n"
+        + "| `Select Tab As Context` | Customer Information | Customers |\n"
+        + "| `Select Tab As Context` | regexp=^A.* | regexp=^B.* | Selects a tab page starting with 'A' from a tab pane starting with 'B' | \n")
+
     @ArgumentNames({"tabIdentifier", "tabPaneIdentifier="})
     public void selectTabAsContext(String tabIdentifier, String tabPaneIdentifier) {
         try {
@@ -107,9 +120,12 @@ public class TabKeywords extends IdentifierSupport {
 
     @RobotKeyword("Sets a tab pane as the current context.\n"
         + "Useful if you have several tab panes in the window.\n\n"
-        + "Example:\n"
+        + "*N.B.* Regular expression can be used to select the tab pane by prefixing the identifiers with ``regexp=``.\n"
+        + "See more details in `Regular expressions` section.\n\n"
+        + "Examples:\n"
         + "| `Select Tab Pane` | Other Tab Pane |\n"
-        + "| `Select Tab` | Customer Information |\n")
+        + "| `Select Tab Pane` | Customer Information |\n"
+        + "| `Select Tab Pane` | regexp=^A.* | Selects a tab pane starting with 'A' |\n")
     @ArgumentNames({"tabPaneIdentifier"})
     public void selectTabPane(String tabPaneIdentifier) {
         TabbedPaneOperator operator = paneOperatorFactory.createOperator(tabPaneIdentifier);
