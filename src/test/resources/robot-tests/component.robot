@@ -54,6 +54,12 @@ Doubleclick On Component
     ${text}=  getButtonText  ${buttonName}
     shouldBeEqual  Button Was Pushed2  ${text}
 
+Click On Component With Shift
+    [Setup]  resetButton
+    clickOnComponent  testButton  1  LEFT BUTTON  SHIFT
+    ${text}=  getButtonText  ${buttonName}
+    shouldBeEqual    Click With Shift    ${text}
+
 Right Click on Component
     [Setup]  resetButton
     rightClickOnComponent    testButton

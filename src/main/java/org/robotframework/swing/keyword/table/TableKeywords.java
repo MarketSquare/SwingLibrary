@@ -30,6 +30,7 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
+import org.robotframework.swing.keyword.utils.OptionalArgsForTableCellAndComponentClicking;
 import org.robotframework.swing.table.CellValueExtractor;
 import org.robotframework.swing.table.TableOperator;
 import org.robotframework.swing.table.TableOperatorFactory;
@@ -334,7 +335,7 @@ public class TableKeywords extends IdentifierSupport {
             + "| ... | 1 | BUTTON1_MASK | CTRL_MASK | SHIFT_MASK | # ... while holding down the CTRL and SHIFT keys |\n")
     @ArgumentNames({"identifier", "row", "column", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings"})
     public void clickOnTableCell(final String identifier, final String row, final String column, final String[] optionalArgs) {
-        OptionalArgsForTableCellClicking optArgs = new OptionalArgsForTableCellClicking(optionalArgs);
+        OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(optionalArgs);
         createTableOperator(identifier).clickOnCell(row,
                 column,
                 optArgs.clickCount(),

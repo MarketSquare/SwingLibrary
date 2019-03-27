@@ -19,10 +19,13 @@ package org.robotframework.swing.component;
 import javax.swing.JComponent;
 
 import org.netbeans.jemmy.ComponentChooser;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.popup.PopupMenuOperatorFactory;
+
+import java.awt.event.InputEvent;
 
 public class ComponentOperator extends JComponentOperator {
     private PopupMenuOperatorFactory popupMenuOperatorFactory = new PopupMenuOperatorFactory();
@@ -41,5 +44,35 @@ public class ComponentOperator extends JComponentOperator {
 
     public JPopupMenuOperator invokePopup() {
         return popupMenuOperatorFactory.createPopupOperator(this);
+    }
+
+    public void clickOnComponent(final String clickCount, final String mouseButton, final String[] keyModifiers) {
+        this.getQueueTool().invokeSmoothly(new QueueTool.QueueAction("Choice expanding") {
+            public Object launch() {
+                ComponentOperator.this.clickMouse(ComponentOperator.this.getCenterXForClick(), ComponentOperator.this.getCenterYForClick(),
+                        Integer.parseInt(clickCount), toInputEventMask(mouseButton), toCombinedInputEventMasks(keyModifiers));
+                return null;
+            }
+        });
+    }
+
+    private int toInputEventMask(String inputEventFieldName) {
+        try {
+            return InputEvent.class.getField(inputEventFieldName).getInt(null);
+        } catch (NoSuchFieldException e) {
+            throw new IllegalArgumentException("No field name '"
+                    + inputEventFieldName + "' in class "
+                    + InputEvent.class.getName() + ".");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private int toCombinedInputEventMasks(String[] modifierStrings) {
+        int combinedInputEventMask = 0;
+        if (modifierStrings.length > 0)
+            for (String modifierAsString : modifierStrings)
+                combinedInputEventMask |= toInputEventMask(modifierAsString);
+        return combinedInputEventMask;
     }
 }
