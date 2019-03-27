@@ -1,6 +1,8 @@
 package org.robotframework.swing.list;
 
 import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.Waiter;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JListOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.swing.common.IdentifierSupport;
 import org.robotframework.swing.common.TimeoutCopier;
 import org.robotframework.swing.common.TimeoutName;
@@ -56,6 +59,14 @@ public class ListOperator extends IdentifierSupport implements ComponentWrapper 
     public int getSize() {
         return jListOperator.getModel()
                             .getSize();
+    }
+    
+    public JPopupMenuOperator callPopupOnListItem(String itemIdentifier) {
+        Point coordinates = jListOperator.indexToLocation(findIndex(itemIdentifier));
+    	return new JPopupMenuOperator(JPopupMenuOperator.callPopup(getSource(), 
+			    (int)coordinates.getX(), 
+			    (int)coordinates.getY(), 
+			    InputEvent.BUTTON3_MASK));
     }
 
     public void selectAll() {

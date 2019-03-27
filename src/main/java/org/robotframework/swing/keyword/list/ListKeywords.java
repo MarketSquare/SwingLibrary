@@ -21,14 +21,18 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
+import org.netbeans.jemmy.operators.JMenuItemOperator;
+import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.common.IdentifierSupport;
+import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.factory.OperatorFactory;
 import org.robotframework.swing.list.ListOperator;
 import org.robotframework.swing.list.ListOperatorFactory;
+import org.robotframework.swing.table.TableOperator;
 import org.robotframework.swing.util.SwingInvoker;
 
 @RobotKeywords
@@ -143,7 +147,23 @@ public class ListKeywords extends IdentifierSupport {
         Assert.assertTrue("List " + identifier + " contains " + value,
                 !getListValues(identifier).contains(value));
     }
-
+    
+    @RobotKeyword("Selects an item from a list item popup.\n"
+            + "Separator for items is ``|``.\n\n"
+            + "Example:\n"
+            + "| `Select From List Item Popup Menu` | myList | listItem | File|Exit | ")
+    @ArgumentNames({"identifier", "listItemIdentifier", "menuPath"})
+    public void selectFromListItemPopupMenu(String identifier, String listItemIdentifier, String menuPath) {    	
+        JMenuItemOperator menuItem = getPopupMenuItem(identifier, listItemIdentifier, menuPath);
+        menuItem.push();   
+    }
+    
+    private JMenuItemOperator getPopupMenuItem(String identifier, String listItemIdentifier, String menuPath) {
+        ListOperator listOperator = createOperator(identifier);
+        JPopupMenuOperator popupMenuOperator = listOperator.callPopupOnListItem(listItemIdentifier);
+        return popupMenuOperator.showMenuItem(menuPath, new EqualsStringComparator());
+    }   
+    
     private ListOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }

@@ -97,6 +97,13 @@ List Should Not Contain
     List Should Not Contain  ${listName}  missing element
     runKeywordAndExpectError  List ${listName} contains one  List Should Not Contain  ${listName}  one
 
+Select From List Item Popup Menu
+    selectFromListItemPopupMenu  ${listName}  three  Show name
+    selectDialog  Message
+    ${labelContents}=  getLabelContent    OptionPane.label
+    shouldBeEqual  ${listName}  ${labelContents}
+    [Teardown]  Run Keywords  closeDialog  Message  AND  selectMainWindow
+
 *** Keywords ***
 listSelectionShouldBe
     [Arguments]  ${listIndex}  ${expectedValue}
