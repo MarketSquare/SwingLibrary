@@ -47,7 +47,7 @@ public class ComponentOperator extends JComponentOperator {
     }
 
     public void clickOnComponent(final String clickCount, final String mouseButton, final String[] keyModifiers) {
-        this.getQueueTool().invokeSmoothly(new QueueTool.QueueAction("Choise expanding") {
+        this.getQueueTool().invokeSmoothly(new QueueTool.QueueAction("Choice expanding") {
             public Object launch() {
                 ComponentOperator.this.clickMouse(ComponentOperator.this.getCenterXForClick(), ComponentOperator.this.getCenterYForClick(),
                         Integer.parseInt(clickCount), toInputEventMask(mouseButton), toCombinedInputEventMasks(keyModifiers));
