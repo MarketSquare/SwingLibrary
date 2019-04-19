@@ -28,6 +28,7 @@ Insert Into AWT Text Field With Index
     shouldBeEqual  ${text}   AWTindex
 
 Type Into AWT Text Field
+    [Tags]  Fails On Windows
     Clear text field           awt=awtTextField
     Type Into Text Field       awt=awtTextField    AWT Typed
     ${text}=        Get Text Field Value  awt=awtTextField
