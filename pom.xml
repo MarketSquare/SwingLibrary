@@ -37,7 +37,7 @@
     <repository>
       <id>laughing-panda</id>
       <name>Laughing Panda</name>
-      <url>http://maven.laughingpanda.org/maven2/</url>
+      <url>https://maven.laughingpanda.org/maven2/</url>
     </repository>
   </repositories>
   <dependencies>
