@@ -17,6 +17,7 @@
 package org.robotframework.swing.keyword.tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -291,5 +292,26 @@ public class TreeNodeKeywords extends TreeSupport {
     public List<String> getTreeNodeChildNames(String identifier, String nodeIdentifier) {
         Collection<String> childNames = treeOperator(identifier).getTreeNodeChildNames(nodeIdentifier);
         return new ArrayList<String>(childNames);
+    }
+
+    @RobotKeyword("Returns a list with the selected paths of a chosen tree.\n\n"
+            + "Example:\n"
+            + "| ${expectedElements}= | `Create List` | firstSelectedPath | secondSelectedPath |\n"
+            + "| ${chosen_paths} = | `Get Selection Paths` | myTree |\n"
+            + "| `Lists Should Be Equal` | ${expectedElements} | ${actualElements} | # This keyword comes from Collections library |\n")
+    @ArgumentNames({"identifier"})
+    public List<String> getSelectionPaths(String identifier) {
+        TreePath[] selectionPaths = treeOperator(identifier).getSelectionPaths();
+        ArrayList<String> paths = new ArrayList<>();
+        for (TreePath selectionPath : selectionPaths) {
+            String path = selectionPath.toString();
+            List<String> replaceItems = Arrays.asList("[", "]");
+            for (String s: replaceItems) {
+                path = path.replace(s, "");
+            }
+            path = path.replace(", ", "|");
+            paths.add(path);
+        }
+        return paths;
     }
 }
