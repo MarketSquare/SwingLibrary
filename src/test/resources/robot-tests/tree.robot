@@ -364,6 +364,13 @@ Tree Item With Same Name As Menu Item Enablement Status
     treeNodePopupMenuItemShouldBeEnabled  ${treeName}  ${rootNode}  Menu Item
     popupMenuShouldNotBeDisplayed
 
+Get Current Selection Paths
+    [Setup]  resetNodes
+    selectNodes
+    ${expected_elements} =  createList  The Java Series|Books for Java Implementers  The Java Series|Books for Java Programmers
+    ${selected_elements} =  getSelectionPaths  ${treeName}
+    listsShouldBeEqual  ${selected_elements}  ${expected_elements}
+
 *** Keywords ***
 keywordShouldFailBecauseContextIsIllegal
     [Arguments]  ${keyword}  @{arguments}
