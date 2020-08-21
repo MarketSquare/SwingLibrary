@@ -72,7 +72,7 @@ public class ComponentKeywords {
             + "| `Click On Component`  | myComponent | # Double clicks with mouse button 2 on the component ... |\n"
             + "| ... | 2 | RIGHT BUTTON | ALT | # ... while holding down the ALT key |\n")
     @ArgumentNames({ "identifier", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings" })
-    public void clickOnComponent(String identifier, String clickCountString, String buttonString, String ...args) {
+    public void clickOnComponent(String identifier, String clickCountString, String buttonString, String... args) {
         OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(clickCountString, buttonString, args);
         operator(identifier).clickOnComponent(
                 optArgs.clickCount(),
@@ -221,7 +221,7 @@ public class ComponentKeywords {
                   + "Example:\n"
                   + "| `Call Component Method` | buttonId | setToolTipText | new tooltip text |")
     @ArgumentNames({"identifier", "method", "*args"})
-    public Object callComponentMethod(String identifier, String method, String ...args) {
+    public Object callComponentMethod(String identifier, String method, String... args) {
         Object component = operator(identifier).getSource();
         Class klass = component.getClass();
         Method m = getMethodByNameAndArgumentCount(klass, method, args.length);

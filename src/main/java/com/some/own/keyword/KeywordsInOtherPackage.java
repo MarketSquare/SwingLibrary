@@ -15,7 +15,7 @@ public class KeywordsInOtherPackage {
     
     @RobotKeyword
     @ArgumentNames({"*args"})
-    public String keywordwithoutArgumentNames(String ...args) {
+    public String keywordwithoutArgumentNames(String... args) {
         return args[0];
     }
 }

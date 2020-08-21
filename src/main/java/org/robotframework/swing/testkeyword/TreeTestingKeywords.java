@@ -20,8 +20,7 @@ public class TreeTestingKeywords extends TreeSupport {
     
     @RobotKeyword
     public void savedNodesShouldBe(String[] expectedNodes) {
-        // TODO - deprecated
-        Assert.assertEquals(expectedNodes, TestTreeResults.nodes.toArray(new String[0]));
+        Assert.assertArrayEquals(expectedNodes, TestTreeResults.nodes.toArray(new String[0]));
     }
     
     @RobotKeyword
