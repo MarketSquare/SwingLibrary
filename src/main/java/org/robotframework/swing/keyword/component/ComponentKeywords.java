@@ -21,9 +21,8 @@ import org.netbeans.jemmy.operators.JMenuItemOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
-import org.robotframework.javalib.annotation.RobotKeywordOverload;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.javalib.reflection.ArgumentConverter;
+import org.robotframework.javalib.reflection.ArgumentCollector;
 import org.robotframework.swing.comparator.EqualsStringComparator;
 import org.robotframework.swing.component.ComponentOperator;
 import org.robotframework.swing.component.ComponentOperatorFactory;
@@ -36,6 +35,7 @@ import org.robotframework.swing.util.ComponentUtils;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.*;
 import java.util.List;
 
@@ -72,8 +72,8 @@ public class ComponentKeywords {
             + "| `Click On Component`  | myComponent | # Double clicks with mouse button 2 on the component ... |\n"
             + "| ... | 2 | RIGHT BUTTON | ALT | # ... while holding down the ALT key |\n")
     @ArgumentNames({ "identifier", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings" })
-    public void clickOnComponent(String identifier, String[] optionalArgs) {
-        OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(optionalArgs);
+    public void clickOnComponent(String identifier, String clickCountString, String buttonString, String ...args) {
+        OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(clickCountString, buttonString, args);
         operator(identifier).clickOnComponent(
                 optArgs.clickCount(),
                 optArgs.button(),
@@ -204,18 +204,31 @@ public class ComponentKeywords {
         throw new RuntimeException(String.format("Method \"%s\" with %d argument(s) doesn't exist.", name, argCount));
     }
 
+    public static List<String> getParameterNames(Method method) {
+        Parameter[] parameters = method.getParameters();
+        List<String> parameterNames = new ArrayList<>();
+
+        for (Parameter parameter : parameters) {
+            String parameterName = parameter.getName();
+            parameterNames.add(parameterName);
+        }
+
+        return parameterNames;
+    }
+
     @RobotKeyword("Calls a method from specified component.\n\n"
                   + "Arguments are automatically converted if possible to type expected by the method.\n\n"
                   + "Example:\n"
                   + "| `Call Component Method` | buttonId | setToolTipText | new tooltip text |")
     @ArgumentNames({"identifier", "method", "*args"})
-    public Object callComponentMethod(String identifier, String method, String[] args) {
+    public Object callComponentMethod(String identifier, String method, String ...args) {
         Object component = operator(identifier).getSource();
         Class klass = component.getClass();
         Method m = getMethodByNameAndArgumentCount(klass, method, args.length);
 
         try {
-            return m.invoke(component, new ArgumentConverter(m.getParameterTypes()).convertArguments(args));
+           return m.invoke(component, new ArgumentCollector(m.getParameterTypes(), getParameterNames(m)).collectArguments(Arrays.asList(args), null).toArray());
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

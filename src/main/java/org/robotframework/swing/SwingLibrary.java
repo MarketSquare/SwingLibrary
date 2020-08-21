@@ -19,15 +19,17 @@ import org.netbeans.jemmy.JemmyProperties;
 import org.netbeans.jemmy.TestOut;
 import org.robotframework.javalib.library.AnnotationLibrary;
 import org.robotframework.javalib.library.KeywordDocumentationRepository;
-import org.robotframework.javalib.library.RobotJavaLibrary;
+import org.robotframework.javalib.library.RobotFrameworkDynamicAPI ;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 import org.robotframework.swing.util.StandardOutOutput;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Collection;
 import java.util.Collections;
 
-public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLibrary {
+public class SwingLibrary implements KeywordDocumentationRepository, RobotFrameworkDynamicAPI  {
     public static final String ROBOT_LIBRARY_SCOPE = "GLOBAL";
     public static SwingLibrary instance;
     private final AnnotationLibrary annotationLibrary = new AnnotationLibrary(
@@ -116,12 +118,17 @@ public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLi
     }
 
     @Override
-    public Object runKeyword(String keywordName, Object[] args) {
-        return annotationLibrary.runKeyword(keywordName, toStrings(args));
+    public Object runKeyword(String keywordName, List args) {
+        return annotationLibrary.runKeyword(keywordName, args);
     }
 
     @Override
-    public String[] getKeywordArguments(String keywordName) {
+    public Object runKeyword(String keywordName, List args, Map kwargs) {
+        return annotationLibrary.runKeyword(keywordName, args, kwargs);
+    }
+
+    @Override
+    public List<String> getKeywordArguments(String keywordName) {
         return annotationLibrary.getKeywordArguments(keywordName);
     }
 
@@ -133,7 +140,7 @@ public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLi
     }
 
     @Override
-    public String[] getKeywordNames() {
+    public List<String> getKeywordNames() {
         return annotationLibrary.getKeywordNames();
     }
 
@@ -144,17 +151,5 @@ public class SwingLibrary implements KeywordDocumentationRepository, RobotJavaLi
     private void disableOutput() {
         TestOut out = new StandardOutOutput();
         JemmyProperties.setCurrentOutput(out);
-    }
-
-    private Object[] toStrings(Object[] args) {
-        Object[] newArgs = new Object[args.length];
-        for (int i = 0; i < newArgs.length; i++) {
-            if (args[i].getClass().isArray()) {
-                newArgs[i] = args[i];
-            } else {
-                newArgs[i] = args[i].toString();
-            }
-        }
-        return newArgs;
     }
 }

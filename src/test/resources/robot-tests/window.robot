@@ -1,6 +1,7 @@
 *** Settings ***
 Test Setup      selectEmptyContext
 Library         TestSwingLibrary
+Library         Collections
 
 *** Test Cases ***
 Select Main Window
@@ -38,7 +39,7 @@ List Windows
     selectFromMainMenu  Test Menu|Show Test Window
     Select Window       Test Window
     @{windows} =   List windows
-    Should be equal   @{windows}[0]    Test App
+    List Should Contain Value   ${windows}    Test App
     [teardown]   closeWindow  Test Window
 
 Resize Window

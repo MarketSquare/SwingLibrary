@@ -139,11 +139,6 @@ public class TableKeywords extends IdentifierSupport {
             return CellValueExtractor.TextSource.AUTO;
     }
 
-    @RobotKeywordOverload
-    public String getTableCellValue(String identifier, String row, String columnIdentifier) {
-        return getTableCellValue(identifier, row, columnIdentifier, "auto");
-    }
-
     @RobotKeyword("Returns selected cell's value from a table.\n\n"
             + "Optional parameter ``source`` allows to override text extraction strategy. "
             + "Available values are ``auto`` (default, will try to get text from cell component "
@@ -155,11 +150,6 @@ public class TableKeywords extends IdentifierSupport {
     public Object getSelectedTableCellValue(String identifier, String source) {
         CellValueExtractor.TextSource textSource = textExtractionSourceFromText(source);
         return createTableOperator(identifier).getSelectedCellValue(textSource).toString();
-    }
-
-    @RobotKeywordOverload
-    public Object getSelectedTableCellValue(String identifier) {
-        return getSelectedTableCellValue(identifier, "auto");
     }
 
     @RobotKeyword("Sets cell value in a table.\n\n"
@@ -334,8 +324,8 @@ public class TableKeywords extends IdentifierSupport {
             + "| `Click On Table Cell`  | myTable | 1 | Header | # Single click on the cell in the second row and column with header 'Header'... |\n"
             + "| ... | 1 | BUTTON1_MASK | CTRL_MASK | SHIFT_MASK | # ... while holding down the CTRL and SHIFT keys |\n")
     @ArgumentNames({"identifier", "row", "column", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings"})
-    public void clickOnTableCell(final String identifier, final String row, final String column, final String[] optionalArgs) {
-        OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(optionalArgs);
+    public void clickOnTableCell(final String identifier, final String row, final String column, final String clickCountString, final String buttonString, final String... args) {
+        OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(clickCountString, buttonString, args);
         createTableOperator(identifier).clickOnCell(row,
                 column,
                 optArgs.clickCount(),
