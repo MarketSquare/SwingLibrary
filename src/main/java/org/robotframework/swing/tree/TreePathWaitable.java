@@ -17,6 +17,7 @@
 package org.robotframework.swing.tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,7 +27,6 @@ import javax.swing.tree.TreePath;
 
 import org.netbeans.jemmy.Waitable;
 import org.netbeans.jemmy.operators.JTreeOperator;
-import org.robotframework.javalib.util.ArrayUtil;
 import org.robotframework.swing.util.ObjectUtils;
 
 public class TreePathWaitable implements Waitable {
@@ -67,7 +67,7 @@ public class TreePathWaitable implements Waitable {
     }
 
     private String[] removeRoot(String[] nodeNames) {
-        return ArrayUtil.copyOfRange(nodeNames, 1, nodeNames.length);
+        return Arrays.copyOfRange(nodeNames, 1, nodeNames.length);
     }
 
     private TreePath buildTreePath(String[] nodeNames) {

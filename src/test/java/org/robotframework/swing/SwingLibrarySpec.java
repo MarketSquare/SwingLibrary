@@ -2,11 +2,8 @@ package org.robotframework.swing;
 
 import jdave.junit4.JDaveRunner;
 
-import org.jmock.Expectations;
 import org.junit.runner.RunWith;
 import org.netbeans.jemmy.JemmyProperties;
-import org.robotframework.javalib.library.AnnotationLibrary;
-import org.robotframework.swing.SwingLibrary;
 import org.robotframework.jdave.mock.MockSupportSpecification;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
@@ -31,30 +28,6 @@ public class SwingLibrarySpec extends MockSupportSpecification<SwingLibrary> {
             for (String timeout : timeouts) {
                 specify(JemmyProperties.getCurrentTimeout(timeout), must.equal(10000));
             }
-        }
-    }
-
-    public class HandlingArguments {
-        private AnnotationLibrary annotationLibrary;
-        private String keywordName = "someKeyword";
-
-        public SwingLibrary create () {
-            SwingLibrary swingLibrary = new SwingLibrary();
-            annotationLibrary = injectMockTo(swingLibrary, AnnotationLibrary.class);
-            return swingLibrary;
-        }
-
-        public void convertsArgumentsToString() {
-            Object[] arrayArgument = new Object[] {  };
-            Object[] actualArguments = new Object[] { new Integer(2), Boolean.TRUE, arrayArgument };
-            final Object[] expectedArguments = new Object[] { "2", "true", arrayArgument };
-
-            checking(new Expectations() {{
-                one(annotationLibrary).runKeyword(keywordName, expectedArguments);
-                will(returnValue("something"));
-            }});
-
-            specify(context.runKeyword(keywordName, actualArguments), "something");
         }
     }
 }

@@ -2,32 +2,44 @@ package org.robotframework.swing.testkeyword;
 
 import org.robotframework.javalib.keyword.Keyword;
 import org.robotframework.javalib.library.AnnotationLibrary;
-import org.robotframework.javalib.library.RobotJavaLibrary;
+import org.robotframework.javalib.library.RobotFrameworkDynamicAPI;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public abstract class RunnerKeyword implements Keyword {
-    private Object[] arguments;
-    private RobotJavaLibrary library = new AnnotationLibrary() {{
+    private List<String> arguments;
+    private Map kwargs;
+    private RobotFrameworkDynamicAPI library = new AnnotationLibrary() {{
         addKeywordPattern("org/robotframework/**/keyword/**/*.class");
 	}};
 
-    public Object execute(Object[] arguments) {
+    public Object execute(List arguments) {
         this.arguments = arguments;
         return executeKeyword();
     }
 
-    protected Object runKeyword() {
-        return library.runKeyword(arguments[0].toString(), removeFirstArgument(arguments));
+    public Object execute(List arguments, Map kwargs) {
+        this.arguments = arguments;
+        this.kwargs = kwargs;
+        return executeKeyword();
     }
 
-    private Object[] removeFirstArgument(Object[] arguments) {
-        Object[] fixedArguments = new Object[arguments.length - 1];
+    protected Object runKeyword() {
+        return library.runKeyword(arguments.get(0), removeFirstArgument(arguments));
+    }
 
-        for(int i = 1; i < arguments.length; i++) {
-            fixedArguments[i - 1] = arguments[i];
-        }
-
-        return fixedArguments;
+    private List<String> removeFirstArgument(List<String> arguments) {
+        List<String> newArgList = new ArrayList<>();
+        newArgList.addAll(arguments);
+        newArgList.remove(0);
+        return newArgList;
     }
 
     protected abstract Object executeKeyword();
+
+    public List<String> getArgumentTypes() {
+        return null;
+    }
 }

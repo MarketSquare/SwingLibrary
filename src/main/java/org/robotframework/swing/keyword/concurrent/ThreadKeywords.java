@@ -47,7 +47,7 @@ public class ThreadKeywords {
         assertArgumentCountIsCorrect(keywordName, arguments);
         new Thread() {
             public void run() {
-                SwingLibrary.instance.runKeyword(keywordName, arguments);
+                SwingLibrary.instance.runKeyword(keywordName, Arrays.asList(arguments));
             }
         }.start();
     }
@@ -55,24 +55,24 @@ public class ThreadKeywords {
     public String stringify(String keywordName, Object... arguments) {
         assertKeywordExists(keywordName);
         assertArgumentCountIsCorrect(keywordName, arguments);
-        return SwingLibrary.instance.runKeyword(keywordName, arguments).toString();
+        return SwingLibrary.instance.runKeyword(keywordName, Arrays.asList(arguments)).toString();
     }
 
     private void assertArgumentCountIsCorrect(String keywordName, Object[] arguments) {
-        String[] keywordArguments = SwingLibrary.instance.getKeywordArguments(normalizer.normalize(keywordName));
+        List<String> keywordArguments = SwingLibrary.instance.getKeywordArguments(normalizer.normalize(keywordName));
         if (keywordArguments == null)
             return;
         if (hasVarArgs(keywordArguments)) {
-            String errorMessage = "Expected " + (keywordArguments.length-1) + " or more but got " + arguments.length + " arguments.     ";
-            Assert.assertTrue(errorMessage, keywordArguments.length-1 <= arguments.length);
+            String errorMessage = "Expected " + (keywordArguments.size()-1) + " or more but got " + arguments.length + " arguments.     ";
+            Assert.assertTrue(errorMessage, keywordArguments.size()-1 <= arguments.length);
         } else {
-            String errorMessage = "Expected " + keywordArguments.length + " but got " + arguments.length + " arguments.     ";
-            Assert.assertEquals(errorMessage, keywordArguments.length, arguments.length);
+            String errorMessage = "Expected " + keywordArguments.size() + " but got " + arguments.length + " arguments.     ";
+            Assert.assertEquals(errorMessage, keywordArguments.size(), arguments.length);
         }
     }
 
-    private boolean hasVarArgs(String[] keywordArguments) {
-        return keywordArguments.length > 0 && keywordArguments[keywordArguments.length-1].startsWith("*");
+    private boolean hasVarArgs(List<String> keywordArguments) {
+        return keywordArguments.size() > 0 && keywordArguments.get(keywordArguments.size()-1).startsWith("*");
     }
 
     private void assertKeywordExists(final String keywordName) {
@@ -83,9 +83,8 @@ public class ThreadKeywords {
     }
 
     @SuppressWarnings("unchecked")
-    private Collection<String> normalizeKeywordNames(String[] keywordNames) {
-        List<String> keywordsList = Arrays.asList(keywordNames);
-        return CollectionUtils.collect(keywordsList, new Transformer() {
+    private Collection<String> normalizeKeywordNames(List<String> keywordNames) {
+        return CollectionUtils.collect(keywordNames, new Transformer() {
             public Object transform(Object input) {
                 return normalizer.normalize(input.toString());
             }

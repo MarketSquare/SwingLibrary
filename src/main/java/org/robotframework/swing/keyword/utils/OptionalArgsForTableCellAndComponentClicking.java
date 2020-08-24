@@ -1,7 +1,6 @@
 package org.robotframework.swing.keyword.utils;
 
-import org.robotframework.javalib.util.ArrayUtil;
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,38 +17,22 @@ public class OptionalArgsForTableCellAndComponentClicking {
         put("META", "META_MASK");
     }};
 
-    private String[] optionalArgs;
+    private final String clickCountString;
+    private final String buttonClick;
+    private final String[] optionalArgs;
 
-    public OptionalArgsForTableCellAndComponentClicking(String[] optionalArgs) {
+    public OptionalArgsForTableCellAndComponentClicking(String clickCountString, String buttonClick, String[] optionalArgs) {
+        this.clickCountString = clickCountString;
+        this.buttonClick = buttonClick;
         this.optionalArgs = optionalArgs;
     }
 
     public String clickCount() {
-        if (clickCountSpecified())
-            return getClickCount();
-        return "1";
-    }
-
-    private boolean clickCountSpecified() {
-        return optionalArgs.length > 0;
-    }
-
-    private String getClickCount() {
-        return optionalArgs[0];
+        return this.clickCountString;
     }
 
     public String button() {
-        if (buttonSpecified())
-            return getButton();
-        return "BUTTON1_MASK";
-    }
-
-    private boolean buttonSpecified() {
-        return optionalArgs.length > 1;
-    }
-
-    private String getButton() {
-        return keyMask(optionalArgs[1]);
+        return keyMask(this.buttonClick);
     }
 
     private String keyMask(String arg) {
@@ -67,11 +50,11 @@ public class OptionalArgsForTableCellAndComponentClicking {
     }
 
     private boolean keymodifiersSpecifiedIn() {
-        return optionalArgs.length > 2;
+        return optionalArgs.length > 0;
     }
 
     private String[] getKeyModifiers() {
-        return replaceAliasesIn(ArrayUtil.copyOfRange(optionalArgs, 2, optionalArgs.length));
+        return replaceAliasesIn(Arrays.copyOfRange(optionalArgs, 0, optionalArgs.length));
     }
 
     private String[] replaceAliasesIn(String[] keyModifiers) {

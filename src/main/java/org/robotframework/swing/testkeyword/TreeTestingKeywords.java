@@ -6,7 +6,6 @@ import org.junit.Assert;
 
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
-import org.robotframework.javalib.util.ArrayUtil;
 import org.robotframework.swing.testapp.TestTreeResults;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreePathAction;
@@ -21,7 +20,7 @@ public class TreeTestingKeywords extends TreeSupport {
     
     @RobotKeyword
     public void savedNodesShouldBe(String[] expectedNodes) {
-        ArrayUtil.assertArraysContainSame(expectedNodes, TestTreeResults.nodes.toArray(new String[0]));
+        Assert.assertArrayEquals(expectedNodes, TestTreeResults.nodes.toArray(new String[0]));
     }
     
     @RobotKeyword

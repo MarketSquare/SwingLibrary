@@ -133,7 +133,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 will(returnValue(cellValue));
             }});
 
-            specify(context.getSelectedTableCellValue(tableIdentifier), must.equal(cellValue.toString()));
+            specify(context.getSelectedTableCellValue(tableIdentifier, "auto"), must.equal(cellValue.toString()));
         }
 
 		public void getsTableCellProperties() {
@@ -231,7 +231,7 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
         	checking(new Expectations() {{
                 one(tableOperator).clickOnCell(row, "0", "1", "BUTTON1_MASK", new String[0]);
             }});
-        	context.clickOnTableCell(tableIdentifier, row, "0", new String[0]);
+        	context.clickOnTableCell(tableIdentifier, row, "0", "1", "BUTTON1_MASK", new String[0]);
         }
 
         public void clicksOnTableCellWithKeyAliases() {
@@ -239,15 +239,15 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 one(tableOperator).clickOnCell(row, "column_identifier", "7", "CTRL_MASK",
                 		                       new String[] {"SHIFT_MASK", "META_MASK", "WHATEVER_MASK"});
             }});
-        	context.clickOnTableCell(tableIdentifier, row, "column_identifier",
-        			                 new String[] {"7", "ctrl", "SHIFT", "MeTa", "WHATEVER_MASK"});
+        	context.clickOnTableCell(tableIdentifier, row, "column_identifier", "7", "CTRL_MASK",
+        			                 new String[] {"SHIFT_MASK", "META_MASK", "WHATEVER_MASK"});
         }
 
         public void doubleClicksOnTableCell() {
         	checking(new Expectations() {{
                 one(tableOperator).clickOnCell(row, "0", "2", "BUTTON1_MASK", new String[0]);
             }});
-        	context.clickOnTableCell(tableIdentifier, row, "0", new String[] {"2"});
+        	context.clickOnTableCell(tableIdentifier, row, "0", "2", "BUTTON1_MASK", new String[0]);
         }
 
         public void doubleClicksOnTableCellWithSeveralButtons() {
@@ -255,8 +255,8 @@ public class TableKeywordsSpec extends MockSupportSpecification<TableKeywords> {
                 one(tableOperator).clickOnCell(row, "column_identifier", "2", "BUTTON2_MASK",
                 		                       new String[] {"CTRL_MASK", "SHIFT_MASK", "META_MASK"});
             }});
-        	context.clickOnTableCell(tableIdentifier, row, "column_identifier",
-        			                 new String[] {"2", "RIGHT BUTTON", "CTRL_MASK", "SHIFT", "META_MASK"});
+        	context.clickOnTableCell(tableIdentifier, row, "column_identifier", "2", "BUTTON2_MASK",
+        			                 new String[] {"CTRL_MASK", "SHIFT_MASK", "META_MASK"});
         }
 
         public void selectsTableCell() {
