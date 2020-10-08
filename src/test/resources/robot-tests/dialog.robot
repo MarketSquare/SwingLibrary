@@ -78,6 +78,12 @@ Close All Dialogs When Two Dialogs Open
     testDialogShouldBeClosed
     nonModalTestDialogShouldBeClosed
 
+List All Dialogs
+    [Setup]  openNonModalTestDialog
+    openTestDialog
+    @{windows} =   listDialogs
+    [Teardown]  closeAllDialogs
+
 *** Keywords ***
 openTestDialog
     selectFromMainMenu  ${dialogMenu}

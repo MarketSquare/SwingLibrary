@@ -31,6 +31,11 @@ import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
 import org.robotframework.swing.util.ComponentExistenceResolver;
 import org.robotframework.swing.util.IComponentConditionResolver;
 
+import java.awt.Window;
+import java.awt.Dialog;
+import java.util.ArrayList;
+import java.util.List;
+
 @RobotKeywords
 public class DialogKeywords {
     private final IdentifierParsingOperatorFactory<DialogOperator> operatorFactory = new DialogOperatorFactory();
@@ -99,5 +104,20 @@ public class DialogKeywords {
         System.out.println("Closed dialog '" + operator.getTitle() + "'.");
         operator.close();
         return true;
+    }
+
+    @RobotKeyword("Gets list of open dialogs titles.\n\n"
+            +"Logs the dialogs titles and names in parenthesis.\n\n"
+            + "Example:\n"
+            + "| `List Dialogs` |\n")
+    public List<String> listDialogs() {
+        List<String> result = new ArrayList<String>();
+        for (Window window: Window.getWindows()) {
+            if (window instanceof Dialog) {
+                result.add(((Dialog) window).getTitle());
+                System.out.println( ((Dialog) window).getTitle() + " (" + window.getName() +")");
+            }
+        }
+        return result;
     }
 }
