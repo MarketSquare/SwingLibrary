@@ -24,12 +24,15 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import org.junit.Assert;
 import org.robotframework.javalib.annotation.ArgumentNames;
 import org.robotframework.javalib.annotation.RobotKeyword;
 import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.context.AbstractContextVerifier;
 import org.robotframework.swing.context.Context;
 import org.robotframework.swing.factory.IdentifierParsingOperatorFactory;
+import org.robotframework.swing.util.ComponentExistenceResolver;
+import org.robotframework.swing.util.IComponentConditionResolver;
 import org.robotframework.swing.window.FrameOperator;
 import org.robotframework.swing.window.FrameOperatorFactory;
 
@@ -38,6 +41,8 @@ import abbot.tester.WindowTester;
 @RobotKeywords
 public class WindowKeywords extends AbstractContextVerifier {
     private final IdentifierParsingOperatorFactory<FrameOperator> operatorFactory = new FrameOperatorFactory();
+    private final IComponentConditionResolver windowExistenceResolver = new ComponentExistenceResolver(
+            operatorFactory);
 
     public WindowKeywords() {
         super(
@@ -119,6 +124,22 @@ public class WindowKeywords extends AbstractContextVerifier {
             + "| `Should Be Equal` | Help Contents               | ${title} |\n")
     public String getSelectedWindowTitle() {
         return frameOperator().getTitle();
+    }
+
+    @RobotKeyword("Fails if the window is not open.\n\n" + "Example:\n"
+            + "| `Window Should Be Open` | window |\n")
+    @ArgumentNames({ "identifier" })
+    public void windowShouldBeOpen(String identifier) {
+        Assert.assertTrue("Window '" + identifier + "' is not open",
+                windowExistenceResolver.satisfiesCondition(identifier));
+    }
+
+    @RobotKeyword("Fails if the window is open.\n"
+            + "| `Window Should Not Be Open` | window |\n")
+    @ArgumentNames({ "identifier" })
+    public void windowShouldNotBeOpen(String identifier) {
+        Assert.assertFalse("Window '" + identifier + "' is open",
+                windowExistenceResolver.satisfiesCondition(identifier));
     }
 
     @SuppressWarnings("unchecked")

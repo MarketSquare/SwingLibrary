@@ -10,14 +10,17 @@ Select Main Window
 
 Select Window By Title
     selectWindow  Test App
+    windowShouldBeOpen  Test App
     contextIsMainWindow
 
 Select Window By Name
     selectWindow  Main Frame
+    windowShouldBeOpen  Main Frame
     contextIsMainWindow
 
 Select Window By Title RegExp
     selectWindow  regexp=T.{2}t.*
+    windowShouldBeOpen  regexp=T.{2}t.*
     contextIsMainWindow
 
 Select Window By Title Without RegExp Prefix Should Fail
@@ -28,6 +31,7 @@ Select Window By Title Without RegExp Prefix Should Fail
 
 Select Window By Index
     selectWindow  0
+    windowShouldBeOpen  0
     contextIsMainWindow
 
 Get Selected Window Title
@@ -38,6 +42,7 @@ Get Selected Window Title
 List Windows
     selectFromMainMenu  Test Menu|Show Test Window
     Select Window       Test Window
+    windowShouldBeOpen  Test Window
     @{windows} =   List windows
     List Should Contain Value   ${windows}    Test App
     [teardown]   closeWindow  Test Window
@@ -54,12 +59,14 @@ Close Window
     selectFromMainMenu  Test Menu|Show Test Window
     Select Window       Test Window
     closeWindow  Test Window
+    windowShouldNotBeOpen  Test Window
     Run keyword and expect error    Frame with name or title 'Test Window'     Select Window       Test Window
 
 Close Window With RegExp
     selectFromMainMenu  Test Menu|Show Test Window
     Select Window       Test Window
     closeWindow  regexp=T.{2}t\\sW.*
+    windowShouldNotBeOpen  Test Window
     Run keyword and expect error    *     Select Window       Test Window
 
 
