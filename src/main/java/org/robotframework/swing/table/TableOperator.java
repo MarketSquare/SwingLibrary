@@ -139,8 +139,13 @@ public class TableOperator extends IdentifierSupport implements
     public int findCellRow(String text, String columnIdentifier) {
         int col = jTableOperator.findColumn(columnIdentifier);
         if (col == -1)
-            throw new RuntimeException("Column '" + columnIdentifier
+            try {
+                columnIdentifier = jTableOperator.getColumnName(Integer.parseInt(columnIdentifier));
+                col = jTableOperator.findColumn(columnIdentifier);
+            } catch (RuntimeException e) {
+                throw new RuntimeException("Column '" + columnIdentifier
                     + " not found.");
+            }
         return jTableOperator.findCellRow(text, col, 0);
     }
 
