@@ -204,7 +204,8 @@ public class TableKeywords extends IdentifierSupport {
             + "Examples:\n"
             + "| ${row}= | `Find Table Row` | myTable | Some Value |\n"
             + "| `Select From Table Cell Popup Menu` | myTable | ${row} | 2 | Activate |\n"
-            + "| ${row}= | `Find Table Row` | myTable | Some Value | Some Column | # Searches the 'Some Value' from the specified  'Some Column'  | \n")
+            + "| ${row}= | `Find Table Row` | myTable | Some Value | Some Column | # Searches the 'Some Value' from the specified  'Some Column'  | \n"
+            + "| ${row}= | `Find Table Row` | myTable | Some Value | 0 | # Searches the 'Some Value' from the column with index 0 | \n")
     @ArgumentNames({"identifier", "text", "columnIdentifier="})
     public int findTableRow(String identifier, String text, String columnIdentifier) {
         if (columnIdentifier != null && !"".equals(columnIdentifier))

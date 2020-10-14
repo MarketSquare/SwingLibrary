@@ -155,6 +155,10 @@ Find Table Row With Column
     ${row}=  findTableRow  TableWithSingleValue  foo  column two
     shouldBeEqualAsIntegers  1  ${row}
 
+Find Table Row With Column Identifier As Index
+    ${row}=  findTableRow  ${tableName}  one/one  0
+    shouldBeEqualAsIntegers  0  ${row}
+
 Get Table Row Count By Index
     ${rowCount}=  getTableRowCount  0
     shouldBeEqualAsIntegers  4  ${rowCount}
