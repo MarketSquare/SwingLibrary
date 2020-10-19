@@ -248,6 +248,18 @@ Click On Table Header
     runKeywordAndExpectError  The specified column identifier '666' is invalid.
     ...  clickTableHeader  tableWithHeader  666
 
+Right Click On Table Header By Index
+    Select From Table Header Popup Menu   tableWithHeader  0  Expand|Show Test Dialog
+    Set Jemmy Timeout  DialogWaiter.WaitDialogTimeout  2
+    Wait Until Keyword Succeeds  10 seconds  1 second  dialogShouldBeOpen  Message
+    [Teardown]  closeDialog  Message
+
+Right Click On Table Header By Value
+    Select From Table Header Popup Menu   tableWithHeader  B  Expand|Show Test Dialog
+    Set Jemmy Timeout  DialogWaiter.WaitDialogTimeout  2
+    Wait Until Keyword Succeeds  10 seconds  1 second  dialogShouldBeOpen  Message
+    [Teardown]  closeDialog  Message
+
 Get Value From Check Box
     assertCellValue  ${tableName}  1  3  true
     assertCellValue  ${tableName}  3  3  false
