@@ -347,7 +347,7 @@ public class TableKeywords extends IdentifierSupport {
     @RobotKeyword("Selects an item from a table header popup.\n"
             + "Separator for items is ``|``.\n\n"
             + "Example:\n"
-            + "| `Select From Table Header Popup Menu` | myTable | columnIndex | Cell Actions|Clear Cell Value | ")
+            + "| `Select From Table Header Popup Menu` | myTable | columnIdentifier | Cell Actions|Clear Cell Value | ")
     @ArgumentNames({"identifier", "columnIdentifier", "menuPath"})
     public void selectFromTableHeaderPopupMenu(String identifier, String columnIdentifier, String menuPath) {
         Point point = createTableOperator(identifier).headerOperator().coordinatesOfTableHeaderWith(columnIdentifier);
