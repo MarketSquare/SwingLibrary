@@ -21,7 +21,7 @@ public class TableHeaderOperator extends IdentifierSupport {
         click(coordinatesOfTableHeaderWith(identifier));
     }
 
-    private Point coordinatesOfTableHeaderWith(String identifier) {
+    public Point coordinatesOfTableHeaderWith(String identifier) {
         return headerOperator.getPointToClick(columnIndex(identifier));
     }
 

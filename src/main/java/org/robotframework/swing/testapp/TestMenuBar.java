@@ -73,14 +73,14 @@ public class TestMenuBar extends JMenuBar {
         }});
     }
 
-    private static class TestMenu extends JMenu {
+    protected static class TestMenu extends JMenu {
         public TestMenu(String text) {
             super(text);
             setName(textNormalizer.normalize(text));
         }
     }
 
-    private static class TestMenuItem extends JMenuItem implements ActionListener {
+    protected static class TestMenuItem extends JMenuItem implements ActionListener {
         public TestMenuItem(String text) {
             super(text);
             setName(textNormalizer.normalize(text));

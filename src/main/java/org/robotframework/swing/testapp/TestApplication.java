@@ -9,28 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.SpinnerListModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.plaf.LayerUI;
-import javax.swing.JLayer;
 
 public class TestApplication {
     private JPanel panel;
@@ -232,6 +214,17 @@ public class TestApplication {
         tableWithHeader.setName("tableWithHeader");
         JTableHeader tableHeader = tableWithHeader.getTableHeader();
         tableHeader.addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    new MyPopup().show((JComponent) e.getSource(), e.getX(), e.getY());
+                }
+            }
+
+            public void mouseClicked(MouseEvent e) {
+                TestTreeResults.clickCount = e.getClickCount();
+            }
+        });
+        tableHeader.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 JTable table = ((JTableHeader) evt.getSource()).getTable();
@@ -244,6 +237,29 @@ public class TestApplication {
         box.add(tableHeader);
         box.add(tableWithHeader);
         return box;
+    }
+
+    private static class MyPopup extends JPopupMenu {
+        public MyPopup() {
+            add(new TestMenuBar.TestMenu("Expand") {
+                {
+                    add(new TestMenuBar.TestMenuItem("Show Test Dialog") {
+                        public void actionPerformed(ActionEvent e) {
+                            JOptionPane.showMessageDialog(this, "This is an example message");
+                        }
+                    });
+                }});
+
+            setOpaque(true);
+            setLightWeightPopupEnabled(true);
+            setName("popupMenu");
+        }
+
+        @Override
+        public void show(Component invoker, int x, int y) {
+            Delay.delay();
+            super.show(invoker, x, y);
+        }
     }
 
     private JSlider testSlider() {
