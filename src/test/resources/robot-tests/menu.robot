@@ -3,11 +3,12 @@ Test Teardown   selectMainWindow
 Library         TestSwingLibrary
 
 *** Variables ***
-${menuText}  Test Menu
-${showDialog}  ${menuText}|Show Test Dialog
-${mutableMenu}  ${menuText}|Mutable Menu
-${disabledMenu}  ${menuText}|Disabled Menu Item
-${checkboxMenu}  Test menu checkbox
+${menuText}         Test Menu
+${showDialog}       ${menuText}|Show Test Dialog
+${mutableMenu}      ${menuText}|Mutable Menu
+${disabledMenu}     ${menuText}|Disabled Menu Item
+${checkboxMenu}     Test menu checkbox
+${radioButtonMenu}  Test menu radiobutton
 
 *** Test Cases ***
 Select From Main Menu
@@ -83,6 +84,16 @@ Main Menu Item Should Not Be Selected
     selectFromMainMenuAndWait  ${menuText}|${checkboxMenu}
     runKeywordAndExpectError  Menu item '${menuText}|${checkboxMenu}' is selected.  mainMenuItemShouldNotBeChecked  ${menuText}|${checkboxMenu}
     [Teardown]  selectFromMainMenuAndWait  ${menuText}|${checkboxMenu}
+
+Menu Radio Item Should Be Selected
+    selectFromMainMenuAndWait  ${menuText}|${radioButtonMenu}
+    radioMenuItemShouldBeSelected  ${menuText}|${radioButtonMenu}
+    [Teardown]  selectFromMainMenuAndWait  ${menuText}|${radioButtonMenu}
+
+Menu Radio Item Should Not Be Selected
+    selectFromMainMenuAndWait  ${menuText}|${radioButtonMenu}
+    runKeywordAndExpectError  Menu item '${menuText}|${radioButtonMenu}' is selected.  radioMenuItemShouldNotBeSelected  ${menuText}|${radioButtonMenu}
+    [Teardown]  selectFromMainMenuAndWait  ${menuText}|${radioButtonMenu}
 
 Select From Popup Menu
     selectFromPopupMenu  testTextField  Show name
