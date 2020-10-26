@@ -33,7 +33,7 @@ import javax.swing.JRadioButtonMenuItem;
 public class MenuRadioButtonKeywords extends MenuSupport {
     private WindowKeywords windowKeywords = new WindowKeywords();
 
-    @RobotKeyword("Searches for an radio menu item from the menu of the currently selected window "
+    @RobotKeyword("Searches for a radio menu item from the menu of the currently selected window "
             + "and fails if it is not checked.\n\n"
             + "Example:\n"
             + "| `Menu Item Should Be Selected` | Tools|My RadioItem |\n")
@@ -42,7 +42,7 @@ public class MenuRadioButtonKeywords extends MenuSupport {
         Assert.assertTrue("Menu item '" + menuPath + "' is not selected.", showRadioMenuItem(menuPath).isSelected());
     }
 
-    @RobotKeyword("Searches for an radio menu item from the menu of the currently selected window "
+    @RobotKeyword("Searches for a radio menu item from the menu of the currently selected window "
             + "and fails if it is selected.\n\n"
             + "Example:\n"
             + "| `Menu Item Should Not Be Selected` | Tools|My RadioItem |\n")
