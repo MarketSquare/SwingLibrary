@@ -287,10 +287,12 @@ public class TreeNodeKeywords extends TreeSupport {
             + "Example:\n"
             + "| ${expectedElements}= | `Create List` | someElement | otherElement |\n"
             + "| ${actualElements}=   | `Get Tree Node Child Names` | myTree | Element Folder |\n"
-            + "| `Lists Should Be Equal` | ${expectedElements} | ${actualElements} | # This keyword comes from Collections library |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier"})
-    public List<String> getTreeNodeChildNames(String identifier, String nodeIdentifier) {
-        Collection<String> childNames = treeOperator(identifier).getTreeNodeChildNames(nodeIdentifier);
+            + "| `Lists Should Be Equal` | ${expectedElements} | ${actualElements} | # This keyword comes from Collections library |\n"
+            + "If ``nodeIdentifier`` is not given or is ``$EMPTY``, all the root's children will be returned.\n")
+    @ArgumentNames({"identifier", "*nodeIdentifier"})
+    public List<String> getTreeNodeChildNames(String identifier, String[] nodeIdentifier) {
+        String nodeId = nodeIdentifier.length == 0 ? "" : nodeIdentifier[0];
+        Collection<String> childNames = treeOperator(identifier).getTreeNodeChildNames(nodeId);
         return new ArrayList<String>(childNames);
     }
 

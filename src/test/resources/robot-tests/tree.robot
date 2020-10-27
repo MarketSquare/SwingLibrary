@@ -332,6 +332,16 @@ Keywords Also Work With Invisible Root
     selectFromPopupMenuOnSelectedTreeNodesKeywordOperatesOnAllSelectedNodes  ${EMPTY}
     [Teardown]  selectFromTreeNodePopupMenu  ${treeName}  0  Show root node
 
+List Children With Invisible Root
+    [Setup]  resetNodes
+    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}
+    hideRootNode
+    ${childNames}=  getTreeNodeChildNames  ${treeName}
+    listsShouldBeEqual  ${expectedChildnames}  ${childNames}
+    ${childNames}=  getTreeNodeChildNames  ${treeName}  ${EMPTY}
+    listsShouldBeEqual  ${expectedChildnames}  ${childNames}
+    [Teardown]  selectFromTreeNodePopupMenu  ${treeName}  0  Show root node
+
 Tree Keywords Fail If Context Is Not Correct
     selectEmptyContext
     keywordShouldFailBecauseContextIsIllegal  clearTreeSelection  ${treeName}

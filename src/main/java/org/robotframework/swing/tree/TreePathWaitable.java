@@ -74,6 +74,13 @@ public class TreePathWaitable implements Waitable {
         Object root = getRoot();
         TreePath treePathToNode = new TreePath(root);
         Iterator<Object> currentLevelChildren = getChildren(root);
+        if (nodeNames.length > 0 && nodeNames[0].isEmpty()) {
+            while (currentLevelChildren.hasNext()) {
+                Object currentNode = currentLevelChildren.next();
+                treePathToNode.pathByAddingChild(currentNode);
+            }
+            return treePathToNode;
+        }
         for (String nodeName : nodeNames) {
             boolean foundMatch = false;
 
