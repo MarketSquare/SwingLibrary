@@ -154,21 +154,23 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         }
 
         public void selectsTreeNode() {
+            final Integer instance = 0;
             checking(new Expectations() {{
                 one(treeOperator).addSelection(nodePath);
             }});
 
-            context.selectTreeNode(treeIdentifier, nodePath, new String[0]);
+            context.selectTreeNode(treeIdentifier, nodePath, instance, new String[0]);
         }
 
         public void selectsMultipleTreeNodes() {
             final String otherNode = "other|node";
+            final Integer instance = 0;
             checking(new Expectations() {{
                 one(treeOperator).addSelection(nodePath);
                 one(treeOperator).addSelection(otherNode);
             }});
 
-            context.selectTreeNode(treeIdentifier, nodePath, new String[]{otherNode});
+            context.selectTreeNode(treeIdentifier, nodePath, instance, new String[]{otherNode});
         }
 
         public void unselectsTreeNode() {

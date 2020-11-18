@@ -99,18 +99,32 @@ public class TreeNodeKeywords extends TreeSupport {
 
     @RobotKeyword("Sets a node as selected in a tree.\n"
             + "Does not clear earlier selections.\n"
-            + "If several nodes have the same path then *only the first* of those nodes is selected.\n\n"
+            + "If several nodes have the same path use ``duplicatedNodeInstance`` to choose which "
+            + "one of those nodes will be selected. If ``duplicatedNodeInstance`` is not specified "
+            + "then the *first node* with the corresponding ``nodeIdentifier`` will be selected. "
+            + "``DuplicatedNodeInstance`` will only select the desired node for the "
+            + "``nodeIdentifier`` and not for the nodes specified using ``additionalNodeIdentifiers``.\n\n"
             + "Example:\n"
             + "| `Select Tree Node` | myTree | Root|Folder |\n"
             + "Any number of node identifiers can be provided to select multiple nodes at once:\n"
             + "| `Select Tree Node` | myTree | Root|Folder | Root|Folder2 | Root|Folder3 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "*additionalNodeIdentifiers"})
-    public void selectTreeNode(String identifier, String nodeIdentifier, String[] additionalNodeIdentifiers) {
+    @ArgumentNames({"identifier", "nodeIdentifier", "duplicatedNodeInstance=0", "*additionalNodeIdentifiers"})
+    public void selectTreeNode(String identifier, String nodeIdentifier, Integer duplicatedNodeInstance, String[] additionalNodeIdentifiers) {
         TreeOperator treeOperator = treeOperator(identifier);
-        treeOperator.addSelection(nodeIdentifier);
+        if(duplicatedNodeInstance!=0) {
+            TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, duplicatedNodeInstance);
+            treeOperator.addSelectionPath(selectionPath);
+        } else {
+            treeOperator.addSelection(nodeIdentifier);
+        }
         for (String node : additionalNodeIdentifiers) {
             treeOperator.addSelection(node);
         }
+    }
+
+    @RobotKeywordOverload
+    public void selectTreeNode(String identifier, String nodeIdentifier, String[] additionalNodeIdentifiers) {
+        selectTreeNode(identifier, nodeIdentifier, 0, additionalNodeIdentifiers);
     }
 
     @RobotKeyword("Gets item names from the node context popup menu.\n"

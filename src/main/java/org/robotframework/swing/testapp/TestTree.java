@@ -36,6 +36,7 @@ public class TestTree extends JTree implements ActionListener {
                         add(new MyTreeNode("leafnode4"));
                     }});
                 }});
+                add(new MyTreeNode("Books for Java Programmers"));
         }});
     }
 

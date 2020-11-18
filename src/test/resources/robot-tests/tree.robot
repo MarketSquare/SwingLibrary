@@ -91,6 +91,11 @@ Select Tree Node By Name
     treeNodeShouldBeSelected  ${treeName}  ${rootNode}
     [Teardown]  unselectTreeNode  ${treeName}  ${rootNode}
 
+Select Tree Node By Name With Duplicate Node
+    clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${childNode1}  1
+    [Teardown]  clearTreeSelection  ${treeName}
+
 Select Tree Node By Name With Jemmy Timeout
     clearTreeSelection  ${treeName}
     selectTreeNode  ${treeName}  ${rootNode}
@@ -233,16 +238,16 @@ Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
 Get Tree Node Count Returns The Count Of All Visible Nodes
     [Setup]  resetNodes
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  3  ${visibleNodes}
+    shouldBeEqualAsIntegers  4  ${visibleNodes}
     expandTreeNode  ${treeName}  ${rootNode}|${childNode1}
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  6  ${visibleNodes}
+    shouldBeEqualAsIntegers  7  ${visibleNodes}
     collapseTreeNode  ${treeName}  ${rootNode}|${childNode1}
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  3  ${visibleNodes}
+    shouldBeEqualAsIntegers  4  ${visibleNodes}
     hideRootNode
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  2  ${visibleNodes}
+    shouldBeEqualAsIntegers  3  ${visibleNodes}
 
 Get Node Items From Tree Popup Menu
     [Setup]  resetNodes
@@ -252,7 +257,7 @@ Get Node Items From Tree Popup Menu
 
 Get Tree Node Child Names
     [Setup]  resetNodes
-    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}
+    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}  ${childNode1}
     ${childNames}=  getTreeNodeChildNames  ${treeName}  ${rootNode}
     listsShouldBeEqual  ${expectedChildnames}  ${childNames}
 
@@ -334,7 +339,7 @@ Keywords Also Work With Invisible Root
 
 List Children With Invisible Root
     [Setup]  resetNodes
-    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}
+    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}  ${childNode1}
     hideRootNode
     ${childNames}=  getTreeNodeChildNames  ${treeName}
     listsShouldBeEqual  ${expectedChildnames}  ${childNames}

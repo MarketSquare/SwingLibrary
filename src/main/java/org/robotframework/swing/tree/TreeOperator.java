@@ -18,6 +18,7 @@ package org.robotframework.swing.tree;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -99,7 +100,24 @@ public class TreeOperator implements ComponentWrapper {
     public void addSelection(String nodeIdentifier) {
         jTreeOperator.addSelectionPath(createTreePath(nodeIdentifier));
     }
-    
+
+    public void addSelectionPath(TreePath nodePath) {
+        jTreeOperator.addSelectionPath(nodePath);
+    }
+
+    public TreePath getDuplicatedNodeInstance(String nodeIdentifier, Integer duplicatedNodeInstance) {
+        TreeNode pn = (TreeNode) jTreeOperator.findPath(nodeIdentifier).getParentPath().getLastPathComponent();
+        Object[] nodeList = jTreeOperator.getChildren(pn);
+        Object firstNode = jTreeOperator.findPath(nodeIdentifier).getLastPathComponent();
+        List<Object> listOfNodesWithSameName = new ArrayList<>();
+        for (Object nodetocheck : nodeList) {
+            if((firstNode.toString()).equals(nodetocheck.toString()))
+                listOfNodesWithSameName.add(nodetocheck);
+        }
+        Object desiredNode = listOfNodesWithSameName.get(duplicatedNodeInstance);
+        return jTreeOperator.getChildPath(jTreeOperator.findPath(nodeIdentifier).getParentPath(), pn.getIndex((TreeNode) desiredNode));
+    }
+
     public void removeSelection(String nodeIdentifier) {
         jTreeOperator.removeSelectionPath(createTreePath(nodeIdentifier));
     }
