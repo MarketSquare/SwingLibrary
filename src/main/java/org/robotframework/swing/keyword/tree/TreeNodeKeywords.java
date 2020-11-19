@@ -108,15 +108,15 @@ public class TreeNodeKeywords extends TreeSupport {
             + "with the corresponding ``nodeIdentifier`` will be selected.\n"
             + "If ``additionalNodeIdentifiers`` is specified ``nodeInstance`` will be set to ``0`` "
             + "and the keyword will work by selecting the first node found that has specified ``nodeIdentifier``.\n\n"
-            + "| `Select Tree Node` | myTree | Folder | 2 | # selects 3rd node which has the specified `nodeIdentifier` | \n"
-            + "| `Select Tree Node` | mytree | Folder | Folder2 | # `nodeInstance` is not specified"
+            + "| `Select Tree Node` | myTree | Folder | 2 | # selects 3rd node which has the specified ``nodeIdentifier`` | \n"
+            + "| `Select Tree Node` | mytree | Folder | Folder2 | # ``nodeInstance`` is not specified"
             + " when using `additionalNodeIdentifiers` and and will automatically select 1st element "
             + "found that match `nodeIdentifier` |")
-    @ArgumentNames({"identifier", "nodeIdentifier", "duplicatedNodeInstance=0", "*additionalNodeIdentifiers"})
-    public void selectTreeNode(String identifier, String nodeIdentifier, Integer NodeInstance, String[] additionalNodeIdentifiers) {
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=0", "*additionalNodeIdentifiers"})
+    public void selectTreeNode(String identifier, String nodeIdentifier, Integer nodeInstance, String[] additionalNodeIdentifiers) {
         TreeOperator treeOperator = treeOperator(identifier);
-        if(NodeInstance!=0) {
-            TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, NodeInstance);
+        if (nodeInstance != 0) {
+            TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, nodeInstance);
             treeOperator.addSelectionPath(selectionPath);
         } else {
             treeOperator.addSelection(nodeIdentifier);

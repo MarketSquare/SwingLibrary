@@ -105,17 +105,18 @@ public class TreeOperator implements ComponentWrapper {
         jTreeOperator.addSelectionPath(nodePath);
     }
 
-    public TreePath getDuplicatedNodeInstance(String nodeIdentifier, Integer duplicatedNodeInstance) {
-        TreeNode pn = (TreeNode) jTreeOperator.findPath(nodeIdentifier).getParentPath().getLastPathComponent();
-        Object[] nodeList = jTreeOperator.getChildren(pn);
+    public TreePath getDuplicatedNodeInstance(String nodeIdentifier, Integer nodeInstance) {
+        TreeNode parentNode = (TreeNode) jTreeOperator.findPath(nodeIdentifier).getParentPath().getLastPathComponent();
+        Object[] nodeList = jTreeOperator.getChildren(parentNode);
         Object firstNode = jTreeOperator.findPath(nodeIdentifier).getLastPathComponent();
         List<Object> listOfNodesWithSameName = new ArrayList<>();
-        for (Object nodetocheck : nodeList) {
-            if((firstNode.toString()).equals(nodetocheck.toString()))
-                listOfNodesWithSameName.add(nodetocheck);
+        for (Object node : nodeList) {
+            if ((firstNode.toString()).equals(node.toString())) {
+                listOfNodesWithSameName.add(node);
+            }
         }
-        Object desiredNode = listOfNodesWithSameName.get(duplicatedNodeInstance);
-        return jTreeOperator.getChildPath(jTreeOperator.findPath(nodeIdentifier).getParentPath(), pn.getIndex((TreeNode) desiredNode));
+        Object desiredNode = listOfNodesWithSameName.get(nodeInstance);
+        return jTreeOperator.getChildPath(jTreeOperator.findPath(nodeIdentifier).getParentPath(), parentNode.getIndex((TreeNode) desiredNode));
     }
 
     public void removeSelection(String nodeIdentifier) {
