@@ -98,21 +98,25 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Sets a node as selected in a tree.\n"
-            + "Does not clear earlier selections.\n"
-            + "If several nodes have the same path use ``duplicatedNodeInstance`` to choose which "
-            + "one of those nodes will be selected. If ``duplicatedNodeInstance`` is not specified "
-            + "then the *first node* with the corresponding ``nodeIdentifier`` will be selected. "
-            + "``DuplicatedNodeInstance`` will only select the desired node for the "
-            + "``nodeIdentifier`` and not for the nodes specified using ``additionalNodeIdentifiers``.\n\n"
+            + "Does not clear earlier selections.\n\n"
             + "Example:\n"
             + "| `Select Tree Node` | myTree | Root|Folder |\n"
             + "Any number of node identifiers can be provided to select multiple nodes at once:\n"
-            + "| `Select Tree Node` | myTree | Root|Folder | Root|Folder2 | Root|Folder3 |\n")
+            + "| `Select Tree Node` | myTree | Root|Folder | Root|Folder2 | Root|Folder3 |\n\n"
+            + "``nodeInstance`` specifies n-th node to choose if several nodes have the same node "
+            + "identifier. If ``nodeInstance`` is not specified then the *first node* "
+            + "with the corresponding ``nodeIdentifier`` will be selected.\n"
+            + "If ``additionalNodeIdentifiers`` is specified ``nodeInstance`` will be set to ``0`` "
+            + "and the keyword will work by selecting the first node found that has specified ``nodeIdentifier``.\n\n"
+            + "| `Select Tree Node` | myTree | Folder | 2 | # selects 3rd node which has the specified `nodeIdentifier` | \n"
+            + "| `Select Tree Node` | mytree | Folder | Folder2 | # `nodeInstance` is not specified"
+            + " when using `additionalNodeIdentifiers` and and will automatically select 1st element "
+            + "found that match `nodeIdentifier` |")
     @ArgumentNames({"identifier", "nodeIdentifier", "duplicatedNodeInstance=0", "*additionalNodeIdentifiers"})
-    public void selectTreeNode(String identifier, String nodeIdentifier, Integer duplicatedNodeInstance, String[] additionalNodeIdentifiers) {
+    public void selectTreeNode(String identifier, String nodeIdentifier, Integer NodeInstance, String[] additionalNodeIdentifiers) {
         TreeOperator treeOperator = treeOperator(identifier);
-        if(duplicatedNodeInstance!=0) {
-            TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, duplicatedNodeInstance);
+        if(NodeInstance!=0) {
+            TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, NodeInstance);
             treeOperator.addSelectionPath(selectionPath);
         } else {
             treeOperator.addSelection(nodeIdentifier);
