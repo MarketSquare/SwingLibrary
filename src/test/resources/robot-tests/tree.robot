@@ -93,7 +93,7 @@ Select Tree Node By Name
 
 Select Tree Node By Name With Duplicate Node
     clearTreeSelection  ${treeName}
-    selectTreeNode  ${treeName}  ${childNode1}  1
+    selectTreeNode  ${treeName}  ${childNode1}  \#1  ${childNode2}
     [Teardown]  clearTreeSelection  ${treeName}
 
 Select Tree Node By Name With Jemmy Timeout

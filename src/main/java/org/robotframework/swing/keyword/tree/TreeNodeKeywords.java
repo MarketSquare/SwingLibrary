@@ -104,20 +104,29 @@ public class TreeNodeKeywords extends TreeSupport {
             + "Any number of node identifiers can be provided to select multiple nodes at once:\n"
             + "| `Select Tree Node` | myTree | Root|Folder | Root|Folder2 | Root|Folder3 |\n\n"
             + "``nodeInstance`` specifies n-th node to choose if several nodes have the same node "
-            + "identifier. If ``nodeInstance`` is not specified then the *first node* "
+            + "identifier. Node instance must be specified using ``#`` before the desired number."
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n"
+            + "If ``nodeInstance`` is not specified then the *first node* "
             + "with the corresponding ``nodeIdentifier`` will be selected.\n"
             + "If ``additionalNodeIdentifiers`` is specified ``nodeInstance`` will be set to ``0`` "
             + "and the keyword will work by selecting the first node found that has specified ``nodeIdentifier``.\n\n"
-            + "| `Select Tree Node` | myTree | Folder | 2 | # selects 3rd node which has the specified ``nodeIdentifier`` | \n"
-            + "| `Select Tree Node` | mytree | Folder | Folder2 | # ``nodeInstance`` is not specified"
-            + " when using `additionalNodeIdentifiers` and and will automatically select 1st element "
-            + "found that match `nodeIdentifier` |")
-    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=0", "*additionalNodeIdentifiers"})
-    public void selectTreeNode(String identifier, String nodeIdentifier, Integer nodeInstance, String[] additionalNodeIdentifiers) {
+            + "| `Select Tree Node` | myTree | Folder |  \\#2 |  | # selects 3rd node which has the specified "
+            + "``nodeIdentifier`` | \n"
+            + "| `Select Tree Node` | mytree | Folder | Folder2 |  | # if ``nodeInstance`` is not specified"
+            + " when using `additionalNodeIdentifiers` it will automatically select 1st element "
+            + "found that match ``nodeIdentifier`` | \n"
+            + "| `Select Tree Node` | mytree | Folder | \\#1 | Folder2 | # selects 2nd node with "
+            + "``nodeIdentifier`` and first occurrence of `Folder2` |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "*additionalNodeIdentifiers"})
+    public void selectTreeNode(String identifier, String nodeIdentifier, String nodeInstance, ArrayList<String> additionalNodeIdentifiers) {
         TreeOperator treeOperator = treeOperator(identifier);
-        if (nodeInstance != 0) {
-            TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, nodeInstance);
-            treeOperator.addSelectionPath(selectionPath);
+        if (nodeInstance != "None") {
+            if ((nodeInstance).contains("#")) {
+                TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+                treeOperator.addSelectionPath(selectionPath);
+            } else {
+                additionalNodeIdentifiers.add(nodeInstance);
+            }
         } else {
             treeOperator.addSelection(nodeIdentifier);
         }
@@ -127,8 +136,13 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeywordOverload
-    public void selectTreeNode(String identifier, String nodeIdentifier, String[] additionalNodeIdentifiers) {
-        selectTreeNode(identifier, nodeIdentifier, 0, additionalNodeIdentifiers);
+    public void selectTreeNode(String identifier, String nodeIdentifier, Object arg) {
+        if ((arg.toString()).contains("#")){
+            selectTreeNode(identifier, nodeIdentifier, (String) arg, new ArrayList<String>());
+        } else {
+            selectTreeNode(identifier, nodeIdentifier, "None", (ArrayList<String>) arg);
+        }
+
     }
 
     @RobotKeyword("Gets item names from the node context popup menu.\n"

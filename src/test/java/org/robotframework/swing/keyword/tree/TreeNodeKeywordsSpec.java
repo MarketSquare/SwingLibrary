@@ -14,6 +14,8 @@ import org.robotframework.swing.tree.TreeIterator;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreePathAction;
 
+import java.util.ArrayList;
+
 
 @RunWith(JDaveRunner.class)
 public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
@@ -154,23 +156,23 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
         }
 
         public void selectsTreeNode() {
-            final Integer instance = 0;
             checking(new Expectations() {{
                 one(treeOperator).addSelection(nodePath);
             }});
 
-            context.selectTreeNode(treeIdentifier, nodePath, instance, new String[0]);
+            context.selectTreeNode(treeIdentifier, nodePath, "None", new ArrayList<String>());
         }
 
         public void selectsMultipleTreeNodes() {
+            ArrayList<String> nodes = new ArrayList<String>();
             final String otherNode = "other|node";
-            final Integer instance = 0;
+            nodes.add(otherNode);
             checking(new Expectations() {{
                 one(treeOperator).addSelection(nodePath);
                 one(treeOperator).addSelection(otherNode);
             }});
 
-            context.selectTreeNode(treeIdentifier, nodePath, instance, new String[]{otherNode});
+            context.selectTreeNode(treeIdentifier, nodePath, "None", nodes);
         }
 
         public void unselectsTreeNode() {

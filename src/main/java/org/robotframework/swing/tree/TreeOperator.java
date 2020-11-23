@@ -151,6 +151,10 @@ public class TreeOperator implements ComponentWrapper {
     public boolean isPathSelected(String nodeIdentifier) {
         return jTreeOperator.isPathSelected(createTreePath(nodeIdentifier));
     }
+
+    public boolean isPathSelected(TreePath nodePath) {
+        return jTreeOperator.isPathSelected(nodePath);
+    }
     
     public boolean isVisible(String nodeIdentifier) {
         TreePath treePath = createTreePath(nodeIdentifier);
