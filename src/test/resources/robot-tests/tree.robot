@@ -93,7 +93,19 @@ Select Tree Node By Name
 
 Select Tree Node By Name With Duplicate Node
     clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldBeSelected  ${treeName}  ${childNode1}  \#1
+    Run Keyword And Expect Error  Tree node 'books for java programmers' is not selected.  treeNodeShouldBeSelected  ${treeName}  ${childNode1}  \#0
+    Run Keyword And Expect Error  Tree node 'books for java programmers' is selected.  treeNodeShouldNotBeSelected  ${treeName}  ${childNode1}  \#1
+    sleep  5s
+    [Teardown]  clearTreeSelection  ${treeName}
+
+Select Tree Node By Name With Duplicate Node And Additional Node Identifiers
+    clearTreeSelection  ${treeName}
     selectTreeNode  ${treeName}  ${childNode1}  \#1  ${childNode2}
+    treeNodeShouldBeSelected  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldNotBeSelected  ${treeName}  ${childNode1}  \#0
+    treeNodeShouldBeSelected  ${treeName}  ${childNode2}  \#0
     [Teardown]  clearTreeSelection  ${treeName}
 
 Select Tree Node By Name With Jemmy Timeout

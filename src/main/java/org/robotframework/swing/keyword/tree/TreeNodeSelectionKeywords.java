@@ -25,6 +25,8 @@ import org.robotframework.javalib.annotation.RobotKeywords;
 import org.robotframework.swing.tree.TreeSupport;
 import org.robotframework.swing.keyword.timeout.TimeoutKeywords;
 
+import javax.swing.tree.TreePath;
+
 @RobotKeywords
 public class TreeNodeSelectionKeywords extends TreeSupport {
     public TimeoutKeywords timeout = new TimeoutKeywords();
@@ -35,23 +37,46 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
             + "See `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n"
-            + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout="})
-    public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier, String jemmyTimeout) {
-        if (jemmyTimeout != "None") {
+            + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n"
+            + "In case of existence of multiple nodes with the same node identifier, ``nodeInstance`` "
+            + "can be used to check the selection of the desired node. If ``nodeInstance`` is not "
+            + "specified, first node found with desired ``nodeIdentifier``is checked. \n\n"
+            + "Node instance must be specified using ``#`` before the desired number.\"\n"
+            +"*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
+            + "Example:\n"
+            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | None | 3 | # check if 3rd node is selected " +
+            "with specified ``nodeIdentifier`` "
+            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | 4 | 2 | # wait checking of 3rd node" +
+            " with specified ``nodeIdentifier`` in 4 seconds\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "jemmyTimeout="})
+    public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
+        if (jemmyTimeout != null && jemmyTimeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", jemmyTimeout);
         }
         try {
-            boolean isSelected = treeOperator(identifier).isPathSelected(nodeIdentifier);
-            Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not selected.", isSelected);
+            Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not selected.", isSelected(identifier, nodeIdentifier, nodeInstance));
         } finally {
-            if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", Long.toString(old_time));
+            if (jemmyTimeout != null && jemmyTimeout != "None")
+                timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", Long.toString(old_time));
+        }
+    }
+
+    public boolean isSelected(String identifier, String nodeIdentifier, String nodeInstance) {
+        if (nodeInstance != null && nodeInstance != "None") {
+            TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+            return treeOperator(identifier).isPathSelected(selectionPath);
+        } else {
+            return treeOperator(identifier).isPathSelected(nodeIdentifier);
         }
     }
 
     @RobotKeywordOverload
-    public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier) {
-        treeNodeShouldBeSelected(identifier, nodeIdentifier, "None");
+    public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier, String arg) {
+        if (arg.contains("#")) {
+            treeNodeShouldBeSelected(identifier, nodeIdentifier, arg, "None");
+        } else {
+            treeNodeShouldBeSelected(identifier, nodeIdentifier, "None", arg);
+        }
     }
 
     @RobotKeyword("Fails if the tree node is selected.\n"
@@ -59,23 +84,37 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
             + "See `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Selected` | myTree | Root|Folder |\n"
-            + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout="})
-    public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier, String jemmyTimeout) {
-        if (jemmyTimeout != "None") {
+            + "| `Tree Node Should Be Selected` | myTree | Root|Folder | 4 |\n"
+            + "In case of existence of multiple nodes with the same node identifier ``nodeInstance`` "
+            + "can be used to check the selection of the desired node. If ``nodeInstance`` is not "
+            + "specified first node found with desired ``nodIdentifier``is checked.\n\n"
+            + "Node instance must be specified using ``#`` before the desired number.\"\n"
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
+            + "Example:\n"
+            + "| `Tree Node Should Not Be Selected` | mytree | Root|Folder | 2 | # check if 3rd "
+            + "occurrence of ``nodeIdentifier`` is not selected "
+            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | 2 | 4 | # wait checking the "
+            + "selection of the 3rd node with specified ``nodeIdentifier`` in 4 seconds\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "jemmyTimeout="})
+    public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
+        if (jemmyTimeout != null && jemmyTimeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", jemmyTimeout);
         }
         try {
-            boolean isSelected = treeOperator(identifier).isPathSelected(nodeIdentifier);
-            Assert.assertFalse("Tree node '" + nodeIdentifier + "' is selected.", isSelected);
+            Assert.assertFalse("Tree node '" + nodeIdentifier + "' is selected.", isSelected(identifier, nodeIdentifier, nodeInstance));
         } finally {
-            if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", Long.toString(old_time));
+            if (jemmyTimeout != null && jemmyTimeout != "None")
+                timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", Long.toString(old_time));
         }
     }
 
     @RobotKeywordOverload
-    public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier) {
-        treeNodeShouldNotBeSelected(identifier, nodeIdentifier, "None");
+    public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier, String arg) {
+        if (arg.contains("#")) {
+            treeNodeShouldNotBeSelected(identifier, nodeIdentifier, arg, "None");
+        } else {
+            treeNodeShouldNotBeSelected(identifier, nodeIdentifier, "None", arg);
+        }
     }
 
 }

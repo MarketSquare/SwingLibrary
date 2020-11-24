@@ -36,7 +36,7 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeSelected(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeSelected(treeIdentifier, nodeIdentifier, "None");
                 }
             }, must.not().raise(Exception.class));
         }
@@ -46,7 +46,7 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldBeSelected(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldBeSelected(treeIdentifier, nodeIdentifier, "None");
                 }
             }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' is not selected."));
         }
@@ -56,7 +56,7 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldNotBeSelected(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldNotBeSelected(treeIdentifier, nodeIdentifier, "None", "None");
                 }
             }, must.not().raise(Exception.class));
         }
@@ -66,7 +66,7 @@ public class TreeNodeSelectionKeywordsSpec extends TreeSpecification<TreeNodeSel
 
             specify(new Block() {
                 public void run() throws Throwable {
-                    context.treeNodeShouldNotBeSelected(treeIdentifier, nodeIdentifier);
+                    context.treeNodeShouldNotBeSelected(treeIdentifier, nodeIdentifier, "None", "None");
                 }
             }, must.raiseExactly(AssertionError.class, "Tree node '" + nodeIdentifier + "' is selected."));
         }

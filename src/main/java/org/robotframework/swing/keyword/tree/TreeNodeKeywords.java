@@ -120,8 +120,8 @@ public class TreeNodeKeywords extends TreeSupport {
     @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "*additionalNodeIdentifiers"})
     public void selectTreeNode(String identifier, String nodeIdentifier, String nodeInstance, ArrayList<String> additionalNodeIdentifiers) {
         TreeOperator treeOperator = treeOperator(identifier);
-        if (nodeInstance != "None") {
-            if ((nodeInstance).contains("#")) {
+        if (nodeInstance != null && nodeInstance != "None") {
+            if ((nodeInstance).contains("#")) {;
                 TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
                 treeOperator.addSelectionPath(selectionPath);
             } else {
@@ -136,11 +136,13 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeywordOverload
-    public void selectTreeNode(String identifier, String nodeIdentifier, Object arg) {
+    public void selectTreeNode(String identifier, String nodeIdentifier, String arg) {
         if ((arg.toString()).contains("#")){
             selectTreeNode(identifier, nodeIdentifier, (String) arg, new ArrayList<String>());
         } else {
-            selectTreeNode(identifier, nodeIdentifier, "None", (ArrayList<String>) arg);
+            ArrayList<String> nodes = new ArrayList<>();
+            nodes.add(arg);
+            selectTreeNode(identifier, nodeIdentifier, "None", nodes);
         }
 
     }
