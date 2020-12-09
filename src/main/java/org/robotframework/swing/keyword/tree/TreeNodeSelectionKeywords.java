@@ -42,12 +42,10 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
             + "can be used to check the selection of the desired node. If ``nodeInstance`` is not "
             + "specified, first node found with desired ``nodeIdentifier``is checked. \n\n"
             + "Node instance must be specified using ``#`` before the desired number.\"\n"
-            +"*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
             + "Example:\n"
-            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | None | 3 | # check if 3rd node is selected " +
-            "with specified ``nodeIdentifier`` "
-            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | 4 | 2 | # wait checking of 3rd node" +
-            " with specified ``nodeIdentifier`` in 4 seconds\n")
+            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | \\#3 |   | # check if 4th node is selected with specified ``nodeIdentifier`` | \n"
+            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | \\#2 | 4 | # wait checking of 3rd node with specified ``nodeIdentifier`` in 4 seconds |\n\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "jemmyTimeout="})
     public void treeNodeShouldBeSelected(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
         if (jemmyTimeout != null && jemmyTimeout != "None") {
@@ -62,7 +60,7 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
     }
 
     public boolean isSelected(String identifier, String nodeIdentifier, String nodeInstance) {
-        if (nodeInstance != null && nodeInstance != "None") {
+        if (nodeInstance != null && !nodeInstance.equals("None")) {
             TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
             return treeOperator(identifier).isPathSelected(selectionPath);
         } else {
@@ -91,19 +89,19 @@ public class TreeNodeSelectionKeywords extends TreeSupport {
             + "Node instance must be specified using ``#`` before the desired number.\"\n"
             + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
             + "Example:\n"
-            + "| `Tree Node Should Not Be Selected` | mytree | Root|Folder | 2 | # check if 3rd "
-            + "occurrence of ``nodeIdentifier`` is not selected "
-            + "| `Tree Node Should Be Selected` | mytree | Root|Folder | 2 | 4 | # wait checking the "
-            + "selection of the 3rd node with specified ``nodeIdentifier`` in 4 seconds\n")
+            + "| `Tree Node Should Not Be Selected` | mytree | Root|Folder | \\#2 |   | # check if 3rd occurrence of "
+            + "``nodeIdentifier`` is not selected |\n"
+            + "| `Tree Node Should Not Be Selected` | mytree | Root|Folder | \\#2 | 4 | # wait checking the "
+            + "selection of the 3rd node with specified ``nodeIdentifier`` in 4 seconds |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "jemmyTimeout="})
     public void treeNodeShouldNotBeSelected(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
-        if (jemmyTimeout != null && jemmyTimeout != "None") {
+        if (jemmyTimeout != null && !jemmyTimeout.equals("None")) {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", jemmyTimeout);
         }
         try {
             Assert.assertFalse("Tree node '" + nodeIdentifier + "' is selected.", isSelected(identifier, nodeIdentifier, nodeInstance));
         } finally {
-            if (jemmyTimeout != null && jemmyTimeout != "None")
+            if (jemmyTimeout != null && !jemmyTimeout.equals("None"))
                 timeout.setJemmyTimeout("JTreeOperator.WaitNodeVisibleTimeout", Long.toString(old_time));
         }
     }

@@ -106,9 +106,9 @@ public class TreeOperator implements ComponentWrapper {
     }
 
     public TreePath getDuplicatedNodeInstance(String nodeIdentifier, Integer nodeInstance) {
-        TreeNode parentNode = (TreeNode) jTreeOperator.findPath(nodeIdentifier).getParentPath().getLastPathComponent();
+        TreeNode parentNode = (TreeNode) createTreePath(nodeIdentifier).getParentPath().getLastPathComponent();
         Object[] nodeList = jTreeOperator.getChildren(parentNode);
-        Object firstNode = jTreeOperator.findPath(nodeIdentifier).getLastPathComponent();
+        Object firstNode = createTreePath(nodeIdentifier).getLastPathComponent();
         List<Object> listOfNodesWithSameName = new ArrayList<>();
         for (Object node : nodeList) {
             if ((firstNode.toString()).equals(node.toString())) {
@@ -116,11 +116,15 @@ public class TreeOperator implements ComponentWrapper {
             }
         }
         Object desiredNode = listOfNodesWithSameName.get(nodeInstance);
-        return jTreeOperator.getChildPath(jTreeOperator.findPath(nodeIdentifier).getParentPath(), parentNode.getIndex((TreeNode) desiredNode));
+        return jTreeOperator.getChildPath(createTreePath(nodeIdentifier).getParentPath(), parentNode.getIndex((TreeNode) desiredNode));
     }
 
     public void removeSelection(String nodeIdentifier) {
         jTreeOperator.removeSelectionPath(createTreePath(nodeIdentifier));
+    }
+
+    public void removeSelection(TreePath nodePath) {
+        jTreeOperator.removeSelectionPath(nodePath);
     }
     
     public boolean isExpanded(String nodeIdentifier) {
@@ -161,8 +165,16 @@ public class TreeOperator implements ComponentWrapper {
         return jTreeOperator.isVisible(treePath);
     }
 
+    public boolean isPathVisible(TreePath nodePath) {
+        return jTreeOperator.isVisible(nodePath);
+    }
+
     public void clickOnNode(String nodeIdentifier, int clickCount) {
         jTreeOperator.clickOnPath(createTreePath(nodeIdentifier), clickCount);
+    }
+
+    public void clickOnNode(TreePath nodeIdentifier, int clickCount) {
+        jTreeOperator.clickOnPath(nodeIdentifier, clickCount);
     }
     
     public JPopupMenuOperator createPopupOperator(String nodeIdentifier) {
