@@ -14,6 +14,8 @@ import org.robotframework.swing.tree.TreeIterator;
 import org.robotframework.swing.tree.TreeOperator;
 import org.robotframework.swing.tree.TreePathAction;
 
+import java.util.ArrayList;
+
 
 @RunWith(JDaveRunner.class)
 public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
@@ -106,8 +108,8 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 one(treeOperator).clickOnNode(nodePath, 1);
             }});
 
-            context.clickOnTreeNode(treeIdentifier, nodePath, 2);
-            context.clickOnTreeNode(treeIdentifier, nodePath);
+            context.clickOnTreeNode(treeIdentifier, nodePath, "None",2);
+            context.clickOnTreeNode(treeIdentifier, nodePath, "None", 1);
         }
 
         public void getsTreeNodeIndex() {
@@ -142,7 +144,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 one(treeOperator).collapse(nodePath);
             }});
 
-            context.collapseTreeNode(treeIdentifier, nodePath);
+            context.collapseTreeNode(treeIdentifier, nodePath, "None");
         }
 
         public void expandsTreeNode() {
@@ -150,7 +152,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 one(treeOperator).expand(nodePath);
             }});
 
-            context.expandTreeNode(treeIdentifier, nodePath);
+            context.expandTreeNode(treeIdentifier, nodePath, "None");
         }
 
         public void selectsTreeNode() {
@@ -158,17 +160,19 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 one(treeOperator).addSelection(nodePath);
             }});
 
-            context.selectTreeNode(treeIdentifier, nodePath, new String[0]);
+            context.selectTreeNode(treeIdentifier, nodePath, "None", new ArrayList<String>());
         }
 
         public void selectsMultipleTreeNodes() {
+            ArrayList<String> nodes = new ArrayList<String>();
             final String otherNode = "other|node";
+            nodes.add(otherNode);
             checking(new Expectations() {{
                 one(treeOperator).addSelection(nodePath);
                 one(treeOperator).addSelection(otherNode);
             }});
 
-            context.selectTreeNode(treeIdentifier, nodePath, new String[]{otherNode});
+            context.selectTreeNode(treeIdentifier, nodePath, "None", nodes);
         }
 
         public void unselectsTreeNode() {
@@ -176,7 +180,7 @@ public class TreeNodeKeywordsSpec extends TreeSpecification<TreeNodeKeywords> {
                 one(treeOperator).removeSelection(nodePath);
             }});
 
-            context.unselectTreeNode(treeIdentifier, nodePath);
+            context.unselectTreeNode(treeIdentifier, nodePath, "None");
         }
 
         public void treeNodeShouldBeExpandedPassesIfTreeNodeIsExpanded() throws Throwable {

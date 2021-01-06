@@ -18,6 +18,7 @@ package org.robotframework.swing.tree;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -99,9 +100,31 @@ public class TreeOperator implements ComponentWrapper {
     public void addSelection(String nodeIdentifier) {
         jTreeOperator.addSelectionPath(createTreePath(nodeIdentifier));
     }
-    
+
+    public void addSelectionPath(TreePath nodePath) {
+        jTreeOperator.addSelectionPath(nodePath);
+    }
+
+    public TreePath getDuplicatedNodeInstance(String nodeIdentifier, Integer nodeInstance) {
+        TreeNode parentNode = (TreeNode) createTreePath(nodeIdentifier).getParentPath().getLastPathComponent();
+        Object[] nodeList = jTreeOperator.getChildren(parentNode);
+        Object firstNode = createTreePath(nodeIdentifier).getLastPathComponent();
+        List<Object> listOfNodesWithSameName = new ArrayList<>();
+        for (Object node : nodeList) {
+            if ((firstNode.toString()).equals(node.toString())) {
+                listOfNodesWithSameName.add(node);
+            }
+        }
+        Object desiredNode = listOfNodesWithSameName.get(nodeInstance);
+        return jTreeOperator.getChildPath(createTreePath(nodeIdentifier).getParentPath(), parentNode.getIndex((TreeNode) desiredNode));
+    }
+
     public void removeSelection(String nodeIdentifier) {
         jTreeOperator.removeSelectionPath(createTreePath(nodeIdentifier));
+    }
+
+    public void removeSelection(TreePath nodePath) {
+        jTreeOperator.removeSelectionPath(nodePath);
     }
     
     public boolean isExpanded(String nodeIdentifier) {
@@ -132,14 +155,26 @@ public class TreeOperator implements ComponentWrapper {
     public boolean isPathSelected(String nodeIdentifier) {
         return jTreeOperator.isPathSelected(createTreePath(nodeIdentifier));
     }
+
+    public boolean isPathSelected(TreePath nodePath) {
+        return jTreeOperator.isPathSelected(nodePath);
+    }
     
     public boolean isVisible(String nodeIdentifier) {
         TreePath treePath = createTreePath(nodeIdentifier);
         return jTreeOperator.isVisible(treePath);
     }
 
+    public boolean isPathVisible(TreePath nodePath) {
+        return jTreeOperator.isVisible(nodePath);
+    }
+
     public void clickOnNode(String nodeIdentifier, int clickCount) {
         jTreeOperator.clickOnPath(createTreePath(nodeIdentifier), clickCount);
+    }
+
+    public void clickOnNode(TreePath nodeIdentifier, int clickCount) {
+        jTreeOperator.clickOnPath(nodeIdentifier, clickCount);
     }
     
     public JPopupMenuOperator createPopupOperator(String nodeIdentifier) {

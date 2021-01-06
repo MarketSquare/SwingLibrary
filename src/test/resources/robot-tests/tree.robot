@@ -64,6 +64,12 @@ Collapse Node By Name
     treeNodeShouldBeCollapsed  ${treeName}  ${rootNode}
     collapseTreeNode  ${treeName}  ${rootNode}
 
+Collapse Node By Name With Duplicated Node Instance
+    expandTreeNode  ${treeName}  ${rootNode}
+    expandTreeNode  ${treeName}  ${childNode1}  \#0
+    treeNodeShouldBeExpanded  ${treeName}  ${childNode1}  \#0
+    collapseTreeNode  ${treeName}  ${childNode1}  \#0
+
 Tree Node Should Be Collapsed
     collapseTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldBeCollapsed  ${treeName}  0
@@ -90,6 +96,28 @@ Select Tree Node By Name
     selectTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldBeSelected  ${treeName}  ${rootNode}
     [Teardown]  unselectTreeNode  ${treeName}  ${rootNode}
+
+Select Tree Node By Name With Duplicate Node
+    clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldBeSelected  ${treeName}  ${childNode1}  \#1
+    Run Keyword And Expect Error  Tree node 'books for java programmers' is not selected.  treeNodeShouldBeSelected  ${treeName}  ${childNode1}  \#0
+    Run Keyword And Expect Error  Tree node 'books for java programmers' is selected.  treeNodeShouldNotBeSelected  ${treeName}  ${childNode1}  \#1
+    [Teardown]  clearTreeSelection  ${treeName}
+
+Select Tree Node By Path With Duplicate Nodes
+    clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${rootNode}|${childNode1}  \#1
+    treeNodeShouldBeSelected  ${treeName}  ${childNode1}  \#1
+    [Teardown]  clearTreeSelection  ${treeName}
+
+Select Tree Node By Name With Duplicate Node And Additional Node Identifiers
+    clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${childNode1}  \#1  ${childNode2}
+    treeNodeShouldBeSelected  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldNotBeSelected  ${treeName}  ${childNode1}  \#0
+    treeNodeShouldBeSelected  ${treeName}  ${childNode2}  \#0
+    [Teardown]  clearTreeSelection  ${treeName}
 
 Select Tree Node By Name With Jemmy Timeout
     clearTreeSelection  ${treeName}
@@ -119,6 +147,16 @@ Unselect Tree Node By Name
     selectTreeNode  ${treeName}  ${rootNode}
     unselectTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldNotBeSelected  ${treeName}  ${rootNode}
+
+Unselect Tree Node By Name Using Node Instance
+    clearTreeSelection  ${treeName}
+    selectTreeNode  ${treeName}  ${childNode1}  \#1
+    unselectTreeNode  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldNotBeSelected  ${treeName}  ${childNode1}  \#1
+    selectTreeNode  ${treeName}  ${childNode1}  \#1  3
+    unselectTreeNode  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldNotBeSelected  ${treeName}  ${childNode1}  \#1
+    sleep  10s
 
 Unselect Tree Node By Name With Jemmy Timeout
     clearTreeSelection  ${treeName}
@@ -160,6 +198,16 @@ Tree Node Should Be Visible
     runKeywordAndExpectError  Tree node '${anotherNodePath}' is not visible.  treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}
     runKeywordAndExpectError  Tree node '${leafNodePath}' is not visible.  treeNodeShouldBeVisible  ${treeName}  ${leafNodePath}
 
+Tree Node Should Be Visible With Duplicated Nodes
+    expandAllTreeNodes  ${treeName}
+    treeNodeShouldBeVisible  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldBeVisible  ${treeName}  ${childNode1}  \#1  3
+    treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}  \#1
+    treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}  \#1  3
+    collapseTreeNode  ${treeName}  ${rootNode}
+    runKeywordAndExpectError  Tree node '${anotherNodePath}' is not visible.  treeNodeShouldBeVisible  ${treeName}  ${anotherNodePath}  \#1
+    runKeywordAndExpectError  Tree node '${childNode1}' is not visible.  treeNodeShouldBeVisible  ${treeName}  ${childNode1}  \#1
+
 Tree Node Should Not Be Visible
     collapseTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldNotBeVisible  ${treeName}  ${anotherNodePath}
@@ -167,6 +215,16 @@ Tree Node Should Not Be Visible
     expandAllTreeNodes  ${treeName}
     runKeywordAndExpectError  Tree node '${anotherNodePath}' is visible.  treeNodeShouldNotBeVisible  ${treeName}  ${anotherNodePath}
     runKeywordAndExpectError  Tree node '${leafNodePath}' is visible.  treeNodeShouldNotBeVisible  ${treeName}  ${leafNodePath}
+
+Tree Node Should Not Be Visible With Duplicated Nodes
+    collapseTreeNode  ${treeName}  ${rootNode}
+    treeNodeShouldNotBeVisible  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldNotBeVisible  ${treeName}  ${childNode1}  \#1  3
+    treeNodeShouldNotBeVisible  ${treeName}  ${anotherNodePath}  \#1
+    treeNodeShouldNotBeVisible  ${treeName}  ${anotherNodePath}  \#1  3
+    expandAllTreeNodes  ${treeName}
+    runKeywordAndExpectError  Tree node '${anotherNodePath}' is visible.  treeNodeShouldNotBeVisible  ${treeName}  ${anotherNodePath}  \#1
+    runKeywordAndExpectError  Tree node '${childNode1}' is visible.  treeNodeShouldNotBeVisible  ${treeName}  ${childNode1}  \#1
 
 Tree Node Should Be Visible With Jemmy Timeout
     expandAllTreeNodes  ${treeName}
@@ -184,6 +242,11 @@ Tree Node Should Be Leaf AND Tree Node Should Not Be Leaf
     treeNodeShouldNotBeLeaf  ${treeName}  ${anotherNodePath}
     collapseTreeNode  ${treeName}  ${rootNode}
     treeNodeShouldNotBeLeaf  ${treeName}  ${rootNode}
+
+Tree Node Should Be/Should Not Be Leaf With Duplicated Node Instance
+    expandTreeNode  ${treeName}  ${rootNode}
+    treeNodeShouldBeLeaf  ${treeName}  ${childNode1}  \#1
+    treeNodeShouldNotBeLeaf  ${treeName}  ${anotherNodePath}  \#0
 
 Tree Node Should Exist By Name
     treeNodeShouldExist  ${treeName}  ${rootNode}
@@ -233,16 +296,16 @@ Tree Node Popup Menu Item Should Be Enabled Should Fail If Menu Item Is Disabled
 Get Tree Node Count Returns The Count Of All Visible Nodes
     [Setup]  resetNodes
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  3  ${visibleNodes}
+    shouldBeEqualAsIntegers  4  ${visibleNodes}
     expandTreeNode  ${treeName}  ${rootNode}|${childNode1}
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  6  ${visibleNodes}
+    shouldBeEqualAsIntegers  7  ${visibleNodes}
     collapseTreeNode  ${treeName}  ${rootNode}|${childNode1}
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  3  ${visibleNodes}
+    shouldBeEqualAsIntegers  4  ${visibleNodes}
     hideRootNode
     ${visibleNodes}=  getTreeNodeCount  ${treeName}
-    shouldBeEqualAsIntegers  2  ${visibleNodes}
+    shouldBeEqualAsIntegers  3  ${visibleNodes}
 
 Get Node Items From Tree Popup Menu
     [Setup]  resetNodes
@@ -252,7 +315,7 @@ Get Node Items From Tree Popup Menu
 
 Get Tree Node Child Names
     [Setup]  resetNodes
-    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}
+    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}  ${childNode1}
     ${childNames}=  getTreeNodeChildNames  ${treeName}  ${rootNode}
     listsShouldBeEqual  ${expectedChildnames}  ${childNames}
 
@@ -292,6 +355,25 @@ Click On Tree Node
     clickOnTreeNode  ${treeName}  ${rootNode}|${childNode1}|${leafNode2}  3
     clickedNodesShouldBe  ${leafNode2}
     clickCountShouldBe  3
+
+Click On Tree Node Without Click Count
+    resetNodes
+    clearSavedNodes
+    clickOnTreeNode  ${treeName}  ${rootNode}|${childNode1}  \#1
+    clickCountShouldBe  1
+
+Click On Tree Node With Duplicated Node Instance
+    resetNodes
+    clearSavedNodes
+    clickOnTreeNode  ${treeName}  ${rootNode}|${childNode1}|${leafNode2}
+    clickCountShouldBe  1
+
+Click On Tree Node With Duplicated Node Instance And Click Count
+    resetNodes
+    clearSavedNodes
+    clickOnTreeNode  ${treeName}  ${rootNode}|${childNode1}  \#1  3
+    clickCountShouldBe  3
+    Sleep  5s
 
 Expand All Tree Nodes
     [Setup]  resetNodes
@@ -334,7 +416,7 @@ Keywords Also Work With Invisible Root
 
 List Children With Invisible Root
     [Setup]  resetNodes
-    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}
+    ${expectedChildnames}=  createList  ${childNode1}  ${childNode2}  ${childNode1}
     hideRootNode
     ${childNames}=  getTreeNodeChildNames  ${treeName}
     listsShouldBeEqual  ${expectedChildnames}  ${childNames}

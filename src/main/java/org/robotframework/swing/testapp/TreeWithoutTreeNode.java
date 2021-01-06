@@ -16,6 +16,7 @@ public class TreeWithoutTreeNode extends JTree {
             new Node("node3",
                 new Node("node4"),
                 new Node("node5",
+                    new Node("node6"),
                     new Node("node6")
                 )
             ),

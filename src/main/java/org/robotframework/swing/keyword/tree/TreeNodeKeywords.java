@@ -54,9 +54,21 @@ public class TreeNodeKeywords extends TreeSupport {
             + "See `Expand Tree Node` for information about ``nodeIdentifier``.\n\n"
             + "Examples:\n"
             + "| `Collapse Tree Node` | myTree | Root|Folder |\n"
-            + "| `Collapse Tree Node` | myTree | 3 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier"})
-    public void collapseTreeNode(String identifier, String nodeIdentifier) {
+            + "| `Collapse Tree Node` | myTree | 3 |\n\n"
+            + "In case of existence of multiple nodes with the same node identifier, ``nodeInstance`` "
+            + "can be used to collapse the desired node. If ``nodeInstance`` is not "
+            + "specified, first node found with desired ``nodeIdentifier`` is collapsed. \n\n"
+            + "Node instance must be specified using ``#`` before the desired number.\n"
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
+            + "Example:\n"
+            + "| `Collapse Tree Node` | mytree | Root|Folder | \\#2 | # collapses 3rd node with specified"
+            + " ``nodeIdentifier`` |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance="})
+    public void collapseTreeNode(String identifier, String nodeIdentifier, String nodeInstance) {
+        if (nodeInstance != null && !nodeInstance.equals("None")) {
+            TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+            treeOperator(identifier).collapse(selectionPath);
+        }
         treeOperator(identifier).collapse(nodeIdentifier);
     }
 
@@ -65,10 +77,23 @@ public class TreeNodeKeywords extends TreeSupport {
             + "or index of the expanded node element. Nested structures can only be expanded "
             + "using the tree path syntax.\n\nExamples:\n"
             + "| `Expand Tree Node` | myTree | Root|Folder |\n"
-            + "| `Expand Tree Node` | myTree | 3 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier"})
-    public void expandTreeNode(String identifier, String nodeIdentifier) {
-        treeOperator(identifier).expand(nodeIdentifier);
+            + "| `Expand Tree Node` | myTree | 3 |\n"
+            + "In case of existence of multiple nodes with the same node identifier, ``nodeInstance`` "
+            + "can be used to expand the desired node. If ``nodeInstance`` is not "
+            + "specified, first node found with desired ``nodeIdentifier`` is expanded. \n\n"
+            + "Node instance must be specified using ``#`` before the desired number.\n"
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
+            + "Example:\n"
+            + "| `Expand Tree Node` | mytree | Root|Folder | \\#2 | # expands 3rd node with specified"
+            + " ``nodeIdentifier`` |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance="})
+    public void expandTreeNode(String identifier, String nodeIdentifier, String nodeInstance) {
+        if (nodeInstance != null && !nodeInstance.equals("None")) {
+            TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+            treeOperator(identifier).expand(selectionPath);
+        } else {
+            treeOperator(identifier).expand(nodeIdentifier);
+        }
     }
 
     @RobotKeyword("Collapses all nodes in a tree.\n\n"
@@ -98,19 +123,53 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Sets a node as selected in a tree.\n"
-            + "Does not clear earlier selections.\n"
-            + "If several nodes have the same path then *only the first* of those nodes is selected.\n\n"
+            + "Does not clear earlier selections.\n\n"
             + "Example:\n"
             + "| `Select Tree Node` | myTree | Root|Folder |\n"
             + "Any number of node identifiers can be provided to select multiple nodes at once:\n"
-            + "| `Select Tree Node` | myTree | Root|Folder | Root|Folder2 | Root|Folder3 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "*additionalNodeIdentifiers"})
-    public void selectTreeNode(String identifier, String nodeIdentifier, String[] additionalNodeIdentifiers) {
+            + "| `Select Tree Node` | myTree | Root|Folder | Root|Folder2 | Root|Folder3 |\n\n"
+            + "``nodeInstance`` specifies n-th node to choose if several nodes have the same node "
+            + "identifier. Node instance must be specified using ``#`` before the desired number."
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n"
+            + "If ``nodeInstance`` is not specified then the *first node* "
+            + "with the corresponding ``nodeIdentifier`` will be selected.\n"
+            + "If ``additionalNodeIdentifiers`` is specified ``nodeInstance`` will be set to ``0`` "
+            + "and the keyword will work by selecting the first node found that has specified ``nodeIdentifier``.\n\n"
+            + "| `Select Tree Node` | myTree | Folder |  \\#2 |  | # selects 3rd node which has the specified "
+            + "``nodeIdentifier`` | \n"
+            + "| `Select Tree Node` | mytree | Folder | Folder2 |  | # if ``nodeInstance`` is not specified"
+            + " when using `additionalNodeIdentifiers` it will automatically select 1st element "
+            + "found that match ``nodeIdentifier`` | \n"
+            + "| `Select Tree Node` | mytree | Folder | \\#1 | Folder2 | # selects 2nd node with "
+            + "``nodeIdentifier`` and first occurrence of `Folder2` |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "*additionalNodeIdentifiers"})
+    public void selectTreeNode(String identifier, String nodeIdentifier, String nodeInstance, ArrayList<String> additionalNodeIdentifiers) {
         TreeOperator treeOperator = treeOperator(identifier);
-        treeOperator.addSelection(nodeIdentifier);
+        if (nodeInstance != null && nodeInstance != "None") {
+            if ((nodeInstance).contains("#")) {
+                TreePath selectionPath = treeOperator.getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+                treeOperator.addSelectionPath(selectionPath);
+            } else {
+                additionalNodeIdentifiers.add(nodeInstance);
+            }
+        } else {
+            treeOperator.addSelection(nodeIdentifier);
+        }
         for (String node : additionalNodeIdentifiers) {
             treeOperator.addSelection(node);
         }
+    }
+
+    @RobotKeywordOverload
+    public void selectTreeNode(String identifier, String nodeIdentifier, String arg) {
+        if ((arg.toString()).contains("#")){
+            selectTreeNode(identifier, nodeIdentifier, (String) arg, new ArrayList<String>());
+        } else {
+            ArrayList<String> nodes = new ArrayList<>();
+            nodes.add(arg);
+            selectTreeNode(identifier, nodeIdentifier, "None", nodes);
+        }
+
     }
 
     @RobotKeyword("Gets item names from the node context popup menu.\n"
@@ -138,15 +197,34 @@ public class TreeNodeKeywords extends TreeSupport {
             + "| `Click On Tree Node` | myTree | 0      | \n\n"
             + "An optional ``clickCount`` parameter can be provided for example if a double click is required.\n"
             + "Default click count is one:\n"
-            + "| `Click On Tree Node` | myTree | Root|Folder | 2 | # doubleclicks on node |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "clickCount=1"})
-    public void clickOnTreeNode(String identifier, String nodeIdentifier, int clickCount) {
-        treeOperator(identifier).clickOnNode(nodeIdentifier, clickCount);
+            + "| `Click On Tree Node` | myTree | Root|Folder | 2 | # doubleclicks on node |\n\n"
+            + "In case of existence of multiple nodes with the same node identifier, ``nodeInstance`` "
+            + "can be used to click the desired node. If ``nodeInstance`` is not "
+            + "specified, first node found with desired ``nodeIdentifier`` is clicked. \n\n"
+            + "Node instance must be specified using ``#`` before the desired number.\n"
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
+            + "Example:\n"
+            + "| `Click On Tree Node` | mytree | Root|Folder | \\#3 |   | # click 4th node with specified "
+            + "``nodeIdentifier`` | \n"
+            + "| `Click On Tree Node` | mytree | Root|Folder | \\#2 | 4 | # clicks 4 times the 3rd node "
+            + "with specified ``nodeIdentifier`` |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "clickCount=1"})
+    public void clickOnTreeNode(String identifier, String nodeIdentifier, String nodeInstance, int clickCount) {
+        if (nodeInstance != null && !nodeInstance.equals("None")) {
+            TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+            treeOperator(identifier).clickOnNode(selectionPath, clickCount);
+        } else {
+            treeOperator(identifier).clickOnNode(nodeIdentifier, clickCount);
+        }
     }
 
     @RobotKeywordOverload
-    public void clickOnTreeNode(String identifier, String nodeIdentifier) {
-        clickOnTreeNode(identifier, nodeIdentifier, 1);
+    public void clickOnTreeNode(String identifier, String nodeIdentifier, String arg) {
+        if ((arg).contains("#")){
+            clickOnTreeNode(identifier, nodeIdentifier, (String) arg, 1);
+        } else {
+            clickOnTreeNode(identifier, nodeIdentifier, "None", Integer.parseInt(arg));
+        }
     }
 
     @RobotKeyword("Fails if the tree node is collapsed.\n"
@@ -155,13 +233,19 @@ public class TreeNodeKeywords extends TreeSupport {
             + "Example:\n"
             + "| `Tree Node Should Be Expanded` | myTree | Root|Folder |\n"
             + "| `Tree Node Should Be Expanded` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout="})
-    public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier, String jemmyTimeout) {
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=","jemmyTimeout="})
+    public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
         if (jemmyTimeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmyTimeout);
         }
         try {
-            boolean isExpanded = treeOperator(identifier).isExpanded(nodeIdentifier);
+            boolean isExpanded;
+            if (!nodeInstance.equals("None")) {
+                TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+                isExpanded = treeOperator(identifier).isExpanded(selectionPath);
+            } else {
+                isExpanded = treeOperator(identifier).isExpanded(nodeIdentifier);
+            }
             Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not expanded.", isExpanded);
         } finally {
             if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", Long.toString(old_time));
@@ -169,8 +253,17 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeywordOverload
+    public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier, String arg) {
+        if (arg.contains("#")) {
+            treeNodeShouldBeExpanded(identifier, nodeIdentifier, arg, "None");
+        } else {
+            treeNodeShouldBeExpanded(identifier, nodeIdentifier, "None", arg);
+        }
+    }
+
+    @RobotKeywordOverload
     public void treeNodeShouldBeExpanded(String identifier, String nodeIdentifier) {
-        treeNodeShouldBeExpanded(identifier, nodeIdentifier, "None");
+        treeNodeShouldBeExpanded(identifier, nodeIdentifier, "None", "None");
     }
 
     @RobotKeyword("Fails if the tree node is expanded.\n"
@@ -178,14 +271,30 @@ public class TreeNodeKeywords extends TreeSupport {
             + "See `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Collapsed` | myTree | Root|Folder |\n"
-            + "| `Tree Node Should Be Collapsed` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout="})
-    public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier, String jemmyTimeout) {
+            + "| `Tree Node Should Be Collapsed` | myTree | Root|Folder | 4 |\n\n"
+            + "In case of existence of multiple nodes with the same node identifier, ``nodeInstance`` "
+            + "can be used to check the desired node. If ``nodeInstance`` is not "
+            + "specified, first node found with desired ``nodeIdentifier`` is checked. \n\n"
+            + "Node instance must be specified using ``#`` before the desired number.\n"
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n\n"
+            + "Example:\n"
+            + "| `Tree Node Should Be Collapsed` | mytree | Root|Folder | \\#3 |   | # checks 4th node with specified "
+            + "``nodeIdentifier`` | \n"
+            + "| `Tree Node Should Be Collapsed` | mytree | Root|Folder | \\#2 | 4 | # wait 4 seconds for the 3rd node "
+            + "with specified ``nodeIdentifier`` to be collapsed |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "jemmyTimeout="})
+    public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
         if (jemmyTimeout != "None") {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmyTimeout);
         }
         try {
-            boolean isCollapsed = treeOperator(identifier).isCollapsed(nodeIdentifier);
+            boolean isCollapsed;
+            if (!nodeInstance.equals("None")) {
+                TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+                isCollapsed = treeOperator(identifier).isCollapsed(selectionPath);
+            } else {
+                isCollapsed = treeOperator(identifier).isCollapsed(nodeIdentifier);
+            }
             Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not collapsed.", isCollapsed);
         } finally {
             if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", Long.toString(old_time));
@@ -193,16 +302,37 @@ public class TreeNodeKeywords extends TreeSupport {
     }
 
     @RobotKeywordOverload
+    public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier, String arg) {
+        if (arg.contains("#")) {
+            treeNodeShouldBeCollapsed(identifier, nodeIdentifier, arg, "None");
+        } else {
+            treeNodeShouldBeCollapsed(identifier, nodeIdentifier, "None", arg);
+        }
+    }
+
+    @RobotKeywordOverload
     public void treeNodeShouldBeCollapsed(String identifier, String nodeIdentifier) {
-        treeNodeShouldBeCollapsed(identifier, nodeIdentifier, "None");
+        treeNodeShouldBeCollapsed(identifier, nodeIdentifier, "None", "None");
     }
 
     @RobotKeyword("Sets a tree node as unselected.\n\n"
             + "Example:\n"
-            + "| `Unselect Tree Node` | myTree | Root|Folder |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier"})
-    public void unselectTreeNode(String identifier, String nodeIdentifier) {
-        treeOperator(identifier).removeSelection(nodeIdentifier);
+            + "| `Unselect Tree Node` | myTree | Root|Folder |\n\n"
+            + "``nodeInstance`` specifies n-th node to unselect if several nodes have the same node "
+            + "identifier. Node instance must be specified using ``#`` before the desired number."
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n"
+            + "If ``nodeInstance`` is not specified then the *first node* "
+            + "with the corresponding ``nodeIdentifier`` will be selected.\n"
+            + "| `Unselect Tree Node` | myTree | Root|Folder | \\#1 | # unselects 2nd node with the"
+            + " specified ``nodeIdentifier`` |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance="})
+    public void unselectTreeNode(String identifier, String nodeIdentifier, String nodeInstance) {
+        if (nodeInstance != null && !nodeInstance.equals("None")) {
+            TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+            treeOperator(identifier).removeSelection(selectionPath);
+        } else {
+            treeOperator(identifier).removeSelection(nodeIdentifier);
+        }
     }
 
     @RobotKeyword("Fails if the node has child nodes.\n"
@@ -210,23 +340,40 @@ public class TreeNodeKeywords extends TreeSupport {
             + "See `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Be Leaf` | myTree | Root|Folder |\n"
-            + "| `Tree Node Should Be Leaf` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout="})
-    public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier, String jemmyTimeout) {
-        if (jemmyTimeout != "None") {
+            + "| `Tree Node Should Be Leaf` | myTree | Root|Folder | 4 |\n\n"
+            + "``nodeInstance`` checks n-th node if it is a leaf, in case several nodes have the same node "
+            + "identifier. Node instance must be specified using ``#`` before the desired number."
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n"
+            + "If ``nodeInstance`` is not specified then the *first node* "
+            + "with the corresponding ``nodeIdentifier`` will be checked.\n"
+            + "| `Tree Node Should Be Leaf` | myTree | Root|Folder | \\#1 | # checks if 2nd node with the"
+            + " specified ``nodeIdentifier`` is a leaf |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "jemmyTimeout="})
+    public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
+        if (!jemmyTimeout.equals("None")) {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmyTimeout);
         }
         try {
-            boolean isLeaf = treeOperator(identifier).isLeaf(nodeIdentifier);
+            boolean isLeaf = isLeafNode(identifier, nodeIdentifier, nodeInstance);
             Assert.assertTrue("Tree node '" + nodeIdentifier + "' is not leaf.", isLeaf);
         } finally {
-            if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", Long.toString(old_time));
+            if (jemmyTimeout != null && !jemmyTimeout.equals("None"))
+                timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", Long.toString(old_time));
+        }
+    }
+
+    @RobotKeywordOverload
+    public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier, String arg) {
+        if (arg.contains("#")) {
+            treeNodeShouldBeLeaf(identifier, nodeIdentifier, arg, "None");
+        } else {
+            treeNodeShouldBeLeaf(identifier, nodeIdentifier, "None", arg);
         }
     }
 
     @RobotKeywordOverload
     public void treeNodeShouldBeLeaf(String identifier, String nodeIdentifier) {
-        treeNodeShouldBeLeaf(identifier, nodeIdentifier, "None");
+        treeNodeShouldBeLeaf(identifier, nodeIdentifier, "None", "None");
     }
 
     @RobotKeyword("Fails if the node doesn't have child nodes.\n"
@@ -234,23 +381,52 @@ public class TreeNodeKeywords extends TreeSupport {
             + "See `Set Jemmy Timeout` keyword for more information about jemmy timeouts.\n\n"
             + "Example:\n"
             + "| `Tree Node Should Not Be Leaf` | myTree | Root|Folder |\n"
-            + "| `Tree Node Should Not Be Leaf` | myTree | Root|Folder | 4 |\n")
-    @ArgumentNames({"identifier", "nodeIdentifier", "jemmyTimeout="})
-    public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier, String jemmyTimeout) {
-        if (jemmyTimeout != "None") {
+            + "| `Tree Node Should Not Be Leaf` | myTree | Root|Folder | 4 |\n"
+            + "``nodeInstance`` checks n-th node if it is not a leaf, in case several nodes have the same node "
+            + "identifier. Node instance must be specified using ``#`` before the desired number."
+            + "*N.B.* ``#`` is a special character and must be escaped using ``\\``.\n"
+            + "If ``nodeInstance`` is not specified then the *first node* "
+            + "with the corresponding ``nodeIdentifier`` will be checked.\n"
+            + "| `Tree Node Should Not Be Leaf` | myTree | Root|Folder | \\#1 |   | # checks if 2nd node with the"
+            + " specified ``nodeIdentifier`` is not leaf |\n"
+            + "| `Tree Node Should Not Be Leaf` | myTree | Root|Folder | \\#1 | 4 | # checks for 4 seconds if 2nd "
+            + "node with the specified ``nodeIdentifier`` is not leaf |\n")
+    @ArgumentNames({"identifier", "nodeIdentifier", "nodeInstance=", "jemmyTimeout="})
+    public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier, String nodeInstance, String jemmyTimeout) {
+        if (jemmyTimeout != null && !jemmyTimeout.equals("None")) {
             old_time = timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", jemmyTimeout);
         }
         try {
-            boolean isLeaf = treeOperator(identifier).isLeaf(nodeIdentifier);
+            boolean isLeaf = isLeafNode(identifier, nodeIdentifier, nodeInstance);
             Assert.assertFalse("Tree node '" + nodeIdentifier + "' is leaf.", isLeaf);
         } finally {
-            if (jemmyTimeout != "None") timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", Long.toString(old_time));
+            if (jemmyTimeout != null && !jemmyTimeout.equals("None"))
+                timeout.setJemmyTimeout("JTreeOperator.WaitNodeExpandedTimeout", Long.toString(old_time));
+        }
+    }
+
+
+    @RobotKeywordOverload
+    public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier, String arg) {
+        if (arg.contains("#")) {
+            treeNodeShouldNotBeLeaf(identifier, nodeIdentifier, arg, "None");
+        } else {
+            treeNodeShouldNotBeLeaf(identifier, nodeIdentifier, "None", arg);
         }
     }
 
     @RobotKeywordOverload
     public void treeNodeShouldNotBeLeaf(String identifier, String nodeIdentifier) {
-        treeNodeShouldNotBeLeaf(identifier, nodeIdentifier, "None");
+        treeNodeShouldNotBeLeaf(identifier, nodeIdentifier, "None", "None");
+    }
+
+    private boolean isLeafNode(String identifier, String nodeIdentifier, String nodeInstance) {
+        if (nodeInstance != null && !nodeInstance.equals("None")) {
+            TreePath selectionPath = treeOperator(identifier).getDuplicatedNodeInstance(nodeIdentifier, Integer.parseInt(nodeInstance.split("#")[1]));
+            return treeOperator(identifier).isLeaf(selectionPath);
+        } else {
+            return treeOperator(identifier).isLeaf(nodeIdentifier);
+        }
     }
 
     @RobotKeyword("Returns the count of all visible nodes.\n\n"
