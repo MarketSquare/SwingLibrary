@@ -285,6 +285,20 @@ Tree Node Popup Menu Item Should Be Disabled
     treeNodePopupMenuItemShouldBeDisabled  ${treeName}  ${rootNode}  Submenu|Disabled menuitem
     popupMenuShouldNotBeDisplayed
 
+Tree Nodes Popup Menu Items Should Be Disabled
+    [Tags]  display-required
+    clearSavedNodes
+    selectNodes
+    treeNodesPopupMenuItemShouldBeDisabled  ${treeName}  Disabled menuitem
+    popupMenuShouldNotBeDisplayed
+
+Tree Nodes Popup Menu Items Should Be Enabled
+    [Tags]  display-required
+    clearSavedNodes
+    selectNodes
+    treeNodesPopupMenuItemShouldBeEnabled  ${treeName}  Submenu|Enabled menuitem
+    popupMenuShouldNotBeDisplayed
+
 Tree Node Popup Menu Item Should Be Disabled Should Fail If Menu Item Is Enabled
     [Tags]  display-required
     runKeywordAndExpectError  *Menu item '${insertChildMenuEntry}' was enabled*  treeNodePopupMenuItemShouldBeDisabled  ${treeName}  ${rootNode}  ${insertChildMenuEntry}
