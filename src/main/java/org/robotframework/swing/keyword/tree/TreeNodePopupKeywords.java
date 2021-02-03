@@ -67,23 +67,50 @@ public class TreeNodePopupKeywords extends TreeSupport {
         + "| `Tree Node Popup Menu Item Should Be Enabled` | 0 | 1 | New Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeEnabled(String identifier, String nodeIdentifier, String menuPath) {
-        JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
-        popupOperator.setComparator(new EqualsStringComparator());
-        boolean menuItemIsEnabled = popupOperator.showMenuItem(menuPath).isEnabled();
-        Assert.assertTrue("Menu item '" + menuPath + "' was disabled", menuItemIsEnabled);
-        popupOperator.setVisible(false);
+        isEnabledOrDisabled(identifier, menuPath, nodeIdentifier, true);
+    }
+
+    @RobotKeyword("Fails if given nodes popup menu item is disabled.\n\n"
+            + "Examples:\n"
+            + "| `Tree Nodes Popup Menu Item Should Be Enabled` | myTree | New Folder |\n"
+            + "| `Tree Nodes Popup Menu Item Should Be Enabled` | 0 | New Folder |\n")
+    @ArgumentNames({"identifier", "menuPath"})
+    public void treeNodesPopupMenuItemShouldBeEnabled(String identifier, String menuPath) {
+        isEnabledOrDisabled(identifier, menuPath, null, true);
+    }
+
+    @RobotKeyword("Fails if given nodes popup menu item is enabled.\n\n"
+            + "Examples:\n"
+            + "| `Tree Nodes Popup Menu Item Should Be Disabled` | myTree | New Folder |\n"
+            + "| `Tree Nodes Popup Menu Item Should Be Disabled` | 0 | New Folder |\n")
+    @ArgumentNames({"identifier", "menuPath"})
+    public void treeNodesPopupMenuItemShouldBeDisabled(String identifier, String menuPath) {
+        isEnabledOrDisabled(identifier, menuPath, null, false);
     }
 
     @RobotKeyword("Fails if given popup menu item is enabled.\n\n"
-        + "Examples:\n"
-        + "| `Tree Node Popup Menu Item Should Be Disabled` | myTree | Root|Folder | New Folder |\n"
-        + "| `Tree Node Popup Menu Item Should Be Disabled` | 0      | 1 | New Folder |\n")
+            + "Examples:\n"
+            + "| `Tree Node Popup Menu Item Should Be Disabled` | myTree | Root|Folder | New Folder |\n"
+            + "| `Tree Node Popup Menu Item Should Be Disabled` | 0      | 1 | New Folder |\n")
     @ArgumentNames({"identifier", "nodeIdentifier", "menuPath"})
     public void treeNodePopupMenuItemShouldBeDisabled(String identifier, String nodeIdentifier, String menuPath) {
-        JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
+        isEnabledOrDisabled(identifier, menuPath, nodeIdentifier, false);
+    }
+
+    private void isEnabledOrDisabled(String identifier, String menuPath, String nodeIdentifier, boolean isEnabled) {
+        JPopupMenuOperator popupOperator;
+        if (nodeIdentifier != null) {
+            popupOperator = treeOperator(identifier).createPopupOperator(nodeIdentifier);
+        } else {
+            popupOperator = treeOperator(identifier).createPopupOperatorOnSelectedNodes();
+        }
         popupOperator.setComparator(new EqualsStringComparator());
         boolean menuItemIsEnabled = popupOperator.showMenuItem(menuPath).isEnabled();
-        Assert.assertFalse("Menu item '" + menuPath + "' was enabled", menuItemIsEnabled);
+        if (isEnabled) {
+            Assert.assertTrue("Menu item '" + menuPath + "' was disabled", menuItemIsEnabled);
+        } else {
+            Assert.assertFalse("Menu item '" + menuPath + "' was enabled", menuItemIsEnabled);
+        }
         popupOperator.setVisible(false);
     }
 }
