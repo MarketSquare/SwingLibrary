@@ -176,7 +176,7 @@ public class TableOperator extends IdentifierSupport implements
                 JPopupMenuOperator.callPopup(
                         headerOperator.getSource(),
                         (int) point.getX(),
-                        (int) point.getY(),
+                        (int) point.getY() / 2,
                         InputEvent.BUTTON3_MASK));
         JMenuItemOperator item = menuOperator.showMenuItem(menuPath,
                 new EqualsStringComparator());
