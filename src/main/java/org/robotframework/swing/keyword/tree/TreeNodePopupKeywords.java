@@ -48,7 +48,8 @@ public class TreeNodePopupKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Invokes a menu action on all the selected tree nodes.\n"
-    	+ "If `checkItemIsEnabled` is set to False, it does not wait for a result.\n "
+    	+ "If ``checkItemIsEnabled`` is set to False, it does not wait for a result, "
+        + "so even if the menu item is disabled, the keyword does not fail .\n "
         + "By default `checkItemIsEnabled` is True. \n"
         + "Separator for items is ``|``.\n\n"
         + "Examples:\n"
@@ -58,7 +59,7 @@ public class TreeNodePopupKeywords extends TreeSupport {
     @ArgumentNames({"identifier", "menuPath", "checkItemIsEnabled=True"})
     public void selectFromPopupMenuOnSelectedTreeNodes(String identifier, String menuPath, Boolean checkItemIsEnabled) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperatorOnSelectedNodes();
-        if(checkItemIsEnabled==Boolean.TRUE) {
+        if (checkItemIsEnabled == Boolean.TRUE) {
             popupOperator.pushMenu(menuPath, new EqualsStringComparator());
         } else {
             popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
