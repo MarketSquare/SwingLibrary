@@ -48,17 +48,22 @@ public class TreeNodePopupKeywords extends TreeSupport {
     }
 
     @RobotKeyword("Invokes a menu action on all the selected tree nodes.\n"
-    	+ "Does not wait for a result.\n"
+    	+ "If `checkItemIsEnabled` is set to False, it does not wait for a result.\n "
+        + "By default `checkItemIsEnabled` is True. \n"
         + "Separator for items is ``|``.\n\n"
         + "Examples:\n"
-        + "| `Select Tree Node` | myTree | Root|Folder1 |\n"
+        + "| `Select Tree Node` | myTree | Root|Folder1 | true |\n"
         + "| `Select Tree Node` | myTree | Root|Folder2 |\n"
         + "| `Select From Popup Menu On Selected Tree Nodes` | myTree | Remove | ")
-    @ArgumentNames({"identifier", "menuPath"})
-    public void selectFromPopupMenuOnSelectedTreeNodes(String identifier, String menuPath) {
+    @ArgumentNames({"identifier", "menuPath", "checkItemIsEnabled=True"})
+    public void selectFromPopupMenuOnSelectedTreeNodes(String identifier, String menuPath, Boolean checkItemIsEnabled) {
         JPopupMenuOperator popupOperator = treeOperator(identifier).createPopupOperatorOnSelectedNodes();
-        popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
-        SwingWaiter.waitToAvoidInstability(300);
+        if(checkItemIsEnabled==Boolean.TRUE) {
+            popupOperator.pushMenu(menuPath, new EqualsStringComparator());
+        } else {
+            popupOperator.pushMenuNoBlock(menuPath, new EqualsStringComparator());
+            SwingWaiter.waitToAvoidInstability(300);
+        }
     }
 
     @RobotKeyword("Fails if given popup menu item is disabled.\n\n"

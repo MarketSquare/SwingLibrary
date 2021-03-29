@@ -477,6 +477,12 @@ Get Current Selection Paths
     ${selected_elements} =  getSelectionPaths  ${treeName}
     listsShouldBeEqual  ${selected_elements}  ${expected_elements}
 
+Select From Popup Menu On Selected Tree Nodes Check Menu Item
+    [Setup]  resetNodes
+    selectNodes
+    selectFromPopupMenuOnSelectedTreeNodes  ${treeName}  Disabled menuitem  False
+    Run Keyword And Expect Error  Menu pushing: (JMenuItem with text "Disabled menuitem")  selectFromPopupMenuOnSelectedTreeNodes  ${treeName}  Disabled menuitem  True
+
 *** Keywords ***
 keywordShouldFailBecauseContextIsIllegal
     [Arguments]  ${keyword}  @{arguments}
