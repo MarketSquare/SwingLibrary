@@ -12,7 +12,7 @@ __ https://github.com/robotframework/SwingLibrary/releases/tag/v2.1.0
 
 Keyword documentation for the latest version (2.2.1) are available `here`__
 
-__ http://robotframework.github.com/SwingLibrary/SwingLibrary.html
+__ https://robotframework.org/SwingLibrary/SwingLibrary.html
 
 This project was originally hosted in `Google Code`__
 
