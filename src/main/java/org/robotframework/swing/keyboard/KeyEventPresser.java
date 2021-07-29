@@ -4,6 +4,13 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+/**
+ * This class was created using methods from abbot.tester.Robot.
+ * Due to a Java 8 update (u301), sun.awt.SunToolkit.InfiniteLoop
+ * was removed entirely and using abbot's Robot would throw a
+ * ClassNotFoundException.
+ */
+
 public class KeyEventPresser extends Robot {
 
     public KeyEventPresser() throws AWTException {
