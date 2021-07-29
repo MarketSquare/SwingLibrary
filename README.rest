@@ -6,11 +6,11 @@ applications.  Usage instructions are in the Wiki__.
 
 __ https://github.com/robotframework/SwingLibrary/wiki
 
-Downloads are available at `Releases 2.2.1`__ 
+Downloads are available at `Releases 2.2.2`__ 
 
 __ https://github.com/robotframework/SwingLibrary/releases/tag/v2.1.0
 
-Keyword documentation for the latest version (2.2.1) are available `here`__
+Keyword documentation for the latest version (2.2.2) are available `here`__
 
 __ https://robotframework.org/SwingLibrary/SwingLibrary.html
 
