@@ -16,9 +16,7 @@
 
 package org.robotframework.swing.keyword.window;
 
-import java.awt.Component;
-import java.awt.Frame;
-import java.awt.Window;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +34,6 @@ import org.robotframework.swing.util.IComponentConditionResolver;
 import org.robotframework.swing.window.FrameOperator;
 import org.robotframework.swing.window.FrameOperatorFactory;
 
-import abbot.tester.WindowTester;
 
 @RobotKeywords
 public class WindowKeywords extends AbstractContextVerifier {
@@ -115,8 +112,15 @@ public class WindowKeywords extends AbstractContextVerifier {
     public void closeWindow(String identifier) {
         FrameOperator operator = operatorFactory.createOperator(identifier);
         operator.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        new WindowTester().actionClose(operator.getSource());
+        close(operator.getWindow());
     }
+
+    private void close(Window w) {
+        if (w.isShowing()) {
+            w.dispose();
+        }
+    }
+
 
     @RobotKeyword("Returns the title of the selected window.\n"
             + "Assumes current context is window.\n\n" + "Example:\n"

@@ -16,24 +16,31 @@
 
 package org.robotframework.swing.keyboard;
 
+import java.awt.AWTException;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import abbot.tester.ComponentTester;
-
 public class KeyEventSender {
-    private ComponentTester componentTester = new ComponentTester();
+    private KeyEventPresser key;
+
+    {
+        try {
+            key = new KeyEventPresser();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void sendEvent(String keyCodeAsString, String[] modifiersAsString) {
         int keyCode = toKeyCode(keyCodeAsString);
         int modifiers = toModifiers(modifiersAsString);
         sendEvent(keyCode, modifiers);
     }
-    
+
     private int toKeyCode(String keyCodeAsString) {
         return getIntValueFromField(KeyEvent.class, keyCodeAsString);
     }
-    
+
     private int getIntValueFromField(Class<?> target, String fieldName) {
         try {
             return target.getField(fieldName).getInt(null);
@@ -43,7 +50,7 @@ public class KeyEventSender {
             throw new RuntimeException(e);
         }
     }
-    
+
     private int toModifiers(String[] modifiersAsString) {
         int modifiers = 0;
         for (String modifierAsString : modifiersAsString) {
@@ -57,6 +64,6 @@ public class KeyEventSender {
     }
 
     private void sendEvent(int keyCode, int modifiers) {
-        componentTester.actionKeyStroke(keyCode, modifiers);
+        key.press(keyCode, modifiers);
     }
 }
