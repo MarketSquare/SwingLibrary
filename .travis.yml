@@ -9,3 +9,7 @@ install:
   - mvn clean package -Dmaven.test.skip=true
 script:
   - mvn clean verify
+
+cache:
+  directories:
+  - $HOME/.m2
