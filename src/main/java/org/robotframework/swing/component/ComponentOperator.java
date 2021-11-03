@@ -23,13 +23,30 @@ import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.ContainerOperator;
 import org.netbeans.jemmy.operators.JComponentOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
+import org.netbeans.jemmy.util.RegExComparator;
+import org.robotframework.swing.chooser.ByNameComponentChooser;
+import org.robotframework.swing.common.Identifier;
+import org.robotframework.swing.context.Context;
 import org.robotframework.swing.popup.PopupMenuOperatorFactory;
 
 import java.awt.event.InputEvent;
 
 public class ComponentOperator extends JComponentOperator {
     private PopupMenuOperatorFactory popupMenuOperatorFactory = new PopupMenuOperatorFactory();
-    
+
+    public static ComponentOperator newOperatorFor(int index) {
+        return new ComponentOperator((ContainerOperator) Context.getContext() , index);
+    }
+
+    public static ComponentOperator newOperatorFor(String name) {
+        Identifier identifier = new Identifier(name);
+        if (identifier.isRegExp())
+            return new ComponentOperator((ContainerOperator) Context.getContext(),
+                    createRegExpComponentChooser(identifier.asString()));
+        return new ComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+    }
+
     public ComponentOperator(ContainerOperator cont, ComponentChooser chooser) {
         super(cont, chooser);
     }
@@ -66,6 +83,10 @@ public class ComponentOperator extends JComponentOperator {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static ComponentChooser createRegExpComponentChooser(String identifier) {
+        return new JComponentFinder(new NameComponentChooser(identifier, new RegExComparator()));
     }
 
     private int toCombinedInputEventMasks(String[] modifierStrings) {

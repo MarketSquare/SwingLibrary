@@ -28,12 +28,12 @@ import org.robotframework.swing.util.ObjectUtils;
 
 public class DialogOperator extends JDialogOperator implements ComponentWrapper {
 
-    public static DialogOperator newOperatorFor(int index) {
-        return new DialogOperator(index);
-    }
-
     private DialogOperator(int index) {
         super(index);
+    }
+
+    public static DialogOperator newOperatorFor(int index) {
+        return new DialogOperator(index);
     }
 
     public static DialogOperator newOperatorFor(String title) {
