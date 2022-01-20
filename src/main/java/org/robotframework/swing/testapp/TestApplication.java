@@ -75,6 +75,7 @@ public class TestApplication {
     private void addComponentsToMainPanel() {
         panel.add(new TestTextField());
         panel.add(new TestButton());
+        panel.add(new TestNullPointerException());
         panel.add(new TestList());
         panel.add(new TestList() {
             {
