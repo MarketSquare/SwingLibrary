@@ -46,8 +46,12 @@ public class ComponentKeywords {
             operatorFactory);
 
     @RobotKeyword("Fails if component exists within current context.\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
-            + "Example:\n" + "| `Component Should Not Exist` | myPanel |\n")
+            + "Example:\n"
+            + "| `Component Should Not Exist` | myPanel |\n"
+            + "| `Component Should Not Exist` | regexp=^A.* | No component starting with 'A' should exist |\n")
     @ArgumentNames({ "identifier" })
     public void componentShouldNotExist(String identifier) {
         Assert.assertFalse("Component '" + identifier + "' exists",
@@ -55,8 +59,12 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Fails if component does not exist within current context.\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             + "You might want to set the waiting timeout with the keyword `Set Jemmy Timeout`\n\n"
-            + "Example:\n" + "| `Component Should Not Exist` | myPanel |\n")
+            + "Example:\n"
+            + "| `Component Should Exist` | myPanel |\n"
+            + "| `Component Should Exist` | regexp=^A.* | There should be a component starting with 'A' |\n")
     @ArgumentNames({ "identifier" })
     public void componentShouldExist(String identifier) {
         Assert.assertTrue("Component '" + identifier + "' does not exist",
@@ -64,13 +72,16 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Clicks on a component, optionally using click count, a specific mouse button and keyboard modifiers.\n\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             + "The codes used for mouse button and key modifiers are the field names from ``java.awt.event.InputEvent``. "
             + "For example: ``BUTTON1_MASK``, ``CTRL_MASK``, ``ALT_MASK``, ``ALT_GRAPH_MASK``, ``SHIFT_MASK``, and ``META_MASK``.\n\n"
             + "*Note:* Some keys have more convinient case insensitive aliases that can be used: ``LEFT BUTTON``, ``RIGHT BUTTON``, ``SHIFT``, "
             + "``CTRL``, ``ALT``, ``META``\n\n"
             + "Examples:\n"
             + "| `Click On Component`  | myComponent | # Double clicks with mouse button 2 on the component ... |\n"
-            + "| ... | 2 | RIGHT BUTTON | ALT | # ... while holding down the ALT key |\n")
+            + "| ... | 2 | RIGHT BUTTON | ALT | # ... while holding down the ALT key |\n"
+            + "| `Click On Component`  | regexp=^A.* | #Clicks with mouse button on a component starting with 'A' ... |\n")
     @ArgumentNames({ "identifier", "clickCountString=1", "buttonString=BUTTON1_MASK", "*keyModifierStrings" })
     public void clickOnComponent(String identifier, String clickCountString, String buttonString, String... args) {
         OptionalArgsForTableCellAndComponentClicking optArgs = new OptionalArgsForTableCellAndComponentClicking(clickCountString, buttonString, args);
@@ -80,15 +91,24 @@ public class ComponentKeywords {
                 optArgs.keyModifiers());
     }
 
-    @RobotKeyword("Right clicks on a component.\n\n" + "Example:\n"
-            + "| `Right Click On Component` | myComponent |")
+    @RobotKeyword("Right clicks on a component.\n\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
+            + "Example:\n"
+            + "| `Right Click On Component` | myComponent |"
+            + "| `Right Click On Component` | regexp=^A.* | #Right clicks on a component starting with 'A'")
     @ArgumentNames({ "identifier" })
     public void rightClickOnComponent(String identifier) {
         operator(identifier).clickMouse(1, InputEvent.BUTTON3_MASK);
     }
 
-    @RobotKeyword("Returns the component's tooltip text.\n\n" + "Example:\n"
+    @RobotKeyword("Returns the component's tooltip text.\n\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
+            + "Example:\n"
             + "| ${tooltip}= | `Get Tooltip Text` | saveButton |\n"
+            + "| `Should Be Equal`    | Save | ${tooltip} |\n"
+            + "| ${tooltip}= | `Get Tooltip Text` | regexp=^A.* |\n"
             + "| `Should Be Equal`    | Save | ${tooltip} |\n")
     @ArgumentNames({ "identifier" })
     public String getTooltipText(String identifier) {
@@ -99,6 +119,7 @@ public class ComponentKeywords {
             + "Useful for example when sending keyboard events to a component.\n\n"
             + "Example:\n"
             + "| `Focus To Component`     | myTextField |           | |\n"
+            + "| `Focus To Component`     | regexp=^A.* |           | |\n"
             + "| `Send Keyboard Event`    | VK_C          | CTRL_MASK | # paste from clipboard |\n")
     @ArgumentNames({ "identifier" })
     public void focusToComponent(String identifier) {
@@ -106,9 +127,12 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Selects an item from the components context popup menu.\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             + "Does a right click on the component and selects the specified menu item from the popup menu.\n\n"
             + "Example:\n"
-            + "| `Select From Popup Menu` | myComponent | Actions | Do something |\n")
+            + "| `Select From Popup Menu` | myComponent | Actions | Do something |\n"
+            + "| `Select From Popup Menu` | regexp=^A.* | Actions | Do something |\n")
     @ArgumentNames({ "identifier", "menuPath" })
     public void selectFromPopupMenu(String identifier, String menuPath) {
         JPopupMenuOperator popup = operator(identifier).invokePopup();
@@ -116,9 +140,12 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Gets item names from the components context popup menu.\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             + "Does a right click on the component and retrieves the specified menu items from the popup menu.\n\n"
             + "Example:\n"
             + "| @{items}= | `Get Menu Items From Popup Menu` | myComponent | Actions |\n"
+            + "| @{items}= | `Get Menu Items From Popup Menu` | regexp=^A.* | Actions |\n"
             + "| `Should Contain` | ${items} | Do something |")
     @ArgumentNames({ "identifier", "menuPath" })
     public List<String> getMenuItemsFromPopupMenu(final String identifier, final String menuPath) {
@@ -132,9 +159,12 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Checks that component is visible.\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             +"Even if one pixel of the component is visible, this keyword will pass.\n\n"
             +"Example:\n"
-            + "| `Component Should Be Visible` | myComponent |\n")
+            + "| `Component Should Be Visible` | myComponent |\n"
+            + "| `Component Should Be Visible` | regexp=^A.* |\n")
          @ArgumentNames({ "identifier"})
          public void componentShouldBeVisible(String identifier) {
         Rectangle visible = operator(identifier).getVisibleRect();
@@ -142,9 +172,12 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Checks that component is not visible.\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             +"Fails if even one pixel of the component is visible.\n\n"
             +"Example:\n"
-            + "| `Component Should Not Be Visible` | myComponent |\n")
+            + "| `Component Should Not Be Visible` | myComponent |\n"
+            + "| `Component Should Not Be Visible` | regexp=^A.* |\n")
     @ArgumentNames({ "identifier"})
     public void componentShouldNotBeVisible(String identifier) {
         Rectangle visible = operator(identifier).getVisibleRect();
@@ -152,18 +185,24 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Scrolls component to view.\n\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             +"Example:\n"
-            + "| `Scroll Component To View` | myComponent |\n")
+            + "| `Scroll Component To View` | myComponent |\n"
+            + "| `Scroll Component To View` | regexp=^A.* |\n")
     @ArgumentNames({ "identifier"})
     public void scrollComponentToView(String identifier) {
         operator(identifier).scrollRectToVisible(new Rectangle(100, 100));
     }
 
     @RobotKeyword("List methods of components object.\n"
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
             +"When working with custom components you may use this keyword to discover methods you can call "
             +"with `Call Component Method` keyword.\n\n"
             +"Example:\n"
-            + "| `List Component Methods` | myComponent |\n")
+            + "| `List Component Methods` | myComponent |\n"
+            + "| `List Component Methods` | regexp=^A.* |\n")
     @ArgumentNames({"identifier"})
     public String[] listComponentMethods(String identifier) {
         Class klass = operator(identifier).getSource().getClass();
@@ -217,9 +256,12 @@ public class ComponentKeywords {
     }
 
     @RobotKeyword("Calls a method from specified component.\n\n"
-                  + "Arguments are automatically converted if possible to type expected by the method.\n\n"
-                  + "Example:\n"
-                  + "| `Call Component Method` | buttonId | setToolTipText | new tooltip text |")
+            + "*N.B.* Regular expression can be used to select the dialog by prefixing the identifier with ``regexp=``.\n"
+            + "See more details in `Regular expressions` section.\n\n"
+            + "Arguments are automatically converted if possible to type expected by the method.\n\n"
+            + "Example:\n"
+            + "| `Call Component Method` | buttonId | setToolTipText | new tooltip text |"
+            + "| `Call Component Method` | regexp=^A.* | setToolTipText | new tooltip text |")
     @ArgumentNames({"identifier", "method", "*args"})
     public Object callComponentMethod(String identifier, String method, String... args) {
         Object component = operator(identifier).getSource();

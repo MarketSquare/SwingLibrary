@@ -24,11 +24,11 @@ import org.robotframework.swing.factory.DefaultContextVerifyingOperatorFactory;
 public class ComponentOperatorFactory extends DefaultContextVerifyingOperatorFactory<ComponentOperator> {
     @Override
     public ComponentOperator createOperatorByIndex(int index) {
-        return new ComponentOperator((ContainerOperator) Context.getContext(), index);
+        return ComponentOperator.newOperatorFor(index);
     }
 
     @Override
     public ComponentOperator createOperatorByName(String name) {
-        return new ComponentOperator((ContainerOperator) Context.getContext(), new ByNameComponentChooser(name));
+        return ComponentOperator.newOperatorFor(name);
     }
 }
