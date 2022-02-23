@@ -30,7 +30,9 @@ jobs:
           mvn clean verify
       - name: Run tests on Windows
         if: runner.os == 'Windows'
-        run: Set-DisplayResolution -Width 1920 -Height 1080 -Force; mvn clean verify
+        run: |
+          (Get-Content -path .\src\test\resources\robot-tests\filechooser.robot -Raw) -replace '\${TEMPDIR}\${/}','c:\\Users\\runneradmin\\AppData\\Local\\Temp\\' | Set-Content -Path .\src\test\resources\robot-tests\filechooser.robot
+          Set-DisplayResolution -Width 1920 -Height 1080 -Force; mvn clean verify
         shell: powershell
       - name: Run tests MacOS
         if: runner.os == 'macOS'
