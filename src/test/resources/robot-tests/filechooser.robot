@@ -27,7 +27,7 @@ Save File In File Chooser With Non Existing File
 
 Choose File In File Chooser Without Args
     pushButton  ${fileChooserButton}
-    chooseFromFileChooser
+    chooseFromFileChooser   ${defaultFile}
     selectedFileShouldBe  ${defaultFile}
 
 *** Keywords ***
