@@ -53,7 +53,7 @@ public class HtmlElementSpec extends Specification<HtmlElement> {
         
         private URL dummy(String spec) {
             try {
-                return new File(spec).toURL();
+                return new File(spec).toURI().toURL();
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
