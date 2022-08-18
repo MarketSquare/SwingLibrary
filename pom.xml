@@ -134,7 +134,7 @@
             <include>**/*Test.java</include>
           </includes>
         </configuration>
-        </plugin>
+      </plugin>
       <plugin>
         <groupId>org.robotframework</groupId>
         <artifactId>robotframework-maven-plugin</artifactId>
@@ -248,7 +248,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-invoker-plugin</artifactId>
-        <version>1.7</version>
+        <version>3.3.0</version>
         <configuration>
           <projectsDirectory>src/it</projectsDirectory>
           <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
