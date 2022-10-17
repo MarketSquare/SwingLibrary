@@ -2,8 +2,7 @@ package org.robotframework.swing.table;
 
 import java.awt.Component;
 
-import javax.swing.AbstractButton;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 
 import org.jretrofit.AllMethodsNotImplementedException;
@@ -48,6 +47,11 @@ public class CellValueExtractor {
         Component cellRendererComponent = getCellRendererComponent(row, col);
         if (isButtonBasedRenderer(cellRendererComponent))
             return new Boolean(((AbstractButton) cellRendererComponent).isSelected()).toString();
+        if (isComboBoxBasedRenderer(cellRendererComponent)) {
+            if (jTableOperator.getModel().getValueAt(row, col) instanceof String)
+                return jTableOperator.getModel().getValueAt(row, col).toString();
+            return ((JComboBox) cellRendererComponent).getSelectedItem().toString();
+        }
         return coerceToWithText(cellRendererComponent).getText();
     }
 
@@ -64,6 +68,10 @@ public class CellValueExtractor {
         TableCellRenderer defaultCheckboxRenderer = ((JTable) jTableOperator.getSource()).getDefaultRenderer(Boolean.class);
         return (defaultCheckboxRenderer.getClass().isInstance(cellRendererComponent) &&
                 cellRendererComponent instanceof AbstractButton);
+    }
+
+    private boolean isComboBoxBasedRenderer(Component cellRendererComponent) {
+        return cellRendererComponent instanceof JComboBox;
     }
 
     private WithText coerceToWithText(Object element) {
