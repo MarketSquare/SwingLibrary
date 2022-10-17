@@ -47,7 +47,7 @@ public class CellValueExtractor {
         Component cellRendererComponent = getCellRendererComponent(row, col);
         if (isButtonBasedRenderer(cellRendererComponent))
             return new Boolean(((AbstractButton) cellRendererComponent).isSelected()).toString();
-        if (isComboBoxBasedRenderer(row, col, cellRendererComponent)) {
+        if (isComboBoxBasedRenderer(cellRendererComponent)) {
             if (jTableOperator.getModel().getValueAt(row, col) instanceof String)
                 return jTableOperator.getModel().getValueAt(row, col).toString();
             return ((JComboBox) cellRendererComponent).getSelectedItem().toString();
@@ -70,7 +70,7 @@ public class CellValueExtractor {
                 cellRendererComponent instanceof AbstractButton);
     }
 
-    private boolean isComboBoxBasedRenderer(int row, int col, Component cellRendererComponent) {
+    private boolean isComboBoxBasedRenderer(Component cellRendererComponent) {
         return cellRendererComponent instanceof JComboBox;
     }
 
