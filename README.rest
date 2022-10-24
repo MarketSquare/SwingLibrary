@@ -8,7 +8,7 @@ __ https://github.com/robotframework/SwingLibrary/wiki
 
 Downloads are available at `Releases 2.3.0`__ 
 
-__ https://github.com/robotframework/SwingLibrary/releases/tag/v2.3.0
+__ https://github.com/robotframework/SwingLibrary/releases/tag/2.3.0
 
 Keyword documentation for the latest version (2.3.0) are available `here`__
 
