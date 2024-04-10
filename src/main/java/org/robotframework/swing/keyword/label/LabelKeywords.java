@@ -70,6 +70,20 @@ public class LabelKeywords {
         Assert.assertTrue("Expected label '" + identifier + "' value to be '" + expected + "', but was '" + actual + "'", expected.equals(actual));
     }
 
+    @RobotKeyword("Fails if the label is not disabled.\n\n"
+        + "Example:\n"
+        + "| `Label Should Be Disabled` | myLabel |\n")
+    public void labelShouldBeDisabled(String identifier) {
+        Assert.assertFalse("Label '" + identifier + "' is not disabled", createOperator(identifier).isEnabled());
+    }
+
+    @RobotKeyword("Fails if the label is not enabled.\n\n"
+        + "Example:\n"
+        + "| `Label Should Be Enabled` | myLabel |\n")
+    public void labelShouldBeEnabled(String identifier) {
+        Assert.assertTrue("Label '" + identifier + "' is not enabled", createOperator(identifier).isEnabled());
+    }
+
     private LabelOperator createOperator(String identifier) {
         return operatorFactory.createOperator(identifier);
     }

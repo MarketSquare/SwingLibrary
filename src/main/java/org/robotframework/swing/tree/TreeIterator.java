@@ -41,7 +41,7 @@ public class TreeIterator {
     private void doOnAll(TreePath parent, TreePathAction treePathAction) {
         TreeNode node = (TreeNode) parent.getLastPathComponent();
         for (@SuppressWarnings("unchecked")
-             Enumeration<TreeNode> e = node.children(); e.hasMoreElements();) {
+             Enumeration<TreeNode> e = (Enumeration<TreeNode>) node.children(); e.hasMoreElements();) {
             TreePath path = parent.pathByAddingChild(e.nextElement());
             doOnAll(path, treePathAction);
         }

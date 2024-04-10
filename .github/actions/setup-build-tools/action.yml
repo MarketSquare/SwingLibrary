@@ -1,0 +1,148 @@
+name: Set up build tools action
+description: Action used to install build tools like Java , maven , caching and configuring settings.xml
+
+inputs:
+  java-version:
+    description: Java version
+    required: false
+    default: "17"
+  java-distribution:
+    description: Java distribution
+    required: false
+    default: "temurin"
+  maven-version:
+    description: Maven version
+    required: false
+    default: "3.9.0"
+
+runs:
+  using: "composite"
+  steps:
+    ## Setup Java
+    - name: Set up ${{ inputs.java-version }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: ${{ inputs.java-distribution }}
+    ## Setup Maven
+    - name: Set up Maven
+      uses: Solibri/setup-maven@master
+      with:
+        maven-version: ${{ inputs.maven-version }}
+    - name: Cache Solibri Maven Packages
+      id: solibri-maven-packages
+      if: contains(runner.name,'kubernetes')
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: "Create maven Settings file"
+      uses: Solibri/maven-settings-xml-action@main
+      with:
+        repositories: |
+          [
+            {
+              "id": "desktop-main",
+              "name": "github-packages-desktop-main",
+              "url": "https://maven.pkg.github.com/Solibri/desktop-main",
+              "releases": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              },
+              "snapshots": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              }
+            },
+            {
+              "id": "desktop-parent",
+              "name": "github-packages-desktop-parent",
+              "url": "https://maven.pkg.github.com/Solibri/desktop-parent",
+              "releases": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              },
+              "snapshots": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              }
+            },
+            {
+              "id": "github-actions-common",
+              "name": "github-packages-github-actions-common",
+              "url": "https://maven.pkg.github.com/Solibri/github-actions-common",
+              "releases": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              },
+              "snapshots": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              }
+            }
+          ]
+        plugin_repositories: |
+          [
+            {
+              "id": "maven-jarsigner-plugin",
+              "name": "github-packages-maven-jarsigner-plugin",
+              "url": "https://maven.pkg.github.com/Solibri/maven-jarsigner-plugin",
+              "releases": {
+               "enabled": "true",
+               "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              },
+              "snapshots": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              }
+            },
+            {
+              "id": "desktop-parent",
+              "name": "github-packages-desktop-parent",
+              "url": "https://maven.pkg.github.com/Solibri/desktop-parent",
+              "releases": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              },
+              "snapshots": {
+                "enabled": "true",
+                "updatePolicy": "never",
+                "checksumPolicy" : "fail"
+              }
+            }
+          ]
+        servers: |
+          [
+            {
+              "id": "maven-jarsigner-plugin",
+              "username": "${env.GITHUB_ACTOR}",
+              "password": "${env.GITHUB_TOKEN}"
+            },
+            {
+              "id": "desktop-parent",
+              "username": "${env.GITHUB_ACTOR}",
+              "password": "${env.GITHUB_TOKEN}"
+            },
+            {
+              "id": "desktop-main",
+              "username": "${env.GITHUB_ACTOR}",
+              "password": "${env.GITHUB_TOKEN}"
+            },
+            {
+              "id": "github-actions-common",
+              "username": "${env.GITHUB_ACTOR}",
+              "password": "${env.GITHUB_TOKEN}"
+            }
+          ]

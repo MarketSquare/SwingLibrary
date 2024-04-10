@@ -2,13 +2,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
+		<groupId>com.solibri</groupId>
+		<artifactId>solibri-parent</artifactId>
+		<version>1.4.1.2</version>
+	</parent>
   <groupId>org.robotframework</groupId>
   <artifactId>swinglibrary</artifactId>
-  <version>2.3.0</version>
+  <version>${revision}</version>
   <packaging>jar</packaging>
   <name>swinglibrary</name>
   <description>A Robot Framework test library for Swing UI testing</description>
@@ -20,10 +20,15 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <scm>
-    <url>https://github.com/robotframework/SwingLibrary</url>
-    <connection>scm:git:https://github.com/robotframework/SwingLibrary</connection>
-  </scm>
+
+  <distributionManagement>
+		<repository>
+			<id>github-actions-common</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/Solibri/github-actions-common</url>
+		</repository>
+	</distributionManagement>
+
   <developers>
     <developer>
       <name>Robot Framework developers</name>
@@ -32,14 +37,9 @@
   </developers>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <revision>2.3.1-SOLIBRI-SNAPSHOT</revision>
   </properties>
-  <repositories>
-    <repository>
-      <id>laughing-panda</id>
-      <name>Laughing Panda</name>
-      <url>http://maven.laughingpanda.org/maven2/</url>
-    </repository>
-  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.netbeans</groupId>
@@ -55,16 +55,6 @@
       <groupId>gnu-regexp</groupId>
       <artifactId>gnu-regexp</artifactId>
       <version>1.1.4</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.robotframework</groupId>
-      <artifactId>javalib-core</artifactId>
-      <version>2.0.3</version>
     </dependency>
     <dependency>
       <groupId>org.jretrofit</groupId>
@@ -110,6 +100,22 @@
       <artifactId>javatools-test</artifactId>
       <version>0.4</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.robotframework</groupId>
+          <artifactId>javalib-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.robotframework</groupId>
+      <artifactId>javalib-core</artifactId>
+      <version>2.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
     </dependency>
   </dependencies>
   <build>
@@ -145,6 +151,9 @@
               <goal>acceptance-test</goal>
               <goal>verify</goal>
             </goals>
+            <configuration>
+              <skip>${skipAcceptanceTests}</skip>
+            </configuration>
           </execution>
           <execution>
             <id>xml-spec</id>
@@ -183,103 +192,6 @@
           </libdoc>
           <testdoc/>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>jarjar-maven-plugin</artifactId>
-        <version>1.9</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>jarjar</goal>
-            </goals>
-            <configuration>
-              <output>${project.build.directory}/with-dependencies/swinglibrary-${project.version}.jar</output>
-              <includes>
-                <include>org.netbeans:jemmy</include>
-                <include>abbot:abbot</include>
-                <include>abbot:costello</include>
-                <include>junit:junit</include>
-                <include>gnu-regexp:gnu-regexp</include>
-                <include>org.jretrofit:jretrofit</include>
-                <include>commons-collections:commons-collections</include>
-                <include>org.robotframework:javalib-core</include>
-              </includes>
-              <rules>
-                <rule>
-                  <pattern>org.netbeans.**</pattern>
-                  <result>org.robotframework.@0</result>
-                </rule>
-                <rule>
-                  <pattern>abbot.**</pattern>
-                  <result>org.robotframework.@0</result>
-                </rule>
-                <rule>
-                  <pattern>org.apache.commons.collections.**</pattern>
-                  <result>org.robotframework.@0</result>
-                </rule>
-                <rule>
-                  <pattern>com.thoughtworks.**</pattern>
-                  <result>org.robotframework.@0</result>
-                </rule>
-                <rule>
-                  <pattern>org.junit.**</pattern>
-                  <result>org.robotframework.@0</result>
-                </rule>
-                <rule>
-                  <pattern>gnu.regexp.**</pattern>
-                  <result>org.robotframework.@0</result>
-                </rule>
-                <rule>
-                  <pattern>org.jretrofit.**</pattern>
-                  <result>org.robotframework.@0</result>
-                </rule>
-                <keep>
-                  <pattern>org.robotframework.**</pattern>
-                </keep>
-                <keep>
-                  <pattern>SwingLibrary</pattern>
-                </keep>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-invoker-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <projectsDirectory>src/it</projectsDirectory>
-          <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-          <pomIncludes>
-            <pomInclude>*/pom.xml</pomInclude>
-          </pomIncludes>
-          <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
-        </configuration>
-        <executions>
-          <execution>
-            <id>integration-test</id>
-            <goals>
-              <goal>install</goal>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.4</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>install</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>

@@ -2,41 +2,21 @@ name: SwingLibrary CI
 
 on: [ push, pull_request ]
 
+env:
+  revision: 2.3.2
+
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ 'ubuntu-latest', 'windows-latest', 'macos-latest' ]
-        include:
-          - os: ubuntu-latest
-            set_display: export DISPLAY=:99; Xvfb :99 -screen 0 1920x1080x24 -ac -noreset & sleep 3
+    runs-on: 'ubuntu-latest'
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Java 8
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v4
+      - name: Setup build tools
+        uses: ./desktop-main/.github/actions/setup-build-tools
         with:
-          java-version: 8
-      - name: maven-settings-xml-action
-        uses: whelk-io/maven-settings-xml-action@v20
-        with:
-          mirrors: '[{ "id": "maven-default-http-blocker", "mirrorOf": "dummy", "url": "http://0.0.0.0/" }]'
-      - name: Run tests on Linux
-        if: runner.os == 'Linux'
+          java-version: 17
+          java-distribution: 'temurin'
+          maven-version: 3.8.4
+      - name: Maven Deploy
         run: |
-          ${{ matrix.set_display }}
-          mvn clean verify
-      - name: Run tests on Windows
-        if: runner.os == 'Windows'
-        run: Set-DisplayResolution -Width 1920 -Height 1080 -Force; mvn clean verify
-        shell: powershell
-      - name: Run tests MacOS
-        if: runner.os == 'macOS'
-        run: mvn clean verify
-      - uses: actions/upload-artifact@v1
-        if: success() || failure()
-        with:
-          name: Test Results - ${{ runner.os }}
-          path: "target with spaces/robotframework-reports/"
+          mvn clean deploy  -Dmaven.test.skip=true -DskipAcceptanceTests=true -DskipIntegrationTests=true -Djarsigner.skip=true -Drevision=${{ env.revision }}

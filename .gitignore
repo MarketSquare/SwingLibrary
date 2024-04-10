@@ -7,3 +7,5 @@ target with spaces
 reports
 tmp
 .DS_Store
+.vscode/settings.json
+.flattened-pom.xml
