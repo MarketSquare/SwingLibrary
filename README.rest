@@ -18,7 +18,7 @@ This project was originally hosted in `Google Code`__
 
 __ http://code.google.com/p/robotframework-swinglibrary/
 
-and later on robotframework github:
+and later on `robotframework github`__
 
 __ https://github.com/robotframework/SwingLibrary/
 
