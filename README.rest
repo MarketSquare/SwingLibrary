@@ -12,7 +12,7 @@ __ https://github.com/MarketSquare/SwingLibrary/releases/tag/2.3.0
 
 Keyword documentation for the latest version (2.3.0) are available `here`__
 
-__ https://robotframework.org/SwingLibrary/SwingLibrary.html
+__ https://marketsquare.github.io/SwingLibrary/SwingLibrary-2.3.0.html
 
 This project was originally hosted in `Google Code`__
 
